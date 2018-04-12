@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import AppsView from './AppsView';
-import Basic from './Basic'
+import FileDropZone from './Basic'
 import { Table } from 'reactstrap';
 import { API_ROOT } from './api-config';
 import axios, { post } from 'axios';
@@ -50,7 +50,7 @@ class Contacts extends React.Component {
           <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
           <ModalBody>
          
-          <Basic />
+          <FileDropZone />
           <Table>
           <tbody>
           <tr>

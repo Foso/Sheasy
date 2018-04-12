@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.handler
 
 import android.content.Context
-import android.util.Log
 import de.jensklingenberg.sheasy.utils.FUtils
 import fi.iki.elonen.NanoHTTPD
 
