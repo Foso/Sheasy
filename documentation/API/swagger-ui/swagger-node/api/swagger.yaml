@@ -1,0 +1,103 @@
+---
+swagger: "2.0"
+info:
+  description: "This is the API documentation for Sheasy."
+  version: "1.0.0"
+  title: "Sheasy API Doc"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "mail@jensklingenberg.de"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "192.168.178.21:8765"
+basePath: "/api/v1"
+tags:
+- name: "pet"
+  description: "Everything about Sheasy"
+  externalDocs:
+    description: "Find out more"
+    url: "https://github.com/Foso/Sheasy"
+schemes:
+- "http"
+paths:
+  /apps:
+    get:
+      tags:
+      - "apps"
+      summary: "Get installed apps"
+      description: "Returns a list of the installed apps"
+      operationId: "getPetById"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AppsResponse"
+        404:
+          description: "Apps not found"
+      x-swagger-router-controller: "Apps"
+  /device/:
+    get:
+      tags:
+      - "apps"
+      summary: "Get device info"
+      description: "Returns a list of the installed apps"
+      operationId: "aa"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/DeviceResponse"
+        404:
+          description: "Apps not found"
+      x-swagger-router-controller: "Apps"
+definitions:
+  AppsResponse:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      instalTime:
+        type: "string"
+        example: "YouTube"
+      name:
+        type: "string"
+        example: "YouTube"
+      packageName:
+        type: "string"
+        example: "com.google.android.youtube"
+    example:
+      name: "YouTube"
+      packageName: "com.google.android.youtube"
+      instalTime: "YouTube"
+    xml:
+      name: "AppsResponse"
+  DeviceResponse:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      instalTime:
+        type: "string"
+        example: "YouTube"
+      name:
+        type: "string"
+        example: "YouTube"
+      packageName:
+        type: "string"
+        example: "com.google.android.youtube"
+    example:
+      name: "YouTube"
+      packageName: "com.google.android.youtube"
+      instalTime: "YouTube"
+    xml:
+      name: "DeviceResponse"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

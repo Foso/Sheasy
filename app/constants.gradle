@@ -1,0 +1,42 @@
+project.ext {
+
+    buildTools = '27.1.0'
+
+    compileSdk = 27
+    targetSdk = 27
+    minSdk = 21
+
+    versionCode = 1
+    appVersion = '1.9.9.3'
+
+    //Database 1.9.9.2 was 8
+    roomDBversion = 9
+    roomDbName = '"basic-sample-db"'
+
+
+    butterknifeVersion = '8.8.1'
+    constraintLayout = '1.0.0'
+    debugDb = '1.0.1'
+    expandableLayoutVersion = '2.9.2'
+    firebaseAuthVersion = '11.8.0'
+    flexbox = '0.3.1'
+    gsonVersion = '2.8.2'
+    junit = '4.12'
+    leakcanaryVersion = '1.5.4'
+    lifeCycleExtension = '1.1.1'
+    mockitoVersion = '1.10.19'
+    moshiConverterVersion = '2.3.0'
+    moshilazyadapters = '2.1'
+    moshiVersion = '1.5.0'
+    picasso2Okhttp3Downloader = '1.1.0'
+    picassoVersion = '2.5.2'
+    rangeSeekBarVersion = '1.0.1'
+    retrofitVersion = '2.3.0'
+    roomVersion = '1.0.0'
+    roundedImageView = '2.3.0'
+    rxandroid = '2.0.2'
+    rxJava = '2.1.7'
+    rxjava2Adapter = '1.0.0'
+    supportLibVersion = '27.1.0'
+    timberVersion = '4.6.0'
+}

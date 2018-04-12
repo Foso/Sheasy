@@ -1,0 +1,142 @@
+<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <DropdownToggle caret>bgggg
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem header>Header</DropdownItem>
+          <DropdownItem disabled>Action</DropdownItem>
+          <DropdownItem>Another Action</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem>Another Action</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+
+
+       axios({
+        url: `http://${API_ROOT}/api/v1/file?file=/storage/emulated/0/rdrd/test.txt`,
+        method: 'POST',
+        data: files
+      })
+
+
+
+       const formData = new FormData();
+      formData.append('file', files[0]);
+
+
+      axios({
+        url: `http://${API_ROOT}/api/v1/file?file=/storage/emulated/0/rdrd/${files[0].name}`,
+        method: 'POST',
+        data: formData,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
+
+
+
+
+      import React from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter,InputGroup,InputGroupAddon,Input } from 'reactstrap';
+import AppsView from './AppsView';
+import FileDropZone from './Basic'
+import { Table } from 'reactstrap';
+import { API_ROOT } from './api-config';
+import axios, { post } from 'axios';
+import DownloadIcon from 'mdi-react/DownloadIcon';
+import DeleteIcon from 'mdi-react/DeleteIcon';
+import { Container, Row, Col,Grid } from 'reactstrap';
+import './MyModal.css';
+
+
+
+class FileTransfer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false,
+      items: [],
+      accounts: [],
+      requestFailed: false
+    };
+
+    this.toggle = this.toggle.bind(this);
+
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  componentDidMount() {
+
+    axios.get(`http://${API_ROOT}/api/v1/file?file=/storage/emulated/0/`, {
+      timeout: 10000
+    }).then(res => {
+      this.setState(
+        { items: res.data, accounts: res.data }
+      );
+      console.log(res.data)
+    });
+
+  }
+
+  render() {
+    return (
+      
+      <div>
+        <div onClick={this.toggle}>Files</div>
+       
+
+        <Modal isOpen={this.state.modal} toggle={this.toggle}  class="custom-modal" className={this.props.className} size="lg" >
+          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalBody>
+          <InputGroup>
+        <InputGroupAddon addonType="prepend">@</InputGroupAddon>
+        <Input placeholder="username" />
+      </InputGroup>
+          <FileDropZone />
+          <Table>
+          <tbody>
+          <tr>
+            <td> <Button type="button" class="btn btn-primary">ghgg</Button> </td>
+            <td>
+         <Table>
+          <tbody>
+          <tr>
+            <th>Name</th>
+            <th>Download</th>
+            <th>Uninstall</th>
+
+          </tr>
+          {
+            this.state.items.map(f =>
+              <tr key={f.name}   >
+                <td><div><p>{f.name}</p></div></td><td><a href={`http://${API_ROOT}/api/v1`+"/file?file="+f.path}><DownloadIcon /></a></td><td><DeleteIcon />
+</td>
+              </tr>)
+          }
+ </tbody>
+        </Table>
+        </td>
+        </tr>
+        </tbody>
+        </Table>
+
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+
+       
+      </div>
+    );
+  }
+}
+
+export default FileTransfer;

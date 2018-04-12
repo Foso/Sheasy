@@ -1,8 +1,15 @@
 apply plugin: 'com.android.application'
+apply from: 'constants.gradle'
 
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'org.hidetake.swagger.generator'
+apply plugin: 'base'
+
+
 
 android {
     compileSdkVersion 27
@@ -20,14 +27,75 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation "com.android.support:appcompat-v7:${supportLibVersion}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    swaggerCodegen 'io.swagger:swagger-codegen-cli:2.3.1'
+
+
+    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    implementation 'org.nanohttpd:nanohttpd-websocket:2.3.1'
+    compile 'com.squareup.moshi:moshi-kotlin:1.5.0'
+    //RxJava
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
+    implementation "io.reactivex.rxjava2:rxjava:${rxJava}"
+
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${rxjava2Adapter}"
+
+    //Moshi
+    implementation "com.squareup.retrofit2:converter-moshi:${moshiConverterVersion}"
+    implementation "com.serjltt.moshi:moshi-lazy-adapters:${moshilazyadapters}"
+
+    implementation('com.mikepenz:aboutlibraries:6.0.6@aar') {
+        transitive = true
+    }
+
+    implementation 'androidx.core:core-ktx:0.3'
+
+//required support lib modules
+    implementation "com.android.support:recyclerview-v7:${supportLibVersion}"
+    implementation "com.android.support:support-annotations:${supportLibVersion}"
+    implementation "com.android.support:cardview-v7:${supportLibVersion}"
+
+
+    //Architecture Components
+    implementation "android.arch.lifecycle:extensions:${lifeCycleExtension}"
+
+    implementation "android.arch.lifecycle:reactivestreams:${lifeCycleExtension}"
+}
+
+
+swaggerSources {
+    petstore {
+        inputFile = file('../documentation/API/swagger-ui/swagger.yaml')
+        code {
+            language = 'nodejs-server'
+            // configFile = file('config.json')
+            outputDir = file("../documentation/API/swagger-ui/swagger-node")
+        }
+    }
+}
+
+task copyFiles(type: Copy) {
+    from '../documentation/API/1'
+    into '../documentation/API/2'
 }
