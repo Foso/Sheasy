@@ -2,6 +2,8 @@ package de.jensklingenberg.sheasy.extension
 
 
 import de.jensklingenberg.sheasy.BuildConfig
+import de.jensklingenberg.sheasy.utils.FUtils
+import de.jensklingenberg.sheasy.utils.ResponseFile
 import fi.iki.elonen.NanoHTTPD
 
 /**
@@ -35,5 +37,19 @@ class NanoHTTPDExt{
             }
             return newFixedLengthResponse1
         }
+
+        fun newChunkedResponse(responseFile: ResponseFile): NanoHTTPD.Response? {
+
+            val newFixedLengthResponse1 = NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, responseFile.mimeType, responseFile?.fileInputStream)
+            if(BuildConfig.DEBUG){
+                newFixedLengthResponse1.addHeader("Access-Control-Allow-Origin", "*")
+            }
+            return newFixedLengthResponse1
+        }
+
+
     }
+
+
+
 }

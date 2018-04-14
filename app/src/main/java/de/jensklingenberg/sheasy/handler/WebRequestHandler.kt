@@ -1,7 +1,9 @@
 package de.jensklingenberg.sheasy.handler
 
 import android.content.Context
+import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
 import de.jensklingenberg.sheasy.utils.FUtils
+import de.jensklingenberg.sheasy.utils.ResponseFile
 import fi.iki.elonen.NanoHTTPD
 
 /**
@@ -18,10 +20,22 @@ class WebRequestHandler {
         fun handle(context: Context, requestV1: String): NanoHTTPD.Response? {
             return when {
                 requestV1.isEmpty() -> {
-                    FUtils.returnAssetFile(context, "web/index.html")
+                    val returnAssetFile: ResponseFile = FUtils.returnAssetFile(context, "web/index.html")
+                    when(returnAssetFile.fileInputStream){
+                        null->{
+                            return NanoHTTPD.newFixedLengthResponse("File $requestV1 not found")
+
+                        }else->{
+                        return NanoHTTPDExt.newChunkedResponse(returnAssetFile)
+
+                    }
+                    }
+
                 }
                 else -> {
-                    FUtils.returnAssetFile(context, requestV1)
+                    val returnAssetFile = FUtils.returnAssetFile(context, requestV1)
+                    return NanoHTTPDExt.newChunkedResponse(returnAssetFile)
+
                 }
             }
 

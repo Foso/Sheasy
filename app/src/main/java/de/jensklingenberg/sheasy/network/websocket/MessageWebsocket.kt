@@ -8,7 +8,7 @@ import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.model.NotificationResponse
 import de.jensklingenberg.sheasy.helpers.NotifyClientEvent
 import de.jensklingenberg.sheasy.toplevel.runInBackground
-import de.jensklingenberg.sheasy.network.MyHttpServer
+import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import io.reactivex.Observable
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by jens on 18/2/18.
  */
-class MessageWebsocket(context: Context, handshakeRequest: NanoHTTPD.IHTTPSession, httpServer: MyHttpServer) : MyWebSocket(context, handshakeRequest, httpServer), NotifyClientEvent {
+class MessageWebsocket(context: Context, handshakeRequest: NanoHTTPD.IHTTPSession, httpServerImpl: MyHttpServerImpl) : MyWebSocket(context, handshakeRequest, httpServerImpl), NotifyClientEvent {
 
 
     override fun onMessage(notificationResponse: NotificationResponse) {

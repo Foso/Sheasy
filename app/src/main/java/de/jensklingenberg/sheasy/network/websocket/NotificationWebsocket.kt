@@ -7,7 +7,7 @@ import android.content.IntentFilter
 import android.util.Log
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.network.MyHttpServer
+import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import de.jensklingenberg.sheasy.model.NotificationResponse
 import de.jensklingenberg.sheasy.helpers.NotifLis
 import de.jensklingenberg.sheasy.toplevel.runInBackground
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by jens on 18/2/18.
  */
-class NotificationWebsocket(context: Context, handshakeRequest: NanoHTTPD.IHTTPSession, httpServer: MyHttpServer) : MyWebSocket(context, handshakeRequest, httpServer), NotifLis {
+class NotificationWebsocket(context: Context, handshakeRequest: NanoHTTPD.IHTTPSession, httpServerImpl: MyHttpServerImpl) : MyWebSocket(context, handshakeRequest, httpServerImpl), NotifLis {
 
 
     init {

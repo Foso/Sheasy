@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,7 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.NotificationResponse
-import de.jensklingenberg.sheasy.network.MyHttpServer
+import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import de.jensklingenberg.sheasy.network.service.HTTPServerService
 import de.jensklingenberg.sheasy.network.websocket.MessageWebsocket
 import de.jensklingenberg.sheasy.ui.viewmodel.ProfileViewModel
@@ -83,7 +82,7 @@ class MainFragment : Fragment(), EventAdapter.OnTagClickListener,ITabView{
 
     private fun initIPAddress() {
         val ip = NetworkUtils.getIP(App.instance)
-        textView.text = "Meine IP Adresse: " + ip + ":" + MyHttpServer.PORT
+        textView.text = "Meine IP Adresse: " + ip + ":" + MyHttpServerImpl.PORT
     }
 
 

@@ -1,11 +1,9 @@
 package de.jensklingenberg.sheasy.handler
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.network.MyHttpServer
+import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
+import de.jensklingenberg.sheasy.model.DeviceResponse
 import de.jensklingenberg.sheasy.utils.DeviceUtils
 import fi.iki.elonen.NanoHTTPD
 
@@ -25,7 +23,9 @@ class DeviceRequestHandler {
             when {
                 mediaRequest.isEmpty() -> {
                     App.instance.sendBroadcast("Device Info REQUESTED",mediaRequest)
-                    return DeviceUtils.getDeviceInfo()
+                    val deviceInfo = DeviceUtils.getDeviceInfo()
+                    val jsonAdapter =  App.instance.moshi?.adapter(DeviceResponse::class.java)
+                    return NanoHTTPDExt.debugResponse(jsonAdapter?.toJson(deviceInfo)?:"")
                 }
             }
 

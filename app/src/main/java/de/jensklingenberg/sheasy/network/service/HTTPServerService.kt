@@ -5,7 +5,8 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
-import de.jensklingenberg.sheasy.network.MyHttpServer
+import de.jensklingenberg.sheasy.factories.ServerFactory
+import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import java.io.IOException
 
 /**
@@ -13,7 +14,7 @@ import java.io.IOException
  */
 class HTTPServerService : Service() {
     private val mBinder = ServiceBinder()
-    private var server: MyHttpServer? = null
+    private var serverImpl: MyHttpServer? = null
 
     inner class ServiceBinder : Binder() {
         val playerService: HTTPServerService
@@ -29,9 +30,9 @@ class HTTPServerService : Service() {
         super.onCreate()
         try {
 
-            server = MyHttpServer(this)
-            server?.start(10000)
-            Log.i("TAG", "Server is started: " + server?.hostname)
+            serverImpl = ServerFactory.createHTTPServer(this)
+            serverImpl?.start(10000)
+            Log.i("TAG", "Server is started: " + serverImpl?.getHostname())
 
 
         } catch (e: IOException) {
@@ -40,7 +41,7 @@ class HTTPServerService : Service() {
     }
 
     override fun stopService(name: Intent?): Boolean {
-        server?.stop()
+        serverImpl?.stop()
         return super.stopService(name)
 
     }

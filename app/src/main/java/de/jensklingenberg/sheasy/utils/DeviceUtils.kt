@@ -12,7 +12,7 @@ import fi.iki.elonen.NanoHTTPD
  */
 class DeviceUtils {
     companion object {
-        public fun getDeviceInfo(): NanoHTTPD.Response? {
+        public fun getDeviceInfo(): DeviceResponse {
 
             val device = DeviceResponse(
                     Build.MANUFACTURER,
@@ -22,8 +22,7 @@ class DeviceUtils {
                     Build.VERSION.RELEASE
             )
 
-            val jsonAdapter =  App.instance.moshi?.adapter(DeviceResponse::class.java)
-            return NanoHTTPDExt.debugResponse(jsonAdapter?.toJson(device)?:"")
+          return device
         }
     }
 

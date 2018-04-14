@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.network;
+package de.jensklingenberg.sheasy.interfaces;
 
 /**
  * Created by jens on 11/9/17.

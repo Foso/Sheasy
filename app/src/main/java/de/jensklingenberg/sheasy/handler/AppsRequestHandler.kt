@@ -1,15 +1,11 @@
 package de.jensklingenberg.sheasy.handler
 
 import android.content.Context
-import android.content.Intent
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
 import de.jensklingenberg.sheasy.model.AppsResponse
-import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.network.MyHttpServer
 import de.jensklingenberg.sheasy.utils.AppUtils
-import de.jensklingenberg.sheasy.utils.IntentUtils
 import fi.iki.elonen.NanoHTTPD
 
 

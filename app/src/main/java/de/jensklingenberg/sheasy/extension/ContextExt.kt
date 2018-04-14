@@ -1,5 +1,6 @@
 package de.jensklingenberg.sheasy.extension
 
+import android.app.NotificationManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.media.AudioManager
@@ -14,4 +15,8 @@ public fun Context.getAudioManager(): AudioManager {
 
 public fun Context.getClipboardMangaer(): ClipboardManager {
     return this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+}
+
+public fun Context.notifcationManager(): NotificationManager {
+    return this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 }

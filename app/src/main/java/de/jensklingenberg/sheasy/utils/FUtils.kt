@@ -5,24 +5,32 @@ import android.webkit.MimeTypeMap
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.ui.Resource
 import fi.iki.elonen.NanoHTTPD
 import java.io.File
 import java.io.FileInputStream
+import java.io.InputStream
 
 /**
  * Created by jens on 25/2/18.
  */
+data class ResponseFile(val fileInputStream: InputStream?, val mimeType: String?)
 
 class FUtils {
     companion object {
-        fun returnFile(filePath: String): NanoHTTPD.Response? {
+
+
+        fun returnFile(filePath: String): ResponseFile? {
             var fis: FileInputStream? = FileInputStream(filePath)
 
+           return when (fis) {
+               null -> {
+                   null
 
-val response = NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, getMimeType(filePath), fis)
-val fileName = "Hallo.txt"
-            response.addHeader("Content-Disposition", "attachment; filename=\""+fileName+"\"");
-            return NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, "hallo.txt", fis)
+               }
+               else -> {
+                   ResponseFile(FileInputStream(filePath), getMimeType(filePath))                }
+           }
         }
 
         fun getMimeType(fileUrl: String): String {
@@ -30,28 +38,28 @@ val fileName = "Hallo.txt"
             return NanoHTTPD.mimeTypes().get(extension) ?: "*"
         }
 
-        fun returnAssetFile(context: Context, filePath: String): NanoHTTPD.Response? {
+        fun returnAssetFile(context: Context, filePath: String): ResponseFile {
             val stream = context.assets.open(filePath)
-            return NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, getMimeType(filePath), stream)
+           return ResponseFile(stream, getMimeType(filePath))
         }
 
-        fun getFilesResponse(folderPath: String): String {
+
+        fun getFilesReponseList(folderPath: String): List<FileResponse> {
             val directory = File(folderPath)
-            val files = directory.listFiles().map { FileResponse(it.name,it.path) }.toList()
-            val moshi = Moshi.Builder().build()
-            val listMyData = Types.newParameterizedType(List::class.java, FileResponse::class.java)
-            val adapter = moshi.adapter<List<FileResponse>>(listMyData)
-            return adapter.toJson(files)
+            return directory.listFiles().map { FileResponse(it.name, it.path) }.toList()
 
         }
 
-        fun handleApkDowload(context: Context,apkPackageName: String): NanoHTTPD.Response? {
+        fun returnAPK(context: Context, apkPackageName: String):ResponseFile? {
             AppUtils.getAllInstalledApplications(context).forEach {
-                if(it.packageName == apkPackageName){
-                    return NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, getMimeType(it.sourceDir), FileInputStream(it.sourceDir))
+                if (it.packageName == apkPackageName) {
+
+                    val responseFile = ResponseFile(FileInputStream(it.sourceDir), getMimeType(it.sourceDir))
+                    return responseFile
                 }
+
             }
-            return NanoHTTPD.newFixedLengthResponse("Package Not Found")
+            return null
         }
     }
 

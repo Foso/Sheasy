@@ -41,18 +41,18 @@ class MediaRequestHandler {
 
             when (command) {
                 LOUDER -> {
-                    MediatUtils.louder(context.getAudioManager())
+                    MediatUtils(context.getAudioManager()).louder()
                     App.instance.sendBroadcast(CATEGORY, "Media louder")
                     return NanoHTTPD.newFixedLengthResponse("Media louder")
                 }
                 LOWER -> {
-                    MediatUtils.lower(context.getAudioManager())
+                    MediatUtils(context.getAudioManager()).lower()
                     App.instance.sendBroadcast(CATEGORY, "Media lower")
                     return NanoHTTPD.newFixedLengthResponse("Audio lower")
                 }
 
                 MUTE -> {
-                    MediatUtils.mute(context.getAudioManager())
+                    MediatUtils(context.getAudioManager()).mute()
                     App.instance.sendBroadcast(CATEGORY, "Media mute")
                     return NanoHTTPD.newFixedLengthResponse("Audio mute")
                 }

@@ -1,7 +1,8 @@
 package de.jensklingenberg.sheasy.handler
 
-import android.content.Context
 import android.util.Log
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.ApiFileCommand
 import de.jensklingenberg.sheasy.extension.getParameterQueryMap
@@ -10,6 +11,10 @@ import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoHTTPD.ResponseException
 import java.io.IOException
 import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
+import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.ui.Resource
+import de.jensklingenberg.sheasy.ui.Status
+import de.jensklingenberg.sheasy.utils.ResponseFile
 import java.io.File
 
 
@@ -78,7 +83,20 @@ class FileRequestHandler {
                 ApiFileCommand.APK -> {
                     val apkPackageName = map["apk"] ?: ""
                     app.sendBroadcast("APK Requested", apkPackageName)
-                    return FUtils.handleApkDowload(app,apkPackageName)
+                    val handleApkDowload = FUtils.returnAPK(app, apkPackageName)
+
+                    return when (handleApkDowload) {
+                        null -> {
+                            NanoHTTPD.newFixedLengthResponse("APK $query not found")
+
+                        }
+                        else -> {
+                            val(fileInputStream,mimeType) = handleApkDowload
+                            NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, mimeType, fileInputStream)
+                        }
+                    }
+                    
+
                 }
                 ApiFileCommand.UNKNOWN -> {
                     return NanoHTTPD.newFixedLengthResponse("DeviceCommand ${session.uri} not found")
@@ -88,11 +106,32 @@ class FileRequestHandler {
                     return if (pathEnding.contains(".")) {
                         val filePath= map["file"] ?: ""
                         app.sendBroadcast("File Requested",filePath)
-                        FUtils.returnFile(filePath)
+                        val returnFile = FUtils.returnFile(filePath)
+
+                            returnFile?.let {
+                                val(fileInputStream,mimeType) = it
+                                val response = NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, FUtils.getMimeType(filePath), fileInputStream)
+                                val fileName = "Hallo.txt"
+                                response.addHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                                return response
+                            }
+
+                        return NanoHTTPD.newFixedLengthResponse("File $query not found")
+
+
+
+
+
                     } else {
                         val folderPath= map["file"] ?: ""
                         app.sendBroadcast("FilePath Requested",folderPath)
-                        return NanoHTTPDExt.debugResponse(FUtils.getFilesResponse(folderPath))
+
+                        val fileList = FUtils.getFilesReponseList(folderPath)
+                        val moshi = Moshi.Builder().build()
+                        val listMyData = Types.newParameterizedType(List::class.java, FileResponse::class.java)
+                        val adapter = moshi.adapter<List<FileResponse>>(listMyData)
+
+                        return NanoHTTPDExt.debugResponse(adapter.toJson(fileList))
                     }
                 }
             }

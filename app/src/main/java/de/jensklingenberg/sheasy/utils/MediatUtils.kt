@@ -6,22 +6,18 @@ import android.media.AudioManager
 /**
  * Created by jens on 17/2/18.
  */
-class MediatUtils {
+class MediatUtils(val audioManager: AudioManager) {
 
-    companion object {
-        fun louder(audioManager: AudioManager) {
-            audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
-        }
+    fun louder() {
+        audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
+    }
 
-        fun lower(audioManager: AudioManager) {
-            audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
-        }
+    fun lower() {
+        audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
+    }
 
-        fun mute(audioManager: AudioManager) {
-            audioManager.adjustVolume(AudioManager.ADJUST_MUTE, AudioManager.FLAG_PLAY_SOUND);
-        }
-
-
+    fun mute() {
+        audioManager.adjustVolume(AudioManager.ADJUST_MUTE, AudioManager.FLAG_PLAY_SOUND);
     }
 
 }

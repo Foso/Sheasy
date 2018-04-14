@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.ui;
+package de.jensklingenberg.sheasy.ui.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

@@ -5,7 +5,7 @@ import android.content.Intent
 
 import com.squareup.moshi.Moshi;
 import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.network.MyHttpServer
+import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 
 /**
  * Created by jens on 9/2/18.
@@ -39,8 +39,8 @@ class App : Application() {
 
 
     fun sendBroadcast(category: String, text: String) {
-        val pipp = Intent(MyHttpServer.ACTION_SHARE)
-        pipp.putExtra(MyHttpServer.ACTION_SHARE, Event(category, text))
+        val pipp = Intent(MyHttpServerImpl.ACTION_SHARE)
+        pipp.putExtra(MyHttpServerImpl.ACTION_SHARE, Event(category, text))
         App.instance.sendBroadcast(pipp)
 
     }
