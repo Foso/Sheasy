@@ -1,28 +1,25 @@
 package de.jensklingenberg.sheasy.handler
 
 import android.content.Context
-import com.squareup.moshi.Types
+import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
+import de.jensklingenberg.sheasy.helpers.MoshiHelper
 import de.jensklingenberg.sheasy.model.ContactResponse
 import de.jensklingenberg.sheasy.utils.ContactUtils
 import fi.iki.elonen.NanoHTTPD
-import java.lang.reflect.ParameterizedType
 
 /**
  * Created by jens on 14/2/18.
  */
 
-class ContactsRequestHandler(val context: Context) {
+class ContactsRequestHandler(val context: Context, val app: App, val moshi: Moshi) {
 
 
     fun handle(requestV1: String): NanoHTTPD.Response? {
         val contacts = ContactUtils.readContacts(context.contentResolver)
-
-
-        App.instance.sendBroadcast(ACTION, requestV1.substringAfter(RESOURCE))
-        val moshi=App.instance.moshi
-        val response = MoshiHelper.toJson(moshi,contacts)
+        app.sendBroadcast(ACTION, requestV1.substringAfter(RESOURCE))
+        val response = MoshiHelper.contactsToJson(moshi,contacts)
 
         return NanoHTTPDExt.debugResponse(response)
     }

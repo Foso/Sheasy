@@ -57,6 +57,8 @@ profileViewModel.sharedFolder.observe(this, Observer {
         }
     }
 
+
+
     fun handleSendMultipleImages(intent: Intent) {
         val imageUris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
         if (imageUris != null) {

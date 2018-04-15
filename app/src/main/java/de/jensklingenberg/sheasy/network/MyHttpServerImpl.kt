@@ -12,10 +12,11 @@ import java.util.ArrayList;
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoWSD;
 import de.jensklingenberg.sheasy.enums.WebsocketCommand
+import de.jensklingenberg.sheasy.factories.WebSocketFactory
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import de.jensklingenberg.sheasy.network.websocket.MessageWebsocket
 import de.jensklingenberg.sheasy.utils.BundledNotificationHelper
-import de.jensklingenberg.sheasy.utils.NotUtils
+import de.jensklingenberg.sheasy.utils.NotifUtils
 
 
 class MyHttpServerImpl : NanoWSD, MyHttpServer {
@@ -29,16 +30,13 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
         this.connections = arrayListOf()
         main = context
         this.main = context
-        instance = this
         BundledNotificationHelper(context).generateBundle(context)
     }
 
     companion object {
         val PORT = 8765
-        val ACTION_SHARE = "seven.notificationlistenerdemo.NLSCONTROL"
 
         const val API_V1 = "api/v1"
-        lateinit var instance: MyHttpServerImpl
     }
 
     override fun openWebSocket(handshake: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket {
@@ -46,26 +44,26 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
         uri = uri.replaceFirst("/", "", true)
 
         val split = uri.split("/")
-        val websockCommand = WebsocketCommand.get(split[0])
+        val websockCommand = WebsocketCommand.get(split[1])
         when (websockCommand) {
             WebsocketCommand.NOTIFICATION -> {
-                return NotificationWebsocket(context, handshake, this)
+                return WebSocketFactory.createNotificationWebsocket(context, handshake, this,App.instance.mySharedMessageBroadcastReceiver,App.instance.moshi)
 
             }
             WebsocketCommand.MESSAGE -> {
-                return MessageWebsocket(context, handshake, this)
+                return WebSocketFactory.createMessageWebsocket(context, handshake, this,App.instance.mySharedMessageBroadcastReceiver,App.instance.moshi)
 
             }
         }
 
-        return MyWebSocket(context, handshake, this)
+        return WebSocketFactory.createDefaultWebSocket(context, handshake, this)
     }
 
     override fun serveHttp(session: IHTTPSession): Response? {
 
         val connectedIps = listOf("192.168.178.32")
         if (!connectedIps.contains(session.remoteIpAddress)) {
-            NotUtils.showConnectionRequest(context, session.remoteIpAddress)
+            NotifUtils.showConnectionRequest(context, session.remoteIpAddress)
            // return NanoHTTPD.newFixedLengthResponse("Not Allowed")
         }
 

@@ -33,8 +33,7 @@ class HTTPServerService : Service() {
             serverImpl = ServerFactory.createHTTPServer(this)
             serverImpl?.start(10000)
             Log.i("TAG", "Server is started: " + serverImpl?.getHostname())
-
-
+            
         } catch (e: IOException) {
             e.printStackTrace()
         }

@@ -10,11 +10,10 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.network.ApiEventListener
+import de.jensklingenberg.sheasy.interfaces.ApiEventListener
 import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import de.jensklingenberg.sheasy.ui.MainActivity
 import de.jensklingenberg.sheasy.model.Resource
-import java.io.IOException
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import de.jensklingenberg.sheasy.App
@@ -42,7 +41,8 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
 
     fun startService(activity: MainActivity, intent: Intent) {
         val filter = IntentFilter(MyHttpServerImpl.ACTION_SHARE)
-        val tt = MyBroadcastReceiver(this)
+        val tt = App.instance.mySharedMessageBroadcastReceiver
+        tt.addd(this)
         application2.registerReceiver(tt, filter);
         application2.startService(intent)
 
@@ -102,22 +102,7 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
     companion object {
         var events = arrayListOf<Event>()
 
-        class MyBroadcastReceiver(val apiEventListener: ApiEventListener) : BroadcastReceiver() {
 
-            override fun onReceive(context: Context, intent: Intent) {
-                val test: Event = intent.extras.getParcelable(MyHttpServerImpl.ACTION_SHARE)
-
-                try {
-                    apiEventListener.onShare(test)
-
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-
-            }
-
-
-        }
 
     }
 }

@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.ui.common.ITabView
 
 class OverviewPagerAdapter(fragmentManager: FragmentManager,
     internal var fragments: List<ITabView>) : FragmentPagerAdapter(fragmentManager) {

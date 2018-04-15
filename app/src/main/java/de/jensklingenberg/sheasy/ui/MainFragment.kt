@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.NotificationResponse
@@ -56,8 +57,8 @@ class MainFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
         profileViewModel.startService(activity as MainActivity, intent)
 
         btnStart.setOnClickListener {
-            val pipp = Intent(MessageWebsocket.MESSAGE).apply {
-                putExtra(MessageWebsocket.MESSAGE, NotificationResponse("test.package", edPath.text.toString(), "2", "3", 0L))
+            val pipp = Intent(MySharedMessageBroadcastReceiver.MESSAGE).apply {
+                putExtra(MySharedMessageBroadcastReceiver.MESSAGE, NotificationResponse("test.package", edPath.text.toString(), "2", "3", 0L))
             }
 
             activity?.sendBroadcast(pipp)

@@ -5,9 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <android.support.v4.view.ViewPager
-      android:id="@+id/viewpager"
+
+  <FrameLayout
+      android:id="@+id/profileContainer"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      />
+      android:layout_height="match_parent"
+      android:layout_alignParentStart="true"
+      android:background="#ffffff"
+      >
+
+
+
+
+
+  </FrameLayout>
 </android.support.constraint.ConstraintLayout>

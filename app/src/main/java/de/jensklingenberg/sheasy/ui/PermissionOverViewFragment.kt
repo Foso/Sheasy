@@ -1,16 +1,15 @@
 package de.jensklingenberg.sheasy.ui
 
-import android.Manifest
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.MainActivity.Companion.REQUEST_PERMISSIONS
+import de.jensklingenberg.sheasy.model.Status
+import de.jensklingenberg.sheasy.ui.common.ITabView
 import de.jensklingenberg.sheasy.ui.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.ui.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_permission_overview.*
@@ -40,8 +39,6 @@ class PermissionOverViewFragment : Fragment(), ITabView {
         profileViewModel.checkStoragePermission()
         profileViewModel.checkNotifcationPermission(context!!)
         profileViewModel.checkContactsPermission()
-
-
 
     }
 

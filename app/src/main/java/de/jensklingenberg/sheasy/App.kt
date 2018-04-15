@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent
 
 import com.squareup.moshi.Moshi;
+import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 
@@ -13,35 +14,26 @@ import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 
 class App : Application() {
 
-    var moshi: Moshi? = null
-        private set
+    var moshi: Moshi = Moshi.Builder().build()
+
+    var mySharedMessageBroadcastReceiver: MySharedMessageBroadcastReceiver
 
     init {
         instance = this
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        setupMoshi()
-    }
-
-    private fun setupMoshi() {
-        moshi = Moshi.Builder()
-                .build()
+        mySharedMessageBroadcastReceiver = MySharedMessageBroadcastReceiver()
     }
 
     companion object {
         lateinit var instance: App
-        val ACTION_NLS_CONTROL = "com.seven.notificationlistenerdemo.NLSCONTROL"
-
 
     }
 
 
     fun sendBroadcast(category: String, text: String) {
-        val pipp = Intent(MyHttpServerImpl.ACTION_SHARE)
-        pipp.putExtra(MyHttpServerImpl.ACTION_SHARE, Event(category, text))
-        App.instance.sendBroadcast(pipp)
+        val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_SHARE).apply {
+            putExtra(MySharedMessageBroadcastReceiver.ACTION_SHARE, Event(category, text))
+        }
+        sendBroadcast(pipp)
 
     }
 
