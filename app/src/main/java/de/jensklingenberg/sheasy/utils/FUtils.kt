@@ -2,10 +2,7 @@ package de.jensklingenberg.sheasy.utils
 
 import android.content.Context
 import android.webkit.MimeTypeMap
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.model.FileResponse
-import de.jensklingenberg.sheasy.ui.Resource
 import fi.iki.elonen.NanoHTTPD
 import java.io.File
 import java.io.FileInputStream

@@ -12,9 +12,6 @@ import fi.iki.elonen.NanoHTTPD.ResponseException
 import java.io.IOException
 import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
 import de.jensklingenberg.sheasy.model.FileResponse
-import de.jensklingenberg.sheasy.ui.Resource
-import de.jensklingenberg.sheasy.ui.Status
-import de.jensklingenberg.sheasy.utils.ResponseFile
 import java.io.File
 
 
@@ -95,10 +92,10 @@ class FileRequestHandler {
                             NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, mimeType, fileInputStream)
                         }
                     }
-                    
+
 
                 }
-                ApiFileCommand.UNKNOWN -> {
+                ApiFileCommand.INVALID -> {
                     return NanoHTTPD.newFixedLengthResponse("DeviceCommand ${session.uri} not found")
                 }
                 ApiFileCommand.FILE -> {

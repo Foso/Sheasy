@@ -18,6 +18,8 @@ import de.jensklingenberg.sheasy.model.NotificationResponse
 import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import de.jensklingenberg.sheasy.network.service.HTTPServerService
 import de.jensklingenberg.sheasy.network.websocket.MessageWebsocket
+import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.ui.common.ITabView
 import de.jensklingenberg.sheasy.ui.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.ui.viewmodel.ViewModelFactory
 import de.jensklingenberg.sheasy.utils.NetworkUtils
@@ -26,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 /**
  * Created by jens on 1/4/18.
  */
-class MainFragment : Fragment(), EventAdapter.OnTagClickListener,ITabView{
+class MainFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
     override fun getTabName(): Int {
       return R.string.main_frag_tab_name
     }
@@ -50,11 +52,6 @@ class MainFragment : Fragment(), EventAdapter.OnTagClickListener,ITabView{
         initIPAddress()
         profileViewModel = ViewModelFactory.obtainProfileViewModel(activity)
 
-
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-
-        initObserver()
-
         val intent = Intent(activity, HTTPServerService::class.java)
         profileViewModel.startService(activity as MainActivity, intent)
 
@@ -73,12 +70,7 @@ class MainFragment : Fragment(), EventAdapter.OnTagClickListener,ITabView{
 
     }
 
-    private fun initObserver() {
-        profileViewModel.shareMessage.observe(this, Observer {
-            var event = EventAdapter(this, activity, it!!)
-            recyclerView.adapter = event
-        })
-    }
+
 
     private fun initIPAddress() {
         val ip = NetworkUtils.getIP(App.instance)

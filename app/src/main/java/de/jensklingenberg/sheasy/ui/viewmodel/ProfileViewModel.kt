@@ -13,19 +13,21 @@ import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.network.ApiEventListener
 import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import de.jensklingenberg.sheasy.ui.MainActivity
-import de.jensklingenberg.sheasy.ui.Resource
+import de.jensklingenberg.sheasy.model.Resource
 import java.io.IOException
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
+import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.utils.PermissionUtils.Companion.MY_PERMISSIONS_REQUEST_READ_CONTACTS
 
 
-class ProfileViewModel(application: Application) : AndroidViewModel(application), ApiEventListener {
+class ProfileViewModel(val application2: Application) : AndroidViewModel(application2), ApiEventListener {
 
     var shareMessage: MutableLiveData<ArrayList<Event>> = MutableLiveData()
     var storagePermission: MutableLiveData<Resource<Boolean>> = MutableLiveData()
     var notificationPermissionStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData()
     var contactsPermissionStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData()
+    var sharedFolder: MutableLiveData<String> = MutableLiveData()
 
 
     override fun onShare(test: Event) {
@@ -33,11 +35,16 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         shareMessage.value = events
     }
 
+
+    fun setSharedFolder(string:String){
+        sharedFolder.value=string
+    }
+
     fun startService(activity: MainActivity, intent: Intent) {
         val filter = IntentFilter(MyHttpServerImpl.ACTION_SHARE)
         val tt = MyBroadcastReceiver(this)
-        activity.registerReceiver(tt, filter);
-        activity.startService(intent)
+        application2.registerReceiver(tt, filter);
+        application2.startService(intent)
 
     }
 

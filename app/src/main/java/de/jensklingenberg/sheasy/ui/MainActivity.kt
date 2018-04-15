@@ -14,6 +14,7 @@ import android.content.pm.PackageManager
 import android.support.v4.app.FragmentPagerAdapter
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.PermissionOverViewFragment
+import de.jensklingenberg.sheasy.ui.main.LogFragment
 import de.jensklingenberg.sheasy.ui.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -43,35 +44,11 @@ lateinit var permissionOverViewFragment: PermissionOverViewFragment
 
       fun initViewPager() {
           mainFragment = MainFragment.newInstance();
+          val logFragment = LogFragment.newInstance()
           permissionOverViewFragment=PermissionOverViewFragment.newInstance()
-          fragmentPagerAdapter =  OverviewPagerAdapter(supportFragmentManager, listOf(mainFragment,permissionOverViewFragment));
+          fragmentPagerAdapter =  OverviewPagerAdapter(supportFragmentManager, listOf(mainFragment,logFragment,permissionOverViewFragment));
           viewpager.adapter = fragmentPagerAdapter;
 }
-
-
-
-
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
-        when (requestCode) {
-            REQUEST_PERMISSIONS -> {
-                if (grantResults.isNotEmpty() && grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    //onToggleScreenShare(mToggleButton)
-                    Log.d("THIS","ja")
-
-                } else {
-                    Log.d("THIS","ney")
-
-                }
-                return
-            }
-        }
-    }
-
-
-
-
 
 }
 

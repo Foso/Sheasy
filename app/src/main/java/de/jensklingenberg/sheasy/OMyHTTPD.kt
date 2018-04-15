@@ -196,7 +196,7 @@ constructor(mainActivity: MainActivity) : NanoHTTPD(PORT),IDownload {
                        val listMyData = Types.newParameterizedType(List::class.java, CommandResponse::class.java)
                        val adapter = moshi.adapter<List<CommandResponse>>(listMyData)
 
-                       val newFixedLengthResponse1 = NanoHTTPD.newFixedLengthResponse(adapter.toJson(commResponse))
+                       val newFixedLengthResponse1 = NanoHTTPD.newFixedLengthResponse(adapter.contactsToJson(commResponse))
                        newFixedLengthResponse1.addHeader("Access-Control-Allow-Origin","*")
 
                        return newFixedLengthResponse1
@@ -237,7 +237,7 @@ constructor(mainActivity: MainActivity) : NanoHTTPD(PORT),IDownload {
 
         val listMyData = Types.newParameterizedType(List::class.java, ContactResponse::class.java)
         val adapter = moshi.adapter<List<ContactResponse>>(listMyData)
-        val newFixedLengthResponse1 = NanoHTTPD.newFixedLengthResponse(adapter.toJson(readContacts))
+        val newFixedLengthResponse1 = NanoHTTPD.newFixedLengthResponse(adapter.contactsToJson(readContacts))
         //NotificationListener.notifi= arrayListOf()
         newFixedLengthResponse1.addHeader("Access-Control-Allow-Origin","*")
 
@@ -256,7 +256,7 @@ constructor(mainActivity: MainActivity) : NanoHTTPD(PORT),IDownload {
 
         val listMyData = Types.newParameterizedType(List::class.java, NotificationResponse::class.java)
         val adapter = moshi.adapter<List<NotificationResponse>>(listMyData)
-        val newFixedLengthResponse1 = NanoHTTPD.newFixedLengthResponse(adapter.toJson(NotificationListener.notifi))
+        val newFixedLengthResponse1 = NanoHTTPD.newFixedLengthResponse(adapter.contactsToJson(NotificationListener.notifi))
         //NotificationListener.notifi= arrayListOf()
         newFixedLengthResponse1.addHeader("Access-Control-Allow-Origin","*")
 
@@ -310,7 +310,7 @@ services.add(ServiceResponse(service.service.className))
 
         val listMyData = Types.newParameterizedType(List::class.java, ServiceResponse::class.java)
         val adapter = moshi.adapter<List<ServiceResponse>>(listMyData)
-        val newFixedLengthResponse1 = NanoHTTPD.newFixedLengthResponse(adapter.toJson(services))
+        val newFixedLengthResponse1 = NanoHTTPD.newFixedLengthResponse(adapter.contactsToJson(services))
         newFixedLengthResponse1.addHeader("Access-Control-Allow-Origin","*")
 
         return newFixedLengthResponse1
@@ -373,7 +373,7 @@ when{
 
 
 
-        val newFixedLengthResponse1 = newFixedLengthResponse(jsonAdapter.toJson(device))
+        val newFixedLengthResponse1 = newFixedLengthResponse(jsonAdapter.contactsToJson(device))
         newFixedLengthResponse1.addHeader("Access-Control-Allow-Origin","*")
 
         return newFixedLengthResponse1
