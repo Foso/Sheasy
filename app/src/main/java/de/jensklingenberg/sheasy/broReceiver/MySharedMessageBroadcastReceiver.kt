@@ -22,7 +22,7 @@ class MySharedMessageBroadcastReceiver() : BroadcastReceiver() {
                 when{
                     intent.hasExtra(MESSAGE)->{
                         val test: NotificationResponse = intent.extras.getParcelable(MESSAGE)
-                            notifyClientEventListener?.onMessage(test)
+                            notifyClientEventListener?.onMessageForClientReceived(test)
 
                     }
 
