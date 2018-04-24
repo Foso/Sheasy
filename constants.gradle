@@ -1,0 +1,49 @@
+ext {
+
+    mavenRepos = ["https://plugins.gradle.org/m2/","https://dl.bintray.com/kotlin/ktor","https://dl.bintray.com/kotlin/kotlinx"]
+
+
+    configuration = [buildTools    : '27.1.0',
+                     kotlin_version: '1.2.40',
+
+                     applicationId : "de.jensklingenberg.sheasy",
+                     compileSdk    : 27,
+                     targetSdk     : 27,
+                     minSdk        : 21,
+                     versionCode   : 1,
+                     versionName   : '1.0.0']
+
+
+    libs = [ktx              : '0.3',
+            aboutlibraries   : '6.0.6@aar',
+            junit            : '4.12',
+            supportLibVersion: '27.1.1',
+            ktor_version     : '0.9.1',
+            retrofitVersion  : '2.3.0',
+            rxandroid        : '2.0.2',
+            rxJava           : '2.1.7',
+            moshikotlin      : '1.5.0'
+
+
+    ]
+
+
+    constraintLayout = '1.0.0'
+    debugDb = '1.0.1'
+    expandableLayoutVersion = '2.9.2'
+    flexbox = '0.3.1'
+    leakcanaryVersion = '1.5.4'
+    lifeCycleExtension = '1.1.1'
+    mockitoVersion = '1.10.19'
+    moshiConverterVersion = '2.3.0'
+    moshilazyadapters = '2.1'
+    moshiVersion = '1.5.0'
+    picasso2Okhttp3Downloader = '1.1.0'
+    picassoVersion = '2.5.2'
+    rangeSeekBarVersion = '1.0.1'
+    roomVersion = '1.0.0'
+    roundedImageView = '2.3.0'
+
+    rxjava2Adapter = '1.0.0'
+    timberVersion = '4.6.0'
+}

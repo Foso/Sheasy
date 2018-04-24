@@ -9,8 +9,8 @@ class ServerFactory {
 
 
     companion object {
-        fun createHTTPServer(httpServerService: Context): MyHttpServer? {
-return MyHttpServerImpl(httpServerService)
+        fun createHTTPServer(httpServerService: Context): MyHttpServer {
+                return MyHttpServerImpl(httpServerService)
         }
 
     }

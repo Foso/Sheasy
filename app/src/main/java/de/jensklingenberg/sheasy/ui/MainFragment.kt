@@ -24,6 +24,13 @@ import de.jensklingenberg.sheasy.ui.common.ITabView
 import de.jensklingenberg.sheasy.ui.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.ui.viewmodel.ViewModelFactory
 import de.jensklingenberg.sheasy.utils.NetworkUtils
+import io.ktor.application.call
+import io.ktor.http.ContentType
+import io.ktor.response.respondText
+import io.ktor.routing.get
+import io.ktor.routing.routing
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
@@ -51,17 +58,18 @@ class MainFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
         super.onViewCreated(view, savedInstanceState)
         edPath.setText(Environment.getExternalStorageDirectory().toString())
         initIPAddress()
-        profileViewModel = ViewModelFactory.obtainProfileViewModel(activity)
+        profileViewModel = obtainProfileViewModel()
+        profileViewModel.startService( Intent(activity, HTTPServerService::class.java))
 
-        val intent = Intent(activity, HTTPServerService::class.java)
-        profileViewModel.startService(activity as MainActivity, intent)
+
+
 
         btnStart.setOnClickListener {
-            val pipp = Intent(MySharedMessageBroadcastReceiver.MESSAGE).apply {
+          Intent(MySharedMessageBroadcastReceiver.MESSAGE).apply {
                 putExtra(MySharedMessageBroadcastReceiver.MESSAGE, NotificationResponse("test.package", edPath.text.toString(), "2", "3", 0L))
+                activity?.sendBroadcast(this)
             }
 
-            activity?.sendBroadcast(pipp)
         }
         btnStop?.apply {
             setOnClickListener {
@@ -74,15 +82,13 @@ class MainFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
 
 
     private fun initIPAddress() {
-        val ip = NetworkUtils.getIP(App.instance)
-        textView.text = "Meine IP Adresse: " + ip + ":" + MyHttpServerImpl.PORT
+        textView.text = "Meine IP Adresse: " + NetworkUtils.getIP(App.instance) + ":" + MyHttpServerImpl.PORT
     }
 
 
     companion object {
-       @JvmStatic fun newInstance(): MainFragment {
-            return MainFragment()
-        }
+       @JvmStatic fun newInstance()=MainFragment()
+
     }
 
 }

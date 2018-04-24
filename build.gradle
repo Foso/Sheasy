@@ -1,28 +1,32 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.31'
+    apply from: './constants.gradle'
+
+    ext.buildMaven = { p -> repositories { maven { url p } } }
+
     repositories {
         google()
         jcenter()
-        maven {
-            url 'https://plugins.gradle.org/m2/'
-        }
+        mavenCentral()
+        mavenRepos.each { buildMaven(it) }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$configuration.kotlin_version"
         classpath 'com.benjaminsproule:swagger-gradle-plugin:+'
         classpath "gradle.plugin.org.hidetake:gradle-swagger-generator-plugin:2.11.0"
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+
     }
 }
 
 allprojects {
     repositories {
         google()
+        mavenCentral()
+
+        mavenRepos.each { buildMaven(it) }
         jcenter()
     }
 }

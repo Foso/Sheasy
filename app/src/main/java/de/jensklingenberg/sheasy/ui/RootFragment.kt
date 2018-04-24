@@ -39,8 +39,7 @@ class RootFragment : BaseFragment(){
     }
 
     companion object {
-        @JvmStatic fun newInstance(): RootFragment {
-            return RootFragment()
+        @JvmStatic fun newInstance()=RootFragment()
         }
-    }
+
 }

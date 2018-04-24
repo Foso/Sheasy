@@ -1,9 +1,9 @@
+apply from: '../constants.gradle'
+
 apply plugin: 'com.android.application'
-apply from: 'constants.gradle'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'org.hidetake.swagger.generator'
@@ -12,14 +12,23 @@ apply plugin: 'base'
 
 
 android {
-    compileSdkVersion 27
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/io.netty.versions.properties'
+
+    }
+    compileSdkVersion configuration.compileSdk
     defaultConfig {
-        applicationId "de.jensklingenberg.sheasy"
-        minSdkVersion 19
+        applicationId configuration.applicationId
+        minSdkVersion configuration.minSdk
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -30,55 +39,56 @@ android {
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
+
     }
     androidExtensions {
         experimental = true
     }
 }
 
+
+repositories {
+
+    jcenter()
+    mavenCentral()
+
+    maven { url "https://dl.bintray.com/kotlin/ktor" }
+    maven { url "https://dl.bintray.com/kotlin/kotlinx" }
+
+}
+
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:${supportLibVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$configuration.kotlin_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:${libs.junit}"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     swaggerCodegen 'io.swagger:swagger-codegen-cli:2.3.1'
-
-
+    implementation "io.ktor:ktor:$libs.ktor_version"
+    implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
+    implementation "io.ktor:ktor-websockets:$libs.ktor_version"
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     implementation 'org.nanohttpd:nanohttpd-websocket:2.3.1'
-    compile 'com.squareup.moshi:moshi-kotlin:1.5.0'
-    //RxJava
-    // Because RxAndroid releases are few and far between, it is recommended you also
-    // explicitly depend on RxJava's latest version for bug fixes and new features.
-    implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
-    implementation "io.reactivex.rxjava2:rxjava:${rxJava}"
-
-    //Retrofit
-    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.moshi:moshi-kotlin:${libs.moshikotlin}"
+    implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
+    implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
+    implementation "com.squareup.retrofit2:retrofit:${libs.retrofitVersion}"
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${rxjava2Adapter}"
-
-    //Moshi
     implementation "com.squareup.retrofit2:converter-moshi:${moshiConverterVersion}"
     implementation "com.serjltt.moshi:moshi-lazy-adapters:${moshilazyadapters}"
-
-    implementation('com.mikepenz:aboutlibraries:6.0.6@aar') {
+    implementation "androidx.core:core-ktx:${libs.ktx}"
+    implementation "com.android.support:recyclerview-v7:${libs.supportLibVersion}"
+    implementation "com.android.support:support-annotations:${libs.supportLibVersion}"
+    implementation "com.android.support:cardview-v7:${libs.supportLibVersion}"
+    implementation "com.android.support:appcompat-v7:${libs.supportLibVersion}"
+    implementation "android.arch.lifecycle:extensions:${lifeCycleExtension}"
+    implementation "android.arch.lifecycle:reactivestreams:${lifeCycleExtension}"
+    implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
 
-    implementation 'androidx.core:core-ktx:0.3'
-
-//required support lib modules
-    implementation "com.android.support:recyclerview-v7:${supportLibVersion}"
-    implementation "com.android.support:support-annotations:${supportLibVersion}"
-    implementation "com.android.support:cardview-v7:${supportLibVersion}"
-
-    //Architecture Components
-    implementation "android.arch.lifecycle:extensions:${lifeCycleExtension}"
-
-    implementation "android.arch.lifecycle:reactivestreams:${lifeCycleExtension}"
 }
 
 

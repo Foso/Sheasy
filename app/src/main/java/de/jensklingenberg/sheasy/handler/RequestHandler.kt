@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.handler
 import android.content.Context
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.ApiCommand
+import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
 import de.jensklingenberg.sheasy.extension.remove
 import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import fi.iki.elonen.NanoHTTPD
@@ -14,15 +15,19 @@ class RequestHandlerFactory {
         fun create(ctx: Context, session1: NanoHTTPD.IHTTPSession,app: App): NanoHTTPD.Response? {
             var uri = session1.uri
 
-            if (uri.startsWith("/${MyHttpServerImpl.API_V1}/")) {
-                uri = uri.remove("/${MyHttpServerImpl.API_V1}/")
+             val API_V1 = "api/v1"
+
+            if (uri.startsWith("/${API_V1}/")) {
+                uri = uri.remove("/${API_V1}/")
                 val split = uri.split("/")
                 val apiCommand = ApiCommand.get(split.first())
 
                 when (apiCommand) {
 
                     ApiCommand.Apps -> {
-                        return AppsRequestHandler(app, app.moshi).handle( session1.uri)
+                        val response = AppsRequestHandler(app, app.moshi).handle( session1.uri)
+                         return NanoHTTPDExt.debugResponse(response)
+
                     }
                     ApiCommand.media -> {
                         return MediaRequestHandler(ctx,app).handle(session1.uri, session1)

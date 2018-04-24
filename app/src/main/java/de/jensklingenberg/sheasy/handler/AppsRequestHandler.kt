@@ -22,12 +22,12 @@ class AppsRequestHandler(val app: App,val moshi: Moshi) {
 
 
 
-    fun handle(requestV1: String): NanoHTTPD.Response? {
+    fun handle(requestV1: String): String {
         app.sendBroadcast("APPS REQUESTED", requestV1.substringAfter(RESOURCE))
 
         val appsResponse = MoshiHelper.appsToJson(moshi,AppUtils.handleApps(app))
-        return NanoHTTPDExt.debugResponse(appsResponse)
-
+       // return NanoHTTPDExt.debugResponse(appsResponse)
+return appsResponse
     }
 
 

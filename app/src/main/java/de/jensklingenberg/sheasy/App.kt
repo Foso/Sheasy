@@ -16,15 +16,19 @@ class App : Application() {
 
     var moshi: Moshi = Moshi.Builder().build()
 
-    var mySharedMessageBroadcastReceiver: MySharedMessageBroadcastReceiver
+    val mySharedMessageBroadcastReceiver= MySharedMessageBroadcastReceiver()
 
     init {
         instance = this
-        mySharedMessageBroadcastReceiver = MySharedMessageBroadcastReceiver()
     }
 
     companion object {
         lateinit var instance: App
+
+    }
+
+    override fun onCreate() {
+        super.onCreate()
 
     }
 

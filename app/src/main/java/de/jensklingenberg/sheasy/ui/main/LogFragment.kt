@@ -49,8 +49,7 @@ class LogFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
 
     private fun initObserver() {
         profileViewModel.shareMessage.observe(this, Observer {
-            var event = EventAdapter(this, activity, it!!)
-            recyclerView.adapter = event
+            recyclerView.adapter = EventAdapter(this, activity, it!!)
         })
     }
 
@@ -58,9 +57,8 @@ class LogFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
 
 
     companion object {
-       @JvmStatic fun newInstance(): LogFragment {
-            return LogFragment()
+       @JvmStatic fun newInstance()= LogFragment()
         }
-    }
+
 
 }

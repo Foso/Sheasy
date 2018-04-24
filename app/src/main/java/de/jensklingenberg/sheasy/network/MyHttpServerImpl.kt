@@ -36,7 +36,6 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
     companion object {
         val PORT = 8765
 
-        const val API_V1 = "api/v1"
     }
 
     override fun openWebSocket(handshake: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket {
