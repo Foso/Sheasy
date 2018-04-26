@@ -16,6 +16,11 @@ data class ResponseFile(val fileInputStream: InputStream?, val mimeType: String?
 class FUtils {
     companion object {
 
+        fun returnFile2(filePath: String): FileInputStream? {
+            var fis: FileInputStream? = FileInputStream(filePath)
+
+            return fis
+        }
 
         fun returnFile(filePath: String): ResponseFile? {
             var fis: FileInputStream? = FileInputStream(filePath)

@@ -64,7 +64,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation "junit:junit:${libs.junit}"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${libs.espressocore}"
     swaggerCodegen 'io.swagger:swagger-codegen-cli:2.3.1'
     implementation "io.ktor:ktor:$libs.ktor_version"
     implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
