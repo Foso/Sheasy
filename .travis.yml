@@ -1,0 +1,12 @@
+language: android
+
+script:
+- ./gradlew build
+
+before_install:
+- yes | sdkmanager "platforms;android-27"
+
+branches:
+  only:
+  - master
+- develop
