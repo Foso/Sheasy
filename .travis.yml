@@ -8,4 +8,4 @@ android:
     - android-27
 
 script:
-   - ./gradlew build connectedCheck
+   - ./gradlew build
