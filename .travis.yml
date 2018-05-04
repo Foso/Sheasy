@@ -6,6 +6,13 @@ android:
     - platform-tools
     - build-tools-27.0.1
     - android-27
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
 script:
    - ./gradlew build
