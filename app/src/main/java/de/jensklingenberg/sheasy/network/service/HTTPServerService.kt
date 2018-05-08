@@ -6,13 +6,17 @@ import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.extension.getAudioManager
 import de.jensklingenberg.sheasy.factories.ServerFactory
+import de.jensklingenberg.sheasy.handler.MediaRequestHandler
 import de.jensklingenberg.sheasy.helpers.MoshiHelper
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import de.jensklingenberg.sheasy.model.DeviceResponse
 import de.jensklingenberg.sheasy.toplevel.runInBackground
 import de.jensklingenberg.sheasy.utils.AppUtils
+import de.jensklingenberg.sheasy.utils.ContactUtils
 import de.jensklingenberg.sheasy.utils.DeviceUtils
+import de.jensklingenberg.sheasy.utils.MediatUtils
 import io.ktor.application.call
 import io.ktor.http.ContentType
 import io.ktor.request.uri
@@ -32,7 +36,7 @@ import java.io.IOException
 class HTTPServerService : Service() {
     private val mBinder = ServiceBinder()
     private var serverImpl: MyHttpServer? = null
-    private var app: App? = null
+    private val app by lazy { App.instance }
     private val APIV1 = "/api/v1/"
 
     inner class ServiceBinder : Binder() {
@@ -48,7 +52,7 @@ class HTTPServerService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        app = App.instance
+        //app = App.instance
 
 
         serverImpl = ServerFactory.createHTTPServer(this)
@@ -78,6 +82,24 @@ class HTTPServerService : Service() {
                                 MoshiHelper.appsToJson(app!!.moshi, AppUtils.handleApps(app!!))
 
                             call.respondText(appsResponse, ContentType.Text.JavaScript)
+                        }
+
+                        get("contacts") {
+                            val contacts = ContactUtils.readContacts(app!!.contentResolver)
+                            val response = MoshiHelper.contactsToJson(app!!.moshi, contacts)
+                            call.respondText(response, ContentType.Text.JavaScript)
+                        }
+
+                        route("media") {
+                            val audioManager = app.getAudioManager()
+
+                            get("louder") {
+
+                                MediatUtils(audioManager).louder()
+                                app.sendBroadcast(MediaRequestHandler.CATEGORY, "Media louder")
+                                call.respondText("Louder", ContentType.Text.JavaScript)
+                            }
+
                         }
 
                         get("device") {

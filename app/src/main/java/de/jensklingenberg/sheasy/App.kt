@@ -7,6 +7,9 @@ import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.model.Event
 import io.ktor.application.install
+import io.ktor.features.CORS
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
 import org.threeten.bp.Duration
 
 /**
@@ -28,6 +31,15 @@ class App : Application() {
 
 
     fun io.ktor.application.Application.main() {
+        install(CORS) {
+            method(HttpMethod.Get)
+            header(HttpHeaders.AccessControlAllowOrigin)
+            anyHost()
+
+            allowCredentials = true
+
+
+        }
         install(BackportWebSocket) {
             pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
             timeout = Duration.ofSeconds(15)

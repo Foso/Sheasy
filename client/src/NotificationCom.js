@@ -8,7 +8,7 @@ import Notification from './Notification';
 import { Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import logo from './img/alarm-light.svg'
 import { Tooltip } from 'reactstrap';
-import { API_ROOT } from './api-config';
+import { API_ROOT } from './api-websocket-config';
 class NotificationCom extends React.Component {
 
 
