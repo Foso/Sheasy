@@ -42,7 +42,7 @@ import Contacts from './Contacts';
         <div>
           
          <Navbar color="faded" light expand="md">
-          <NavbarBrand href="https://github.com/foso">Github</NavbarBrand>
+          <NavbarBrand href="https://github.com/Foso/Sheasy">Github</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

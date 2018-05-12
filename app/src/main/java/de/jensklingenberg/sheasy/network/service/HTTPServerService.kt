@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.extension.getAudioManager
 import de.jensklingenberg.sheasy.factories.ServerFactory
@@ -12,21 +14,24 @@ import de.jensklingenberg.sheasy.handler.MediaRequestHandler
 import de.jensklingenberg.sheasy.helpers.MoshiHelper
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import de.jensklingenberg.sheasy.model.DeviceResponse
+import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.toplevel.runInBackground
-import de.jensklingenberg.sheasy.utils.AppUtils
-import de.jensklingenberg.sheasy.utils.ContactUtils
-import de.jensklingenberg.sheasy.utils.DeviceUtils
-import de.jensklingenberg.sheasy.utils.MediatUtils
+import de.jensklingenberg.sheasy.utils.*
 import io.ktor.application.call
+import io.ktor.content.PartData
+import io.ktor.content.forEachPart
 import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.request.receiveMultipart
 import io.ktor.request.uri
+import io.ktor.response.header
 import io.ktor.response.respond
 import io.ktor.response.respondText
-import io.ktor.routing.get
-import io.ktor.routing.route
-import io.ktor.routing.routing
+import io.ktor.routing.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
 
 
@@ -81,13 +86,119 @@ class HTTPServerService : Service() {
                             val appsResponse =
                                 MoshiHelper.appsToJson(app!!.moshi, AppUtils.handleApps(app!!))
 
-                            call.respondText(appsResponse, ContentType.Text.JavaScript)
+                            call.apply {
+                                response.header(HttpHeaders.AccessControlAllowOrigin, "*")
+                                respondText(appsResponse, ContentType.Text.JavaScript)
+                            }
+
+
                         }
 
                         get("contacts") {
                             val contacts = ContactUtils.readContacts(app!!.contentResolver)
                             val response = MoshiHelper.contactsToJson(app!!.moshi, contacts)
                             call.respondText(response, ContentType.Text.JavaScript)
+                        }
+
+                        route("file") {
+
+
+                            param("apk") {
+                                get() {
+                                    val login = call.parameters["apk"] ?: ""
+
+                                    val test = FUtils.returnAPK(app, login)
+                                    val mimeType = test?.mimeType
+                                    val fileInputStream = test?.fileInputStream
+
+                                    call.respond(fileInputStream?.readBytes() ?: "apk Not found")
+                                }
+
+                            }
+
+                            param("upload") {
+                                post {
+                                    val filePath = call.parameters["upload"] ?: ""
+
+
+                                    val multipart = call.receiveMultipart()
+                                    multipart.forEachPart { part ->
+                                        when (part) {
+                                            is PartData.FormItem -> {
+
+                                            }
+                                            is PartData.FileItem -> {
+                                                val ext = File(part.originalFileName).extension
+
+                                                val sourceFile = File(filePath)
+                                                val destinationFile = File(filePath)
+                                                sourceFile.copyTo(destinationFile, true)
+
+                                                part.streamProvider().use { its ->
+                                                    its.copyTo(sourceFile.outputStream())
+                                                }
+                                            }
+
+                                        }
+
+                                    }
+                                }
+                            }
+
+
+                            param("download") {
+                                get {
+                                    val login = call.parameters["download"] ?: ""
+
+                                    if (login.contains(".")) {
+
+                                        val test = FUtils.returnAPK(app, login)
+                                        val mimeType = test?.mimeType
+                                        val fileInputStream = FileInputStream(File(login))
+
+                                        call.respond(
+                                            fileInputStream?.readBytes() ?: "download Not found"
+                                        )
+                                    } else {
+                                        app.sendBroadcast("FilePath Requested", login)
+
+                                        val fileList = FUtils.getFilesReponseList(login)
+
+                                        if (fileList.isEmpty()) {
+                                            call.respondText(
+                                                "path not found",
+                                                ContentType.Text.JavaScript
+                                            )
+
+                                        } else {
+                                            val moshi = Moshi.Builder().build()
+                                            val listMyData = Types.newParameterizedType(
+                                                List::class.java,
+                                                FileResponse::class.java
+                                            )
+                                            val adapter =
+                                                moshi.adapter<List<FileResponse>>(listMyData)
+                                                    .toJson(fileList)
+
+                                            call.apply {
+                                                response.header(
+                                                    HttpHeaders.AccessControlAllowOrigin,
+                                                    "*"
+                                                )
+                                                respondText(adapter, ContentType.Text.JavaScript)
+                                            }
+
+                                        }
+
+
+                                    }
+
+                                }
+
+                            }
+
+
+                            // call.respondText(response, ContentType.Text.JavaScript)
                         }
 
                         route("media") {
@@ -97,6 +208,8 @@ class HTTPServerService : Service() {
 
                                 MediatUtils(audioManager).louder()
                                 app.sendBroadcast(MediaRequestHandler.CATEGORY, "Media louder")
+                                call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
+
                                 call.respondText("Louder", ContentType.Text.JavaScript)
                             }
 
@@ -108,6 +221,7 @@ class HTTPServerService : Service() {
                             val jsonAdapter = App.instance.moshi.adapter(DeviceResponse::class.java)
 
 
+                            call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
                             call.respondText(
                                 jsonAdapter?.toJson(deviceInfo) ?: "",
                                 ContentType.Text.JavaScript
@@ -128,6 +242,8 @@ class HTTPServerService : Service() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+
+
     }
 
     override fun stopService(name: Intent?): Boolean {
