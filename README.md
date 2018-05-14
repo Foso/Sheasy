@@ -1,6 +1,14 @@
 # Sheasy - Share Easy
 This an Android App like Airdroid to manage files on your Android Device through a WebInterface in the Browser
 
+Motivation
+
+A short description of the motivation behind the creation and maintenance of the project. This should explain why the project exists.
+
+## Motivation
+A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
