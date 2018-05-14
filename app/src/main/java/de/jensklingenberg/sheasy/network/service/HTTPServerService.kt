@@ -30,6 +30,7 @@ import io.ktor.response.respondText
 import io.ktor.routing.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.ktor.websocket.*
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
@@ -67,7 +68,32 @@ class HTTPServerService : Service() {
 
         runInBackground {
             embeddedServer(Netty, 8766) {
+
+
                 routing {
+
+
+                    webSocket("ws/message") {
+                        // websocketSession
+                        while (true) {
+                            val frame = incoming.receive()
+                            when (frame) {
+                                is Frame.Text -> {
+                                    val text = frame.readText()
+                                    outgoing.send(Frame.Text("YOU SAID: $text"))
+                                    if (text.equals("bye", ignoreCase = true)) {
+                                        close(
+                                            CloseReason(
+                                                CloseReason.Codes.NORMAL,
+                                                "Client said BYE"
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
 
                     get("/") {
                         call.respond(this@HTTPServerService.assets.open("web/index.html").readBytes())

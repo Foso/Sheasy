@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.nanohttpd:nanohttpd-websocket:2.3.1@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nanohttpd/nanohttpd-websocket/2.3.1/f2cfb09cee12469ff64f0d698b13de19903bb4f7/nanohttpd-websocket-2.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.nanohttpd/nanohttpd-websocket/2.3.1/2da79bf296879e85cb6700679809e4d6716e0f04/nanohttpd-websocket-2.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

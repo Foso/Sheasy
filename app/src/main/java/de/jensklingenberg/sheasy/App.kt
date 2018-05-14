@@ -11,6 +11,7 @@ import io.ktor.features.CORS
 import io.ktor.features.DefaultHeaders
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
+import io.ktor.websocket.WebSockets
 import org.threeten.bp.Duration
 
 /**
@@ -33,6 +34,8 @@ class App : Application() {
 
     fun io.ktor.application.Application.main() {
         install(DefaultHeaders)
+     //   install(Locations)
+
 
         install(CORS) {
             anyHost()
@@ -44,6 +47,9 @@ class App : Application() {
                 HttpMethod.Delete,
                 HttpMethod.Options
             ).forEach { method(it) }
+        }
+        install(WebSockets){
+
         }
         install(BackportWebSocket) {
             pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
