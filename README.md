@@ -1,3 +1,5 @@
+[![jCenter](https://img.shields.io/badge/License-GPLv3-yellow.svg
+)](https://bintray.com/terrakok/terramaven/cicerone/_latestVersion)
 # Sheasy - Share Easy
 This an Android App like Airdroid to manage files on your Android Device through a WebInterface in the Browser
 
