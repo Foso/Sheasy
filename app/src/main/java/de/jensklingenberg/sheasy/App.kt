@@ -24,7 +24,6 @@ class App : Application() {
 
     val mySharedMessageBroadcastReceiver = MySharedMessageBroadcastReceiver()
 
-
     init {
         instance = this
         AndroidThreeTen.init(this);

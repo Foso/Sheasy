@@ -39,6 +39,11 @@ import java.io.IOException
 /**
  * Created by jens on 25/2/18.
  */
+
+
+
+
+
 class HTTPServerService : Service() {
     private val mBinder = ServiceBinder()
     private var serverImpl: MyHttpServer? = null
@@ -73,30 +78,30 @@ class HTTPServerService : Service() {
                 routing {
 
 
-                    webSocket("ws/message") {
-                        // websocketSession
-                        while (true) {
-                            val frame = incoming.receive()
-                            when (frame) {
-                                is Frame.Text -> {
-                                    val text = frame.readText()
-                                    outgoing.send(Frame.Text("YOU SAID: $text"))
-                                    if (text.equals("bye", ignoreCase = true)) {
-                                        close(
-                                            CloseReason(
-                                                CloseReason.Codes.NORMAL,
-                                                "Client said BYE"
-                                            )
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
+
 
 
                     get("/") {
                         call.respond(this@HTTPServerService.assets.open("web/index.html").readBytes())
+                    }
+
+
+
+                    get("swagger") {
+                        call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
+
+                        call.respond(this@HTTPServerService.assets.open("swagger/SwaggerUI.html").readBytes())
+
+
+                    }
+
+                    get("swagger/{filepath...}") {
+                        var test = call.request.uri.replaceFirst("/", "")
+                        Log.d("SWAGGER",test)
+                        call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
+
+                        call.respond(this@HTTPServerService.assets.open("swagger/"+test).readBytes())
+
                     }
 
 
