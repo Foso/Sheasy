@@ -1,22 +1,16 @@
 package de.jensklingenberg.sheasy.network;
 
-import android.content.Context;
+
+import android.content.Context
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
-import de.jensklingenberg.sheasy.network.websocket.NotificationWebsocket
-import de.jensklingenberg.sheasy.handler.*
-
-
-import java.util.ArrayList;
-
-import fi.iki.elonen.NanoHTTPD;
-import fi.iki.elonen.NanoWSD;
 import de.jensklingenberg.sheasy.enums.WebsocketCommand
 import de.jensklingenberg.sheasy.factories.WebSocketFactory
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
-import de.jensklingenberg.sheasy.network.websocket.MessageWebsocket
+import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
 import de.jensklingenberg.sheasy.utils.BundledNotificationHelper
-import de.jensklingenberg.sheasy.utils.NotifUtils
+import fi.iki.elonen.NanoHTTPD
+import fi.iki.elonen.NanoWSD
+import java.util.*
 
 
 class MyHttpServerImpl : NanoWSD, MyHttpServer {
@@ -46,27 +40,28 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
         val websockCommand = WebsocketCommand.get(split[1])
         when (websockCommand) {
             WebsocketCommand.NOTIFICATION -> {
-                return WebSocketFactory.createNotificationWebsocket(context, handshake, this,App.instance.mySharedMessageBroadcastReceiver,App.instance.moshi)
+                return WebSocketFactory.createNotificationWebsocket(
+                    context,
+                    handshake,
+                    this,
+                    App.instance.mySharedMessageBroadcastReceiver,
+                    App.instance.moshi
+                )
 
             }
             WebsocketCommand.MESSAGE -> {
-                return WebSocketFactory.createMessageWebsocket(context, handshake, this,App.instance.mySharedMessageBroadcastReceiver,App.instance.moshi)
+                return WebSocketFactory.createMessageWebsocket(
+                    context,
+                    handshake,
+                    this,
+                    App.instance.mySharedMessageBroadcastReceiver,
+                    App.instance.moshi
+                )
 
             }
         }
 
         return WebSocketFactory.createDefaultWebSocket(context, handshake, this)
-    }
-
-    override fun serveHttp(session: IHTTPSession): Response? {
-
-        val connectedIps = listOf("192.168.178.32")
-        if (!connectedIps.contains(session.remoteIpAddress)) {
-            NotifUtils.showConnectionRequest(context, session.remoteIpAddress)
-           // return NanoHTTPD.newFixedLengthResponse("Not Allowed")
-        }
-
-        return RequestHandlerFactory.create(context, session, App.instance)
     }
 
 

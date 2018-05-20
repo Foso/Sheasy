@@ -48,7 +48,7 @@ class FileTransfer extends React.Component {
 
 
     axios({
-      url: `${this.state.title}/${files[0].name}`,
+      url: `http://${API_ROOT}/api/v1/file?upload=/storage/emulated/0/${files[0].name}`,
       method: 'POST',
       data: formData
     })
@@ -58,9 +58,9 @@ class FileTransfer extends React.Component {
 
   componentDidMount() {
     this.setState(
-      { title: `http://${API_ROOT}/api/v1/file?file=/storage/emulated/0/` }
+      { title: `http://${API_ROOT}/api/v1/file?upload=/storage/emulated/0/` }
     )
-    axios.get(`http://${API_ROOT}/api/v1/file?file=/storage/emulated/0/`, {
+    axios.get(`http://${API_ROOT}/api/v1/file?download=/storage/emulated/0/`, {
       timeout: 10000
     }).then(res => {
       this.setState(
@@ -75,9 +75,9 @@ class FileTransfer extends React.Component {
 
   search(data){
     this.setState(
-      { title: `http://${API_ROOT}/api/v1/file?file=`+data }
+      { title: `http://${API_ROOT}/api/v1/file?upload=`+data }
     )
-    axios.get(`http://${API_ROOT}/api/v1/file?file=`+data, {
+    axios.get(`http://${API_ROOT}/api/v1/file?download=`+data, {
       timeout: 10000
     }).then(res => {
       this.setState(

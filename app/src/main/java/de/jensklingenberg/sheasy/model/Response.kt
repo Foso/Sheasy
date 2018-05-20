@@ -9,6 +9,7 @@ import android.os.Parcelable
 /**
  * Created by jens on 16/2/18.
  */
+
 data class NotificationResponse(val packageName: String, val title: String, val text: String, val subText: String, val postTime: Long) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),

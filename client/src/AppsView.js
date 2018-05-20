@@ -25,8 +25,20 @@ class AppsView extends Component {
 
   componentDidMount() {
 
+    const config = {
+      method: 'GET',
+    
+
+      timeout: 10000,
+      url: "http://"+API_ROOT+"/api/v1/apps/",
+      headers:{'Access-Control-Allow-Origin':'*'}
+    };
+
     axios.get(`http://${API_ROOT}/api/v1/apps/`, {
-      timeout: 10000
+   // axios.request(config, {
+  
+  
+     
     }).then(res => {
       this.setState({ items: res.data, accounts: res.data });
     });

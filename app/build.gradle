@@ -69,6 +69,7 @@ dependencies {
     implementation "io.ktor:ktor:$libs.ktor_version"
     implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
     implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+    //implementation "io.ktor:ktor-locations:$libs.ktor_version"
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     implementation 'org.nanohttpd:nanohttpd-websocket:2.3.1'
     implementation "com.squareup.moshi:moshi-kotlin:${libs.moshikotlin}"
@@ -88,6 +89,7 @@ dependencies {
     implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
 
 }
 
@@ -106,4 +108,9 @@ swaggerSources {
 task copyFiles(type: Copy) {
     from '../documentation/API/1'
     into '../documentation/API/2'
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }
