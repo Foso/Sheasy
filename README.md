@@ -1,12 +1,10 @@
-[![jCenter](https://img.shields.io/badge/License-GPLv3-yellow.svg
-)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
-# Sheasy - Share Easy
+# Sheasy - Share Easy [![Sheasy](https://img.shields.io/badge/License-GPLv3-yellow.svg)](https://github.com/sindresorhus/awesome)
 This an Android App like Airdroid to manage files on your Android Device through a WebInterface in the Browser
 
 
 ## Table of Contents
 
-- [Introduction](#introduction)
+- [Motivation](#motivation)
 - [Features](#features)
 - [Feedback](#feedback)
 - [Contributors](#contributors)
