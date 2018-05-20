@@ -1,6 +1,6 @@
 # Contributors
 
-Thank you to all the people who have already contributed to GitPoint!
+Thank you to all the people who have already contributed to Sheasy!
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
