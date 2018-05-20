@@ -40,8 +40,12 @@ A few of the things you can do with Sheasy:
 # 🏠 Architecture
 
 ## 🛠️ Built With
+
+### Backend
 * [Ktor](https://github.com/ktorio/ktor) - Used as Backend
 * [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - Only used for WebSockets, because Ktor's websocket need API23
+
+### Frontend
 * [React.js](https://reactjs.org/) - Used for Web Frontend
 
 ## Android
