@@ -40,6 +40,13 @@ A few of the things you can do with Sheasy:
 # 🏠 Architecture
 
 ## 🛠️ Built With
+### Android
+[![jCenter](https://img.shields.io/badge/minSDK-21-yellow.svg
+)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+[![jCenter](https://img.shields.io/badge/compileSdk-27-yellow.svg
+)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+[![jCenter](https://img.shields.io/badge/targetSdk-27-yellow.svg
+)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
 
 ### Backend
 * [Ktor](https://github.com/ktorio/ktor) - Used as Backend
@@ -48,13 +55,7 @@ A few of the things you can do with Sheasy:
 ### Frontend
 * [React.js](https://reactjs.org/) - Used for Web Frontend
 
-## Android
-[![jCenter](https://img.shields.io/badge/minSDK-21-yellow.svg
-)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
-[![jCenter](https://img.shields.io/badge/compileSdk-27-yellow.svg
-)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
-[![jCenter](https://img.shields.io/badge/targetSdk-27-yellow.svg
-)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+
 
 ## API
 I integrated a swagger api endpoint. You can find it at ip:8766/swagger.
