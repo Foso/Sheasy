@@ -1,6 +1,6 @@
 # Contributors
 
-Thank you to all the people who have already contributed to Sheasy!
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification and is brought to you by these [contributors](./CONTRIBUTORS.md).
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
