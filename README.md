@@ -83,7 +83,7 @@ See also the list of [contributors](https://github.com/Foso/Sheasy/graphs/contri
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](https://github.com/Foso/Sheasy/blob/master/LICENSE) file for details
 
 ## Acknowledgments
 
