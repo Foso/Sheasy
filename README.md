@@ -71,8 +71,7 @@ I wanted to to use something like swagger annotations, but i couldn't figure it 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ## 📙 Docs
-
-What things you need to install the software and how to install them
+Please take a look into the [Wiki](https://github.com/Foso/Sheasy/wiki) 
 
 ## 💬 Contributors 
 
