@@ -11,9 +11,9 @@ This an Android App like Airdroid to manage files on your Android Device through
 ## 🚩 Table of Contents
 
 - [Introduction](#introduction)
-- [Features](#features)
+- [Features](#-features)
 - [Feedback](#feedback)
-- [Contributors](#contributors)
+- [Contributors](#-contributors)
 - [Build Process](#build-process)
 - [Backers](#backers-)
 - [Sponsors](#sponsors-)
@@ -35,7 +35,7 @@ A few of the things you can do with Sheasy:
 
 
 ## 🗺️ Roadmap
-- see screen recording in browser
+- [ ] show screen recording in browser
 
 # 🏠 Architecture
 
@@ -56,12 +56,9 @@ A few of the things you can do with Sheasy:
 [![jCenter](https://img.shields.io/badge/targetSdk-27-yellow.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
 
-
-
 ## API
 I integrated a swagger api endpoint. You can find it at ip:8766/swagger.
 I wanted to to use something like swagger annotations, but i couldn't figure it out, how to use it with ktor.
-
 
 ## Getting Started
 
@@ -71,60 +68,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-
-
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## 💬 Contributors
+## 💬 Contributors 
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification and is brought to you by these [awesome contributors](./CONTRIBUTORS.md).
 
