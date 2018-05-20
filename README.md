@@ -1,24 +1,31 @@
+# Sheasy - Share Easy
 [![jCenter](https://img.shields.io/badge/License-GPLv3-yellow.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
-# Sheasy - Share Easy
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-range.svg?style=flat-square)](#contributors)
+  <a href="https://twitter.com/intent/tweet?text=Hey, check out Sheasy - Share Easy Android App https://github.com/Foso/Sheasy via @jklingenberg_ #Android 
+"><img src="https://img.shields.io/twitter/url/https/github.com/angular-medellin/meetup.svg?style=social" alt="Tweet"></a>
+
 This an Android App like Airdroid to manage files on your Android Device through a WebInterface in the Browser
 
-
-## Table of Contents
+## 🚩 Table of Contents
 
 - [Introduction](#introduction)
-- [Features](#features)
+- [Features](#-features)
+- [Roadmap](#-roadmap)
+- [Architecture](#-architecture)
+- [Docs](#-docs)
 - [Feedback](#feedback)
-- [Contributors](#contributors)
-- [Build Process](#build-process)
-- [Backers](#backers-)
-- [Sponsors](#sponsors-)
+- [Contributors](#-contributors)
 - [Acknowledgments](#acknowledgments)
 
-## Motivation
+## Introduction
+
+
+
 A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
 
-## Features
+## 🎨 Features
 A few of the things you can do with Sheasy:
 - download apks
 - download files
@@ -27,86 +34,52 @@ A few of the things you can do with Sheasy:
 - get contacts
 
 
-## Roadmap
-- see screen recording in browser
+## 🗺️ Roadmap
+- [ ] show screen recording in browser
 
-# Architecture
+# 🏠 Architecture
+
+## 🛠️ Built With
+### Android
+[![jCenter](https://img.shields.io/badge/minSDK-21-yellow.svg
+)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+[![jCenter](https://img.shields.io/badge/compileSdk-27-yellow.svg
+)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+[![jCenter](https://img.shields.io/badge/targetSdk-27-yellow.svg
+)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+
+### Backend
+* [Ktor](https://github.com/ktorio/ktor) - Used as Backend
+* [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - Only used for WebSockets, because Ktor's websocket need API23
+
+### Frontend
+* [React.js](https://reactjs.org/) - Used for Web Frontend
+
+
 
 ## API
 I integrated a swagger api endpoint. You can find it at ip:8766/swagger.
 I wanted to to use something like swagger annotations, but i couldn't figure it out, how to use it with ktor.
 
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+## 📙 Docs
 
 What things you need to install the software and how to install them
 
-```
-Give examples
-```
+## 💬 Contributors 
 
-### Installing
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification and is brought to you by these [contributors](./CONTRIBUTORS.md).
 
-A step by step series of examples that tell you have to get a development env running
+## ✍️ Feedback
 
-Say what the step will be
+Feel free to send us feedback on [Twitter](https://twitter.com/gitpointapp) or [file an issue](https://github.com/gitpoint/git-point/issues/new). Feature requests are always welcome. If you wish to contribute, please take a quick look at the [guidelines](./CONTRIBUTING.md)!
 
-```
-Give the example
-```
+If there's anything you'd like to chat about, please feel free to join our [Gitter chat](https://gitter.im/git-point)!
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-* [Ktor](https://github.com/ktorio/ktor) - Used as Backend
-* [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - Only used for WebSockets, because Ktor's websocket need API23
-* [React.js](https://reactjs.org/) - Used for Web Frontend
-
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Contributors
-
-This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification and is brought to you by these [awesome contributors](./CONTRIBUTORS.md).
-
-
-## License
+## 📜 License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](https://github.com/Foso/Sheasy/blob/master/LICENSE) file for details
 
