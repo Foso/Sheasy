@@ -6,7 +6,7 @@
 
 This an Android App like Airdroid to manage files on your Android Device through a WebInterface in the Browser
 
-## Table of Contents
+## 🚩 Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
@@ -23,7 +23,7 @@ This an Android App like Airdroid to manage files on your Android Device through
 
 A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
 
-## Features
+## 🎨 Features
 A few of the things you can do with Sheasy:
 - download apks
 - download files
@@ -32,7 +32,7 @@ A few of the things you can do with Sheasy:
 - get contacts
 
 
-## Roadmap
+## 🗺️ Roadmap
 - see screen recording in browser
 
 # Architecture
@@ -96,7 +96,7 @@ Give an example
 
 Add additional notes about how to deploy this on a live system
 
-## Built With
+## 🛠️ Built With
 * [Ktor](https://github.com/ktorio/ktor) - Used as Backend
 * [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - Only used for WebSockets, because Ktor's websocket need API23
 * [React.js](https://reactjs.org/) - Used for Web Frontend
@@ -106,7 +106,7 @@ Add additional notes about how to deploy this on a live system
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
-## Contributors
+## 💬 Contributors
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification and is brought to you by these [awesome contributors](./CONTRIBUTORS.md).
 
@@ -116,7 +116,7 @@ Feel free to send us feedback on [Twitter](https://twitter.com/gitpointapp) or [
 
 If there's anything you'd like to chat about, please feel free to join our [Gitter chat](https://gitter.im/git-point)!
 
-## License
+## 📜 License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](https://github.com/Foso/Sheasy/blob/master/LICENSE) file for details
 
