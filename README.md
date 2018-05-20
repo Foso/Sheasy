@@ -12,11 +12,11 @@ This an Android App like Airdroid to manage files on your Android Device through
 
 - [Introduction](#introduction)
 - [Features](#-features)
+- [Roadmap](#-roadmap)
+- [Architecture](#-architecture)
+- [Docs](#-docs)
 - [Feedback](#feedback)
 - [Contributors](#-contributors)
-- [Build Process](#build-process)
-- [Backers](#backers-)
-- [Sponsors](#sponsors-)
 - [Acknowledgments](#acknowledgments)
 
 ## Introduction
@@ -64,7 +64,7 @@ I wanted to to use something like swagger annotations, but i couldn't figure it 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+## 📙 Docs
 
 What things you need to install the software and how to install them
 
