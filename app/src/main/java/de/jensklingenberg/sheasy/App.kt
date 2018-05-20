@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy;
+package de.jensklingenberg.sheasy
 
 import android.app.Application
 import android.content.Intent
@@ -26,16 +26,11 @@ class App : Application() {
 
     init {
         instance = this
-        AndroidThreeTen.init(this);
-
+        AndroidThreeTen.init(this)
     }
-
 
     fun io.ktor.application.Application.main() {
         install(DefaultHeaders)
-     //   install(Locations)
-
-
         install(CORS) {
             anyHost()
             header(HttpHeaders.AccessControlAllowOrigin)
@@ -47,26 +42,22 @@ class App : Application() {
                 HttpMethod.Options
             ).forEach { method(it) }
         }
-        install(WebSockets){
+        /*   install(WebSockets){
 
         }
-        install(BackportWebSocket) {
+     install(BackportWebSocket) {
             pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
             timeout = Duration.ofSeconds(15)
             maxFrameSize =
                     Long.MAX_VALUE // Disabled (max value). The connection will be closed if surpassed this length.
             masking = false
-        }
+        }*/
 
     }
 
     companion object {
         lateinit var instance: App
 
-    }
-
-    override fun onCreate() {
-        super.onCreate()
     }
 
 

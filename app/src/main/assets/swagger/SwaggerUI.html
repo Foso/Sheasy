@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <title>Swagger UI</title>
+  <link rel="icon" type="image/png" href="http://localhost:8080/docs/images/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="http://localhost:8080/docs/images/favicon-16x16.png" sizes="16x16">
+  <link href="swagger/SwaggerUI_files/typography.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="swagger/SwaggerUI_files/reset.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="swagger/SwaggerUI_files/screen.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="swagger/SwaggerUI_files/reset.css" media="print" rel="stylesheet" type="text/css">
+  <link href="swagger/SwaggerUI_files/print.css" media="print" rel="stylesheet" type="text/css">
+  <script src="swagger/SwaggerUI_files/jquery-1.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/jquery_003.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/jquery_002.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/jquery.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/handlebars-2.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/js-yaml.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/lodash.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/backbone-min.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/swagger-ui.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/highlight.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/jsoneditor.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/marked.js" type="text/javascript"></script>
+  <script src="swagger/SwaggerUI_files/swagger-oauth.js" type="text/javascript"></script>
+
+  <!-- Some basic translations -->
+  <!-- <script src='lang/translator.js' type='text/javascript'></script> -->
+  <!-- <script src='lang/ru.js' type='text/javascript'></script> -->
+  <!-- <script src='lang/en.js' type='text/javascript'></script> -->
+
+  <script type="text/javascript">
+    $(function () {
+      function initSwaggerUi (url) {
+        // Pre load translate...
+        if(window.SwaggerTranslator) {
+          window.SwaggerTranslator.translate();
+        }
+        window.swaggerUi = new SwaggerUi({
+          url: url,
+          dom_id: "swagger-ui-container",
+          supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+          onComplete: function(swaggerApi, swaggerUi){
+            if(typeof initOAuth == "function") {
+              initOAuth({
+                clientId: "your-client-id",
+                clientSecret: "your-client-secret-if-required",
+                realm: "your-realms",
+                appName: "your-app-name",
+                scopeSeparator: ",",
+                additionalQueryStringParams: {}
+              });
+            }
+
+            if(window.SwaggerTranslator) {
+              window.SwaggerTranslator.translate();
+            }
+
+            addApiKeyAuthorization();
+          },
+          onFailure: function(data) {
+            log("Unable to Load SwaggerUI");
+          },
+          docExpansion: "none",
+          jsonEditor: false,
+          apisSorter: "alpha",
+          defaultModelRendering: 'schema',
+          showRequestHeaders: false
+        });
+
+        function addApiKeyAuthorization(){
+          var key = encodeURIComponent($('#input_apiKey')[0].value);
+          if(key && key.trim() != "") {
+            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
+            window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
+            log("added key " + key);
+          }
+        }
+
+        $('#input_apiKey').change(addApiKeyAuthorization);
+
+        // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
+        /*
+           var apiKey = "myApiKeyXXXX123456789";
+           $('#input_apiKey').val(apiKey);
+         */
+
+        window.swaggerUi.load();
+
+        function log() {
+          if ('console' in window) {
+            console.log.apply(console, arguments);
+          }
+        }
+      }
+
+      $.ajax({
+        type: "GET",
+        async: true,
+        url: document.location,
+        error: function (xhr, status, thrown) {
+          log("Unable to get the Swagger UI URL from the server: " + thrown);
+        },
+        success: function (message, text, response) {
+          var url = response.getResponseHeader('Swagger-API-Docs-URL');
+
+          if (!url) {
+            url = window.location.search.match(/url=([^&]+)/);
+
+            if (url && url.length > 1) {
+              url = decodeURIComponent(url[1]);
+            } else {
+              url = window.location+ "/swagger.yaml" ;
+            }
+          }
+
+          initSwaggerUi(url);
+        }
+      });
+    });
+  </script>
+</head>
+
+<body class="swagger-section">
+<div id="header">
+  <div class="swagger-ui-wrap">
+    <a id="logo" href="http://swagger.io/">swagger</a>
+    <form id="api_selector">
+      <div class="input"><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" value="http://192.168.178.20:8766/swagger/swagger.json" type="text"></div>
+      <div class="input"><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"></div>
+      <div class="input"><a id="explore" href="#" data-sw-translate="">Explore</a></div>
+    </form>
+  </div>
+</div>
+
+<div id="message-bar" class="swagger-ui-wrap message-success" data-sw-translate=""></div>
+<div id="swagger-ui-container" class="swagger-ui-wrap"><div class="info" id="api_info">
+  <div class="info_title">Uber AP</div>
+  <div class="info_description markdown"><p>ove your app forward with the Uber API</p>
+</div>
+  
+  
+  
+  
+  
+</div>
+<div class="container" id="resources_container">
+  <ul id="resources"><li id="resource_Estimates" class="resource"><div class="heading">
+  <h2>
+    <a href="#!/Estimates" class="toggleEndpointList" data-id="Estimates">Estimates</a> 
+  </h2>
+  <ul class="options">
+    <li>
+      <a href="#!/Estimates" id="endpointListTogger_Estimates" class="toggleEndpointList" data-id="Estimates" data-sw-translate="">Show/Hide</a>
+    </li>
+    <li>
+      <a href="#" class="collapseResource" data-id="Estimates" data-sw-translate="">
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href="#" class="expandResource" data-id="Estimates" data-sw-translate="">
+        Expand Operations
+      </a>
+    </li>
+  </ul>
+</div>
+<ul class="endpoints" id="Estimates_endpoint_list" style="display: none;">
+
+<li class="endpoint">  <ul class="operations">
+    <li class="get operation" id="Estimates_estimatesPriceGET">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#!/Estimates/estimatesPriceGET" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="#!/Estimates/estimatesPriceGET" class="toggleOperation ">/estimates/price</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#!/Estimates/estimatesPriceGET" class="toggleOperation">Price Estimates</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="Estimates_estimatesPriceGET_content" style="display: block;">
+        <h4><span data-sw-translate="">Implementation Notes</span></h4>
+        <div class="markdown"><p>The Price Estimates endpoint returns an estimated price range
+for each product offered at a given location. The price estimate is
+provided as a formatted string with the full price range and the localized
+currency symbol.<br><br>The response also includes low and high estimates,
+and the <a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> currency code for
+situations requiring currency conversion. When surge is active for a particular
+product, its surge_multiplier will be greater than 1, but the price estimate
+already factors in this multiplier.</p>
+</div>
+
+        
+          <div class="response-class">
+            <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+              <div class="markdown"><p>An array of price estimates by product</p>
+</div>
+            <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Example Value</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model [</span><div>PriceEstimate</div><span class="strong">]</span><br><span class="strong">PriceEstimate {</span><div><span class="propName ">product_id</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Unique
+ identifier representing a specific product for a given latitude &amp; 
+longitude. For example, uberX in San Francisco will have a different 
+product_id than uberX in Los Angeles</p>
+</span>,</div><div><span class="propName ">currency_code</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p><a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> currency code.</p>
+</span>,</div><div><span class="propName ">display_name</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Display name of product.</p>
+</span>,</div><div><span class="propName ">estimate</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Formatted
+ string of estimate in local currency of the start location. Estimate 
+could be a range, a single number (flat rate) or "Metered" for TAXI.</p>
+</span>,</div><div><span class="propName ">low_estimate</span> (<span class="propType">number</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Lower bound of the estimated price.</p>
+</span>,</div><div><span class="propName ">high_estimate</span> (<span class="propType">number</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Upper bound of the estimated price.</p>
+</span>,</div><div><span class="propName ">surge_multiplier</span> (<span class="propType">number</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Expected
+ surge multiplier. Surge is active if surge_multiplier is greater than 
+1. Price estimate already factors in the surge multiplier.</p>
+</span></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+      <div class="snippet_json" style="display: block;">
+        <pre><code>[
+  {
+    "high_estimate": 6.027456183070403,
+    "product_id": "product_id",
+    "low_estimate": 0.8008281904610115,
+    "surge_multiplier": 1.4658129805029452,
+    "estimate": "estimate",
+    "display_name": "display_name",
+    "currency_code": "currency_code"
+  }
+]</code></pre>
+        
+      </div>
+  </div>
+</div>
+</div></div></div></span></p>
+            <br>
+            <div class="response-content-type"><div><label data-sw-translate="" for="rct0.5695711010730613">Response Content Type</label>
+<select name="responseContentType" id="rct0.5695711010730613">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+            </div>
+
+
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code required"><label for="mstart_latitude0.810965983158188">start_latitude</label></td>
+<td>
+<input class="parameter required" minlength="1" name="start_latitude" placeholder="(required)" id="mstart_latitude0.810965983158188" type="text"></td>
+<td>
+	<strong><span class="markdown"><p>Latitude component of start location.</p>
+</span></strong>
+</td>
+<td>query</td>
+<td><span class="model-signature">double</span></td>
+</tr><tr><td class="code required"><label for="mstart_longitude0.8018670977748803">start_longitude</label></td>
+<td>
+<input class="parameter required" minlength="1" name="start_longitude" placeholder="(required)" id="mstart_longitude0.8018670977748803" type="text"></td>
+<td>
+	<strong><span class="markdown"><p>Longitude component of start location.</p>
+</span></strong>
+</td>
+<td>query</td>
+<td><span class="model-signature">double</span></td>
+</tr><tr><td class="code required"><label for="mend_latitude0.625064993486869">end_latitude</label></td>
+<td>
+<input class="parameter required" minlength="1" name="end_latitude" placeholder="(required)" id="mend_latitude0.625064993486869" type="text"></td>
+<td>
+	<strong><span class="markdown"><p>Latitude component of end location.</p>
+</span></strong>
+</td>
+<td>query</td>
+<td><span class="model-signature">double</span></td>
+</tr><tr><td class="code required"><label for="mend_longitude0.8016457329122385">end_longitude</label></td>
+<td>
+<input class="parameter required" minlength="1" name="end_longitude" placeholder="(required)" id="mend_longitude0.8016457329122385" type="text"></td>
+<td>
+	<strong><span class="markdown"><p>Longitude component of end location.</p>
+</span></strong>
+</td>
+<td>query</td>
+<td><span class="model-signature">double</span></td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+            <tr><td class="code" width="15%">default</td>
+<td class="markdown"><p>Unexpected error</p>
+</td>
+<td width="50%"><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Example Value</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Error {</span><div><span class="propName ">code</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">message</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">fields</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+      <div class="snippet_json" style="display: block;">
+        <pre><code>{
+  "code": 0,
+  "message": "string",
+  "fields": "string"
+}</code></pre>
+        
+      </div>
+  </div>
+</div>
+</div></div></div></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="submit">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4 class="curl">Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">  <ul class="operations">
+    <li class="get operation" id="Estimates_estimatesTimeGET">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#!/Estimates/estimatesTimeGET" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="#!/Estimates/estimatesTimeGET" class="toggleOperation ">/estimates/time</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#!/Estimates/estimatesTimeGET" class="toggleOperation">Time Estimates</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="Estimates_estimatesTimeGET_content" style="">
+        <h4><span data-sw-translate="">Implementation Notes</span></h4>
+        <div class="markdown"><p>The Time Estimates endpoint returns 
+ETAs for all products offered at a given location, with the responses 
+expressed as integers in seconds. We recommend that this endpoint be 
+called every minute to provide the most accurate, up-to-date ETAs.</p>
+</div>
+
+        
+          <div class="response-class">
+            <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+              <div class="markdown"><p>An array of products</p>
+</div>
+            <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Example Value</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model [</span><div>Product</div><span class="strong">]</span><br><span class="strong">Product {</span><div><span class="propName ">product_id</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Unique
+ identifier representing a specific product for a given latitude &amp; 
+longitude. For example, uberX in San Francisco will have a different 
+product_id than uberX in Los Angeles.</p>
+</span>,</div><div><span class="propName ">description</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Description of product.</p>
+</span>,</div><div><span class="propName ">display_name</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Display name of product.</p>
+</span>,</div><div><span class="propName ">capacity</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Capacity of product. For example, 4 people.</p>
+</span>,</div><div><span class="propName ">image</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Image URL representing the product.</p>
+</span></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+      <div class="snippet_json" style="display: block;">
+        <pre><code>[
+  {
+    "image": "image",
+    "product_id": "product_id",
+    "description": "description",
+    "display_name": "display_name",
+    "capacity": "capacity"
+  }
+]</code></pre>
+        
+      </div>
+  </div>
+</div>
+</div></div></div></span></p>
+            <br>
+            <div class="response-content-type"><div><label data-sw-translate="" for="rct0.15030228683015334">Response Content Type</label>
+<select name="responseContentType" id="rct0.15030228683015334">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+            </div>
+
+
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code required"><label for="mstart_latitude0.597180582721448">start_latitude</label></td>
+<td>
+<input class="parameter required" minlength="1" name="start_latitude" placeholder="(required)" id="mstart_latitude0.597180582721448" type="text"></td>
+<td>
+	<strong><span class="markdown"><p>Latitude component of start location.</p>
+</span></strong>
+</td>
+<td>query</td>
+<td><span class="model-signature">double</span></td>
+</tr><tr><td class="code required"><label for="mstart_longitude0.017410114623913064">start_longitude</label></td>
+<td>
+<input class="parameter required" minlength="1" name="start_longitude" placeholder="(required)" id="mstart_longitude0.017410114623913064" type="text"></td>
+<td>
+	<strong><span class="markdown"><p>Longitude component of start location.</p>
+</span></strong>
+</td>
+<td>query</td>
+<td><span class="model-signature">double</span></td>
+</tr><tr><td class="code"><label for="mcustomer_uuid0.8997833823306074">customer_uuid</label></td>
+<td>
+
+<input class="parameter" minlength="0" name="customer_uuid" placeholder="" id="mcustomer_uuid0.8997833823306074" type="text">
+</td>
+<td class="markdown"><p>Unique customer identifier to be used for experience customization.</p>
+</td>
+<td>query</td>
+<td>
+	<span class="model-signature">string</span>
+</td>
+</tr><tr><td class="code"><label for="mproduct_id0.783851133596485">product_id</label></td>
+<td>
+
+<input class="parameter" minlength="0" name="product_id" placeholder="" id="mproduct_id0.783851133596485" type="text">
+</td>
+<td class="markdown"><p>Unique identifier representing a specific product for a given latitude &amp; longitude.</p>
+</td>
+<td>query</td>
+<td>
+	<span class="model-signature">string</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+            <tr><td class="code" width="15%">default</td>
+<td class="markdown"><p>Unexpected error</p>
+</td>
+<td width="50%"><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Example Value</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Error {</span><div><span class="propName ">code</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">message</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">fields</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+      <div class="snippet_json" style="display: block;">
+        <pre><code>{
+  "code": 0,
+  "message": "string",
+  "fields": "string"
+}</code></pre>
+        
+      </div>
+  </div>
+</div>
+</div></div></div></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="submit">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4 class="curl">Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li></ul>
+</li><li id="resource_Products" class="resource active"><div class="heading">
+  <h2>
+    <a href="#!/Products" class="toggleEndpointList" data-id="Products">Products</a> 
+  </h2>
+  <ul class="options">
+    <li>
+      <a href="#!/Products" id="endpointListTogger_Products" class="toggleEndpointList" data-id="Products" data-sw-translate="">Show/Hide</a>
+    </li>
+    <li>
+      <a href="#" class="collapseResource" data-id="Products" data-sw-translate="">
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href="#" class="expandResource" data-id="Products" data-sw-translate="">
+        Expand Operations
+      </a>
+    </li>
+  </ul>
+</div>
+<ul class="endpoints" id="Products_endpoint_list" style="">
+
+<li class="endpoint">  <ul class="operations">
+    <li class="get operation" id="Products_productsGET">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#!/Products/productsGET" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="#!/Products/productsGET" class="toggleOperation ">/products</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#!/Products/productsGET" class="toggleOperation">Product Types</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="Products_productsGET_content" style="display:none">
+        <h4><span data-sw-translate="">Implementation Notes</span></h4>
+        <div class="markdown"><p>The Products endpoint returns information about the <em>Uber</em> products
+offered at a given location. The response includes the display name
+and other details about each product, and lists the products in the
+proper display order.</p>
+</div>
+
+        
+          <div class="response-class">
+            <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+              <div class="markdown"><p>An array of products</p>
+</div>
+            <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Example Value</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Inline Model [</span><div>Product</div><span class="strong">]</span><br><span class="strong">Product {</span><div><span class="propName ">product_id</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Unique
+ identifier representing a specific product for a given latitude &amp; 
+longitude. For example, uberX in San Francisco will have a different 
+product_id than uberX in Los Angeles.</p>
+</span>,</div><div><span class="propName ">description</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Description of product.</p>
+</span>,</div><div><span class="propName ">display_name</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Display name of product.</p>
+</span>,</div><div><span class="propName ">capacity</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Capacity of product. For example, 4 people.</p>
+</span>,</div><div><span class="propName ">image</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Image URL representing the product.</p>
+</span></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+      <div class="snippet_json" style="display: block;">
+        <pre><code>[
+  {
+    "image": "image",
+    "product_id": "product_id",
+    "description": "description",
+    "display_name": "display_name",
+    "capacity": "capacity"
+  }
+]</code></pre>
+        
+      </div>
+  </div>
+</div>
+</div></div></div></span></p>
+            <br>
+            <div class="response-content-type"><div><label data-sw-translate="" for="rct0.5660345620881561">Response Content Type</label>
+<select name="responseContentType" id="rct0.5660345620881561">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+            </div>
+
+
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code required"><label for="mlatitude0.26545053860573053">latitude</label></td>
+<td>
+<input class="parameter required" minlength="1" name="latitude" placeholder="(required)" id="mlatitude0.26545053860573053" type="text"></td>
+<td>
+	<strong><span class="markdown"><p>Latitude component of location.</p>
+</span></strong>
+</td>
+<td>query</td>
+<td><span class="model-signature">double</span></td>
+</tr><tr><td class="code required"><label for="mlongitude0.9033023450433155">longitude</label></td>
+<td>
+<input class="parameter required" minlength="1" name="longitude" placeholder="(required)" id="mlongitude0.9033023450433155" type="text"></td>
+<td>
+	<strong><span class="markdown"><p>Longitude component of location.</p>
+</span></strong>
+</td>
+<td>query</td>
+<td><span class="model-signature">double</span></td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+            <tr><td class="code" width="15%">default</td>
+<td class="markdown"><p>Unexpected error</p>
+</td>
+<td width="50%"><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Example Value</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Error {</span><div><span class="propName ">code</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">message</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">fields</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+      <div class="snippet_json" style="display: block;">
+        <pre><code>{
+  "code": 0,
+  "message": "string",
+  "fields": "string"
+}</code></pre>
+        
+      </div>
+  </div>
+</div>
+</div></div></div></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="submit">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4 class="curl">Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li></ul>
+</li><li id="resource_User" class="resource"><div class="heading">
+  <h2>
+    <a href="#!/User" class="toggleEndpointList" data-id="User">User</a> 
+  </h2>
+  <ul class="options">
+    <li>
+      <a href="#!/User" id="endpointListTogger_User" class="toggleEndpointList" data-id="User" data-sw-translate="">Show/Hide</a>
+    </li>
+    <li>
+      <a href="#" class="collapseResource" data-id="User" data-sw-translate="">
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href="#" class="expandResource" data-id="User" data-sw-translate="">
+        Expand Operations
+      </a>
+    </li>
+  </ul>
+</div>
+<ul class="endpoints" id="User_endpoint_list" style="display:none">
+
+<li class="endpoint">  <ul class="operations">
+    <li class="get operation" id="User_meGET">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#!/User/meGET" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="#!/User/meGET" class="toggleOperation ">/me</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#!/User/meGET" class="toggleOperation">User Profile</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="User_meGET_content" style="display:none">
+        <h4><span data-sw-translate="">Implementation Notes</span></h4>
+        <div class="markdown"><p>The User Profile endpoint returns information about the Uber user that has authorized with the application.</p>
+</div>
+
+        
+          <div class="response-class">
+            <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+              <div class="markdown"><p>Profile information for a user</p>
+</div>
+            <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Example Value</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Profile {</span><div><span class="propName ">first_name</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>First name of the Uber user.</p>
+</span>,</div><div><span class="propName ">last_name</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Last name of the Uber user.</p>
+</span>,</div><div><span class="propName ">email</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Email address of the Uber user</p>
+</span>,</div><div><span class="propName ">picture</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Image URL of the Uber user.</p>
+</span>,</div><div><span class="propName ">promo_code</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Promo code of the Uber user.</p>
+</span></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+      <div class="snippet_json" style="display: block;">
+        <pre><code>{
+  "last_name": "last_name",
+  "promo_code": "promo_code",
+  "first_name": "first_name",
+  "email": "email",
+  "picture": "picture"
+}</code></pre>
+        
+      </div>
+  </div>
+</div>
+</div></div></div></span></p>
+            <br>
+            <div class="response-content-type"><div><label data-sw-translate="" for="rct0.5853931063272745">Response Content Type</label>
+<select name="responseContentType" id="rct0.5853931063272745">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+            </div>
+
+
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+            <tr><td class="code" width="15%">default</td>
+<td class="markdown"><p>Unexpected error</p>
+</td>
+<td width="50%"><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Example Value</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Error {</span><div><span class="propName ">code</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">message</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">fields</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+      <div class="snippet_json" style="display: block;">
+        <pre><code>{
+  "code": 0,
+  "message": "string",
+  "fields": "string"
+}</code></pre>
+        
+      </div>
+  </div>
+</div>
+</div></div></div></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="submit">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4 class="curl">Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li><li class="endpoint">  <ul class="operations">
+    <li class="get operation" id="User_historyGET">
+      <div class="heading">
+        <h3>
+          <span class="http_method">
+          <a href="#!/User/historyGET" class="toggleOperation">get</a>
+          </span>
+          <span class="path">
+          <a href="#!/User/historyGET" class="toggleOperation ">/history</a>
+          </span>
+        </h3>
+        <ul class="options">
+          <li>
+          <a href="#!/User/historyGET" class="toggleOperation">User Activity</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content" id="User_historyGET_content" style="display:none">
+        <h4><span data-sw-translate="">Implementation Notes</span></h4>
+        <div class="markdown"><p>The User Activity endpoint returns data
+ about a user's lifetime activity with Uber. The response will include 
+pickup locations and times, dropoff locations and times, the distance of
+ past requests, and information about which products were requested.<br><br>The
+ history array in the response will have a maximum length based on the 
+limit parameter. The response value count may exceed limit, therefore 
+subsequent API requests may be necessary.</p>
+</div>
+
+        
+          <div class="response-class">
+            <h4><span data-sw-translate="">Response Class</span> (<span data-sw-translate="">Status</span> 200)</h4>
+              <div class="markdown"><p>History information for the given user</p>
+</div>
+            <p><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Example Value</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Activities {</span><div><span class="propName ">offset</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Position in pagination.</p>
+</span>,</div><div><span class="propName ">limit</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Number of items to retrieve (100 max).</p>
+</span>,</div><div><span class="propName ">count</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Total number of items available.</p>
+</span>,</div><div><span class="propName ">history</span> (<span class="propType">Array[Activity]</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span><br><span class="strong">Activity {</span><div><span class="propName ">uuid</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>): <span class="propDesc markdown"><p>Unique identifier for the activity</p>
+</span></div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+      <div class="snippet_json" style="display: block;">
+        <pre><code>{
+  "offset": 0,
+  "limit": 6,
+  "count": 1,
+  "history": [
+    {
+      "uuid": "uuid"
+    },
+    {
+      "uuid": "uuid"
+    }
+  ]
+}</code></pre>
+        
+      </div>
+  </div>
+</div>
+</div></div></div></span></p>
+            <br>
+            <div class="response-content-type"><div><label data-sw-translate="" for="rct0.0582753458643569">Response Content Type</label>
+<select name="responseContentType" id="rct0.0582753458643569">
+  <option value="application/json" selected="selected">application/json</option>
+</select>
+</div></div>
+            </div>
+
+
+        <form accept-charset="UTF-8" class="sandbox">
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Parameters</h4>
+          <table class="fullwidth">
+          <thead>
+            <tr>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter</th>
+            <th style="width: 310px; max-width: 310px" data-sw-translate="">Value</th>
+            <th style="width: 200px; max-width: 200px" data-sw-translate="">Description</th>
+            <th style="width: 100px; max-width: 100px" data-sw-translate="">Parameter Type</th>
+            <th style="width: 220px; max-width: 230px" data-sw-translate="">Data Type</th>
+            </tr>
+          </thead>
+          <tbody class="operation-params">
+
+          <tr><td class="code"><label for="moffset0.7635476375139079">offset</label></td>
+<td>
+
+<input class="parameter" minlength="0" name="offset" placeholder="" id="moffset0.7635476375139079" type="text">
+</td>
+<td class="markdown"><p>Offset the list of returned results by this amount. Default is zero.</p>
+</td>
+<td>query</td>
+<td>
+	<span class="model-signature">integer</span>
+</td>
+</tr><tr><td class="code"><label for="mlimit0.6665023066321579">limit</label></td>
+<td>
+
+<input class="parameter" minlength="0" name="limit" placeholder="" id="mlimit0.6665023066321579" type="text">
+</td>
+<td class="markdown"><p>Number of items to retrieve. Default is 5, maximum is 100.</p>
+</td>
+<td>query</td>
+<td>
+	<span class="model-signature">integer</span>
+</td>
+</tr></tbody>
+          </table>
+          <div style="margin:0;padding:0;display:inline"></div>
+          <h4 data-sw-translate="">Response Messages</h4>
+          <table class="fullwidth">
+            <thead>
+            <tr>
+              <th data-sw-translate="">HTTP Status Code</th>
+              <th data-sw-translate="">Reason</th>
+              <th data-sw-translate="">Response Model</th>
+              <th data-sw-translate="">Headers</th>
+            </tr>
+            </thead>
+            <tbody class="operation-status">
+            <tr><td class="code" width="15%">default</td>
+<td class="markdown"><p>Unexpected error</p>
+</td>
+<td width="50%"><span class="model-signature"><div><div>
+<ul class="signature-nav">
+  <li><a class="description-link" href="#" data-sw-translate="">Model</a></li>
+  <li><a class="snippet-link selected" href="#" data-sw-translate="">Example Value</a></li>
+</ul>
+<div>
+
+<div class="signature-container">
+  <div class="description" style="display: none;">
+    <span class="strong">Error {</span><div><span class="propName ">code</span> (<span class="propType">integer</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">message</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>),</div><div><span class="propName ">fields</span> (<span class="propType">string</span>, <span class="propOptKey">optional</span>)</div><span class="strong">}</span>
+  </div>
+
+  <div class="snippet" style="display: block;">
+      <div class="snippet_json" style="display: block;">
+        <pre><code>{
+  "code": 0,
+  "message": "string",
+  "fields": "string"
+}</code></pre>
+        
+      </div>
+  </div>
+</div>
+</div></div></div></span></td>
+<td class="headers">
+  <table>
+    <tbody>
+    </tbody>
+  </table>
+</td></tr></tbody>
+          </table>
+          <div class="sandbox_header">
+            <input class="submit" value="Try it out!" data-sw-translate="" type="submit">
+            <a href="#" class="response_hider" style="display:none" data-sw-translate="">Hide Response</a>
+            <span class="response_throbber" style="display:none"></span>
+          </div>
+        </form>
+        <div class="response" style="display:none">
+          <h4 class="curl">Curl</h4>
+          <div class="block curl"></div>
+          <h4 data-sw-translate="">Request URL</h4>
+          <div class="block request_url"></div>
+          <h4 data-sw-translate="">Response Body</h4>
+          <div class="block response_body"></div>
+          <h4 data-sw-translate="">Response Code</h4>
+          <div class="block response_code"></div>
+          <h4 data-sw-translate="">Response Headers</h4>
+          <div class="block response_headers"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</li></ul>
+</li></ul>
+
+  <div class="footer">
+    <h4 style="color: #999">[ <span style="font-variant: small-caps">base url</span>: /v1
+  , <span style="font-variant: small-caps" data-sw-translate="">api version</span>: 1.0.0
+    ]
+    </h4>
+    </div>
+</div>
+</div>
+
+
+</body></html>
