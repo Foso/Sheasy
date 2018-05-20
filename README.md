@@ -79,7 +79,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * **Jens Klingenberg** - *Initial work* - [Foso](https://github.com/Foso)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/Foso/Sheasy/graphs/contributors) who participated in this project.
 
 ## License
 
