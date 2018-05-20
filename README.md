@@ -4,7 +4,7 @@ This an Android App like Airdroid to manage files on your Android Device through
 
 ## Table of Contents
 
-- [Motivation](#motivation)
+- [Introduction](#introduction)
 - [Features](#features)
 - [Feedback](#feedback)
 - [Contributors](#contributors)
@@ -13,7 +13,7 @@ This an Android App like Airdroid to manage files on your Android Device through
 - [Sponsors](#sponsors-)
 - [Acknowledgments](#acknowledgments)
 
-## Motivation
+## Introduction
 A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
 
 ## Features
@@ -103,6 +103,11 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification and is brought to you by these [awesome contributors](./CONTRIBUTORS.md).
 
+## Feedback
+
+Feel free to send us feedback on [Twitter](https://twitter.com/gitpointapp) or [file an issue](https://github.com/gitpoint/git-point/issues/new). Feature requests are always welcome. If you wish to contribute, please take a quick look at the [guidelines](./CONTRIBUTING.md)!
+
+If there's anything you'd like to chat about, please feel free to join our [Gitter chat](https://gitter.im/git-point)!
 
 ## License
 
