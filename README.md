@@ -1,6 +1,5 @@
-# Sheasy - Share Easy [![Sheasy](https://img.shields.io/badge/License-GPLv3-yellow.svg)](https://github.com/sindresorhus/awesome)
+# Sheasy - Share Easy [![Sheasy](https://img.shields.io/badge/License-GPLv3-yellow.svg)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
 This an Android App like Airdroid to manage files on your Android Device through a WebInterface in the Browser
-
 
 ## Table of Contents
 
@@ -14,6 +13,12 @@ This an Android App like Airdroid to manage files on your Android Device through
 - [Acknowledgments](#acknowledgments)
 
 ## Introduction
+
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![jCenter](https://img.shields.io/badge/License-GPLv3-yellow.svg
+)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-range.svg?style=flat-square)](#contributors)
+
 A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
 
 ## Features
