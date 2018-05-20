@@ -6,6 +6,23 @@ This an Android App like Airdroid to manage files on your Android Device through
 ## Motivation
 A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
 
+## Features
+- download apks
+- download files
+- receive notifications in browser
+- get device informations
+- get contacts
+
+
+## Roadmap
+- see screen recording in browser
+
+# Architecture
+
+## API
+I integrated a swagger api endpoint. You can find it at ip:8766/swagger.
+I wanted to to use something like swagger annotations, but i couldn't figure it out, how to use it with ktor.
+
 
 ## Getting Started
 
