@@ -94,3 +94,6 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 * Inspiration
 * etc
 
+### Find this project useful ? :heart:
+* Support it by clicking the :star: button on the upper right of this page. :v:
+
