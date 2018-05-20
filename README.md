@@ -3,6 +3,8 @@
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-range.svg?style=flat-square)](#contributors)
+  <a href="https://twitter.com/intent/tweet?text=Conoce%20a%20Angular%20Medellín!%20%E2%9C%A8%20Aquí%20está%20su%20reposotirio%20oficial%20%E2%9C%A8%20https://github.com/angular-medellin/meetup%20%F0%9F%A4%97
+"><img src="https://img.shields.io/twitter/url/https/github.com/angular-medellin/meetup.svg?style=social" alt="Tweet"></a>
 
 This an Android App like Airdroid to manage files on your Android Device through a WebInterface in the Browser
 
@@ -36,6 +38,21 @@ A few of the things you can do with Sheasy:
 - see screen recording in browser
 
 # 🏠 Architecture
+
+## 🛠️ Built With
+* [Ktor](https://github.com/ktorio/ktor) - Used as Backend
+* [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - Only used for WebSockets, because Ktor's websocket need API23
+* [React.js](https://reactjs.org/) - Used for Web Frontend
+
+## Android
+[![jCenter](https://img.shields.io/badge/minSDK-21-yellow.svg
+)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+[![jCenter](https://img.shields.io/badge/compileSdk-21-yellow.svg
+)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+[![jCenter](https://img.shields.io/badge/targetSdk-21-yellow.svg
+)](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+
+
 
 ## API
 I integrated a swagger api endpoint. You can find it at ip:8766/swagger.
@@ -96,10 +113,7 @@ Give an example
 
 Add additional notes about how to deploy this on a live system
 
-## 🛠️ Built With
-* [Ktor](https://github.com/ktorio/ktor) - Used as Backend
-* [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - Only used for WebSockets, because Ktor's websocket need API23
-* [React.js](https://reactjs.org/) - Used for Web Frontend
+
 
 
 ## Versioning
