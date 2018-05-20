@@ -35,7 +35,7 @@ A few of the things you can do with Sheasy:
 ## 🗺️ Roadmap
 - see screen recording in browser
 
-# Architecture
+# 🏠 Architecture
 
 ## API
 I integrated a swagger api endpoint. You can find it at ip:8766/swagger.
