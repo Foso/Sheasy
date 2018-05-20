@@ -3,10 +3,23 @@
 # Sheasy - Share Easy
 This an Android App like Airdroid to manage files on your Android Device through a WebInterface in the Browser
 
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Feedback](#feedback)
+- [Contributors](#contributors)
+- [Build Process](#build-process)
+- [Backers](#backers-)
+- [Sponsors](#sponsors-)
+- [Acknowledgments](#acknowledgments)
+
 ## Motivation
 A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
 
 ## Features
+A few of the things you can do with Sheasy:
 - download apks
 - download files
 - receive notifications in browser
@@ -84,19 +97,14 @@ Add additional notes about how to deploy this on a live system
 * [React.js](https://reactjs.org/) - Used for Web Frontend
 
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
-## Authors
+## Contributors
 
-* **Jens Klingenberg** - *Initial work* - [Foso](https://github.com/Foso)
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification and is brought to you by these [awesome contributors](./CONTRIBUTORS.md).
 
-See also the list of [contributors](https://github.com/Foso/Sheasy/graphs/contributors) who participated in this project.
 
 ## License
 
