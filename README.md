@@ -32,10 +32,15 @@ A few of the things you can do with Sheasy:
 - receive notifications in browser
 - get device informations
 - get contacts
+- see log of last transactions
 
 
 ## 🗺️ Roadmap
 - [ ] show screen recording in browser
+- [ ] host only single folder like "python -m SimpleHTTPServer"
+- [ ] security
+
+
 
 # 🏠 Architecture
 
