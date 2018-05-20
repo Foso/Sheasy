@@ -51,9 +51,9 @@ A few of the things you can do with Sheasy:
 ## Android
 [![jCenter](https://img.shields.io/badge/minSDK-21-yellow.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
-[![jCenter](https://img.shields.io/badge/compileSdk-21-yellow.svg
+[![jCenter](https://img.shields.io/badge/compileSdk-27-yellow.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
-[![jCenter](https://img.shields.io/badge/targetSdk-21-yellow.svg
+[![jCenter](https://img.shields.io/badge/targetSdk-27-yellow.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
 
 
