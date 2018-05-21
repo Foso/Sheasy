@@ -5,11 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.widget.Toast
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.viewmodel.ProfileViewModel
-import de.jensklingenberg.sheasy.ui.viewmodel.ViewModelFactory
+import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
+import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_share_actvity.*
 
 class ShareActvity : AppCompatActivity() {

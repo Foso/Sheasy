@@ -13,7 +13,7 @@ import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.ui.EventAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
-import de.jensklingenberg.sheasy.ui.viewmodel.ProfileViewModel
+import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_log.*
 
 /**

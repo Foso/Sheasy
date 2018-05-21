@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.main.LogFragment
+import de.jensklingenberg.sheasy.ui.main.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class RootFragment : BaseFragment(){
@@ -31,11 +32,13 @@ class RootFragment : BaseFragment(){
 
 
     fun initViewPager() {
-        mainFragment = MainFragment.newInstance();
+        mainFragment = MainFragment.newInstance()
         val logFragment = LogFragment.newInstance()
+        val settingsFragment = SettingsFragment.newInstance()
+
         permissionOverViewFragment=PermissionOverViewFragment.newInstance()
-        fragmentPagerAdapter =  OverviewPagerAdapter(childFragmentManager, listOf(mainFragment,logFragment,permissionOverViewFragment));
-        viewpager.adapter = fragmentPagerAdapter;
+        fragmentPagerAdapter =  OverviewPagerAdapter(childFragmentManager, listOf(mainFragment,logFragment,permissionOverViewFragment))
+        viewpager.adapter = fragmentPagerAdapter
     }
 
     companion object {

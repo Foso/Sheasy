@@ -53,7 +53,7 @@ class EventAdapter(private val onDocsItemClickListener: OnTagClickListener,
 
     private fun setupDefaultTagViewHolder(holder: DefaultTagViewHolder, position: Int) {
         val item = list[position]
-        holder.itemView.eventName.text = item.title
+        holder.itemView.eventName.text = item.category.title
         holder.itemView.eventText.text = item.text
         holder.itemView.setOnClickListener { onDocsItemClickListener.onTagClicked(item) }
 
