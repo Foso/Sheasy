@@ -1,10 +1,10 @@
 ext {
 
-    mavenRepos = ["https://plugins.gradle.org/m2/","https://dl.bintray.com/kotlin/ktor","https://dl.bintray.com/kotlin/kotlinx"]
+    mavenRepos = ["https://plugins.gradle.org/m2/", "https://dl.bintray.com/kotlin/ktor", "https://dl.bintray.com/kotlin/kotlinx"]
 
 
     configuration = [buildTools    : '27.1.0',
-                     kotlin_version: '1.2.40',
+                     kotlin_version: '1.2.41',
 
                      applicationId : "de.jensklingenberg.sheasy",
                      compileSdk    : 27,
@@ -15,6 +15,7 @@ ext {
 
 
     libs = [ktx              : '0.3',
+            dagger_version: '2.16',
             aboutlibraries   : '6.0.6@aar',
             junit            : '4.12',
             supportLibVersion: '27.1.1',
@@ -22,9 +23,9 @@ ext {
             retrofitVersion  : '2.3.0',
             rxandroid        : '2.0.2',
             rxJava           : '2.1.7',
-            moshikotlin      : '1.5.0'
+            moshikotlin      : '1.5.0',
 
-
+            espressocore     : '3.0.1'
     ]
 
 

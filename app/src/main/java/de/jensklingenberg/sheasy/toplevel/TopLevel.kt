@@ -1,7 +1,5 @@
 package de.jensklingenberg.sheasy.toplevel
 
-import com.squareup.moshi.Moshi
-import de.jensklingenberg.sheasy.model.NotificationResponse
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 
@@ -14,9 +12,9 @@ public fun runInBackground(function: () -> Unit) {
 
         true
     }
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(Schedulers.newThread())
-            .subscribe { result ->
-                //Use result for something
-            }
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(Schedulers.newThread())
+        .subscribe { result ->
+            //Use result for something
+        }
 }

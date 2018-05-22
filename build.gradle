@@ -12,7 +12,7 @@ buildscript {
         mavenRepos.each { buildMaven(it) }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha14'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$configuration.kotlin_version"
         classpath 'com.benjaminsproule:swagger-gradle-plugin:+'
         classpath "gradle.plugin.org.hidetake:gradle-swagger-generator-plugin:2.11.0"

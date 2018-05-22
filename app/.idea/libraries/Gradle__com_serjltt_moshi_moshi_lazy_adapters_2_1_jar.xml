@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.serjltt.moshi:moshi-lazy-adapters:2.1@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.serjltt.moshi/moshi-lazy-adapters/2.1/c28f5b22f173d2fccf3a2d82c9b9942e5f26e729/moshi-lazy-adapters-2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.serjltt.moshi/moshi-lazy-adapters/2.1/40fc567c1fc0d8b69ccbf60c9ec7e9d822eed33b/moshi-lazy-adapters-2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
