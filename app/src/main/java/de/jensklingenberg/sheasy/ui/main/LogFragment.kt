@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
@@ -45,6 +46,12 @@ class LogFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
         initObserver()
 
 
+        // Create an ArrayAdapter using a simple spinner layout and languages array
+        val aa = ArrayAdapter(context, android.R.layout.simple_spinner_item, arrayListOf("Hallo"))
+        // Set layout to use when the list of choices appear
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // Set Adapter to Spinner
+        spinner?.adapter = aa
     }
 
     private fun initObserver() {
