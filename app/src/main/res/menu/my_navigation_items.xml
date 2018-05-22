@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+      android:id="@+id/menu_location"
+      android:enabled="true"
+      android:icon="@drawable/ic_launcher_background"
+      android:title="Standorte"
+      />
+
+  <item
+      android:id="@+id/menu_profile"
+      android:enabled="true"
+
+      android:icon="@drawable/ic_launcher_background"
+      android:title="Home"
+      />
+
+  <item
+      android:id="@+id/menu_catalog"
+      android:enabled="true"
+
+
+      android:icon="@drawable/ic_launcher_background"
+      android:title="Settings"/>
+</menu>

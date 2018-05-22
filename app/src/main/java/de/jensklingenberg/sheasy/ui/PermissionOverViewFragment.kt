@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.ui.common.ITabView
-import de.jensklingenberg.sheasy.ui.viewmodel.ProfileViewModel
-import de.jensklingenberg.sheasy.ui.viewmodel.ViewModelFactory
+import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
+import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_permission_overview.*
 
 /**
@@ -47,7 +47,7 @@ class PermissionOverViewFragment : Fragment(), ITabView {
 
             when (it?.status) {
                 Status.SUCCESS -> {
-                    when (it?.data) {
+                    when (it.data) {
                         true -> {
                             toggleButton.isChecked = true
                         }
@@ -120,7 +120,7 @@ class PermissionOverViewFragment : Fragment(), ITabView {
         fun newInstance(): PermissionOverViewFragment {
             val args = Bundle()
             val fragment = PermissionOverViewFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }

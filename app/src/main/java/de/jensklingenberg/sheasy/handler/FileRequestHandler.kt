@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.ApiFileCommand
+import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.extension.getParameterQueryMap
 import de.jensklingenberg.sheasy.utils.FUtils
 import fi.iki.elonen.NanoHTTPD
@@ -59,7 +60,7 @@ class FileRequestHandler {
                 val sourceFile = File(files["file"])
                 val destinationFile = File(destinationPath)
                 sourceFile.copyTo(destinationFile, true)
-                app.sendBroadcast("File Received","${destinationFile.name}to: $destinationPath")
+                app.sendBroadcast(EventCategory.REQUEST,"File Received ${destinationFile.name}to: $destinationPath")
                 return NanoHTTPDExt.debugResponse("OK")
 
             } catch (ioe: IOException) {
@@ -109,7 +110,7 @@ class FileRequestHandler {
                                 val(fileInputStream,mimeType) = it
                                 val response = NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, FUtils.getMimeType(filePath), fileInputStream)
                                 val fileName = "Hallo.txt"
-                                response.addHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                                response.addHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
                                 return response
                             }
 

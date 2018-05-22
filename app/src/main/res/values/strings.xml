@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Sheasy</string>
     <string name="main_frag_tab_name">dd</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_settings">Settings</string>
+
     <string name="record">Record</string>
     <string name="stop">Stop</string>
     <string name="description_info">Info</string>

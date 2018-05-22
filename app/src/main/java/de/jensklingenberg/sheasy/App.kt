@@ -13,6 +13,10 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.websocket.WebSockets
 import org.threeten.bp.Duration
+import android.content.SharedPreferences
+import de.jensklingenberg.sheasy.data.viewmodel.SettingsViewModel
+import de.jensklingenberg.sheasy.enums.EventCategory
+
 
 /**
  * Created by jens on 9/2/18.
@@ -25,8 +29,18 @@ class App : Application() {
     val mySharedMessageBroadcastReceiver = MySharedMessageBroadcastReceiver()
 
     init {
+
+
+    }
+
+    override fun onCreate() {
+        super.onCreate()
         instance = this
         AndroidThreeTen.init(this)
+
+       // SettingsViewModel.savePort(this,8766)
+
+        port = SettingsViewModel.loadPort(this)
     }
 
     fun io.ktor.application.Application.main() {
@@ -57,13 +71,32 @@ class App : Application() {
 
     companion object {
         lateinit var instance: App
+        var port = 0
+
+    }
+
+    fun sendBroadcast(event: Event) {
+        val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_SHARE).apply {
+            putExtra(MySharedMessageBroadcastReceiver.ACTION_SHARE, event)
+        }
+        sendBroadcast(pipp)
 
     }
 
 
-    fun sendBroadcast(category: String, text: String) {
+
+    fun sendBroadcast(category: EventCategory, text: String) {
         val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_SHARE).apply {
             putExtra(MySharedMessageBroadcastReceiver.ACTION_SHARE, Event(category, text))
+        }
+        sendBroadcast(pipp)
+
+    }
+
+
+   @Deprecated("") fun sendBroadcast(category: String, text: String) {
+        val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_SHARE).apply {
+            putExtra(MySharedMessageBroadcastReceiver.ACTION_SHARE, Event(EventCategory.DEFAULT, text))
         }
         sendBroadcast(pipp)
 

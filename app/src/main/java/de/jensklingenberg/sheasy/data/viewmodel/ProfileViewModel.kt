@@ -1,9 +1,9 @@
-package de.jensklingenberg.sheasy.ui.viewmodel;
+package de.jensklingenberg.sheasy.data.viewmodel
 
 import android.Manifest
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.MutableLiveData;
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.MutableLiveData
 import android.content.*
 import android.content.pm.PackageManager
 import android.provider.Settings
@@ -11,21 +11,12 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.interfaces.ApiEventListener
-import de.jensklingenberg.sheasy.network.MyHttpServerImpl
-import de.jensklingenberg.sheasy.ui.MainActivity
 import de.jensklingenberg.sheasy.model.Resource
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.utils.PermissionUtils.Companion.MY_PERMISSIONS_REQUEST_READ_CONTACTS
-import io.ktor.application.call
-import io.ktor.http.ContentType
-import io.ktor.response.respondText
-import io.ktor.routing.get
-import io.ktor.routing.routing
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
 
 
 class ProfileViewModel(val application2: Application) : AndroidViewModel(application2), ApiEventListener {
@@ -53,8 +44,21 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
         tt.addd(this)
 
 
-       application2.registerReceiver(tt, filter);
+       application2.registerReceiver(tt, filter)
         application2.startService(intent)
+
+
+
+    }
+
+    fun stopService( intent: Intent) {
+        val filter = IntentFilter(MySharedMessageBroadcastReceiver.ACTION_SHARE)
+        val tt = App.instance.mySharedMessageBroadcastReceiver
+        tt.addd(this)
+
+
+        application2.registerReceiver(tt, filter)
+        application2.stopService(intent)
 
     }
 

@@ -2,6 +2,7 @@ package de.jensklingenberg.sheasy.model
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
+import de.jensklingenberg.sheasy.enums.EventCategory
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -9,4 +10,10 @@ import kotlinx.android.parcel.Parcelize
  */
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class Event(val title: String, val text: String) : Parcelable
+data class Event(val category: EventCategory, val text: String) : Parcelable{
+var time = ""
+
+    constructor(category: EventCategory,text: String,time:String) : this(category,text){
+        this.time=time
+    }
+}

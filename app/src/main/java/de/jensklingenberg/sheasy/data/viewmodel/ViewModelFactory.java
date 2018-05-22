@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package de.jensklingenberg.sheasy.ui.viewmodel;
+package de.jensklingenberg.sheasy.data.viewmodel;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -24,8 +24,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.FragmentActivity;
-
-import de.jensklingenberg.sheasy.ui.viewmodel.ProfileViewModel;
 
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 

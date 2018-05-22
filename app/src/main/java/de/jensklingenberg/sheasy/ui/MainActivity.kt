@@ -8,10 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.main.LogFragment
-import de.jensklingenberg.sheasy.ui.viewmodel.ProfileViewModel
-import de.jensklingenberg.sheasy.ui.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_main.*
+import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
+import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 
 
 class MainActivity : AppCompatActivity() {

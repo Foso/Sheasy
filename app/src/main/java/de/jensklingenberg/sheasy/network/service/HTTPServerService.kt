@@ -5,12 +5,16 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import android.view.KeyEvent
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.BuildConfig
+import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.extension.getAudioManager
 import de.jensklingenberg.sheasy.factories.ServerFactory
 import de.jensklingenberg.sheasy.handler.MediaRequestHandler
+import de.jensklingenberg.sheasy.handler.ShareRequestHandler
 import de.jensklingenberg.sheasy.helpers.MoshiHelper
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import de.jensklingenberg.sheasy.model.DeviceResponse
@@ -20,6 +24,7 @@ import de.jensklingenberg.sheasy.utils.*
 import io.ktor.application.call
 import io.ktor.content.PartData
 import io.ktor.content.forEachPart
+import io.ktor.features.origin
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.request.receiveMultipart
@@ -67,27 +72,24 @@ class HTTPServerService : Service() {
 
 
         serverImpl = ServerFactory.createHTTPServer(this)
-        serverImpl?.start(10000)
+       // serverImpl?.start(10000)
 
-
+        Log.d("PORT:",App.port.toString())
 
         runInBackground {
-            embeddedServer(Netty, 8766) {
-
-
+            embeddedServer(Netty, App.port) {
                 routing {
-
-
-
-
-
                     get("/") {
+                        app.sendBroadcast(EventCategory.CONNECTION, "from IP:"+call.request.origin.host)
+
                         call.respond(this@HTTPServerService.assets.open("web/index.html").readBytes())
                     }
 
 
 
                     get("swagger") {
+                        app.sendBroadcast(EventCategory.REQUEST, "swagger")
+
                         call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
 
                         call.respond(this@HTTPServerService.assets.open("swagger/SwaggerUI.html").readBytes())
@@ -108,14 +110,15 @@ class HTTPServerService : Service() {
                     get("web/{filepath...}") {
                         var test = call.request.uri.replaceFirst("/", "")
                         call.respond(this@HTTPServerService.assets.open(test).readBytes())
-
                     }
 
 
                     route(APIV1) {
                         get("apps") {
+                            app.sendBroadcast(EventCategory.REQUEST, "/apps")
+
                             val appsResponse =
-                                MoshiHelper.appsToJson(app!!.moshi, AppUtils.handleApps(app!!))
+                                MoshiHelper.appsToJson(app.moshi, AppUtils.handleApps(app))
 
                             call.apply {
                                 response.header(HttpHeaders.AccessControlAllowOrigin, "*")
@@ -126,8 +129,10 @@ class HTTPServerService : Service() {
                         }
 
                         get("contacts") {
-                            val contacts = ContactUtils.readContacts(app!!.contentResolver)
-                            val response = MoshiHelper.contactsToJson(app!!.moshi, contacts)
+                            app.sendBroadcast(EventCategory.REQUEST, "/contacts")
+
+                            val contacts = ContactUtils.readContacts(app.contentResolver)
+                            val response = MoshiHelper.contactsToJson(app.moshi, contacts)
                             call.respondText(response, ContentType.Text.JavaScript)
                         }
 
@@ -135,7 +140,7 @@ class HTTPServerService : Service() {
 
 
                             param("apk") {
-                                get() {
+                                get {
                                     val login = call.parameters["apk"] ?: ""
 
                                     val test = FUtils.returnAPK(app, login)
@@ -188,7 +193,7 @@ class HTTPServerService : Service() {
                                         val fileInputStream = FileInputStream(File(login))
 
                                         call.respond(
-                                            fileInputStream?.readBytes() ?: "download Not found"
+                                            fileInputStream.readBytes()
                                         )
                                     } else {
                                         app.sendBroadcast("FilePath Requested", login)
@@ -236,6 +241,7 @@ class HTTPServerService : Service() {
                             val audioManager = app.getAudioManager()
 
                             get("louder") {
+                                app.sendBroadcast(EventCategory.MEDIA, "louder")
 
                                 MediatUtils(audioManager).louder()
                                 app.sendBroadcast(MediaRequestHandler.CATEGORY, "Media louder")
@@ -244,10 +250,19 @@ class HTTPServerService : Service() {
                                 call.respondText("Louder", ContentType.Text.JavaScript)
                             }
 
+                            get("pause") {
+                                app.sendBroadcast(EventCategory.MEDIA, "puase")
+
+                                KeyUtils.sendKeyEvent(app, KeyEvent.KEYCODE_MEDIA_PAUSE)
+                                app.sendBroadcast("MEDIA", "Media pause")
+
+                                call.respondText("Pause", ContentType.Text.JavaScript)
+                            }
+
                         }
 
                         get("device") {
-                            App.instance.sendBroadcast("Device Info REQUESTED", "Device")
+                            App.instance.sendBroadcast(EventCategory.REQUEST,"Device Info REQUESTED")
                             val deviceInfo = DeviceUtils.getDeviceInfo()
                             val jsonAdapter = App.instance.moshi.adapter(DeviceResponse::class.java)
 
