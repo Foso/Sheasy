@@ -1,19 +1,21 @@
 language: android
+
 android:
   components:
-    - tools # to get the new `repository-11.xml`
-    - tools # see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
+    - tools
     - platform-tools
-    - build-tools-27.0.1
+    - build-tools-27.0.3
     - android-27
-    - extra-google-m2repository
+    - extra-android-support
     - extra-android-m2repository
-
   licenses:
-    - 'android-sdk-preview-license-52d11cd2'
+    - android-sdk-license-5be876d5
+    - android-sdk-license-c81a61d9
+    - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
+jdk: oraclejdk8
+
 before_install:
-  - yes | sdkmanager "platforms;android-27"
-  - yes | sdkmanager "build-tools;27.0.3"
+- yes | sdkmanager "platforms;android-27"
