@@ -15,7 +15,7 @@ This an Android App like Airdroid to manage files on your Android Device through
 - [Roadmap](#-roadmap)
 - [Architecture](#-architecture)
 - [Docs](#-docs)
-- [Feedback](#feedback)
+- [Feedback](#-feedback)
 - [Contributors](#-contributors)
 - [Acknowledgments](#acknowledgments)
 

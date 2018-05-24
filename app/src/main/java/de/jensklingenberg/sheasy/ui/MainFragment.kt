@@ -13,16 +13,15 @@ import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.NotificationResponse
-import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import de.jensklingenberg.sheasy.network.service.HTTPServerService
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.enums.EventCategory
+import de.jensklingenberg.sheasy.ui.EventLog.EventAdapter
 import de.jensklingenberg.sheasy.utils.NetworkUtils
 import kotlinx.android.synthetic.main.fragment_main.*
 import org.threeten.bp.LocalDateTime
-import java.util.*
 
 /**
  * Created by jens on 1/4/18.
