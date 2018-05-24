@@ -31,7 +31,7 @@ class FUtils {
 
                }
                else -> {
-                   ResponseFile(FileInputStream(filePath), getMimeType(filePath))                }
+                   ResponseFile(FileInputStream(filePath), getMimeType(filePath)) }
            }
         }
 
@@ -44,7 +44,6 @@ class FUtils {
             val stream = context.assets.open(filePath)
            return ResponseFile(stream, getMimeType(filePath))
         }
-
 
         fun getFilesReponseList(folderPath: String): List<FileResponse> {
             val directory = File(folderPath)

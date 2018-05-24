@@ -14,13 +14,11 @@ import kotlinx.android.synthetic.main.list_item_event.view.*
 /**
  * Created by jens on 25/2/18.
  */
-class EventAdapter(private val onDocsItemClickListener: OnTagClickListener,
-                   private val context: Context?,
-                   tagArrayList: ArrayList<Event>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EventAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val list = ArrayList<Event>()
-
-    init {
-
+    var onDocsItemClickListener: OnTagClickListener?=null
+    fun setItems( tagArrayList: List<Event>) {
+this.list.clear()
         this.list.addAll(tagArrayList)
     }
 
@@ -55,7 +53,7 @@ class EventAdapter(private val onDocsItemClickListener: OnTagClickListener,
         val item = list[position]
         holder.itemView.eventName.text = item.category.title
         holder.itemView.eventText.text = item.text
-        holder.itemView.setOnClickListener { onDocsItemClickListener.onTagClicked(item) }
+        holder.itemView.setOnClickListener { onDocsItemClickListener?.onTagClicked(item) }
 
     }
 

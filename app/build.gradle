@@ -89,6 +89,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${libs.supportLibVersion}"
     implementation "android.arch.lifecycle:extensions:${lifeCycleExtension}"
     implementation "android.arch.lifecycle:reactivestreams:${lifeCycleExtension}"
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
     implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
