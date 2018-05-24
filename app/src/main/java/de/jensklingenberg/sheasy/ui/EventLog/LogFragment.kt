@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.ui.main
+package de.jensklingenberg.sheasy.ui.EventLog
 
 import android.arch.lifecycle.Observer
 import android.content.ClipData
@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.ui.EventAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
@@ -56,7 +55,8 @@ class LogFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
 
     private fun initObserver() {
         profileViewModel.shareMessage.observe(this, Observer {
-            recyclerView.adapter = EventAdapter(this, activity, it!!)
+            recyclerView.adapter =
+                    EventAdapter(this, activity, it!!)
         })
     }
 

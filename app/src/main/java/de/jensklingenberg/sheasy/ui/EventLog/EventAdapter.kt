@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.ui
+package de.jensklingenberg.sheasy.ui.EventLog
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -35,7 +35,9 @@ class EventAdapter(private val onDocsItemClickListener: OnTagClickListener,
             0 -> {
                 val itemView = inflater.inflate(R.layout.list_item_event, parent, false)
 
-                return DefaultTagViewHolder(itemView)
+                return DefaultTagViewHolder(
+                    itemView
+                )
             }
         }
 
