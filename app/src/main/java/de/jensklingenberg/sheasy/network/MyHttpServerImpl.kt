@@ -1,8 +1,9 @@
-package de.jensklingenberg.sheasy.network;
+package de.jensklingenberg.sheasy.network
 
 
 import android.content.Context
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.enums.WebsocketCommand
 import de.jensklingenberg.sheasy.factories.WebSocketFactory
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
@@ -28,7 +29,7 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
     }
 
     companion object {
-        val PORT = 8765
+        val PORT = BuildConfig.WEBSOCKET_PORT
 
     }
 

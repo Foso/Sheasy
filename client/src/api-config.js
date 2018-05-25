@@ -8,7 +8,7 @@ const hostname = window && window.location && window.location.hostname;
     backendHost = '192.168.178.20:8766';
   } 
 else {
-  backendHost = hostname+":8765";
+  backendHost = hostname+":8766";
 }
 
 export const API_ROOT = `${backendHost}`;

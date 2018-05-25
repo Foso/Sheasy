@@ -4,6 +4,7 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
 import de.jensklingenberg.sheasy.helpers.MoshiHelper
 import de.jensklingenberg.sheasy.model.AppsResponse
@@ -23,7 +24,7 @@ class AppsRequestHandler(val app: App,val moshi: Moshi) {
 
 
     fun handle(requestV1: String): String {
-        app.sendBroadcast("APPS REQUESTED", requestV1.substringAfter(RESOURCE))
+        app.sendBroadcast(EventCategory.REQUEST, "/apps")
 
         val appsResponse = MoshiHelper.appsToJson(moshi,AppUtils.handleApps(app))
        // return NanoHTTPDExt.debugResponse(appsResponse)
