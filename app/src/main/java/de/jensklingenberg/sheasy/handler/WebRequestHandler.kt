@@ -20,15 +20,17 @@ class WebRequestHandler {
         fun handle(context: Context, requestV1: String): NanoHTTPD.Response? {
             return when {
                 requestV1.isEmpty() -> {
-                    val returnAssetFile: ResponseFile = FUtils.returnAssetFile(context, "web/index.html")
-                    when(returnAssetFile.fileInputStream){
-                        null->{
+                    val returnAssetFile: ResponseFile =
+                        FUtils.returnAssetFile(context, "web/index.html")
+                    when (returnAssetFile.fileInputStream) {
+                        null -> {
                             return NanoHTTPD.newFixedLengthResponse("File $requestV1 not found")
 
-                        }else->{
-                        return NanoHTTPDExt.newChunkedResponse(returnAssetFile)
+                        }
+                        else -> {
+                            return NanoHTTPDExt.newChunkedResponse(returnAssetFile)
 
-                    }
+                        }
                     }
 
                 }

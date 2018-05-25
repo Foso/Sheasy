@@ -1,12 +1,9 @@
 package de.jensklingenberg.sheasy.utils
 
-import android.app.Activity
 import android.content.Context
 import android.net.wifi.WifiManager
 import android.text.format.Formatter
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.handler.AppsRequestHandler
-import fi.iki.elonen.NanoHTTPD
 
 /**
  * Created by jens on 24/2/18.

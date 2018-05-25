@@ -12,17 +12,19 @@ import de.jensklingenberg.sheasy.ui.main.LogFragment
 import de.jensklingenberg.sheasy.ui.main.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class RootFragment : BaseFragment(){
+class RootFragment : BaseFragment() {
 
 
     lateinit var permissionOverViewFragment: PermissionOverViewFragment
     lateinit var mainFragment: MainFragment
     var fragmentPagerAdapter: FragmentPagerAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        return  inflater.inflate(R.layout.fragment_root, container, false)
+        return inflater.inflate(R.layout.fragment_root, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,13 +40,17 @@ class RootFragment : BaseFragment(){
         val settingsFragment = SettingsFragment.newInstance()
         val filesFragment = FilesFragment.newInstance()
 
-        permissionOverViewFragment=PermissionOverViewFragment.newInstance()
-        fragmentPagerAdapter =  OverviewPagerAdapter(childFragmentManager, listOf(mainFragment,filesFragment,permissionOverViewFragment))
+        permissionOverViewFragment = PermissionOverViewFragment.newInstance()
+        fragmentPagerAdapter = OverviewPagerAdapter(
+            childFragmentManager,
+            listOf(mainFragment, filesFragment, permissionOverViewFragment)
+        )
         viewpager.adapter = fragmentPagerAdapter
     }
 
     companion object {
-        @JvmStatic fun newInstance()=RootFragment()
-        }
+        @JvmStatic
+        fun newInstance() = RootFragment()
+    }
 
 }

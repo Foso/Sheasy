@@ -23,10 +23,10 @@ class DeviceRequestHandler {
             var mediaRequest = requestV1.substringAfter(RESOURCE)
             when {
                 mediaRequest.isEmpty() -> {
-                    App.instance.sendBroadcast(EventCategory.REQUEST,"Device Info REQUESTED")
+                    App.instance.sendBroadcast(EventCategory.REQUEST, "Device Info REQUESTED")
                     val deviceInfo = DeviceUtils.getDeviceInfo()
                     val jsonAdapter = App.instance.moshi.adapter(DeviceResponse::class.java)
-                    return NanoHTTPDExt.debugResponse(jsonAdapter?.toJson(deviceInfo)?:"")
+                    return NanoHTTPDExt.debugResponse(jsonAdapter?.toJson(deviceInfo) ?: "")
                 }
             }
 

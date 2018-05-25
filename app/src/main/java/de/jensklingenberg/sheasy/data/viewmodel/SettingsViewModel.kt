@@ -2,19 +2,17 @@ package de.jensklingenberg.sheasy.data.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.R.id.edit
-import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import de.jensklingenberg.sheasy.App
 
 
-class SettingsViewModel(val application2: Application) : AndroidViewModel(application2){
+class SettingsViewModel(val application2: Application) : AndroidViewModel(application2) {
 
 
     companion object {
 
 
-        fun savePort(application: Application,s: Int) {
+        fun savePort(application: Application, s: Int) {
             val preferences =
                 PreferenceManager.getDefaultSharedPreferences(App.instance)
             val editor = preferences.edit()
@@ -27,12 +25,11 @@ class SettingsViewModel(val application2: Application) : AndroidViewModel(applic
             val preferences =
                 PreferenceManager.getDefaultSharedPreferences(application)
             val name = preferences.getInt("PORT", 8766)
-           return name
+            return name
 
         }
 
     }
-
 
 
 }

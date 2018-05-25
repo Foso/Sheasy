@@ -3,8 +3,6 @@ package de.jensklingenberg.sheasy.utils
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.util.Log
-import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.model.AppsResponse
 
 /**
@@ -29,9 +27,10 @@ class AppUtils {
         fun getAllInstalledApplications(context: Context): List<ApplicationInfo> {
             val pm = context.packageManager
 
-            val installedApps = pm.getInstalledApplications(PackageManager.PERMISSION_GRANTED).filter {
-                pm.getLaunchIntentForPackage(it.packageName) != null
-            }.toList()
+            val installedApps =
+                pm.getInstalledApplications(PackageManager.PERMISSION_GRANTED).filter {
+                    pm.getLaunchIntentForPackage(it.packageName) != null
+                }.toList()
 
             return installedApps
         }

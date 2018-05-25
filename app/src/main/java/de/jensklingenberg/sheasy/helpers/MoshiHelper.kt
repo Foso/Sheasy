@@ -6,13 +6,14 @@ import de.jensklingenberg.sheasy.model.AppsResponse
 import de.jensklingenberg.sheasy.model.ContactResponse
 import java.lang.reflect.ParameterizedType
 
-class MoshiHelper{
+class MoshiHelper {
     companion object {
-        fun contactsToJson(moshi: Moshi?, list: List<ContactResponse>):String{
+        fun contactsToJson(moshi: Moshi?, list: List<ContactResponse>): String {
             moshi?.let {
-                val listMyData: ParameterizedType = Types.newParameterizedType(List::class.java, ContactResponse::class.java)
+                val listMyData: ParameterizedType =
+                    Types.newParameterizedType(List::class.java, ContactResponse::class.java)
                 val adapter = moshi?.adapter<kotlin.collections.List<ContactResponse>>(listMyData)
-                return adapter?.toJson(list)?:""
+                return adapter?.toJson(list) ?: ""
             }
 
             return ""
@@ -21,9 +22,10 @@ class MoshiHelper{
 
         fun appsToJson(moshi: Moshi?, list: List<AppsResponse>): String {
             moshi?.let {
-                val listMyData: ParameterizedType = Types.newParameterizedType(List::class.java, AppsResponse::class.java)
+                val listMyData: ParameterizedType =
+                    Types.newParameterizedType(List::class.java, AppsResponse::class.java)
                 val adapter = moshi.adapter<kotlin.collections.List<AppsResponse>>(listMyData)
-                return adapter?.toJson(list)?:""
+                return adapter?.toJson(list) ?: ""
             }
 
             return ""

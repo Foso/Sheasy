@@ -7,10 +7,9 @@ import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 class ServerFactory {
 
 
-
     companion object {
         fun createHTTPServer(httpServerService: Context): MyHttpServer {
-                return MyHttpServerImpl(httpServerService)
+            return MyHttpServerImpl(httpServerService)
         }
 
     }

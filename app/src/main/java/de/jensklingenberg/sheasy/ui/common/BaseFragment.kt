@@ -9,12 +9,9 @@ import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
  */
 open class BaseFragment : Fragment() {
 
-fun obtainProfileViewModel(): ProfileViewModel {
-    return ViewModelFactory.obtainProfileViewModel(activity)
-}
-
-
-
+    fun obtainProfileViewModel(): ProfileViewModel {
+        return ViewModelFactory.obtainProfileViewModel(activity)
+    }
 
 
 }

@@ -1,6 +1,6 @@
 package de.jensklingenberg.sheasy.ui.filemanager
 
-import android.content.Context
+
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.FileResponse
-
-
 import kotlinx.android.synthetic.main.list_item_event.view.*
 
 /**
@@ -19,7 +17,7 @@ class FilesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val list = ArrayList<FileResponse>()
 
     fun setItems(tagArrayList: List<FileResponse>) {
-this.list.clear()
+        this.list.clear()
         this.list.addAll(tagArrayList)
     }
 
@@ -40,9 +38,11 @@ this.list.clear()
             }
         }
 
-        throw RuntimeException("there is no type that matches the type "
-                + viewType
-                + " + make sure your using types correctly")
+        throw RuntimeException(
+            "there is no type that matches the type "
+                    + viewType
+                    + " + make sure your using types correctly"
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

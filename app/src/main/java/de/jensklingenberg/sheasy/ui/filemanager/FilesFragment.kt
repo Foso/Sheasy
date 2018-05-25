@@ -4,18 +4,16 @@ import android.arch.lifecycle.Observer
 import android.content.ClipData
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.ui.EventLog.EventAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
-import de.jensklingenberg.sheasy.utils.FUtils
 import kotlinx.android.synthetic.main.component_toolbar.*
 import kotlinx.android.synthetic.main.fragment_share_with.*
 
@@ -24,22 +22,25 @@ import kotlinx.android.synthetic.main.fragment_share_with.*
  */
 class FilesFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
     override fun getTabName(): Int {
-      return R.string.main_frag_tab_name
+        return R.string.main_frag_tab_name
     }
+
     lateinit var profileViewModel: ProfileViewModel
 
-    val filesAdapter= FilesAdapter()
+    val filesAdapter = FilesAdapter()
 
     override fun onTagClicked(tag: Event) {
-      activity?.getClipboardMangaer()?.apply {
+        activity?.getClipboardMangaer()?.apply {
             primaryClip = ClipData.newPlainText("simple text", tag.text)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        return  inflater.inflate(R.layout.fragment_files, container, false)
+        return inflater.inflate(R.layout.fragment_files, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,11 +61,10 @@ class FilesFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView 
     }
 
 
-
-
     companion object {
-       @JvmStatic fun newInstance()= FilesFragment()
-        }
+        @JvmStatic
+        fun newInstance() = FilesFragment()
+    }
 
 
 }

@@ -9,7 +9,8 @@ enum class WebsocketCommand {
 
     companion object {
         fun get(str: String): WebsocketCommand {
-            return values().firstOrNull { it.name.toLowerCase() == str.substringBefore("/") }?: INVALID
+            return values().firstOrNull { it.name.toLowerCase() == str.substringBefore("/") }
+                    ?: INVALID
 
 
         }

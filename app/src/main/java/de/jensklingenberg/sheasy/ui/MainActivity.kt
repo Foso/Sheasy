@@ -13,7 +13,7 @@ import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 
 
 class MainActivity : AppCompatActivity() {
-lateinit var permissionOverViewFragment: PermissionOverViewFragment
+    lateinit var permissionOverViewFragment: PermissionOverViewFragment
     lateinit var mainFragment: MainFragment
     var fragmentPagerAdapter: FragmentPagerAdapter? = null
     lateinit var profileViewModel: ProfileViewModel
@@ -29,23 +29,23 @@ lateinit var permissionOverViewFragment: PermissionOverViewFragment
         profileViewModel = ViewModelFactory.obtainProfileViewModel(this)
 
         when (intent.extras) {
-             null -> {
-                 changeFragment(RootFragment.newInstance(),false)
+            null -> {
+                changeFragment(RootFragment.newInstance(), false)
 
-             }
+            }
             else -> {
                 intent?.let {
                     val action = it.action
                     val type = it.type
 
-                    when(action){
-                        Intent.ACTION_SEND->{
+                    when (action) {
+                        Intent.ACTION_SEND -> {
                             handleSendImage(it)
 
-                            Toast.makeText(this,"Hallo", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Hallo", Toast.LENGTH_LONG).show()
                         }
 
-                        Intent.ACTION_SEND_MULTIPLE->{
+                        Intent.ACTION_SEND_MULTIPLE -> {
                             handleSendMultipleImages(it)
                         }
                         else -> {
@@ -54,10 +54,6 @@ lateinit var permissionOverViewFragment: PermissionOverViewFragment
                 }
             }
         }
-
-
-
-
 
 
         //initViewPager()
@@ -71,33 +67,31 @@ lateinit var permissionOverViewFragment: PermissionOverViewFragment
     }
 
 
-
     fun handleSendMultipleImages(intent: Intent) {
         val imageUris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
         if (imageUris != null) {
             // Update UI to reflect multiple images being shared
             val path = imageUris.first().path
             profileViewModel.setSharedFolder(path)
-changeFragment(ShareFragment.newInstance(),false)
+            changeFragment(ShareFragment.newInstance(), false)
         }
     }
 
     fun changeFragment(fragment: Fragment, keepInstance: Boolean) {
 
-            val trans = supportFragmentManager.beginTransaction()
-            if (keepInstance) {
-                trans.add(R.id.profileContainer, fragment)
-            } else {
-                trans.replace(R.id.profileContainer, fragment)
-            }
+        val trans = supportFragmentManager.beginTransaction()
+        if (keepInstance) {
+            trans.add(R.id.profileContainer, fragment)
+        } else {
+            trans.replace(R.id.profileContainer, fragment)
+        }
 
-            trans.addToBackStack(null)
+        trans.addToBackStack(null)
 
-            trans.commit()
+        trans.commit()
 
 
     }
-
 
 
 }

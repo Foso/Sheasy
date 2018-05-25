@@ -8,15 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.model.Status
-import de.jensklingenberg.sheasy.ui.common.ITabView
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.fragment_log.*
+import de.jensklingenberg.sheasy.model.Status
+import de.jensklingenberg.sheasy.ui.common.ITabView
 import kotlinx.android.synthetic.main.fragment_permission_overview.*
-import android.R.array
-import android.widget.ArrayAdapter
-
 
 
 /**
@@ -29,8 +25,10 @@ class PermissionOverViewFragment : Fragment(), ITabView {
 
     lateinit var profileViewModel: ProfileViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         return inflater.inflate(R.layout.fragment_permission_overview, container, false)
     }
@@ -44,10 +42,6 @@ class PermissionOverViewFragment : Fragment(), ITabView {
         profileViewModel.checkStoragePermission()
         profileViewModel.checkNotifcationPermission(context!!)
         profileViewModel.checkContactsPermission()
-
-
-
-
 
 
     }
@@ -71,41 +65,41 @@ class PermissionOverViewFragment : Fragment(), ITabView {
         })
 
         profileViewModel.notificationPermissionStatus.observe(this, Observer { it ->
-            when(it?.status){
-               Status.SUCCESS->{
+            when (it?.status) {
+                Status.SUCCESS -> {
                     when (it.data) {
-                       true -> {
-                           notificationBtn?.apply {
-                               isActivated = true
-                               setOnClickListener {
-                                   profileViewModel.disableNotificationPermission()
-                               }
-                           }
-                       }
-                       false -> {
-                           notificationBtn?.apply {
-                               isActivated = false
-                               setOnClickListener {
-                                   profileViewModel.requestNotificationPermission(context)
-                               }
-                           }
-                       }
-                       null -> ""
-                   }
-               }
-           }
+                        true -> {
+                            notificationBtn?.apply {
+                                isActivated = true
+                                setOnClickListener {
+                                    profileViewModel.disableNotificationPermission()
+                                }
+                            }
+                        }
+                        false -> {
+                            notificationBtn?.apply {
+                                isActivated = false
+                                setOnClickListener {
+                                    profileViewModel.requestNotificationPermission(context)
+                                }
+                            }
+                        }
+                        null -> ""
+                    }
+                }
+            }
         })
 
 
         profileViewModel.contactsPermissionStatus.observe(this, Observer { it ->
-            when(it?.status){
-                Status.SUCCESS->{
+            when (it?.status) {
+                Status.SUCCESS -> {
                     when (it.data) {
                         true -> {
                             contactsBtn?.apply {
                                 isActivated = true
                                 setOnClickListener {
-                                   // profileViewModel.disableNotificationPermission()
+                                    // profileViewModel.disableNotificationPermission()
                                 }
                             }
                         }

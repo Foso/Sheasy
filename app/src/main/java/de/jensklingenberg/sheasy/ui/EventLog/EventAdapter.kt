@@ -1,24 +1,22 @@
 package de.jensklingenberg.sheasy.ui.EventLog
 
-import android.content.Context
+
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.Event
-
-
 import kotlinx.android.synthetic.main.list_item_event.view.*
 
 /**
  * Created by jens on 25/2/18.
  */
-class EventAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val list = ArrayList<Event>()
-    var onDocsItemClickListener: OnTagClickListener?=null
-    fun setItems( tagArrayList: List<Event>) {
-this.list.clear()
+    var onDocsItemClickListener: OnTagClickListener? = null
+    fun setItems(tagArrayList: List<Event>) {
+        this.list.clear()
         this.list.addAll(tagArrayList)
     }
 
@@ -39,9 +37,11 @@ this.list.clear()
             }
         }
 
-        throw RuntimeException("there is no type that matches the type "
-                + viewType
-                + " + make sure your using types correctly")
+        throw RuntimeException(
+            "there is no type that matches the type "
+                    + viewType
+                    + " + make sure your using types correctly"
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

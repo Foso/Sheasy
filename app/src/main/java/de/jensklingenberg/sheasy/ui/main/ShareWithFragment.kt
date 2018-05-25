@@ -8,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.ui.EventLog.EventAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_share_with.*
 
 /**
@@ -21,20 +21,23 @@ import kotlinx.android.synthetic.main.fragment_share_with.*
  */
 class ShareWithFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
     override fun getTabName(): Int {
-      return R.string.main_frag_tab_name
+        return R.string.main_frag_tab_name
     }
+
     lateinit var profileViewModel: ProfileViewModel
 
     override fun onTagClicked(tag: Event) {
-      activity?.getClipboardMangaer()?.apply {
+        activity?.getClipboardMangaer()?.apply {
             primaryClip = ClipData.newPlainText("simple text", tag.text)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        return  inflater.inflate(R.layout.fragment_share_with, container, false)
+        return inflater.inflate(R.layout.fragment_share_with, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,11 +57,10 @@ class ShareWithFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabV
     }
 
 
-
-
     companion object {
-       @JvmStatic fun newInstance()= ShareWithFragment()
-        }
+        @JvmStatic
+        fun newInstance() = ShareWithFragment()
+    }
 
 
 }

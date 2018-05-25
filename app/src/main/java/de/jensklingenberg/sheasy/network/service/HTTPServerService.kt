@@ -42,8 +42,7 @@ import java.io.IOException
  * Created by jens on 25/2/18.
  */
 
-data class ConnectionInfo(val result: String,val deviceName:String)
-
+data class ConnectionInfo(val result: String, val deviceName: String)
 
 
 class HTTPServerService : Service() {
@@ -53,8 +52,7 @@ class HTTPServerService : Service() {
     private val APIV1 = "/api/v1/"
 
 
-
-private var serverRunning = true
+    private var serverRunning = true
 
     inner class ServiceBinder : Binder() {
         val playerService: HTTPServerService
@@ -73,15 +71,18 @@ private var serverRunning = true
 
 
         serverImpl = ServerFactory.createHTTPServer(this)
-       // serverImpl?.start(10000)
+        // serverImpl?.start(10000)
 
-        Log.d("PORT:",App.port.toString())
+        Log.d("PORT:", App.port.toString())
 
         runInBackground {
-           val server = embeddedServer(Netty, App.port) {
+            val server = embeddedServer(Netty, App.port) {
                 routing {
                     get("/") {
-                        app.sendBroadcast(EventCategory.CONNECTION, "from IP:"+call.request.origin.host)
+                        app.sendBroadcast(
+                            EventCategory.CONNECTION,
+                            "from IP:" + call.request.origin.host
+                        )
 
                         call.respond(this@HTTPServerService.assets.open("web/index.html").readBytes())
                     }
@@ -100,10 +101,10 @@ private var serverRunning = true
 
                     get("swagger/{filepath...}") {
                         var test = call.request.uri.replaceFirst("/", "")
-                        Log.d("SWAGGER",test)
+                        Log.d("SWAGGER", test)
                         call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
 
-                        call.respond(this@HTTPServerService.assets.open("swagger/"+test).readBytes())
+                        call.respond(this@HTTPServerService.assets.open("swagger/" + test).readBytes())
 
                     }
 
@@ -130,8 +131,11 @@ private var serverRunning = true
                         }
 
                         get("connect") {
-                            App.instance.sendBroadcast(EventCategory.REQUEST,"Device Info REQUESTED")
-                            val deviceInfo = ConnectionInfo("OK","Frist")
+                            App.instance.sendBroadcast(
+                                EventCategory.REQUEST,
+                                "Device Info REQUESTED"
+                            )
+                            val deviceInfo = ConnectionInfo("OK", "Frist")
                             val jsonAdapter = App.instance.moshi.adapter(ConnectionInfo::class.java)
 
 
@@ -276,7 +280,10 @@ private var serverRunning = true
                         }
 
                         get("device") {
-                            App.instance.sendBroadcast(EventCategory.REQUEST,"Device Info REQUESTED")
+                            App.instance.sendBroadcast(
+                                EventCategory.REQUEST,
+                                "Device Info REQUESTED"
+                            )
                             val deviceInfo = DeviceUtils.getDeviceInfo()
                             val jsonAdapter = App.instance.moshi.adapter(DeviceResponse::class.java)
 
@@ -307,7 +314,7 @@ private var serverRunning = true
     }
 
     override fun stopService(name: Intent?): Boolean {
-        serverRunning=false
+        serverRunning = false
         serverImpl?.stop()
         return super.stopService(name)
 

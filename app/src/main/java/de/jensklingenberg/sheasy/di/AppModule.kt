@@ -8,11 +8,9 @@ import javax.inject.Singleton
 @Module
 class AppModule(private val bueApplication: Application) {
 
-  @Provides
-  @Singleton
-  fun provideContext(): Application = bueApplication
-
-
+    @Provides
+    @Singleton
+    fun provideContext(): Application = bueApplication
 
 
 }

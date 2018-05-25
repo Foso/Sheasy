@@ -2,7 +2,6 @@ package de.jensklingenberg.sheasy.extension
 
 
 import de.jensklingenberg.sheasy.BuildConfig
-import de.jensklingenberg.sheasy.utils.FUtils
 import de.jensklingenberg.sheasy.utils.ResponseFile
 import fi.iki.elonen.NanoHTTPD
 
@@ -13,11 +12,11 @@ import fi.iki.elonen.NanoHTTPD
 fun NanoHTTPD.IHTTPSession.getParameterQueryMap(): HashMap<String, String> {
     val queryMap = HashMap<String, String>()
 
-    val query  =this.queryParameterString
+    val query = this.queryParameterString
     val split = query.split("&")
     split.forEach {
         val querySplit = it.split("=")
-        var parameter= querySplit[0]
+        var parameter = querySplit[0]
         var value = querySplit[1]
         queryMap.put(parameter, value)
 
@@ -27,12 +26,12 @@ fun NanoHTTPD.IHTTPSession.getParameterQueryMap(): HashMap<String, String> {
 }
 
 
-class NanoHTTPDExt{
+class NanoHTTPDExt {
     companion object {
-        fun debugResponse(string:String): NanoHTTPD.Response? {
+        fun debugResponse(string: String): NanoHTTPD.Response? {
 
             val newFixedLengthResponse1 = NanoHTTPD.newFixedLengthResponse(string)
-            if(BuildConfig.DEBUG){
+            if (BuildConfig.DEBUG) {
                 newFixedLengthResponse1.addHeader("Access-Control-Allow-Origin", "*")
             }
             return newFixedLengthResponse1
@@ -40,8 +39,12 @@ class NanoHTTPDExt{
 
         fun newChunkedResponse(responseFile: ResponseFile): NanoHTTPD.Response? {
 
-            val newFixedLengthResponse1 = NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, responseFile.mimeType, responseFile?.fileInputStream)
-            if(BuildConfig.DEBUG){
+            val newFixedLengthResponse1 = NanoHTTPD.newChunkedResponse(
+                NanoHTTPD.Response.Status.OK,
+                responseFile.mimeType,
+                responseFile?.fileInputStream
+            )
+            if (BuildConfig.DEBUG) {
                 newFixedLengthResponse1.addHeader("Access-Control-Allow-Origin", "*")
             }
             return newFixedLengthResponse1
@@ -49,7 +52,6 @@ class NanoHTTPDExt{
 
 
     }
-
 
 
 }
