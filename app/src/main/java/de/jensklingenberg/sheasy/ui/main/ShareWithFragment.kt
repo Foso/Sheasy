@@ -49,8 +49,7 @@ class ShareWithFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabV
 
     private fun initObserver() {
         profileViewModel.shareMessage.observe(this, Observer {
-            recyclerView.adapter =
-                    EventAdapter(this, activity, it!!)
+            recyclerView.adapter = EventAdapter()
         })
     }
 

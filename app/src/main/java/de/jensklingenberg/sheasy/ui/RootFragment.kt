@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
-import de.jensklingenberg.sheasy.ui.EventLog.LogFragment
 import de.jensklingenberg.sheasy.ui.filemanager.FilesFragment
+import de.jensklingenberg.sheasy.ui.main.LogFragment
 import de.jensklingenberg.sheasy.ui.main.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 

@@ -100,7 +100,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:${libs.dagger_version}"
     //implementation 'com.google.android.material:material:1.0.0-alpha1'
     implementation "com.android.support:design:${libs.supportLibVersion}"
-
+    implementation("com.mikepenz:materialdrawer:6.0.6@aar") {
+        transitive = true
+    }
 }
 
 
