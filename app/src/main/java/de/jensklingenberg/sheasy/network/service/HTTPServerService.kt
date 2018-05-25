@@ -9,12 +9,10 @@ import android.view.KeyEvent
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.extension.getAudioManager
 import de.jensklingenberg.sheasy.factories.ServerFactory
 import de.jensklingenberg.sheasy.handler.MediaRequestHandler
-import de.jensklingenberg.sheasy.handler.ShareRequestHandler
 import de.jensklingenberg.sheasy.helpers.MoshiHelper
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import de.jensklingenberg.sheasy.model.DeviceResponse
@@ -35,7 +33,6 @@ import io.ktor.response.respondText
 import io.ktor.routing.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import io.ktor.websocket.*
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
@@ -45,7 +42,7 @@ import java.io.IOException
  * Created by jens on 25/2/18.
  */
 
-
+data class ConnectionInfo(val result: String,val deviceName:String)
 
 
 
@@ -54,6 +51,10 @@ class HTTPServerService : Service() {
     private var serverImpl: MyHttpServer? = null
     private val app by lazy { App.instance }
     private val APIV1 = "/api/v1/"
+
+
+
+private var serverRunning = true
 
     inner class ServiceBinder : Binder() {
         val playerService: HTTPServerService
@@ -77,7 +78,7 @@ class HTTPServerService : Service() {
         Log.d("PORT:",App.port.toString())
 
         runInBackground {
-            embeddedServer(Netty, App.port) {
+           val server = embeddedServer(Netty, App.port) {
                 routing {
                     get("/") {
                         app.sendBroadcast(EventCategory.CONNECTION, "from IP:"+call.request.origin.host)
@@ -126,6 +127,19 @@ class HTTPServerService : Service() {
                             }
 
 
+                        }
+
+                        get("connect") {
+                            App.instance.sendBroadcast(EventCategory.REQUEST,"Device Info REQUESTED")
+                            val deviceInfo = ConnectionInfo("OK","Frist")
+                            val jsonAdapter = App.instance.moshi.adapter(ConnectionInfo::class.java)
+
+
+                            call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
+                            call.respondText(
+                                jsonAdapter?.toJson(deviceInfo) ?: "",
+                                ContentType.Text.JavaScript
+                            )
                         }
 
                         get("contacts") {
@@ -293,6 +307,7 @@ class HTTPServerService : Service() {
     }
 
     override fun stopService(name: Intent?): Boolean {
+        serverRunning=false
         serverImpl?.stop()
         return super.stopService(name)
 

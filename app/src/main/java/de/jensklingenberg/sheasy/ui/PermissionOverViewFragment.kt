@@ -12,7 +12,12 @@ import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.ui.common.ITabView
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
+import kotlinx.android.synthetic.main.fragment_log.*
 import kotlinx.android.synthetic.main.fragment_permission_overview.*
+import android.R.array
+import android.widget.ArrayAdapter
+
+
 
 /**
  * Created by jens on 1/4/18.
@@ -40,6 +45,11 @@ class PermissionOverViewFragment : Fragment(), ITabView {
         profileViewModel.checkNotifcationPermission(context!!)
         profileViewModel.checkContactsPermission()
 
+
+
+
+
+
     }
 
     private fun initObserver() {
@@ -49,10 +59,10 @@ class PermissionOverViewFragment : Fragment(), ITabView {
                 Status.SUCCESS -> {
                     when (it.data) {
                         true -> {
-                            toggleButton.isChecked = true
+                            toggleButton.isActivated = true
                         }
                         false -> {
-                            toggleButton.isChecked = false
+                            toggleButton.isActivated = false
                         }
                     }
 
@@ -66,7 +76,7 @@ class PermissionOverViewFragment : Fragment(), ITabView {
                     when (it.data) {
                        true -> {
                            notificationBtn?.apply {
-                               isChecked = true
+                               isActivated = true
                                setOnClickListener {
                                    profileViewModel.disableNotificationPermission()
                                }
@@ -74,7 +84,7 @@ class PermissionOverViewFragment : Fragment(), ITabView {
                        }
                        false -> {
                            notificationBtn?.apply {
-                               isChecked = false
+                               isActivated = false
                                setOnClickListener {
                                    profileViewModel.requestNotificationPermission(context)
                                }
@@ -93,7 +103,7 @@ class PermissionOverViewFragment : Fragment(), ITabView {
                     when (it.data) {
                         true -> {
                             contactsBtn?.apply {
-                                isChecked = true
+                                isActivated = true
                                 setOnClickListener {
                                    // profileViewModel.disableNotificationPermission()
                                 }
@@ -101,7 +111,7 @@ class PermissionOverViewFragment : Fragment(), ITabView {
                         }
                         false -> {
                             contactsBtn?.apply {
-                                isChecked = false
+                                isActivated = false
                                 setOnClickListener {
                                     profileViewModel.requestContactsPermission(activity as AppCompatActivity)
                                 }

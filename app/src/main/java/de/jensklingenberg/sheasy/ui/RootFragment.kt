@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.ui.filemanager.FilesFragment
 import de.jensklingenberg.sheasy.ui.main.LogFragment
 import de.jensklingenberg.sheasy.ui.main.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -35,9 +36,10 @@ class RootFragment : BaseFragment(){
         mainFragment = MainFragment.newInstance()
         val logFragment = LogFragment.newInstance()
         val settingsFragment = SettingsFragment.newInstance()
+        val filesFragment = FilesFragment.newInstance()
 
         permissionOverViewFragment=PermissionOverViewFragment.newInstance()
-        fragmentPagerAdapter =  OverviewPagerAdapter(childFragmentManager, listOf(mainFragment,logFragment,permissionOverViewFragment))
+        fragmentPagerAdapter =  OverviewPagerAdapter(childFragmentManager, listOf(mainFragment,filesFragment,permissionOverViewFragment))
         viewpager.adapter = fragmentPagerAdapter
     }
 

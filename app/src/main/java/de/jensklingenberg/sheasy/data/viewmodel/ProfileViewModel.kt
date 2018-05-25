@@ -14,8 +14,11 @@ import de.jensklingenberg.sheasy.interfaces.ApiEventListener
 import de.jensklingenberg.sheasy.model.Resource
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
+import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.utils.FUtils
 import de.jensklingenberg.sheasy.utils.PermissionUtils.Companion.MY_PERMISSIONS_REQUEST_READ_CONTACTS
 
 
@@ -27,6 +30,15 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
     var contactsPermissionStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData()
     var sharedFolder: MutableLiveData<String> = MutableLiveData()
 
+    var files: MutableLiveData<List<FileResponse>> = MutableLiveData()
+
+
+    fun getFiles( folderPath:String){
+        val fileList = FUtils.getFilesReponseList(folderPath)
+
+        //fileList.forEach { Log.d("this",it.name) }
+files.value = fileList
+    }
 
     override fun onShare(test: Event) {
         events.add(test)

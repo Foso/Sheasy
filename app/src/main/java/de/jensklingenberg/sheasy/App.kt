@@ -15,6 +15,10 @@ import io.ktor.websocket.WebSockets
 import org.threeten.bp.Duration
 import android.content.SharedPreferences
 import de.jensklingenberg.sheasy.data.viewmodel.SettingsViewModel
+import de.jensklingenberg.sheasy.di.AppComponent
+import de.jensklingenberg.sheasy.di.AppModule
+import de.jensklingenberg.sheasy.di.DaggerAppComponent
+import de.jensklingenberg.sheasy.di.RemoteModule
 import de.jensklingenberg.sheasy.enums.EventCategory
 
 
@@ -32,6 +36,15 @@ class App : Application() {
 
 
     }
+
+    fun initializeDagger() {
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+           // .serviceModule(ServiceModule())
+            .remoteModule(RemoteModule())
+            .build()
+    }
+
 
     override fun onCreate() {
         super.onCreate()
@@ -72,6 +85,7 @@ class App : Application() {
     companion object {
         lateinit var instance: App
         var port = 0
+        lateinit var appComponent: AppComponent
 
     }
 
