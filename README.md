@@ -1,6 +1,7 @@
 # Sheasy - Share Easy
 [![jCenter](https://img.shields.io/badge/License-GPLv3-yellow.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
+[![Build Status](https://travis-ci.com/Foso/Sheasy.svg?token=4gYgACSGtuiyKMUSkuob&branch=master)](https://travis-ci.com/Foso/Sheasy)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-range.svg?style=flat-square)](#contributors)
   <a href="https://twitter.com/intent/tweet?text=Hey, check out Sheasy - Share Easy Android App https://github.com/Foso/Sheasy via @jklingenberg_ #Android 
