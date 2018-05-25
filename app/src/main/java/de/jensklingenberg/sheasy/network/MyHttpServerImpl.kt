@@ -33,6 +33,11 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
 
     }
 
+    override fun stop() {
+
+
+    }
+
     override fun openWebSocket(handshake: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket {
         var uri = handshake.uri
         uri = uri.replaceFirst("/", "", true)
@@ -64,6 +69,8 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
 
         return WebSocketFactory.createDefaultWebSocket(context, handshake, this)
     }
+
+
 
 
 }

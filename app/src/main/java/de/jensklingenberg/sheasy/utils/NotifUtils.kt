@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.extension.notifcationManager
+import de.jensklingenberg.sheasy.utils.extension.notifcationManager
 
 class NotifUtils {
     companion object {

@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.extension
+package de.jensklingenberg.sheasy.utils.extension
 
 /**
  * Created by jens on 30/3/18.

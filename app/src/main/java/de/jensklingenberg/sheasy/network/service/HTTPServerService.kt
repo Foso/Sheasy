@@ -10,15 +10,15 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.EventCategory
-import de.jensklingenberg.sheasy.extension.getAudioManager
-import de.jensklingenberg.sheasy.factories.ServerFactory
+import de.jensklingenberg.sheasy.utils.extension.getAudioManager
 import de.jensklingenberg.sheasy.handler.MediaRequestHandler
-import de.jensklingenberg.sheasy.helpers.MoshiHelper
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import de.jensklingenberg.sheasy.model.DeviceResponse
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.toplevel.runInBackground
 import de.jensklingenberg.sheasy.utils.*
+import de.jensklingenberg.sheasy.utils.extension.appsToJson
+import de.jensklingenberg.sheasy.utils.extension.contactsToJson
 import io.ktor.application.call
 import io.ktor.content.PartData
 import io.ktor.content.forEachPart
@@ -70,7 +70,7 @@ class HTTPServerService : Service() {
         //app = App.instance
 
 
-        serverImpl = ServerFactory.createHTTPServer(this)
+       // serverImpl = ServerFactory.createHTTPServer(this)
         // serverImpl?.start(10000)
 
         Log.d("PORT:", App.port.toString())
@@ -119,8 +119,8 @@ class HTTPServerService : Service() {
                         get("apps") {
                             app.sendBroadcast(EventCategory.REQUEST, "/apps")
 
-                            val appsResponse =
-                                MoshiHelper.appsToJson(app.moshi, AppUtils.handleApps(app))
+                            val appsResponse = app.moshi.appsToJson(AppUtils.handleApps(app))
+
 
                             call.apply {
                                 response.header(HttpHeaders.AccessControlAllowOrigin, "*")
@@ -150,7 +150,7 @@ class HTTPServerService : Service() {
                             app.sendBroadcast(EventCategory.REQUEST, "/contacts")
 
                             val contacts = ContactUtils.readContacts(app.contentResolver)
-                            val response = MoshiHelper.contactsToJson(app.moshi, contacts)
+                            val response = app.moshi.contactsToJson(contacts)
                             call.respondText(response, ContentType.Text.JavaScript)
                         }
 
@@ -297,7 +297,7 @@ class HTTPServerService : Service() {
                     }
 
                 }
-            }.start(wait = true)
+            }.start(wait = serverRunning)
         }
 
         try {
@@ -315,9 +315,16 @@ class HTTPServerService : Service() {
 
     override fun stopService(name: Intent?): Boolean {
         serverRunning = false
-        serverImpl?.stop()
+      //  serverImpl?.stop()
         return super.stopService(name)
 
+    }
+
+    override fun onDestroy() {
+        serverRunning = false
+      //  serverImpl?.stop()
+        Log.d("hhh","ddd")
+        super.onDestroy()
     }
 
 

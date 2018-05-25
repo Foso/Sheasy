@@ -51,8 +51,9 @@ open class MyWebSocket(
         reason: String,
         initiatedByRemote: Boolean
     ) {
-        this.httpServerImpl.connections.remove(this)
         isClosed = true
+        this.httpServerImpl.connections.remove(this)
+
     }
 
     override fun onMessage(message: NanoWSD.WebSocketFrame) {

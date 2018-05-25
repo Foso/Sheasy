@@ -56,10 +56,22 @@ class NotificationWebsocket(
     }
 
     override fun onOpen() {
+
         super.onOpen()
         startRunner()
 
     }
+
+    override fun onClose(
+        code: NanoWSD.WebSocketFrame.CloseCode,
+        reason: String,
+        initiatedByRemote: Boolean
+    ) {
+        super.onClose(code, reason, initiatedByRemote)
+
+    }
+
+
 
     private fun startRunner() {
 

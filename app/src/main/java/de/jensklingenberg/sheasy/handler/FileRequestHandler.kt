@@ -6,8 +6,8 @@ import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.ApiFileCommand
 import de.jensklingenberg.sheasy.enums.EventCategory
-import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
-import de.jensklingenberg.sheasy.extension.getParameterQueryMap
+import de.jensklingenberg.sheasy.utils.extension.NanoHTTPDExt
+import de.jensklingenberg.sheasy.utils.extension.getParameterQueryMap
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.utils.FUtils
 import fi.iki.elonen.NanoHTTPD
@@ -114,7 +114,7 @@ class FileRequestHandler {
                     val pathEnding = session.queryParameterString.substringAfterLast("/")
                     return if (pathEnding.contains(".")) {
                         val filePath = map["file"] ?: ""
-                        app.sendBroadcast("File Requested", filePath)
+                        app.sendBroadcast(EventCategory.REQUEST, filePath)
                         val returnFile = FUtils.returnFile(filePath)
 
                         returnFile?.let {
@@ -137,7 +137,7 @@ class FileRequestHandler {
 
                     } else {
                         val folderPath = map["file"] ?: ""
-                        app.sendBroadcast("FilePath Requested", folderPath)
+                        app.sendBroadcast(EventCategory.REQUEST, folderPath)
 
                         val fileList = FUtils.getFilesReponseList(folderPath)
                         val moshi = Moshi.Builder().build()

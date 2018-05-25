@@ -12,7 +12,7 @@ import com.jakewharton.rxbinding2.widget.RxAdapterView
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.enums.EventCategory
-import de.jensklingenberg.sheasy.extension.getClipboardMangaer
+import de.jensklingenberg.sheasy.utils.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.ui.EventLog.EventAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment

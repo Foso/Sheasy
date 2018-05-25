@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy.handler
 
 import android.content.Context
-import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
+import de.jensklingenberg.sheasy.utils.extension.NanoHTTPDExt
 import de.jensklingenberg.sheasy.utils.FUtils
 import de.jensklingenberg.sheasy.utils.ResponseFile
 import fi.iki.elonen.NanoHTTPD

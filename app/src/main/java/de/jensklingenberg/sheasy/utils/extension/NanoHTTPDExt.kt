@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.extension
+package de.jensklingenberg.sheasy.utils.extension
 
 
 import de.jensklingenberg.sheasy.BuildConfig

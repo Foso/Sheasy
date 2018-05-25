@@ -4,9 +4,9 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.EventCategory
-import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
-import de.jensklingenberg.sheasy.helpers.MoshiHelper
+import de.jensklingenberg.sheasy.utils.extension.NanoHTTPDExt
 import de.jensklingenberg.sheasy.utils.ContactUtils
+import de.jensklingenberg.sheasy.utils.extension.contactsToJson
 import fi.iki.elonen.NanoHTTPD
 
 /**
@@ -19,7 +19,7 @@ class ContactsRequestHandler(val context: Context, val app: App, val moshi: Mosh
     fun handle(requestV1: String): NanoHTTPD.Response? {
         val contacts = ContactUtils.readContacts(context.contentResolver)
         app.sendBroadcast(EventCategory.REQUEST, ACTION)
-        val response = MoshiHelper.contactsToJson(moshi, contacts)
+        val response = moshi.contactsToJson(contacts)
 
         return NanoHTTPDExt.debugResponse(response)
     }

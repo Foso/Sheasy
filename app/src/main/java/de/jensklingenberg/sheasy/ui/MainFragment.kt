@@ -12,7 +12,7 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.enums.EventCategory
-import de.jensklingenberg.sheasy.extension.getClipboardMangaer
+import de.jensklingenberg.sheasy.utils.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.NotificationResponse
 import de.jensklingenberg.sheasy.network.service.HTTPServerService

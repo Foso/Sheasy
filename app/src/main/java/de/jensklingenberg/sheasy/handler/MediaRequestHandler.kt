@@ -5,7 +5,7 @@ import android.view.KeyEvent
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.MediaCommand
 import de.jensklingenberg.sheasy.enums.MediaCommand.*
-import de.jensklingenberg.sheasy.extension.getAudioManager
+import de.jensklingenberg.sheasy.utils.extension.getAudioManager
 import de.jensklingenberg.sheasy.utils.KeyUtils
 import de.jensklingenberg.sheasy.utils.MediatUtils
 import fi.iki.elonen.NanoHTTPD

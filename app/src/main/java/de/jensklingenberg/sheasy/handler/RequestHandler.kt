@@ -3,8 +3,8 @@ package de.jensklingenberg.sheasy.handler
 import android.content.Context
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.ApiCommand
-import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
-import de.jensklingenberg.sheasy.extension.remove
+import de.jensklingenberg.sheasy.utils.extension.NanoHTTPDExt
+import de.jensklingenberg.sheasy.utils.extension.remove
 import fi.iki.elonen.NanoHTTPD
 
 class RequestHandlerFactory {

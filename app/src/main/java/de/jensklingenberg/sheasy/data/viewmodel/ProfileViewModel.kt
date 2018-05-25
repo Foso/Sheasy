@@ -76,15 +76,22 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
     }
 
     fun checkStoragePermission() {
-        if (ContextCompat.checkSelfPermission(
-                getApplication(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            storagePermission.value = Resource.success(true)
-        } else {
-            storagePermission.value = Resource.success(false)
-        }
+
+        val permGranted = checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+        storagePermission.value = Resource.success(permGranted)
+
+    }
+
+    fun checkPermission( permissionType: String):Boolean {
+
+        return (ContextCompat.checkSelfPermission(
+            getApplication(),
+            permissionType
+        ) == PackageManager.PERMISSION_GRANTED
+                )
+
+
+
     }
 
     fun checkContactsPermission() {
