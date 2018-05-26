@@ -15,7 +15,7 @@ ext {
 
 
     libs = [ktx              : '0.3',
-            dagger_version: '2.16',
+            dagger_version: '2.15',
             aboutlibraries   : '6.0.6@aar',
             junit            : '4.12',
             supportLibVersion: '27.1.1',

@@ -3,7 +3,6 @@ package de.jensklingenberg.sheasy.utils
 import android.content.Context
 import android.content.Intent
 import android.support.v4.content.ContextCompat.startActivity
-import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.IntentRequest
 import fi.iki.elonen.NanoHTTPD
 

@@ -1,14 +1,11 @@
 package de.jensklingenberg.sheasy.network.websocket;
 
-import android.content.Context;
-import android.util.Log;
-
-import java.io.IOException;
-import java.nio.charset.CharacterCodingException;
-
-import de.jensklingenberg.sheasy.network.MyHttpServerImpl;
-import fi.iki.elonen.NanoHTTPD;
-import fi.iki.elonen.NanoWSD;
+import android.content.Context
+import android.util.Log
+import fi.iki.elonen.NanoHTTPD
+import fi.iki.elonen.NanoWSD
+import java.io.IOException
+import java.nio.charset.CharacterCodingException
 
 
 interface IMyWebSocket {
@@ -19,9 +16,13 @@ interface IMyWebSocket {
     fun onException(exception: IOException)
 }
 
-open class MyWebSocket(context: Context, internal var httpSession: NanoHTTPD.IHTTPSession, internal var httpServerImpl: MyHttpServerImpl) : NanoWSD.WebSocket(httpSession), IMyWebSocket {
+open class MyWebSocket(
+    context: Context,
+    internal var httpSession: NanoHTTPD.IHTTPSession,
+    internal var httpServerImpl: MyHttpServerImpl
+) : NanoWSD.WebSocket(httpSession), IMyWebSocket {
 
-    var isClosed=false
+    var isClosed = false
 
 
     override fun onOpen() {
@@ -44,9 +45,14 @@ open class MyWebSocket(context: Context, internal var httpSession: NanoHTTPD.IHT
     }
 
 
-    override fun onClose(code: NanoWSD.WebSocketFrame.CloseCode, reason: String, initiatedByRemote: Boolean) {
+    override fun onClose(
+        code: NanoWSD.WebSocketFrame.CloseCode,
+        reason: String,
+        initiatedByRemote: Boolean
+    ) {
+        isClosed = true
         this.httpServerImpl.connections.remove(this)
-        isClosed=true
+
     }
 
     override fun onMessage(message: NanoWSD.WebSocketFrame) {

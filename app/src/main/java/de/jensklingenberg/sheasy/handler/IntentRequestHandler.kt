@@ -17,11 +17,11 @@ class IntentRequestHandler {
 
         val RESOURCE = "/Intent/"
 
-        fun handle(context: Context, session: NanoHTTPD.IHTTPSession) :NanoHTTPD.Response? {
+        fun handle(context: Context, session: NanoHTTPD.IHTTPSession): NanoHTTPD.Response? {
 
             when (session.method) {
                 NanoHTTPD.Method.POST -> {
-                   handlePOST(context,session)
+                    handlePOST(context, session)
                 }
             }
 
@@ -29,13 +29,13 @@ class IntentRequestHandler {
 
         }
 
-        fun handlePOST(context: Context,session: NanoHTTPD.IHTTPSession): NanoHTTPD.Response? {
+        fun handlePOST(context: Context, session: NanoHTTPD.IHTTPSession): NanoHTTPD.Response? {
             var map = HashMap<String, String>()
             session.parseBody(map)
 
 
             val jsonAdapter = Moshi.Builder()
-                    .build().adapter(IntentRequest::class.java)
+                .build().adapter(IntentRequest::class.java)
             val get1 = jsonAdapter.fromJson(map[("postData")])
 
 

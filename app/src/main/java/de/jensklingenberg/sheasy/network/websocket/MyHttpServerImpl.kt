@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.network
+package de.jensklingenberg.sheasy.network.websocket
 
 
 import android.content.Context
@@ -7,7 +7,6 @@ import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.enums.WebsocketCommand
 import de.jensklingenberg.sheasy.factories.WebSocketFactory
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
-import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
 import de.jensklingenberg.sheasy.utils.BundledNotificationHelper
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
@@ -30,6 +29,11 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
 
     companion object {
         val PORT = BuildConfig.WEBSOCKET_PORT
+
+    }
+
+    override fun stop() {
+
 
     }
 
@@ -64,6 +68,8 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
 
         return WebSocketFactory.createDefaultWebSocket(context, handshake, this)
     }
+
+
 
 
 }

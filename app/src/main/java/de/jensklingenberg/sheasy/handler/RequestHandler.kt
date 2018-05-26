@@ -3,19 +3,18 @@ package de.jensklingenberg.sheasy.handler
 import android.content.Context
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.ApiCommand
-import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
-import de.jensklingenberg.sheasy.extension.remove
-import de.jensklingenberg.sheasy.network.MyHttpServerImpl
+import de.jensklingenberg.sheasy.utils.extension.NanoHTTPDExt
+import de.jensklingenberg.sheasy.utils.extension.remove
 import fi.iki.elonen.NanoHTTPD
 
 class RequestHandlerFactory {
 
 
     companion object {
-        fun create(ctx: Context, session1: NanoHTTPD.IHTTPSession,app: App): NanoHTTPD.Response? {
+        fun create(ctx: Context, session1: NanoHTTPD.IHTTPSession, app: App): NanoHTTPD.Response? {
             var uri = session1.uri
 
-             val API_V1 = "api/v1"
+            val API_V1 = "api/v1"
 
             if (uri.startsWith("/${API_V1}/")) {
                 uri = uri.remove("/${API_V1}/")
@@ -25,12 +24,12 @@ class RequestHandlerFactory {
                 when (apiCommand) {
 
                     ApiCommand.Apps -> {
-                        val response = AppsRequestHandler(app, app.moshi).handle( session1.uri)
-                         return NanoHTTPDExt.debugResponse(response)
+                        val response = AppsRequestHandler(app, app.moshi).handle(session1.uri)
+                        return NanoHTTPDExt.debugResponse(response)
 
                     }
                     ApiCommand.media -> {
-                        return MediaRequestHandler(ctx,app).handle(session1.uri, session1)
+                        return MediaRequestHandler(ctx, app).handle(session1.uri, session1)
                     }
                     ApiCommand.Intent -> {
                         return IntentRequestHandler.handle(ctx, session1)
@@ -52,7 +51,7 @@ class RequestHandlerFactory {
                     }
 
                     ApiCommand.CONTACTS -> {
-                        return ContactsRequestHandler(ctx,app, app.moshi).handle( session1.uri)
+                        return ContactsRequestHandler(ctx, app, app.moshi).handle(session1.uri)
                     }
                 }
             } else {

@@ -1,6 +1,5 @@
 package de.jensklingenberg.sheasy.utils
 
-import android.content.Context
 import android.media.AudioManager
 
 /**

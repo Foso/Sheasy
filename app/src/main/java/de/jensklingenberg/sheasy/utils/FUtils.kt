@@ -25,14 +25,15 @@ class FUtils {
         fun returnFile(filePath: String): ResponseFile? {
             var fis: FileInputStream? = FileInputStream(filePath)
 
-           return when (fis) {
-               null -> {
-                   null
+            return when (fis) {
+                null -> {
+                    null
 
-               }
-               else -> {
-                   ResponseFile(FileInputStream(filePath), getMimeType(filePath))                }
-           }
+                }
+                else -> {
+                    ResponseFile(FileInputStream(filePath), getMimeType(filePath))
+                }
+            }
         }
 
         fun getMimeType(fileUrl: String): String {
@@ -42,21 +43,22 @@ class FUtils {
 
         fun returnAssetFile(context: Context, filePath: String): ResponseFile {
             val stream = context.assets.open(filePath)
-           return ResponseFile(stream, getMimeType(filePath))
+            return ResponseFile(stream, getMimeType(filePath))
         }
-
 
         fun getFilesReponseList(folderPath: String): List<FileResponse> {
             val directory = File(folderPath)
-            return directory.listFiles().map { FileResponse(it.name, it.path) }.toList()
+            return directory.listFiles()?.map { FileResponse(it.name, it.path) }?.toList()
+                    ?: emptyList()
 
         }
 
-        fun returnAPK(context: Context, apkPackageName: String):ResponseFile? {
+        fun returnAPK(context: Context, apkPackageName: String): ResponseFile? {
             AppUtils.getAllInstalledApplications(context).forEach {
                 if (it.packageName == apkPackageName) {
 
-                    val responseFile = ResponseFile(FileInputStream(it.sourceDir), getMimeType(it.sourceDir))
+                    val responseFile =
+                        ResponseFile(FileInputStream(it.sourceDir), getMimeType(it.sourceDir))
                     return responseFile
                 }
 

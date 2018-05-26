@@ -7,9 +7,9 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 
-import de.jensklingenberg.sheasy.ui.MainActivity;
 import de.jensklingenberg.sheasy.App;
 import de.jensklingenberg.sheasy.R;
+import de.jensklingenberg.sheasy.ui.MainActivity;
 
 /**
  * Created by multidots on 6/23/2016.

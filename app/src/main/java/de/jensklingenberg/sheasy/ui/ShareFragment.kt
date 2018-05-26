@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
+import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import kotlinx.android.synthetic.main.activity_share_actvity.*
 
 /**
@@ -19,11 +19,12 @@ class ShareFragment : BaseFragment() {
     lateinit var profileViewModel: ProfileViewModel
 
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-
-        return  inflater.inflate(R.layout.activity_share_actvity, container, false)
+        return inflater.inflate(R.layout.activity_share_actvity, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,19 +35,16 @@ class ShareFragment : BaseFragment() {
 
 
         profileViewModel.sharedFolder.observe(this, Observer {
-            fileTv?.text= it
+            fileTv?.text = it
 
         })
 
     }
 
 
-
-
-
-
     companion object {
-       @JvmStatic fun newInstance(): ShareFragment {
+        @JvmStatic
+        fun newInstance(): ShareFragment {
             return ShareFragment()
         }
     }

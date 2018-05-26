@@ -5,7 +5,7 @@ import android.view.KeyEvent
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.MediaCommand
 import de.jensklingenberg.sheasy.enums.MediaCommand.*
-import de.jensklingenberg.sheasy.extension.getAudioManager
+import de.jensklingenberg.sheasy.utils.extension.getAudioManager
 import de.jensklingenberg.sheasy.utils.KeyUtils
 import de.jensklingenberg.sheasy.utils.MediatUtils
 import fi.iki.elonen.NanoHTTPD
@@ -14,12 +14,12 @@ import fi.iki.elonen.NanoHTTPD
  * Created by jens on 14/2/18.
  */
 
-class MediaRequestHandler(val context: Context,val app: App) {
+class MediaRequestHandler(val context: Context, val app: App) {
 
 
-    fun handle( requestV1: String,session:NanoHTTPD.IHTTPSession): NanoHTTPD.Response? {
-        when(session.method){
-            NanoHTTPD.Method.GET->{
+    fun handle(requestV1: String, session: NanoHTTPD.IHTTPSession): NanoHTTPD.Response? {
+        when (session.method) {
+            NanoHTTPD.Method.GET -> {
                 handleGET(requestV1);
             }
         }
@@ -27,12 +27,12 @@ class MediaRequestHandler(val context: Context,val app: App) {
 
     }
 
-    private fun handleGET( requestV1: String): NanoHTTPD.Response? {
+    private fun handleGET(requestV1: String): NanoHTTPD.Response? {
         val mediaRequest = requestV1.substringAfter(RESOURCE);
 
         val requestSplitArray = mediaRequest.split("/")
         val command = MediaCommand.get(requestSplitArray.first())
-val audioManager = context.getAudioManager()
+        val audioManager = context.getAudioManager()
         when (command) {
             LOUDER -> {
                 MediatUtils(audioManager).louder()
@@ -93,9 +93,6 @@ val audioManager = context.getAudioManager()
 
         val RESOURCE = "/media/"
         val CATEGORY = "MEDIA"
-
-
-
 
 
     }

@@ -5,17 +5,18 @@ import android.content.Intent
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
+import de.jensklingenberg.sheasy.data.viewmodel.SettingsViewModel
+import de.jensklingenberg.sheasy.di.AppComponent
+import de.jensklingenberg.sheasy.di.AppModule
+import de.jensklingenberg.sheasy.di.DaggerAppComponent
+import de.jensklingenberg.sheasy.di.RemoteModule
+import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.model.Event
 import io.ktor.application.install
 import io.ktor.features.CORS
 import io.ktor.features.DefaultHeaders
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
-import io.ktor.websocket.WebSockets
-import org.threeten.bp.Duration
-import android.content.SharedPreferences
-import de.jensklingenberg.sheasy.data.viewmodel.SettingsViewModel
-import de.jensklingenberg.sheasy.enums.EventCategory
 
 
 /**
@@ -33,12 +34,21 @@ class App : Application() {
 
     }
 
+    fun initializeDagger() {
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            // .serviceModule(ServiceModule())
+            .remoteModule(RemoteModule())
+            .build()
+    }
+
+
     override fun onCreate() {
         super.onCreate()
         instance = this
         AndroidThreeTen.init(this)
 
-       // SettingsViewModel.savePort(this,8766)
+        // SettingsViewModel.savePort(this,8766)
 
         port = SettingsViewModel.loadPort(this)
     }
@@ -72,6 +82,7 @@ class App : Application() {
     companion object {
         lateinit var instance: App
         var port = 0
+        lateinit var appComponent: AppComponent
 
     }
 
@@ -84,7 +95,6 @@ class App : Application() {
     }
 
 
-
     fun sendBroadcast(category: EventCategory, text: String) {
         val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_SHARE).apply {
             putExtra(MySharedMessageBroadcastReceiver.ACTION_SHARE, Event(category, text))
@@ -94,9 +104,13 @@ class App : Application() {
     }
 
 
-   @Deprecated("") fun sendBroadcast(category: String, text: String) {
+    @Deprecated("")
+    fun sendBroadcast(category: String, text: String) {
         val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_SHARE).apply {
-            putExtra(MySharedMessageBroadcastReceiver.ACTION_SHARE, Event(EventCategory.DEFAULT, text))
+            putExtra(
+                MySharedMessageBroadcastReceiver.ACTION_SHARE,
+                Event(EventCategory.DEFAULT, text)
+            )
         }
         sendBroadcast(pipp)
 

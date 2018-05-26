@@ -1,4 +1,5 @@
 apply from: '../constants.gradle'
+apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 apply plugin: 'com.android.application'
 
@@ -54,12 +55,19 @@ repositories {
 
     jcenter()
     mavenCentral()
+    mavenRepos.each { buildMaven(it) }
 
-    maven { url "https://dl.bintray.com/kotlin/ktor" }
-    maven { url "https://dl.bintray.com/kotlin/kotlinx" }
 
 }
-
+ktlint {
+    version = "0.23.1"
+    debug = true
+    verbose = true
+    android = true
+    outputToConsole = true
+    reporters = ["PLAIN", "CHECKSTYLE"]
+    ignoreFailures = false
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -89,17 +97,21 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${libs.supportLibVersion}"
     implementation "android.arch.lifecycle:extensions:${lifeCycleExtension}"
     implementation "android.arch.lifecycle:reactivestreams:${lifeCycleExtension}"
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
     implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
     implementation "com.google.dagger:dagger-android:${libs.dagger_version}"
-    implementation "com.google.dagger:dagger-android-support:${libs.dagger_version}" // if you use the support libraries
+    implementation "com.google.dagger:dagger-android-support:${libs.dagger_version}"
+    // if you use the support libraries
     kapt "com.google.dagger:dagger-android-processor:${libs.dagger_version}"
     kapt "com.google.dagger:dagger-compiler:${libs.dagger_version}"
     //implementation 'com.google.android.material:material:1.0.0-alpha1'
     implementation "com.android.support:design:${libs.supportLibVersion}"
-
+    implementation("com.mikepenz:materialdrawer:6.0.6@aar") {
+        transitive = true
+    }
 }
 
 

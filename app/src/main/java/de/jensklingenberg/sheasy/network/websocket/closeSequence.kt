@@ -4,11 +4,13 @@ import io.ktor.websocket.CloseReason
 import io.ktor.websocket.Frame
 import io.ktor.websocket.WebSocketSession
 import io.ktor.websocket.readReason
-import kotlinx.coroutines.experimental.*
-import kotlinx.coroutines.experimental.channels.*
+import kotlinx.coroutines.experimental.CoroutineStart
+import kotlinx.coroutines.experimental.channels.SendChannel
+import kotlinx.coroutines.experimental.channels.actor
+import kotlinx.coroutines.experimental.withTimeoutOrNull
 import org.threeten.bp.Duration
-import java.util.concurrent.*
-import kotlin.coroutines.experimental.*
+import java.util.concurrent.TimeUnit
+import kotlin.coroutines.experimental.CoroutineContext
 
 /**
  * Starts websocket close sequence actor job on [coroutineContext] for websocket [session]
@@ -21,7 +23,12 @@ import kotlin.coroutines.experimental.*
  *
  * Once the job is completed, the connection could be terminated.
  */
-fun closeSequence(coroutineContext: CoroutineContext, session: WebSocketSession, timeout: () -> Duration, populateCloseReason: (reason: CloseReason?) -> Unit): SendChannel<CloseFrameEvent> {
+fun closeSequence(
+    coroutineContext: CoroutineContext,
+    session: WebSocketSession,
+    timeout: () -> Duration,
+    populateCloseReason: (reason: CloseReason?) -> Unit
+): SendChannel<CloseFrameEvent> {
     return actor(coroutineContext, capacity = 2, start = CoroutineStart.LAZY) {
         var reason: CloseReason? = null
 
@@ -41,7 +48,14 @@ fun closeSequence(coroutineContext: CoroutineContext, session: WebSocketSession,
                     }
 
                     is CloseFrameEvent.Received -> {
-                        session.send(Frame.Close(reason ?: CloseReason(CloseReason.Codes.NORMAL, "OK")))
+                        session.send(
+                            Frame.Close(
+                                reason ?: CloseReason(
+                                    CloseReason.Codes.NORMAL,
+                                    "OK"
+                                )
+                            )
+                        )
                         session.flush()
                     }
                 }

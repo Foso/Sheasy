@@ -8,33 +8,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.extension.getClipboardMangaer
+import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
+import de.jensklingenberg.sheasy.utils.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.ui.EventAdapter
+import de.jensklingenberg.sheasy.ui.EventLog.EventAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
-import kotlinx.android.synthetic.main.fragment_log.*
+import kotlinx.android.synthetic.main.fragment_share_with.*
 
 /**
  * Created by jens on 1/4/18.
  */
-class LogFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
+class ShareWithFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
     override fun getTabName(): Int {
-      return R.string.main_frag_tab_name
+        return R.string.main_frag_tab_name
     }
+
     lateinit var profileViewModel: ProfileViewModel
 
     override fun onTagClicked(tag: Event) {
-      activity?.getClipboardMangaer()?.apply {
+        activity?.getClipboardMangaer()?.apply {
             primaryClip = ClipData.newPlainText("simple text", tag.text)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        return  inflater.inflate(R.layout.fragment_log, container, false)
+        return inflater.inflate(R.layout.fragment_share_with, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,16 +52,15 @@ class LogFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
 
     private fun initObserver() {
         profileViewModel.shareMessage.observe(this, Observer {
-            recyclerView.adapter = EventAdapter(this, activity, it!!)
+            recyclerView.adapter = EventAdapter()
         })
     }
 
 
-
-
     companion object {
-       @JvmStatic fun newInstance()= LogFragment()
-        }
+        @JvmStatic
+        fun newInstance() = ShareWithFragment()
+    }
 
 
 }

@@ -9,18 +9,16 @@ import android.view.KeyEvent
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.enums.EventCategory
-import de.jensklingenberg.sheasy.extension.getAudioManager
-import de.jensklingenberg.sheasy.factories.ServerFactory
 import de.jensklingenberg.sheasy.handler.MediaRequestHandler
-import de.jensklingenberg.sheasy.handler.ShareRequestHandler
-import de.jensklingenberg.sheasy.helpers.MoshiHelper
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import de.jensklingenberg.sheasy.model.DeviceResponse
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.toplevel.runInBackground
 import de.jensklingenberg.sheasy.utils.*
+import de.jensklingenberg.sheasy.utils.extension.appsToJson
+import de.jensklingenberg.sheasy.utils.extension.contactsToJson
+import de.jensklingenberg.sheasy.utils.extension.getAudioManager
 import io.ktor.application.call
 import io.ktor.content.PartData
 import io.ktor.content.forEachPart
@@ -35,18 +33,18 @@ import io.ktor.response.respondText
 import io.ktor.routing.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import io.ktor.websocket.*
+import io.ktor.server.netty.NettyApplicationEngine
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 
 /**
  * Created by jens on 25/2/18.
  */
 
-
-
+data class ConnectionInfo(val result: String, val deviceName: String)
 
 
 class HTTPServerService : Service() {
@@ -54,6 +52,10 @@ class HTTPServerService : Service() {
     private var serverImpl: MyHttpServer? = null
     private val app by lazy { App.instance }
     private val APIV1 = "/api/v1/"
+
+    var serv: NettyApplicationEngine? = null
+
+    private var serverRunning = true
 
     inner class ServiceBinder : Binder() {
         val playerService: HTTPServerService
@@ -71,16 +73,19 @@ class HTTPServerService : Service() {
         //app = App.instance
 
 
-        serverImpl = ServerFactory.createHTTPServer(this)
-       // serverImpl?.start(10000)
+        // serverImpl = ServerFactory.createHTTPServer(this)
+        // serverImpl?.start(10000)
 
-        Log.d("PORT:",App.port.toString())
+        Log.d("PORT:", App.port.toString())
 
         runInBackground {
-            embeddedServer(Netty, App.port) {
+            serv = embeddedServer(Netty, App.port) {
                 routing {
                     get("/") {
-                        app.sendBroadcast(EventCategory.CONNECTION, "from IP:"+call.request.origin.host)
+                        app.sendBroadcast(
+                            EventCategory.CONNECTION,
+                            "from IP:" + call.request.origin.host
+                        )
 
                         call.respond(this@HTTPServerService.assets.open("web/index.html").readBytes())
                     }
@@ -99,10 +104,10 @@ class HTTPServerService : Service() {
 
                     get("swagger/{filepath...}") {
                         var test = call.request.uri.replaceFirst("/", "")
-                        Log.d("SWAGGER",test)
+                        Log.d("SWAGGER", test)
                         call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
 
-                        call.respond(this@HTTPServerService.assets.open("swagger/"+test).readBytes())
+                        call.respond(this@HTTPServerService.assets.open("swagger/" + test).readBytes())
 
                     }
 
@@ -118,7 +123,8 @@ class HTTPServerService : Service() {
                             app.sendBroadcast(EventCategory.REQUEST, "/apps")
 
                             val appsResponse =
-                                MoshiHelper.appsToJson(app.moshi, AppUtils.handleApps(app))
+                                app.moshi.appsToJson(AppUtils.getAppsResponseList(app))
+
 
                             call.apply {
                                 response.header(HttpHeaders.AccessControlAllowOrigin, "*")
@@ -128,11 +134,27 @@ class HTTPServerService : Service() {
 
                         }
 
+                        get("connect") {
+                            App.instance.sendBroadcast(
+                                EventCategory.REQUEST,
+                                "Device Info REQUESTED"
+                            )
+                            val deviceInfo = ConnectionInfo("OK", "Frist")
+                            val jsonAdapter = App.instance.moshi.adapter(ConnectionInfo::class.java)
+
+
+                            call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
+                            call.respondText(
+                                jsonAdapter?.toJson(deviceInfo) ?: "",
+                                ContentType.Text.JavaScript
+                            )
+                        }
+
                         get("contacts") {
                             app.sendBroadcast(EventCategory.REQUEST, "/contacts")
 
                             val contacts = ContactUtils.readContacts(app.contentResolver)
-                            val response = MoshiHelper.contactsToJson(app.moshi, contacts)
+                            val response = app.moshi.contactsToJson(contacts)
                             call.respondText(response, ContentType.Text.JavaScript)
                         }
 
@@ -262,7 +284,10 @@ class HTTPServerService : Service() {
                         }
 
                         get("device") {
-                            App.instance.sendBroadcast(EventCategory.REQUEST,"Device Info REQUESTED")
+                            App.instance.sendBroadcast(
+                                EventCategory.REQUEST,
+                                "Device Info REQUESTED"
+                            )
                             val deviceInfo = DeviceUtils.getDeviceInfo()
                             val jsonAdapter = App.instance.moshi.adapter(DeviceResponse::class.java)
 
@@ -276,7 +301,8 @@ class HTTPServerService : Service() {
                     }
 
                 }
-            }.start(wait = true)
+            }.start(wait = serverRunning)
+
         }
 
         try {
@@ -293,9 +319,19 @@ class HTTPServerService : Service() {
     }
 
     override fun stopService(name: Intent?): Boolean {
-        serverImpl?.stop()
+        serverRunning = false
+        serv?.stop(0L, 0L, TimeUnit.SECONDS)
+        //  serverImpl?.stop()
         return super.stopService(name)
 
+    }
+
+    override fun onDestroy() {
+        serverRunning = false
+        serv?.stop(0L, 0L, TimeUnit.SECONDS)
+        //  serverImpl?.stop()
+        Log.d("hhh", "ddd")
+        super.onDestroy()
     }
 
 
