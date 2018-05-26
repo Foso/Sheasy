@@ -20,7 +20,7 @@ class AppsRequestHandler(val app: App, val moshi: Moshi) {
     fun handle(requestV1: String): String {
         app.sendBroadcast(EventCategory.REQUEST, "/apps")
 
-        val appsResponse =moshi.appsToJson(AppUtils.handleApps(app))
+        val appsResponse = moshi.appsToJson(AppUtils.getAppsResponseList(app))
         // return NanoHTTPDExt.debugResponse(appsResponse)
         return appsResponse
     }

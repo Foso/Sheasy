@@ -32,6 +32,11 @@ class ViewModelFactory private constructor(private val mApplication: Application
 
             return ProfileViewModel(mApplication) as T
         }
+
+        if (modelClass.isAssignableFrom(PermissionViewModel::class.java)) {
+
+            return PermissionViewModel(mApplication) as T
+        }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
 
@@ -62,6 +67,12 @@ class ViewModelFactory private constructor(private val mApplication: Application
             // Use a Factory to inject dependencies into the ViewModel
             val factory = ViewModelFactory.getInstance(activity!!.application)
             return ViewModelProviders.of(activity!!, factory).get(ProfileViewModel::class.java)
+        }
+
+        fun obtainPermissionViewModel(activity: FragmentActivity?): PermissionViewModel {
+            // Use a Factory to inject dependencies into the ViewModel
+            val factory = ViewModelFactory.getInstance(activity!!.application)
+            return ViewModelProviders.of(activity!!, factory).get(PermissionViewModel::class.java)
         }
     }
 

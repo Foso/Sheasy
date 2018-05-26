@@ -12,7 +12,7 @@ class AppUtils {
 
     companion object {
 
-        fun handleApps(context: Context): List<AppsResponse> {
+        fun getAppsResponseList(context: Context): List<AppsResponse> {
             val pm = context.packageManager
 
             val appResponseList = getAllInstalledApplications(context).map {

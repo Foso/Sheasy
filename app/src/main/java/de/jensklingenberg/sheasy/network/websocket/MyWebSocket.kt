@@ -2,7 +2,6 @@ package de.jensklingenberg.sheasy.network.websocket;
 
 import android.content.Context
 import android.util.Log
-import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import java.io.IOException

@@ -7,7 +7,6 @@ import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.interfaces.OnNotificationReceivedListener
 import de.jensklingenberg.sheasy.model.NotificationResponse
-import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import de.jensklingenberg.sheasy.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD

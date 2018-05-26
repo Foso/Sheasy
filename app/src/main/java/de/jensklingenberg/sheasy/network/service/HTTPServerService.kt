@@ -10,7 +10,6 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.EventCategory
-import de.jensklingenberg.sheasy.utils.extension.getAudioManager
 import de.jensklingenberg.sheasy.handler.MediaRequestHandler
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import de.jensklingenberg.sheasy.model.DeviceResponse
@@ -19,6 +18,7 @@ import de.jensklingenberg.sheasy.toplevel.runInBackground
 import de.jensklingenberg.sheasy.utils.*
 import de.jensklingenberg.sheasy.utils.extension.appsToJson
 import de.jensklingenberg.sheasy.utils.extension.contactsToJson
+import de.jensklingenberg.sheasy.utils.extension.getAudioManager
 import io.ktor.application.call
 import io.ktor.content.PartData
 import io.ktor.content.forEachPart
@@ -33,9 +33,11 @@ import io.ktor.response.respondText
 import io.ktor.routing.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.ktor.server.netty.NettyApplicationEngine
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -51,6 +53,7 @@ class HTTPServerService : Service() {
     private val app by lazy { App.instance }
     private val APIV1 = "/api/v1/"
 
+    var serv: NettyApplicationEngine? = null
 
     private var serverRunning = true
 
@@ -70,13 +73,13 @@ class HTTPServerService : Service() {
         //app = App.instance
 
 
-       // serverImpl = ServerFactory.createHTTPServer(this)
+        // serverImpl = ServerFactory.createHTTPServer(this)
         // serverImpl?.start(10000)
 
         Log.d("PORT:", App.port.toString())
 
         runInBackground {
-            val server = embeddedServer(Netty, App.port) {
+            serv = embeddedServer(Netty, App.port) {
                 routing {
                     get("/") {
                         app.sendBroadcast(
@@ -119,7 +122,8 @@ class HTTPServerService : Service() {
                         get("apps") {
                             app.sendBroadcast(EventCategory.REQUEST, "/apps")
 
-                            val appsResponse = app.moshi.appsToJson(AppUtils.handleApps(app))
+                            val appsResponse =
+                                app.moshi.appsToJson(AppUtils.getAppsResponseList(app))
 
 
                             call.apply {
@@ -298,6 +302,7 @@ class HTTPServerService : Service() {
 
                 }
             }.start(wait = serverRunning)
+
         }
 
         try {
@@ -315,15 +320,17 @@ class HTTPServerService : Service() {
 
     override fun stopService(name: Intent?): Boolean {
         serverRunning = false
-      //  serverImpl?.stop()
+        serv?.stop(0L, 0L, TimeUnit.SECONDS)
+        //  serverImpl?.stop()
         return super.stopService(name)
 
     }
 
     override fun onDestroy() {
         serverRunning = false
-      //  serverImpl?.stop()
-        Log.d("hhh","ddd")
+        serv?.stop(0L, 0L, TimeUnit.SECONDS)
+        //  serverImpl?.stop()
+        Log.d("hhh", "ddd")
         super.onDestroy()
     }
 

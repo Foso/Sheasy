@@ -48,7 +48,8 @@ class FUtils {
 
         fun getFilesReponseList(folderPath: String): List<FileResponse> {
             val directory = File(folderPath)
-            return directory.listFiles().map { FileResponse(it.name, it.path) }.toList()
+            return directory.listFiles()?.map { FileResponse(it.name, it.path) }?.toList()
+                    ?: emptyList()
 
         }
 

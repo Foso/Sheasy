@@ -2,7 +2,7 @@ package de.jensklingenberg.sheasy.factories
 
 import android.content.Context
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
-import de.jensklingenberg.sheasy.network.MyHttpServerImpl
+import de.jensklingenberg.sheasy.network.websocket.MyHttpServerImpl
 
 class ServerFactory {
 

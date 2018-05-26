@@ -1,13 +1,17 @@
 package de.jensklingenberg.sheasy.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
-import de.jensklingenberg.sheasy.ui.filemanager.FilesFragment
+import de.jensklingenberg.sheasy.ui.apps.AppsFragment
 import de.jensklingenberg.sheasy.ui.main.LogFragment
 import de.jensklingenberg.sheasy.ui.main.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,28 +33,27 @@ class RootFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewPager()
 
     }
 
 
-    fun initViewPager() {
-        mainFragment = MainFragment.newInstance()
-        val logFragment = LogFragment.newInstance()
-        val settingsFragment = SettingsFragment.newInstance()
-        val filesFragment = FilesFragment.newInstance()
+    fun changeFragment(fragment: Fragment, keepInstance: Boolean, imageView: ImageView?) {
+        val trans = childFragmentManager.beginTransaction()
+        if (keepInstance) {
+            trans.add(R.id.rootContainer, fragment)
+        } else {
+            trans.replace(R.id.rootContainer, fragment)
+        }
+        // trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        trans.addToBackStack(null)
 
-        permissionOverViewFragment = PermissionOverViewFragment.newInstance()
-        fragmentPagerAdapter = OverviewPagerAdapter(
-            childFragmentManager,
-            listOf(mainFragment, filesFragment, permissionOverViewFragment)
-        )
-        viewpager.adapter = fragmentPagerAdapter
+        trans.commit()
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = RootFragment()
     }
+
 
 }

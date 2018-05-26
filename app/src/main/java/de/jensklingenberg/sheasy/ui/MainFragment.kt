@@ -2,6 +2,7 @@ package de.jensklingenberg.sheasy.ui
 
 import android.content.ClipData
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -105,6 +106,24 @@ class MainFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
         @JvmStatic
         fun newInstance() = MainFragment()
 
+    }
+
+    fun handleSendImage(intent: Intent) {
+        val imageUri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
+        if (imageUri != null) {
+            // Update UI to reflect image being shared
+        }
+    }
+
+
+    fun handleSendMultipleImages(intent: Intent) {
+        val imageUris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
+        if (imageUris != null) {
+            // Update UI to reflect multiple images being shared
+            val path = imageUris.first().path
+            profileViewModel.setSharedFolder(path)
+            changeFragment(ShareFragment.newInstance(), false)
+        }
     }
 
 }
