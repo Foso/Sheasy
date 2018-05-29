@@ -4,7 +4,7 @@ package de.jensklingenberg.sheasy.enums
  * Created by jens on 8/2/18.
  */
 enum class WebsocketCommand {
-    NOTIFICATION, MESSAGE, INVALID;
+    NOTIFICATION, MESSAGE, INVALID, SCREENSHARE;
 
 
     companion object {

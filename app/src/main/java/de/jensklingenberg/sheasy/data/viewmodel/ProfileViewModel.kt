@@ -76,7 +76,7 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
     fun startService(intent: Intent) {
         val filter = IntentFilter(MySharedMessageBroadcastReceiver.ACTION_SHARE)
         val tt = App.instance.mySharedMessageBroadcastReceiver
-        tt.addd(this)
+        tt.apiEventListener = this
 
 
         application2.registerReceiver(tt, filter)
@@ -88,7 +88,7 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
     fun stopService(intent: Intent) {
         val filter = IntentFilter(MySharedMessageBroadcastReceiver.ACTION_SHARE)
         val tt = App.instance.mySharedMessageBroadcastReceiver
-        tt.addd(this)
+        tt.apiEventListener = this
 
 
         application2.registerReceiver(tt, filter)

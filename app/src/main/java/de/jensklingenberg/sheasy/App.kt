@@ -15,8 +15,10 @@ import de.jensklingenberg.sheasy.model.Event
 import io.ktor.application.install
 import io.ktor.features.CORS
 import io.ktor.features.DefaultHeaders
+import io.ktor.features.PartialContent
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
+import org.threeten.bp.Duration
 
 
 /**
@@ -55,6 +57,10 @@ class App : Application() {
 
     fun io.ktor.application.Application.main() {
         install(DefaultHeaders)
+        install(PartialContent) {
+            maxRangeCount = 10
+        }
+
         install(CORS) {
             anyHost()
             header(HttpHeaders.AccessControlAllowOrigin)
@@ -68,14 +74,14 @@ class App : Application() {
         }
         /*   install(WebSockets){
 
-        }
-     install(BackportWebSocket) {
+        }*/
+        install(BackportWebSocket) {
             pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
             timeout = Duration.ofSeconds(15)
             maxFrameSize =
                     Long.MAX_VALUE // Disabled (max value). The connection will be closed if surpassed this length.
             masking = false
-        }*/
+        }
 
     }
 

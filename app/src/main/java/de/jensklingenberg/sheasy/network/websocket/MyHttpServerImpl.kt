@@ -13,7 +13,19 @@ import fi.iki.elonen.NanoWSD
 import java.util.*
 
 
+interface NanoWsdWebSocketListener {
+    fun onNotificationWebSocketRequest()
+}
+
+
 class MyHttpServerImpl : NanoWSD, MyHttpServer {
+
+    var nanoWsdWebSocketListener: NanoWsdWebSocketListener? = null
+
+    override fun addWebSocketListenr(nanoWsdWebSocketListener: NanoWsdWebSocketListener) {
+        this.nanoWsdWebSocketListener = nanoWsdWebSocketListener
+
+    }
 
     private val context: Context
     var main: Context? = null
@@ -41,10 +53,10 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
         var uri = handshake.uri
         uri = uri.replaceFirst("/", "", true)
 
-        val split = uri.split("/")
-        val websockCommand = WebsocketCommand.get(split[1])
+        val websockCommand = WebsocketCommand.get(uri)
         when (websockCommand) {
             WebsocketCommand.NOTIFICATION -> {
+                nanoWsdWebSocketListener?.onNotificationWebSocketRequest()
                 return WebSocketFactory.createNotificationWebsocket(
                     context,
                     handshake,
@@ -64,12 +76,19 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
                 )
 
             }
+            WebsocketCommand.SCREENSHARE -> {
+                return WebSocketFactory.createScreenshareWebsocket(
+                    context,
+                    handshake,
+                    this,
+                    App.instance.mySharedMessageBroadcastReceiver,
+                    App.instance.moshi
+                )
+            }
         }
 
-        return WebSocketFactory.createDefaultWebSocket(context, handshake, this)
+        return WebSocketFactory.createDefaultWebSocket(handshake, this)
     }
-
-
 
 
 }

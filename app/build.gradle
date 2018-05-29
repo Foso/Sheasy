@@ -81,7 +81,7 @@ dependencies {
     implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
     implementation "io.ktor:ktor-websockets:$libs.ktor_version"
     //implementation "io.ktor:ktor-locations:$libs.ktor_version"
-    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    // implementation 'org.nanohttpd:nanohttpd:2.3.1'
     implementation 'org.nanohttpd:nanohttpd-websocket:2.3.1'
     implementation "com.squareup.moshi:moshi-kotlin:${libs.moshikotlin}"
     implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
@@ -94,6 +94,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${libs.supportLibVersion}"
     implementation "com.android.support:support-annotations:${libs.supportLibVersion}"
     implementation "com.android.support:cardview-v7:${libs.supportLibVersion}"
+    implementation 'us.feras.mdv:markdownview:1.1.0'
     implementation "com.android.support:appcompat-v7:${libs.supportLibVersion}"
     implementation "android.arch.lifecycle:extensions:${lifeCycleExtension}"
     implementation "android.arch.lifecycle:reactivestreams:${lifeCycleExtension}"
@@ -101,6 +102,8 @@ dependencies {
     implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
+  //  compile 'com.github.ar-android:libstreaming:1.0.0'
+
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
     implementation "com.google.dagger:dagger-android:${libs.dagger_version}"
     implementation "com.google.dagger:dagger-android-support:${libs.dagger_version}"
@@ -112,6 +115,7 @@ dependencies {
     implementation("com.mikepenz:materialdrawer:6.0.6@aar") {
         transitive = true
     }
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
 }
 
 

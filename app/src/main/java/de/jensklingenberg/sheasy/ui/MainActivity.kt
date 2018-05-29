@@ -1,9 +1,7 @@
 package de.jensklingenberg.sheasy.ui
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -20,6 +18,8 @@ import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 import de.jensklingenberg.sheasy.ui.apps.AppsFragment
 import de.jensklingenberg.sheasy.ui.filemanager.FilesFragment
 import de.jensklingenberg.sheasy.ui.main.LogFragment
+import de.jensklingenberg.sheasy.ui.screenshare.RecordClientFragment
+import de.jensklingenberg.sheasy.ui.screenshare.RecordFragment
 import de.jensklingenberg.sheasy.ui.main.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
 
     companion object {
         val REQUEST_PERMISSIONS = 100
-
+        val DEBUG = true
+        val TAG = "MainActivity"
     }
 
     lateinit var result: Drawer
@@ -55,18 +56,19 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         val settingsFragment = SettingsFragment.newInstance()
         val appsFragment = AppsFragment.newInstance()
         val filesFragment = FilesFragment.newInstance()
+        val recordFragment = RecordFragment.newInstance()
+        val recordClientFragment = RecordClientFragment.newInstance()
 
         permissionOverViewFragment = PermissionOverViewFragment.newInstance()
         fragmentPagerAdapter = OverviewPagerAdapter(
             supportFragmentManager,
-            listOf(mainFragment, filesFragment, appsFragment, permissionOverViewFragment)
+            listOf(mainFragment, recordFragment, recordClientFragment, permissionOverViewFragment)
         )
         viewpager.adapter = fragmentPagerAdapter
     }
 
 
     private fun initDrawer() {
-
 
         // Create the AccountHeader
         headerResult = AccountHeaderBuilder()
@@ -90,7 +92,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
             )
         )
 
-        result.openDrawer()
+
     }
 
     private fun initBottomBar() {

@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.network.websocket;
+package de.jensklingenberg.sheasy.network.websocket
 
 import android.content.Context
 import android.util.Log
@@ -17,7 +17,6 @@ interface IMyWebSocket {
 }
 
 open class MyWebSocket(
-    context: Context,
     internal var httpSession: NanoHTTPD.IHTTPSession,
     internal var httpServerImpl: MyHttpServerImpl
 ) : NanoWSD.WebSocket(httpSession), IMyWebSocket {

@@ -1,6 +1,11 @@
 package de.jensklingenberg.sheasy.ui.common
 
+import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 import de.jensklingenberg.sheasy.ui.RootFragment
@@ -9,6 +14,20 @@ import de.jensklingenberg.sheasy.ui.RootFragment
  * Created by jens on 1/4/18.
  */
 open class BaseFragment : Fragment() {
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        return inflater.inflate(getLayoutId(), container, false)
+    }
+
+    open fun getLayoutId(): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 
     fun obtainProfileViewModel(): ProfileViewModel {
         return ViewModelFactory.obtainProfileViewModel(activity)

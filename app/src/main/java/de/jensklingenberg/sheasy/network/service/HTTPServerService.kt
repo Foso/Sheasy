@@ -10,10 +10,12 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.EventCategory
+import de.jensklingenberg.sheasy.factories.ServerFactory
 import de.jensklingenberg.sheasy.handler.MediaRequestHandler
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import de.jensklingenberg.sheasy.model.DeviceResponse
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.network.websocket.NanoWsdWebSocketListener
 import de.jensklingenberg.sheasy.toplevel.runInBackground
 import de.jensklingenberg.sheasy.utils.*
 import de.jensklingenberg.sheasy.utils.extension.appsToJson
@@ -47,7 +49,12 @@ import java.util.concurrent.TimeUnit
 data class ConnectionInfo(val result: String, val deviceName: String)
 
 
-class HTTPServerService : Service() {
+class HTTPServerService : Service(), NanoWsdWebSocketListener {
+    override fun onNotificationWebSocketRequest() {
+
+
+    }
+
     private val mBinder = ServiceBinder()
     private var serverImpl: MyHttpServer? = null
     private val app by lazy { App.instance }
@@ -73,8 +80,8 @@ class HTTPServerService : Service() {
         //app = App.instance
 
 
-        // serverImpl = ServerFactory.createHTTPServer(this)
-        // serverImpl?.start(10000)
+        serverImpl = ServerFactory.createHTTPServer(this)
+        serverImpl?.start(10000)
 
         Log.d("PORT:", App.port.toString())
 
@@ -307,8 +314,8 @@ class HTTPServerService : Service() {
 
         try {
 
-            // serverImpl = ServerFactory.createHTTPServer(this)
-            //  serverImpl?.start(10000)
+            serverImpl = ServerFactory.createHTTPServer(this)
+            serverImpl?.start(10000)
             Log.i("TAG", "Server is started: " + serverImpl?.getHostname())
 
         } catch (e: IOException) {

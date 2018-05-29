@@ -1,6 +1,6 @@
 ext {
 
-    mavenRepos = ["https://plugins.gradle.org/m2/", "https://dl.bintray.com/kotlin/ktor", "https://dl.bintray.com/kotlin/kotlinx"]
+    mavenRepos = ["https://plugins.gradle.org/m2/", "https://dl.bintray.com/kotlin/ktor", "https://dl.bintray.com/kotlin/kotlinx", "https://jitpack.io"]
 
 
     configuration = [buildTools    : '27.1.0',
@@ -15,7 +15,7 @@ ext {
 
 
     libs = [ktx              : '0.3',
-            dagger_version: '2.15',
+            dagger_version   : '2.15',
             aboutlibraries   : '6.0.6@aar',
             junit            : '4.12',
             supportLibVersion: '27.1.1',

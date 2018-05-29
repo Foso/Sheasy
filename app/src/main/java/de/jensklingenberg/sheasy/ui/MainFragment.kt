@@ -40,20 +40,16 @@ class MainFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        return inflater.inflate(R.layout.fragment_main, container, false)
-    }
+    override fun getLayoutId() = R.layout.fragment_main
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         edPath.setText(Environment.getExternalStorageDirectory().toString())
         initIPAddress()
         profileViewModel = obtainProfileViewModel()
+        profileViewModel.startService(Intent(activity, HTTPServerService::class.java))
 
+        // markdownView.loadMarkdownFile("https://raw.githubusercontent.com/wiki/Foso/Notes/Android-Studio.md")
         serverSwitch?.setOnCheckedChangeListener { buttonView, isChecked ->
             when (isChecked) {
                 true -> {

@@ -33,7 +33,7 @@ class BackportWebSocket(
 
     companion object Feature :
         ApplicationFeature<Application, WebSocketOptions, BackportWebSocket> {
-        override val key = AttributeKey<BackportWebSocket>("WebSockets")
+        override val key = AttributeKey<BackportWebSocket>("BackportWebSocket")
 
         override fun install(
             pipeline: Application,
