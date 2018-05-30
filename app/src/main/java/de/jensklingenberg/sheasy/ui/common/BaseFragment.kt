@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.ShareScreenViewModel
@@ -16,6 +17,12 @@ import de.jensklingenberg.sheasy.ui.RootFragment
  */
 open class BaseFragment : Fragment() {
 
+
+    init {
+        initializeDagger()
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

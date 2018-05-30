@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         permissionOverViewFragment = PermissionOverViewFragment.newInstance()
         fragmentPagerAdapter = OverviewPagerAdapter(
             supportFragmentManager,
-            listOf(mainFragment, recordFragment, recordClientFragment, permissionOverViewFragment)
+            listOf(mainFragment, appsFragment, recordClientFragment, permissionOverViewFragment)
         )
         viewpager.adapter = fragmentPagerAdapter
     }

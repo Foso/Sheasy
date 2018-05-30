@@ -5,10 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MediatorLiveData;
 import android.support.annotation.NonNull;
 
-public class BaseViewModel extends AndroidViewModel {
-    public MediatorLiveData<Integer> snack = new MediatorLiveData<>();
+open class BaseViewModel(application2: Application) : AndroidViewModel(application2) {
 
-    public BaseViewModel(@NonNull Application application) {
-        super(application);
-    }
+
 }

@@ -33,8 +33,7 @@ class ScreenSharWebsocket(
             }
         }
     }
-
-
+    
     init {
         val filter = IntentFilter(EVENT_SCREENSHARE)
         mySharedMessageBroadcastReceiver.onScreenShareEventListener = this
@@ -58,9 +57,7 @@ class ScreenSharWebsocket(
             .repeatUntil({ isClosed })
             .subscribeOn(Schedulers.newThread())
             .observeOn(Schedulers.newThread())
-            .subscribe { result ->
-                //Use result for something
-            }
+            .subscribe {}
 
 
     }

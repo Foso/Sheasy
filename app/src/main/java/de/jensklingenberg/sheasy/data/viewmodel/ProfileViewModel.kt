@@ -1,18 +1,12 @@
 package de.jensklingenberg.sheasy.data.viewmodel
 
-import android.Manifest
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
-import android.provider.Settings
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.NotificationManagerCompat
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.PopupMenu
 import android.view.View
 import de.jensklingenberg.sheasy.App
@@ -22,10 +16,9 @@ import de.jensklingenberg.sheasy.interfaces.ApiEventListener
 import de.jensklingenberg.sheasy.model.AppsResponse
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.FileResponse
-import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.utils.AppUtils
 import de.jensklingenberg.sheasy.utils.FUtils
-import de.jensklingenberg.sheasy.utils.PermissionUtils.Companion.MY_PERMISSIONS_REQUEST_READ_CONTACTS
+import javax.inject.Inject
 
 
 class ProfileViewModel(val application2: Application) : AndroidViewModel(application2),
@@ -40,20 +33,16 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
 
 
     fun getFiles(folderPath: String) {
-        val fileList = FUtils.getFilesReponseList(folderPath)
-
-        //fileList.forEach { Log.d("this",it.name) }
-        files.value = fileList
+        files.value = FUtils.getFilesReponseList(folderPath)
     }
 
     fun showPopup(context: Context?, v: View) {
         context?.let {
-            val popup = PopupMenu(context, v)
+            PopupMenu(context, v).apply {
+                inflate(R.menu.actions)
+                show()
+            }
 
-            // val inflater = popup.getMenuInflater()
-            // inflater.inflate(R.menu.actions, popup.getMenu())
-            popup.inflate(R.menu.actions)
-            popup.show()
         }
 
     }
@@ -75,11 +64,10 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
 
     fun startService(intent: Intent) {
         val filter = IntentFilter(MySharedMessageBroadcastReceiver.ACTION_SHARE)
-        val tt = App.instance.mySharedMessageBroadcastReceiver
-        tt.apiEventListener = this
+        val mySharedMessageBroadcastReceiver = App.instance.mySharedMessageBroadcastReceiver
+        mySharedMessageBroadcastReceiver.apiEventListener = this
 
-
-        application2.registerReceiver(tt, filter)
+        application2.registerReceiver(mySharedMessageBroadcastReceiver, filter)
         application2.startService(intent)
 
 

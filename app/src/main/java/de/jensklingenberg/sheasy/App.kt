@@ -49,41 +49,12 @@ class App : Application() {
         super.onCreate()
         instance = this
         AndroidThreeTen.init(this)
-
+        initializeDagger()
         // SettingsViewModel.savePort(this,8766)
 
         port = SettingsViewModel.loadPort(this)
     }
 
-    fun io.ktor.application.Application.main() {
-        install(DefaultHeaders)
-        install(PartialContent) {
-            maxRangeCount = 10
-        }
-
-        install(CORS) {
-            anyHost()
-            header(HttpHeaders.AccessControlAllowOrigin)
-            allowCredentials = true
-            listOf(
-                HttpMethod.Get,
-                HttpMethod.Put,
-                HttpMethod.Delete,
-                HttpMethod.Options
-            ).forEach { method(it) }
-        }
-        /*   install(WebSockets){
-
-        }*/
-        install(BackportWebSocket) {
-            pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
-            timeout = Duration.ofSeconds(15)
-            maxFrameSize =
-                    Long.MAX_VALUE // Disabled (max value). The connection will be closed if surpassed this length.
-            masking = false
-        }
-
-    }
 
     companion object {
         lateinit var instance: App
@@ -110,7 +81,7 @@ class App : Application() {
     }
 
 
-    @Deprecated("")
+    @Deprecated("Use EventCategory")
     fun sendBroadcast(category: String, text: String) {
         val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_SHARE).apply {
             putExtra(

@@ -23,27 +23,39 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.annotation.VisibleForTesting
 import android.support.v4.app.FragmentActivity
+import de.jensklingenberg.sheasy.App
+import javax.inject.Inject
 
-class ViewModelFactory private constructor(private val mApplication: Application) :
+
+class ViewModelFactory private constructor() :
     ViewModelProvider.NewInstanceFactory() {
+
+    @Inject
+    lateinit var application: Application
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
 
-            return ProfileViewModel(mApplication) as T
+            return ProfileViewModel(application) as T
         }
 
         if (modelClass.isAssignableFrom(ShareScreenViewModel::class.java)) {
 
-            return ShareScreenViewModel(mApplication) as T
+            return ShareScreenViewModel(application) as T
         }
 
         if (modelClass.isAssignableFrom(PermissionViewModel::class.java)) {
 
-            return PermissionViewModel(mApplication) as T
+            return PermissionViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
+
+    init {
+        initializeDagger()
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
 
     companion object {
 
@@ -56,7 +68,7 @@ class ViewModelFactory private constructor(private val mApplication: Application
             if (INSTANCE == null) {
                 synchronized(ViewModelFactory::class.java) {
                     if (INSTANCE == null) {
-                        INSTANCE = ViewModelFactory(application)
+                        INSTANCE = ViewModelFactory()
                     }
                 }
             }

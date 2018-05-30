@@ -13,9 +13,8 @@ import de.jensklingenberg.sheasy.ui.common.ITabView
  * Created by jens on 1/4/18.
  */
 class SettingsFragment : BaseFragment(), ITabView {
-    override fun getTabNameResId(): Int {
-        return R.string.main_frag_tab_name
-    }
+    override fun getTabNameResId() = R.string.settings
+
 
     lateinit var profileViewModel: ProfileViewModel
 

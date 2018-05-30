@@ -20,38 +20,32 @@ import de.jensklingenberg.sheasy.ui.common.ITabView
 import de.jensklingenberg.sheasy.ui.filemanager.FilesFragment
 import kotlinx.android.synthetic.main.component_toolbar.*
 import kotlinx.android.synthetic.main.fragment_apps.*
+import javax.inject.Inject
 
 
 /**
  * Created by jens on 1/4/18.
  */
 class AppsFragment : BaseFragment(), AppsAdapter.OnTagClickListener, ITabView {
-    override fun onTagClicked(view: View, tag: AppsResponse) {
-        profileViewModel?.showPopup(context!!, view)
 
-    }
-
-
-    override fun getTabNameResId(): Int {
-        return R.string.main_frag_tab_name
-    }
-
+    @Inject
     lateinit var profileViewModel: ProfileViewModel
 
     val filesAdapter = AppsAdapter()
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onTagClicked(view: View, tag: AppsResponse) {
+        profileViewModel?.showPopup(context!!, view)
 
-        return inflater.inflate(R.layout.fragment_apps, container, false)
     }
+
+    override fun getTabNameResId() = R.string.main_frag_tab_name
+
+
+    override fun getLayoutId() = R.layout.fragment_apps
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profileViewModel = obtainProfileViewModel()
         filesAdapter.onTagClickListener = this
         recyclerView.adapter = filesAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)

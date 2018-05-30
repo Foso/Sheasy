@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.data.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.preference.PreferenceManager
+import androidx.core.content.edit
 import de.jensklingenberg.sheasy.App
 
 
@@ -15,17 +16,16 @@ class SettingsViewModel(val application2: Application) : AndroidViewModel(applic
         fun savePort(application: Application, s: Int) {
             val preferences =
                 PreferenceManager.getDefaultSharedPreferences(App.instance)
-            val editor = preferences.edit()
-            editor.putInt("PORT", s)
-            editor.apply()
+            val editor = preferences.edit {
+                putInt("PORT", s)
+                apply()
+            }
+
         }
 
 
         fun loadPort(application: Application): Int {
-            val preferences =
-                PreferenceManager.getDefaultSharedPreferences(application)
-            val name = preferences.getInt("PORT", 8766)
-            return name
+            return PreferenceManager.getDefaultSharedPreferences(application).getInt("PORT", 8766)
 
         }
 

@@ -5,6 +5,7 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.utils.AppUtils
 import de.jensklingenberg.sheasy.utils.extension.appsToJson
+import de.jensklingenberg.sheasy.utils.extension.listToJSON
 
 
 /**
@@ -20,7 +21,7 @@ class AppsRequestHandler(val app: App, val moshi: Moshi) {
     fun handle(requestV1: String): String {
         app.sendBroadcast(EventCategory.REQUEST, "/apps")
 
-        val appsResponse = moshi.appsToJson(AppUtils.getAppsResponseList(app))
+        val appsResponse = moshi.listToJSON(AppUtils.getAppsResponseList(app))
         // return NanoHTTPDExt.debugResponse(appsResponse)
         return appsResponse
     }

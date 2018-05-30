@@ -9,6 +9,7 @@ import android.view.KeyEvent
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.BackportWebSocket
 import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.factories.ServerFactory
 import de.jensklingenberg.sheasy.handler.MediaRequestHandler
@@ -21,12 +22,18 @@ import de.jensklingenberg.sheasy.utils.*
 import de.jensklingenberg.sheasy.utils.extension.appsToJson
 import de.jensklingenberg.sheasy.utils.extension.contactsToJson
 import de.jensklingenberg.sheasy.utils.extension.getAudioManager
+import de.jensklingenberg.sheasy.utils.extension.listToJSON
 import io.ktor.application.call
+import io.ktor.application.install
 import io.ktor.content.PartData
 import io.ktor.content.forEachPart
+import io.ktor.features.CORS
+import io.ktor.features.DefaultHeaders
+import io.ktor.features.PartialContent
 import io.ktor.features.origin
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
 import io.ktor.request.receiveMultipart
 import io.ktor.request.uri
 import io.ktor.response.header
@@ -36,6 +43,7 @@ import io.ktor.routing.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
+import org.threeten.bp.Duration
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
@@ -50,10 +58,6 @@ data class ConnectionInfo(val result: String, val deviceName: String)
 
 
 class HTTPServerService : Service(), NanoWsdWebSocketListener {
-    override fun onNotificationWebSocketRequest() {
-
-
-    }
 
     private val mBinder = ServiceBinder()
     private var serverImpl: MyHttpServer? = null
@@ -63,6 +67,7 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
     var serv: NettyApplicationEngine? = null
 
     private var serverRunning = true
+
 
     inner class ServiceBinder : Binder() {
         val playerService: HTTPServerService
@@ -75,15 +80,45 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
     }
 
 
+    override fun onNotificationWebSocketRequest() {
+
+
+    }
+
+    fun io.ktor.application.Application.main() {
+        install(DefaultHeaders)
+        install(PartialContent) {
+            maxRangeCount = 10
+        }
+
+        install(CORS) {
+            anyHost()
+            header(HttpHeaders.AccessControlAllowOrigin)
+            allowCredentials = true
+            listOf(
+                HttpMethod.Get,
+                HttpMethod.Put,
+                HttpMethod.Delete,
+                HttpMethod.Options
+            ).forEach { method(it) }
+        }
+
+        install(BackportWebSocket) {
+            pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
+            timeout = Duration.ofSeconds(15)
+            maxFrameSize =
+                    Long.MAX_VALUE // Disabled (max value). The connection will be closed if surpassed this length.
+            masking = false
+        }
+
+    }
+
+
     override fun onCreate() {
         super.onCreate()
-        //app = App.instance
-
 
         serverImpl = ServerFactory.createHTTPServer(this)
         serverImpl?.start(10000)
-
-        Log.d("PORT:", App.port.toString())
 
         runInBackground {
             serv = embeddedServer(Netty, App.port) {
@@ -130,7 +165,7 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                             app.sendBroadcast(EventCategory.REQUEST, "/apps")
 
                             val appsResponse =
-                                app.moshi.appsToJson(AppUtils.getAppsResponseList(app))
+                                app.moshi.listToJSON(AppUtils.getAppsResponseList(app))
 
 
                             call.apply {
@@ -161,7 +196,7 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                             app.sendBroadcast(EventCategory.REQUEST, "/contacts")
 
                             val contacts = ContactUtils.readContacts(app.contentResolver)
-                            val response = app.moshi.contactsToJson(contacts)
+                            val response = app.moshi.listToJSON(contacts)
                             call.respondText(response, ContentType.Text.JavaScript)
                         }
 
@@ -237,20 +272,17 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
 
                                         } else {
                                             val moshi = Moshi.Builder().build()
-                                            val listMyData = Types.newParameterizedType(
-                                                List::class.java,
-                                                FileResponse::class.java
-                                            )
-                                            val adapter =
-                                                moshi.adapter<List<FileResponse>>(listMyData)
-                                                    .toJson(fileList)
+
 
                                             call.apply {
                                                 response.header(
                                                     HttpHeaders.AccessControlAllowOrigin,
                                                     "*"
                                                 )
-                                                respondText(adapter, ContentType.Text.JavaScript)
+                                                respondText(
+                                                    moshi.listToJSON(fileList),
+                                                    ContentType.Text.JavaScript
+                                                )
                                             }
 
                                         }
@@ -283,7 +315,7 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                                 app.sendBroadcast(EventCategory.MEDIA, "puase")
 
                                 KeyUtils.sendKeyEvent(app, KeyEvent.KEYCODE_MEDIA_PAUSE)
-                                app.sendBroadcast("MEDIA", "Media pause")
+                                app.sendBroadcast(EventCategory.MEDIA, "Media pause")
 
                                 call.respondText("Pause", ContentType.Text.JavaScript)
                             }

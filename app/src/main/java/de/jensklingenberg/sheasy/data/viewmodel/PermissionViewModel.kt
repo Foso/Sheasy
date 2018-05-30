@@ -29,7 +29,7 @@ import de.jensklingenberg.sheasy.utils.FUtils
 import de.jensklingenberg.sheasy.utils.PermissionUtils.Companion.MY_PERMISSIONS_REQUEST_READ_CONTACTS
 
 
-class PermissionViewModel(val application2: Application) : AndroidViewModel(application2) {
+class PermissionViewModel(val application2: Application) : BaseViewModel(application2) {
 
     var storagePermission: MutableLiveData<Resource<Boolean>> = MutableLiveData()
     var notificationPermissionStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData()
@@ -84,25 +84,33 @@ class PermissionViewModel(val application2: Application) : AndroidViewModel(appl
 
     }
 
-    fun requestStorage(context: Activity){
+    fun requestStorage(context: Activity) {
 
-        if (ContextCompat.checkSelfPermission(context,
-                        Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
 
             // Permission is not granted
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(context,
-                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    context,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            ) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
 
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(context,
-                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                        MY_PERMISSIONS_REQUEST_READ_CONTACTS)
+                ActivityCompat.requestPermissions(
+                    context,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS
+                )
                 storagePermission.value = Resource.success(true)
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an

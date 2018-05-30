@@ -59,13 +59,11 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return 0
-    }
+    override fun getItemViewType(position: Int) = 0
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+
+    override fun getItemCount() = list.size
+
 
     interface OnTagClickListener {
         fun onTagClicked(tag: Event)
