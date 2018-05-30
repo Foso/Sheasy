@@ -28,7 +28,7 @@ class FilesFragment : BaseFragment(), FilesAdapter.OnEntryClickListener, ITabVie
 
     }
 
-    override fun getTabName() = R.string.main_frag_tab_name
+    override fun getTabNameResId() = R.string.main_frag_tab_name
 
 
     lateinit var profileViewModel: ProfileViewModel

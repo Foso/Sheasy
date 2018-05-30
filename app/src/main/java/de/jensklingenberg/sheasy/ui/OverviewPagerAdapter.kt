@@ -25,6 +25,6 @@ class OverviewPagerAdapter(
 
     // Returns the page title for the top indicator
     override fun getPageTitle(position: Int): CharSequence? {
-        return App.instance.getString(fragments[position].getTabName())
+        return App.instance.getString(fragments[position].getTabNameResId())
     }
 }

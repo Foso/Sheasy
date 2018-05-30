@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
+import de.jensklingenberg.sheasy.data.viewmodel.ShareScreenViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 import de.jensklingenberg.sheasy.ui.RootFragment
 
@@ -31,6 +32,10 @@ open class BaseFragment : Fragment() {
 
     fun obtainProfileViewModel(): ProfileViewModel {
         return ViewModelFactory.obtainProfileViewModel(activity)
+    }
+
+    fun obtainShareScreenViewModel(): ShareScreenViewModel {
+        return ViewModelFactory.obtainShareScreenViewModel(activity)
     }
 
     fun changeFragment(fragment: Fragment, keepInstance: Boolean = false) {

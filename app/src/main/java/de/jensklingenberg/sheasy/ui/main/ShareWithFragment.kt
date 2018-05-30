@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_share_with.*
  * Created by jens on 1/4/18.
  */
 class ShareWithFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
-    override fun getTabName(): Int {
+    override fun getTabNameResId(): Int {
         return R.string.main_frag_tab_name
     }
 

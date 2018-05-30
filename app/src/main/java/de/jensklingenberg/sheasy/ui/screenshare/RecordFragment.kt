@@ -15,23 +15,26 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.support.annotation.RequiresApi
+import android.util.Base64
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.Display
+import android.view.Surface
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
 import de.jensklingenberg.sheasy.ui.common.bindView
+import de.jensklingenberg.sheasy.utils.extension.mediaProjectionManager
 import java.io.File
 import java.io.IOException
 
 /**
  * Created by jens on 1/4/18.
  */
-class RecordFragment : BaseFragment(), ITabView, AdapterView.OnItemSelectedListener {
-
-
+class RecordFragment : BaseFragment(), ITabView {
     private val TAG = "ScreenRecordActivity"
     private var mediaProjectionManager: MediaProjectionManager? = null
     private var mediaProjection: MediaProjection? = null
@@ -40,28 +43,16 @@ class RecordFragment : BaseFragment(), ITabView, AdapterView.OnItemSelectedListe
     private var videoEncoder: MediaCodec? = null
     private var muxerStarted: Boolean = false
     private var trackIndex = -1
-
     val play: Button by bindView(R.id.play_stop_button)
-
-
     val toggleRecording: Button  by bindView(R.id.screen_record_button)
-
-    private var mSelectedMovie: Int = 0
     private var mShowStopLabel: Boolean = false
-    private var mPlayTask: MoviePlayer.PlayTask? = null
     private var mSurfaceHolderReady = false
-
-
     private val REQUEST_CODE_CAPTURE_PERM = 1234
     private val VIDEO_MIME_TYPE = "video/avc"
-
     private var encoderCallback: android.media.MediaCodec.Callback? = null
 
 
-    override fun getTabName(): Int {
-        return R.string.main_frag_tab_name
-    }
-
+    override fun getTabNameResId() = R.string.main_frag_tab_name
 
     override fun getLayoutId() = R.layout.fragment_record
 
@@ -94,9 +85,7 @@ class RecordFragment : BaseFragment(), ITabView, AdapterView.OnItemSelectedListe
             return
         }
 
-
-
-        toggleRecording.setOnClickListener(View.OnClickListener { v ->
+        toggleRecording.setOnClickListener({ v ->
             if (v.id == R.id.screen_record_button) {
                 if (muxerStarted) {
                     stopRecording()
@@ -136,13 +125,20 @@ class RecordFragment : BaseFragment(), ITabView, AdapterView.OnItemSelectedListe
                         val b = ByteArray(info.size)
                         encodedData.position(info.offset)
                         encodedData.limit(info.offset + info.size)
-                        encodedData.get(b, info.offset, info.offset + info.size)
+                        encodedData[b, info.offset, info.offset + info.size]
                         Log.d("this", encodedData.toString())
+                        Log.d("this", b.toString())
+                        val infoString = info.offset.toString() + "," + info.size + "," +
+                                info.presentationTimeUs + "," + info.flags
+
+
+                        val response =
+                            Base64.encodeToString(b, Base64.DEFAULT) + ",," + infoString
 
                         Intent(MySharedMessageBroadcastReceiver.EVENT_SCREENSHARE).apply {
                             putExtra(
                                 MySharedMessageBroadcastReceiver.EVENT_SCREENSHARE,
-                                encodedData.toString()
+                                response
                             )
                             activity?.sendBroadcast(this)
                         }
@@ -257,29 +253,35 @@ class RecordFragment : BaseFragment(), ITabView, AdapterView.OnItemSelectedListe
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private fun prepareVideoEncoder(width: Int, height: Int) {
-        val format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE, width, height)
         val frameRate = 30 // 30 fps
+        val format = MediaFormat.createVideoFormat(VIDEO_MIME_TYPE, width, height).apply {
+            setInteger(
+                MediaFormat.KEY_COLOR_FORMAT,
+                MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface
+            )
+            setInteger(MediaFormat.KEY_BIT_RATE, (1024.0 * 1024.0 * 0.5).toInt())
+            setInteger(MediaFormat.KEY_FRAME_RATE, frameRate)
+            setInteger(MediaFormat.KEY_CAPTURE_RATE, frameRate)
+            setInteger(MediaFormat.KEY_REPEAT_PREVIOUS_FRAME_AFTER, 1000000 / frameRate)
+            setInteger(MediaFormat.KEY_CHANNEL_COUNT, 1)
+            setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1) // 1 seconds between I-frames
+        }
 
         // Set some required properties. The media codec may fail if these aren't defined.
-        format.setInteger(
-            MediaFormat.KEY_COLOR_FORMAT,
-            MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface
-        )
-        format.setInteger(MediaFormat.KEY_BIT_RATE, 6000000) // 6Mbps
-        format.setInteger(MediaFormat.KEY_FRAME_RATE, frameRate)
-        format.setInteger(MediaFormat.KEY_CAPTURE_RATE, frameRate)
-        format.setInteger(MediaFormat.KEY_REPEAT_PREVIOUS_FRAME_AFTER, 1000000 / frameRate)
-        format.setInteger(MediaFormat.KEY_CHANNEL_COUNT, 1)
-        format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1) // 1 seconds between I-frames
+
 
         // Create a MediaCodec encoder and configure it. Get a Surface we can use for recording into.
         try {
 
-            videoEncoder = MediaCodec.createEncoderByType(VIDEO_MIME_TYPE)
-            videoEncoder!!.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
+            videoEncoder = MediaCodec.createEncoderByType(VIDEO_MIME_TYPE).apply {
+                configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
+                setCallback(encoderCallback)
+
+            }
+
             inputSurface = videoEncoder!!.createInputSurface()
-            videoEncoder!!.setCallback(encoderCallback)
-            videoEncoder!!.start()
+            videoEncoder?.start()
+
         } catch (e: IOException) {
             releaseEncoders()
         }
@@ -336,19 +338,6 @@ class RecordFragment : BaseFragment(), ITabView, AdapterView.OnItemSelectedListe
             }
         }
     }
-
-
-    /*
-     * Called when the movie Spinner gets touched.
-     */
-    override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-        val spinner = parent as Spinner
-        mSelectedMovie = spinner.selectedItemPosition
-
-        //Log.d(TAG, "onItemSelected: " + mSelectedMovie + " '" + mMovieFiles[mSelectedMovie] + "'")
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>) {}
 
 
 }

@@ -7,7 +7,7 @@ import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver.Companion.MESSAGE
 import de.jensklingenberg.sheasy.interfaces.NotifyClientEventListener
 import de.jensklingenberg.sheasy.model.NotificationResponse
-import de.jensklingenberg.sheasy.toplevel.runInBackground
+import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import io.reactivex.Observable
@@ -23,7 +23,7 @@ class MessageWebsocket(
     httpServerImpl: MyHttpServerImpl,
     mySharedMessageBroadcastReceiver: MySharedMessageBroadcastReceiver,
     val moshi: Moshi
-) : MyWebSocket(context, handshakeRequest, httpServerImpl), NotifyClientEventListener {
+) : MyWebSocket(handshakeRequest, httpServerImpl), NotifyClientEventListener {
 
     override fun onMessageForClientReceived(notificationResponse: NotificationResponse) {
 

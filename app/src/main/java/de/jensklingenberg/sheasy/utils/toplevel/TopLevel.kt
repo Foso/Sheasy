@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.toplevel
+package de.jensklingenberg.sheasy.utils.toplevel
 
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers

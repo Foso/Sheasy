@@ -7,7 +7,7 @@ import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.interfaces.OnNotificationReceivedListener
 import de.jensklingenberg.sheasy.model.NotificationResponse
-import de.jensklingenberg.sheasy.toplevel.runInBackground
+import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import io.reactivex.Observable
@@ -23,7 +23,7 @@ class NotificationWebsocket(
     httpServerImpl: MyHttpServerImpl,
     mySharedMessageBroadcastReceiver: MySharedMessageBroadcastReceiver,
     val moshi: Moshi
-) : MyWebSocket(context, handshakeRequest, httpServerImpl), OnNotificationReceivedListener {
+) : MyWebSocket(handshakeRequest, httpServerImpl), OnNotificationReceivedListener {
 
 
     init {
@@ -69,7 +69,6 @@ class NotificationWebsocket(
         super.onClose(code, reason, initiatedByRemote)
 
     }
-
 
 
     private fun startRunner() {

@@ -32,7 +32,7 @@ class AppsFragment : BaseFragment(), AppsAdapter.OnTagClickListener, ITabView {
     }
 
 
-    override fun getTabName(): Int {
+    override fun getTabNameResId(): Int {
         return R.string.main_frag_tab_name
     }
 

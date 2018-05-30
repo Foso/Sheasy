@@ -46,7 +46,7 @@
         android:text="Recordon"
         android:layout_toEndOf="@id/playMovieFile_spinner"
         android:layout_toRightOf="@id/playMovieFile_spinner"
-        android:onClick="clickPlayStop" />
+         />
 
     <SurfaceView
         android:id="@+id/surfaceView"

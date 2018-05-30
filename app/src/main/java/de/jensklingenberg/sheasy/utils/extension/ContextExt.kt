@@ -4,6 +4,7 @@ import android.app.NotificationManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.media.AudioManager
+import android.media.projection.MediaProjectionManager
 import java.io.File
 import java.io.InputStream
 
@@ -22,6 +23,11 @@ public fun Context.getClipboardMangaer(): ClipboardManager {
 public fun Context.notifcationManager(): NotificationManager {
     return this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 }
+
+public fun Context.mediaProjectionManager(): MediaProjectionManager {
+    return this.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+}
+
 
 fun InputStream.toFile(path: String) {
     use { input ->

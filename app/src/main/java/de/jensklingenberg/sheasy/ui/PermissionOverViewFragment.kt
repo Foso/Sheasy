@@ -1,5 +1,6 @@
 package de.jensklingenberg.sheasy.ui
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,26 +13,22 @@ import de.jensklingenberg.sheasy.data.viewmodel.PermissionViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 import de.jensklingenberg.sheasy.model.Status
+import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
+import de.jensklingenberg.sheasy.utils.extension.nonNull
 import kotlinx.android.synthetic.main.fragment_permission_overview.*
 
 
 /**
  * Created by jens on 1/4/18.
  */
-class PermissionOverViewFragment : Fragment(), ITabView {
+class PermissionOverViewFragment : BaseFragment(), ITabView {
     lateinit var permissiViewModel: PermissionViewModel
-    override fun getTabName(): Int {
+    override fun getTabNameResId(): Int {
         return R.string.main_frag_tab_name
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        return inflater.inflate(R.layout.fragment_permission_overview, container, false)
-    }
+    override fun getLayoutId() = R.layout.fragment_permission_overview
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,11 +39,10 @@ class PermissionOverViewFragment : Fragment(), ITabView {
         permissiViewModel.checkNotifcationPermission(context!!)
         permissiViewModel.checkContactsPermission()
 
-
     }
 
     private fun initObserver() {
-        permissiViewModel.storagePermission.observe(this, Observer {
+        permissiViewModel.storagePermission.nonNull().observe(this, Observer {
 
             when (it?.status) {
                 Status.SUCCESS -> {
@@ -55,7 +51,12 @@ class PermissionOverViewFragment : Fragment(), ITabView {
                             toggleButton.isActivated = true
                         }
                         false -> {
-                            toggleButton.isActivated = false
+                            toggleButton.apply {
+                                isActivated = false
+                                setOnClickListener {
+                                    permissiViewModel.requestStorage(activity as AppCompatActivity)
+                                }
+                            }
                         }
                     }
 

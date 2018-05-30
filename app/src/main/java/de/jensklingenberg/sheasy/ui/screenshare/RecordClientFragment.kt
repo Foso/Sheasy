@@ -7,6 +7,7 @@ import android.media.MediaMuxer
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.Surface
 import android.view.SurfaceHolder
@@ -16,12 +17,15 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.MainActivity
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
+import de.jensklingenberg.sheasy.utils.extension.str_to_bb
+import io.ktor.util.decodeString
 import kotlinx.android.synthetic.main.fragment_record_client.*
 import okhttp3.*
 import okio.ByteString
 import okhttp3.OkHttpClient
 import java.io.IOException
 import java.nio.ByteBuffer
+import java.nio.charset.Charset
 
 
 /**
@@ -33,28 +37,16 @@ class RecordClientFragment : BaseFragment(), ITabView {
 
     private val TAG = "ScreenRecordActivity"
 
-    private var inputSurface: Surface? = null
-    private var videoEncoder: MediaCodec? = null
-    private var trackIndex = -1
     private var firstIFrameAdded: Boolean = false
     internal var decoder: MediaCodec? = null
     internal var videoResolution = Point()
-
-    private var mSurfaceView: SurfaceView? = null
-    private var mMovieFiles: Array<String>? = null
-    private var mSelectedMovie: Int = 0
-    private var mShowStopLabel: Boolean = false
-    private var mSurfaceHolderReady = false
-
     internal var decoderConfigured = false
     internal var info2 = MediaCodec.BufferInfo()
 
-    internal var encBuffer = CircularEncoderBuffer((1024.0 * 1024.0 * 0.5).toInt(), 30, 7)
+    internal var encBuffer = CircularEncoderBuffer((1024.0 * 1024.0 * 0.5).toInt(), 60, 7)
 
 
-    override fun getTabName(): Int {
-        return R.string.main_frag_tab_name
-    }
+    override fun getTabNameResId() = R.string.main_frag_tab_name
 
 
     override fun getLayoutId() = R.layout.fragment_record_client
@@ -91,7 +83,7 @@ class RecordClientFragment : BaseFragment(), ITabView {
 
     private fun start() {
 
-        val request = Request.Builder().url("ws://192.168.178.20:8765/screenshare").build()
+        val request = Request.Builder().url("ws://192.168.2.40:8765/screenshare").build()
         val listener = EchoWebSocketListener()
         val ws = client.newWebSocket(request, listener)
 
@@ -113,6 +105,29 @@ class RecordClientFragment : BaseFragment(), ITabView {
 
         override fun onMessage(webSocket: WebSocket, text: String) {
             Log.d("THIS<<<<<<<", "Receiving : $text")
+            val split = text.split(",,")
+
+            val test = Base64.decode(split[0], Base64.DEFAULT)
+            val byteBuffer = ByteBuffer.wrap(test)
+            val s = split[1]
+
+            val parts = s.split(",")
+            try {
+                info2.set(
+                    Integer.parseInt(parts[0]),
+                    Integer.parseInt(parts[1]),
+                    java.lang.Long.parseLong(parts[2]),
+                    Integer.parseInt(parts[3])
+                )
+            } catch (e: NumberFormatException) {
+                e.printStackTrace()
+                Log.d(TAG, "===========Exception = " + e.message + " =================")
+                //TODO: Need to stop the decoder or to skip the current decoder loop
+                //showToast(e.getMessage());
+            }
+
+            setData(byteBuffer, info2)
+            // doDecoderThingie()
         }
 
         override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
@@ -186,6 +201,7 @@ class RecordClientFragment : BaseFragment(), ITabView {
                     val decoderOutputFormat = decoder!!.outputFormat
                     Log.d(TAG, "decoder output format changed: $decoderOutputFormat")
                 } else {
+                    Log.d(TAG, "DECODER RELEASE")
                     decoder!!.releaseOutputBuffer(decoderStatus, true)
                 }
             }
@@ -199,7 +215,7 @@ class RecordClientFragment : BaseFragment(), ITabView {
         Log.d("this", infoString)
 
 
-        onStringAvailable(infoString)
+        //onStringAvailable(infoString)
 
         if (info.flags and MediaCodec.BUFFER_FLAG_CODEC_CONFIG != 0) {
             Log.d(TAG, "Configuring Decoder")
@@ -213,7 +229,7 @@ class RecordClientFragment : BaseFragment(), ITabView {
                 format, surfaceView.holder.surface,
                 null, 0
             )
-            decoder?.start()
+            decoder!!.start()
             decoderConfigured = true
             Log.d(TAG, "decoder configured (" + info.size + " bytes)")
             return
