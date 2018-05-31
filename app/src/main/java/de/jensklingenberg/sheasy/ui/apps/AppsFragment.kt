@@ -28,27 +28,29 @@ import javax.inject.Inject
  */
 class AppsFragment : BaseFragment(), AppsAdapter.OnTagClickListener, ITabView {
 
-    @Inject
     lateinit var profileViewModel: ProfileViewModel
 
     val filesAdapter = AppsAdapter()
 
 
     override fun onTagClicked(view: View, tag: AppsResponse) {
-        profileViewModel?.showPopup(context!!, view)
+        profileViewModel.showPopup(context!!, view)
 
     }
 
     override fun getTabNameResId() = R.string.main_frag_tab_name
 
-
     override fun getLayoutId() = R.layout.fragment_apps
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        profileViewModel = obtainProfileViewModel()
+
         filesAdapter.onTagClickListener = this
-        recyclerView.adapter = filesAdapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView?.apply {
+            adapter = filesAdapter
+            recyclerView.layoutManager = LinearLayoutManager(context)
+        }
         initObserver()
         pageTitleTv.text = "Apps"
         profileViewModel.getApps()

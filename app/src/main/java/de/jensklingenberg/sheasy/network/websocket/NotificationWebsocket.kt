@@ -4,15 +4,18 @@ import android.content.Context
 import android.content.IntentFilter
 import android.util.Log
 import com.squareup.moshi.Moshi
+import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.interfaces.OnNotificationReceivedListener
 import de.jensklingenberg.sheasy.model.NotificationResponse
+import de.jensklingenberg.sheasy.utils.extension.toJson
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 /**
  * Created by jens on 18/2/18.
@@ -20,16 +23,24 @@ import java.util.concurrent.TimeUnit
 class NotificationWebsocket(
     context: Context,
     handshakeRequest: NanoHTTPD.IHTTPSession,
-    httpServerImpl: MyHttpServerImpl,
-    mySharedMessageBroadcastReceiver: MySharedMessageBroadcastReceiver,
-    val moshi: Moshi
+    httpServerImpl: MyHttpServerImpl
 ) : MyWebSocket(handshakeRequest, httpServerImpl), OnNotificationReceivedListener {
 
+    @Inject
+    lateinit var moshi: Moshi
+
+    @Inject
+    lateinit var msbr: MySharedMessageBroadcastReceiver
+
+    init {
+        initializeDagger()
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
 
     init {
         val filter = IntentFilter(MySharedMessageBroadcastReceiver.ACTION_NOTIFICATION)
-        val tt = mySharedMessageBroadcastReceiver
-        context.registerReceiver(tt, filter);
+        context.registerReceiver(msbr, filter);
 
     }
 
@@ -38,9 +49,7 @@ class NotificationWebsocket(
         Log.d("HIER", notificationResponse.packageName)
 
         runInBackground {
-            val jsonAdapter = moshi.adapter(NotificationResponse::class.java)
-
-            send(jsonAdapter.toJson(notificationResponse))
+            send(moshi.toJson(notificationResponse))
         }
 
     }
@@ -81,10 +90,8 @@ class NotificationWebsocket(
 
             ping(pingframe.binaryPayload)
 
-            val jsonAdapter = Moshi.Builder().build().adapter(NotificationResponse::class.java)
-
             send(
-                jsonAdapter.toJson(
+                moshi.toJson(
                     NotificationResponse(
                         "test.package",
                         "Testnotification",

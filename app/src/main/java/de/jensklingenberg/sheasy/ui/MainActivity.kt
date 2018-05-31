@@ -99,23 +99,13 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         navigation?.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_location -> {
-
-
                     viewpager.setCurrentItem(PAGE_ID_0, false)
-
-
                 }
                 R.id.menu_profile -> {
-
                     viewpager.setCurrentItem(PAGE_ID_1, false)
-
-
                 }
                 R.id.menu_catalog -> {
-
                     viewpager.setCurrentItem(PAGE_ID_2, false)
-
-
                 }
 
             }

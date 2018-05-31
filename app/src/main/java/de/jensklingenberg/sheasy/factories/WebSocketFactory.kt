@@ -13,32 +13,24 @@ class WebSocketFactory {
         fun createNotificationWebsocket(
             context: Context,
             handshakeRequest: NanoHTTPD.IHTTPSession,
-            httpServerImpl: MyHttpServerImpl,
-            mySharedMessageBroadcastReceiver: MySharedMessageBroadcastReceiver,
-            moshi: Moshi
+            httpServerImpl: MyHttpServerImpl
         ): MyWebSocket {
             return NotificationWebsocket(
                 context,
                 handshakeRequest,
-                httpServerImpl,
-                mySharedMessageBroadcastReceiver,
-                moshi
+                httpServerImpl
             )
         }
 
         fun createScreenshareWebsocket(
             context: Context,
             handshakeRequest: NanoHTTPD.IHTTPSession,
-            httpServerImpl: MyHttpServerImpl,
-            mySharedMessageBroadcastReceiver: MySharedMessageBroadcastReceiver,
-            moshi: Moshi
+            httpServerImpl: MyHttpServerImpl
         ): MyWebSocket {
             return ScreenSharWebsocket(
                 context,
                 handshakeRequest,
-                httpServerImpl,
-                mySharedMessageBroadcastReceiver,
-                moshi
+                httpServerImpl
             )
         }
 
@@ -46,16 +38,12 @@ class WebSocketFactory {
         fun createMessageWebsocket(
             context: Context,
             handshakeRequest: NanoHTTPD.IHTTPSession,
-            httpServerImpl: MyHttpServerImpl,
-            mySharedMessageBroadcastReceiver: MySharedMessageBroadcastReceiver,
-            moshi: Moshi
+            httpServerImpl: MyHttpServerImpl
         ): MyWebSocket {
             return MessageWebsocket(
                 context,
                 handshakeRequest,
-                httpServerImpl,
-                mySharedMessageBroadcastReceiver,
-                moshi
+                httpServerImpl
             )
         }
 

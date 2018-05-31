@@ -21,9 +21,9 @@ import de.jensklingenberg.sheasy.utils.FUtils
 import javax.inject.Inject
 
 
-class ProfileViewModel(val application2: Application) : AndroidViewModel(application2),
+class ProfileViewModel @Inject constructor(val application2: Application) : ViewModel(),
     ApiEventListener {
-
+    
     var shareMessage: MutableLiveData<ArrayList<Event>> = MutableLiveData()
 
     var sharedFolder: MutableLiveData<String> = MutableLiveData()
@@ -31,6 +31,12 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
     var files: MutableLiveData<List<FileResponse>> = MutableLiveData()
     var apps: MutableLiveData<List<AppsResponse>> = MutableLiveData()
 
+
+    init {
+        initializeDagger()
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
 
     fun getFiles(folderPath: String) {
         files.value = FUtils.getFilesReponseList(folderPath)
@@ -42,7 +48,6 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
                 inflate(R.menu.actions)
                 show()
             }
-
         }
 
     }
@@ -90,4 +95,6 @@ class ProfileViewModel(val application2: Application) : AndroidViewModel(applica
 
 
     }
+
+
 }

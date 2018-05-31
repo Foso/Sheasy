@@ -36,25 +36,20 @@ class PermissionViewModel(val application2: Application) : BaseViewModel(applica
     var contactsPermissionStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData()
 
     fun checkStoragePermission() {
-
         val permGranted = checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
         storagePermission.value = Resource.success(permGranted)
-
     }
 
     fun checkPermission(permissionType: String): Boolean {
         return (ContextCompat.checkSelfPermission(
             getApplication(),
             permissionType
-        ) == PackageManager.PERMISSION_GRANTED
-                )
+        ) == PackageManager.PERMISSION_GRANTED)
     }
 
     fun checkContactsPermission() {
         val permGranted = checkPermission(Manifest.permission.READ_CONTACTS)
-
         contactsPermissionStatus.value = Resource.success(permGranted)
-
     }
 
     fun checkNotifcationPermission(context: Context) {
@@ -64,11 +59,8 @@ class PermissionViewModel(val application2: Application) : BaseViewModel(applica
             if (service == context.packageName)
                 weHaveNotificationListenerPermission = true
         }
-        if (weHaveNotificationListenerPermission) {
-            notificationPermissionStatus.value = Resource.success(true)
-        } else {
-            notificationPermissionStatus.value = Resource.success(false)
-        }
+        notificationPermissionStatus.value = Resource.success(weHaveNotificationListenerPermission)
+
     }
 
     fun requestNotificationPermission(context: Context) {
@@ -81,7 +73,6 @@ class PermissionViewModel(val application2: Application) : BaseViewModel(applica
 
     fun disableNotificationPermission() {
         notificationPermissionStatus.value = Resource.success(false)
-
     }
 
     fun requestStorage(context: Activity) {
@@ -139,20 +130,7 @@ class PermissionViewModel(val application2: Application) : BaseViewModel(applica
         }
 
 
-
-        fun requestNotificationPermission(context: Context) {
-            ContextCompat.startActivity(
-                context,
-                Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS),
-                null
-            )
-        }
-
-        fun disableNotificationPermission() {
-            notificationPermissionStatus.value = Resource.success(false)
-
-        }
-
-
     }
+
+
 }

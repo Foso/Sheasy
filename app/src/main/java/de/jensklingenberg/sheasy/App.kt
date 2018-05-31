@@ -12,6 +12,7 @@ import de.jensklingenberg.sheasy.di.DaggerAppComponent
 import de.jensklingenberg.sheasy.di.RemoteModule
 import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.model.Event
+import de.jensklingenberg.sheasy.utils.ApplicationUtils
 import io.ktor.application.install
 import io.ktor.features.CORS
 import io.ktor.features.DefaultHeaders
@@ -19,6 +20,7 @@ import io.ktor.features.PartialContent
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import org.threeten.bp.Duration
+import javax.inject.Inject
 
 
 /**
@@ -27,9 +29,21 @@ import org.threeten.bp.Duration
 
 class App : Application() {
 
-    var moshi: Moshi = Moshi.Builder().build()
+
+    // @Inject
+    //lateinit var moshi: Moshi
+
 
     val mySharedMessageBroadcastReceiver = MySharedMessageBroadcastReceiver()
+
+
+    companion object {
+        lateinit var instance: App
+        var port = 0
+        lateinit var appComponent: AppComponent
+
+    }
+
 
     init {
 
@@ -56,41 +70,21 @@ class App : Application() {
     }
 
 
-    companion object {
-        lateinit var instance: App
-        var port = 0
-        lateinit var appComponent: AppComponent
-
-    }
-
     fun sendBroadcast(event: Event) {
-        val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_SHARE).apply {
-            putExtra(MySharedMessageBroadcastReceiver.ACTION_SHARE, event)
-        }
-        sendBroadcast(pipp)
+        ApplicationUtils(this).sendBroadcast(event)
 
     }
 
 
     fun sendBroadcast(category: EventCategory, text: String) {
-        val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_SHARE).apply {
-            putExtra(MySharedMessageBroadcastReceiver.ACTION_SHARE, Event(category, text))
-        }
-        sendBroadcast(pipp)
+        ApplicationUtils(this).sendBroadcast(category, text)
 
     }
 
 
     @Deprecated("Use EventCategory")
     fun sendBroadcast(category: String, text: String) {
-        val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_SHARE).apply {
-            putExtra(
-                MySharedMessageBroadcastReceiver.ACTION_SHARE,
-                Event(EventCategory.DEFAULT, text)
-            )
-        }
-        sendBroadcast(pipp)
-
+        ApplicationUtils(this).sendBroadcast(category, text)
     }
 
 

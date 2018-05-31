@@ -3,11 +3,12 @@ package de.jensklingenberg.sheasy.handler
 import android.content.Context
 import android.view.KeyEvent
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.enums.MediaCommand
 import de.jensklingenberg.sheasy.enums.MediaCommand.*
 import de.jensklingenberg.sheasy.utils.extension.getAudioManager
 import de.jensklingenberg.sheasy.utils.KeyUtils
-import de.jensklingenberg.sheasy.utils.MediatUtils
+import de.jensklingenberg.sheasy.utils.MediaUtils
 import fi.iki.elonen.NanoHTTPD
 
 /**
@@ -35,31 +36,31 @@ class MediaRequestHandler(val context: Context, val app: App) {
         val audioManager = context.getAudioManager()
         when (command) {
             LOUDER -> {
-                MediatUtils(audioManager).louder()
-                app.sendBroadcast(CATEGORY, "Media louder")
+                MediaUtils(audioManager).louder()
+                app.sendBroadcast(EventCategory.MEDIA, "Media louder")
                 return NanoHTTPD.newFixedLengthResponse("Media louder")
             }
             LOWER -> {
-                MediatUtils(audioManager).lower()
-                app.sendBroadcast(CATEGORY, "Media lower")
+                MediaUtils(audioManager).lower()
+                app.sendBroadcast(EventCategory.MEDIA, "Media lower")
                 return NanoHTTPD.newFixedLengthResponse("Audio lower")
             }
 
             MUTE -> {
-                MediatUtils(audioManager).mute()
-                app.sendBroadcast(CATEGORY, "Media mute")
+                MediaUtils(audioManager).mute()
+                app.sendBroadcast(EventCategory.MEDIA, "Media mute")
                 return NanoHTTPD.newFixedLengthResponse("Audio mute")
             }
 
             PREV -> {
                 KeyUtils.sendKeyEvent(context, KeyEvent.KEYCODE_MEDIA_PREVIOUS)
-                app.sendBroadcast(CATEGORY, "Media prev")
+                app.sendBroadcast(EventCategory.MEDIA, "Media prev")
                 return NanoHTTPD.newFixedLengthResponse("Media prev")
             }
 
             NEXT -> {
                 KeyUtils.sendKeyEvent(context, KeyEvent.KEYCODE_MEDIA_NEXT)
-                app.sendBroadcast(CATEGORY, "Media next")
+                app.sendBroadcast(EventCategory.MEDIA, "Media next")
                 return NanoHTTPD.newFixedLengthResponse("Media next")
             }
 
@@ -92,7 +93,6 @@ class MediaRequestHandler(val context: Context, val app: App) {
     companion object {
 
         val RESOURCE = "/media/"
-        val CATEGORY = "MEDIA"
 
 
     }

@@ -7,22 +7,17 @@ import android.os.IBinder
 import android.util.Log
 import android.view.KeyEvent
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BackportWebSocket
 import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.factories.ServerFactory
-import de.jensklingenberg.sheasy.handler.MediaRequestHandler
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
 import de.jensklingenberg.sheasy.model.DeviceResponse
-import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.websocket.NanoWsdWebSocketListener
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import de.jensklingenberg.sheasy.utils.*
-import de.jensklingenberg.sheasy.utils.extension.appsToJson
-import de.jensklingenberg.sheasy.utils.extension.contactsToJson
 import de.jensklingenberg.sheasy.utils.extension.getAudioManager
-import de.jensklingenberg.sheasy.utils.extension.listToJSON
+import de.jensklingenberg.sheasy.utils.extension.toJson
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.content.PartData
@@ -48,6 +43,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 /**
@@ -59,14 +55,21 @@ data class ConnectionInfo(val result: String, val deviceName: String)
 
 class HTTPServerService : Service(), NanoWsdWebSocketListener {
 
+
+    @Inject
+    lateinit var moshi: Moshi
+
+    val app by lazy { App.instance }
     private val mBinder = ServiceBinder()
     private var serverImpl: MyHttpServer? = null
-    private val app by lazy { App.instance }
     private val APIV1 = "/api/v1/"
-
     var serv: NettyApplicationEngine? = null
 
-    private var serverRunning = true
+    init {
+        initializeDagger()
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
 
 
     inner class ServiceBinder : Binder() {
@@ -165,7 +168,7 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                             app.sendBroadcast(EventCategory.REQUEST, "/apps")
 
                             val appsResponse =
-                                app.moshi.listToJSON(AppUtils.getAppsResponseList(app))
+                                moshi.toJson(AppUtils.getAppsResponseList(app))
 
 
                             call.apply {
@@ -177,17 +180,16 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                         }
 
                         get("connect") {
-                            App.instance.sendBroadcast(
+                            app.sendBroadcast(
                                 EventCategory.REQUEST,
                                 "Device Info REQUESTED"
                             )
                             val deviceInfo = ConnectionInfo("OK", "Frist")
-                            val jsonAdapter = App.instance.moshi.adapter(ConnectionInfo::class.java)
 
 
                             call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
                             call.respondText(
-                                jsonAdapter?.toJson(deviceInfo) ?: "",
+                                moshi?.toJson(deviceInfo) ?: "",
                                 ContentType.Text.JavaScript
                             )
                         }
@@ -196,7 +198,7 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                             app.sendBroadcast(EventCategory.REQUEST, "/contacts")
 
                             val contacts = ContactUtils.readContacts(app.contentResolver)
-                            val response = app.moshi.listToJSON(contacts)
+                            val response = moshi.toJson(contacts)
                             call.respondText(response, ContentType.Text.JavaScript)
                         }
 
@@ -271,7 +273,6 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                                             )
 
                                         } else {
-                                            val moshi = Moshi.Builder().build()
 
 
                                             call.apply {
@@ -280,7 +281,7 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                                                     "*"
                                                 )
                                                 respondText(
-                                                    moshi.listToJSON(fileList),
+                                                    moshi.toJson(fileList),
                                                     ContentType.Text.JavaScript
                                                 )
                                             }
@@ -291,11 +292,7 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                                     }
 
                                 }
-
                             }
-
-
-                            // call.respondText(response, ContentType.Text.JavaScript)
                         }
 
                         route("media") {
@@ -304,8 +301,8 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                             get("louder") {
                                 app.sendBroadcast(EventCategory.MEDIA, "louder")
 
-                                MediatUtils(audioManager).louder()
-                                app.sendBroadcast(MediaRequestHandler.CATEGORY, "Media louder")
+                                MediaUtils(audioManager).louder()
+                                app.sendBroadcast(EventCategory.MEDIA, "Media louder")
                                 call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
 
                                 call.respondText("Louder", ContentType.Text.JavaScript)
@@ -328,19 +325,20 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
                                 "Device Info REQUESTED"
                             )
                             val deviceInfo = DeviceUtils.getDeviceInfo()
-                            val jsonAdapter = App.instance.moshi.adapter(DeviceResponse::class.java)
 
 
                             call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
                             call.respondText(
-                                jsonAdapter?.toJson(deviceInfo) ?: "",
+                                moshi?.toJson(deviceInfo) ?: "",
                                 ContentType.Text.JavaScript
                             )
                         }
                     }
 
                 }
-            }.start(wait = serverRunning)
+            }
+            serv?.start(wait = true)
+
 
         }
 
@@ -358,17 +356,15 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
     }
 
     override fun stopService(name: Intent?): Boolean {
-        serverRunning = false
         serv?.stop(0L, 0L, TimeUnit.SECONDS)
-        //  serverImpl?.stop()
+        serverImpl?.stop()
         return super.stopService(name)
 
     }
 
     override fun onDestroy() {
-        serverRunning = false
         serv?.stop(0L, 0L, TimeUnit.SECONDS)
-        //  serverImpl?.stop()
+        serverImpl?.stop()
         Log.d("hhh", "ddd")
         super.onDestroy()
     }

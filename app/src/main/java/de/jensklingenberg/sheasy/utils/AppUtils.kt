@@ -10,6 +10,7 @@ import de.jensklingenberg.sheasy.model.AppsResponse
  */
 class AppUtils {
 
+
     companion object {
 
         fun getAppsResponseList(context: Context): List<AppsResponse> {

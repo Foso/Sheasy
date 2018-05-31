@@ -58,15 +58,6 @@ class MySharedMessageBroadcastReceiver : BroadcastReceiver() {
 
     }
 
-    fun addSharedMessageListener(notifyClientEventListener: NotifyClientEventListener) {
-        this.notifyClientEventListener = notifyClientEventListener
-    }
-
-
-    fun add(onNotificationReceivedListener: OnNotificationReceivedListener) {
-        this.onNotificationReceivedListener = onNotificationReceivedListener
-    }
-
 
     companion object {
         const val MESSAGE = "MESSAGE.ACTION"

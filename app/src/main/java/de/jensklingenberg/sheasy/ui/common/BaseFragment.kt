@@ -28,7 +28,6 @@ open class BaseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(getLayoutId(), container, false)
     }
 

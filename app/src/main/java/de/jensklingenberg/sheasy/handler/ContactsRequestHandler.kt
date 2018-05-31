@@ -6,7 +6,7 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.utils.extension.NanoHTTPDExt
 import de.jensklingenberg.sheasy.utils.ContactUtils
-import de.jensklingenberg.sheasy.utils.extension.contactsToJson
+import de.jensklingenberg.sheasy.utils.extension.toJson
 import fi.iki.elonen.NanoHTTPD
 
 /**
@@ -19,7 +19,7 @@ class ContactsRequestHandler(val context: Context, val app: App, val moshi: Mosh
     fun handle(requestV1: String): NanoHTTPD.Response? {
         val contacts = ContactUtils.readContacts(context.contentResolver)
         app.sendBroadcast(EventCategory.REQUEST, ACTION)
-        val response = moshi.contactsToJson(contacts)
+        val response = moshi.toJson(contacts)
 
         return NanoHTTPDExt.debugResponse(response)
     }

@@ -5,7 +5,7 @@ import android.media.AudioManager
 /**
  * Created by jens on 17/2/18.
  */
-class MediatUtils(val audioManager: AudioManager) {
+class MediaUtils(val audioManager: AudioManager) {
 
     fun louder() {
         audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);

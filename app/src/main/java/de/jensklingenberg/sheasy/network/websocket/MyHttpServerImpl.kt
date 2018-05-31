@@ -2,8 +2,10 @@ package de.jensklingenberg.sheasy.network.websocket
 
 
 import android.content.Context
+import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BuildConfig
+import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.enums.WebsocketCommand
 import de.jensklingenberg.sheasy.factories.WebSocketFactory
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
@@ -11,6 +13,7 @@ import de.jensklingenberg.sheasy.utils.BundledNotificationHelper
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import java.util.*
+import javax.inject.Inject
 
 
 interface NanoWsdWebSocketListener {
@@ -19,6 +22,19 @@ interface NanoWsdWebSocketListener {
 
 
 class MyHttpServerImpl : NanoWSD, MyHttpServer {
+
+    @Inject
+    lateinit var moshi: Moshi
+
+    @Inject
+    lateinit var mySharedMessageBroadcastReceiver: MySharedMessageBroadcastReceiver
+
+    init {
+        initializeDagger()
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
+
 
     var nanoWsdWebSocketListener: NanoWsdWebSocketListener? = null
 
@@ -45,7 +61,7 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
     }
 
     override fun stop() {
-
+        super.stop()
 
     }
 
@@ -57,12 +73,11 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
         when (websockCommand) {
             WebsocketCommand.NOTIFICATION -> {
                 nanoWsdWebSocketListener?.onNotificationWebSocketRequest()
+
                 return WebSocketFactory.createNotificationWebsocket(
                     context,
                     handshake,
-                    this,
-                    App.instance.mySharedMessageBroadcastReceiver,
-                    App.instance.moshi
+                    this
                 )
 
             }
@@ -70,20 +85,18 @@ class MyHttpServerImpl : NanoWSD, MyHttpServer {
                 return WebSocketFactory.createMessageWebsocket(
                     context,
                     handshake,
-                    this,
-                    App.instance.mySharedMessageBroadcastReceiver,
-                    App.instance.moshi
+                    this
                 )
 
             }
             WebsocketCommand.SCREENSHARE -> {
-                return WebSocketFactory.createScreenshareWebsocket(
+                val screenSharWebsocket = WebSocketFactory.createScreenshareWebsocket(
                     context,
                     handshake,
-                    this,
-                    App.instance.mySharedMessageBroadcastReceiver,
-                    App.instance.moshi
+                    this
                 )
+                connections.add(screenSharWebsocket)
+                return screenSharWebsocket
             }
         }
 

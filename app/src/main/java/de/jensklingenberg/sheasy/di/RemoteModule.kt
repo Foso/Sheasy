@@ -9,12 +9,4 @@ import javax.inject.Singleton
 class RemoteModule {
 
 
-    @Provides
-    @Singleton
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder().build()
-
-    }
-
-
 }
