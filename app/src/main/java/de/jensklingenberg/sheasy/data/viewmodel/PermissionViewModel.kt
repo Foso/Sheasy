@@ -27,13 +27,15 @@ import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.utils.AppUtils
 import de.jensklingenberg.sheasy.utils.FUtils
 import de.jensklingenberg.sheasy.utils.PermissionUtils.Companion.MY_PERMISSIONS_REQUEST_READ_CONTACTS
+import de.jensklingenberg.sheasy.utils.extension.ResourceMediatorLiveData
 
 
 class PermissionViewModel(val application2: Application) : BaseViewModel(application2) {
 
     var storagePermission: MutableLiveData<Resource<Boolean>> = MutableLiveData()
     var notificationPermissionStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData()
-    var contactsPermissionStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData()
+    var contactsPermissionStatus: ResourceMediatorLiveData<Resource<Boolean>> =
+        ResourceMediatorLiveData()
 
     fun checkStoragePermission() {
         val permGranted = checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)

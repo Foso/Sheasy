@@ -6,10 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
-import de.jensklingenberg.sheasy.data.viewmodel.ShareScreenViewModel
-import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
+import de.jensklingenberg.sheasy.data.viewmodel.*
 import de.jensklingenberg.sheasy.ui.RootFragment
 
 /**
@@ -36,8 +33,16 @@ open class BaseFragment : Fragment() {
     }
 
 
-    fun obtainProfileViewModel(): ProfileViewModel {
+    fun obtainProfileViewModel(): CommonViewModel {
         return ViewModelFactory.obtainProfileViewModel(activity)
+    }
+
+    fun obtainAppsViewModel(): AppsViewModel {
+        return ViewModelFactory.obtainAppsViewModel(activity)
+    }
+
+    fun obtainNetworkViewModel(): NetworkViewModel {
+        return ViewModelFactory.obtainNetworkViewModel(activity)
     }
 
     fun obtainShareScreenViewModel(): ShareScreenViewModel {

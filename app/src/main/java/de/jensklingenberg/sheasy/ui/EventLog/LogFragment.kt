@@ -1,20 +1,17 @@
-package de.jensklingenberg.sheasy.ui.main
+package de.jensklingenberg.sheasy.ui.EventLog
 
 import android.arch.lifecycle.Observer
 import android.content.ClipData
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
+import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
 import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.utils.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.ui.EventLog.EventAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,7 +26,7 @@ class LogFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
         return R.string.main_frag_tab_name
     }
 
-    lateinit var profileViewModel: ProfileViewModel
+    lateinit var profileViewModel: CommonViewModel
     var lili = ArrayList<Event>()
 
     val eventAdapter = EventAdapter()
@@ -41,13 +38,8 @@ class LogFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
 
-        return inflater.inflate(R.layout.fragment_log, container, false)
-    }
+    override fun getLayoutId() = R.layout.fragment_log
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

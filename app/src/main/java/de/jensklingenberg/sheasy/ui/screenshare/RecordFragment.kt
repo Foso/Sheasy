@@ -26,8 +26,7 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
-import de.jensklingenberg.sheasy.ui.common.bindView
-import de.jensklingenberg.sheasy.utils.extension.mediaProjectionManager
+import de.jensklingenberg.sheasy.utils.toplevel.bindView
 import java.io.File
 import java.io.IOException
 

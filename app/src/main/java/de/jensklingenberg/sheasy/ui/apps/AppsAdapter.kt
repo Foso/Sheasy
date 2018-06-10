@@ -1,25 +1,17 @@
 package de.jensklingenberg.sheasy.ui.apps
 
 
-import android.support.v7.widget.PopupMenu
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.AppsResponse
-import de.jensklingenberg.sheasy.model.Event
 import kotlinx.android.synthetic.main.list_item_apps.view.*
-import android.view.MenuInflater
-import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.ui.common.SimpleRvAdapter
 
 
 /**
  * Created by jens on 25/2/18.
  */
-class AppsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AppsAdapter : SimpleRvAdapter() {
     private val list = ArrayList<AppsResponse>()
     var onTagClickListener: OnTagClickListener? = null
 
@@ -28,39 +20,9 @@ class AppsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.list.addAll(tagArrayList)
     }
 
+    override fun getLayoutId() = R.layout.list_item_apps
 
-    class DefaultTagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val context = parent.context
-        val inflater = LayoutInflater.from(context)
-
-        when (viewType) {
-            0 -> {
-                val itemView = inflater.inflate(R.layout.list_item_apps, parent, false)
-
-                return DefaultTagViewHolder(
-                    itemView
-                )
-            }
-        }
-
-        throw RuntimeException(
-            "there is no type that matches the type "
-                    + viewType
-                    + " + make sure your using types correctly"
-        )
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-        if (holder is DefaultTagViewHolder) {
-            setupDefaultTagViewHolder(holder, position)
-        }
-    }
-
-    private fun setupDefaultTagViewHolder(holder: DefaultTagViewHolder, position: Int) {
+    override fun setupDefaultTagViewHolder(holder: DefaultTagViewHolder, position: Int) {
         val item = list[position]
         holder.itemView.eventName.text = item.name
         holder.itemView.eventText.text = item.packageName
@@ -73,9 +35,6 @@ class AppsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         holder.itemView.setOnClickListener { }
 
     }
-
-
-    override fun getItemViewType(position: Int) = 0
 
     override fun getItemCount() = list.size
 

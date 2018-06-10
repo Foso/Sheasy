@@ -1,16 +1,13 @@
 package de.jensklingenberg.sheasy.ui.filemanager
 
 import android.arch.lifecycle.Observer
-import android.content.ClipData
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
-import de.jensklingenberg.sheasy.utils.extension.getClipboardMangaer
-import de.jensklingenberg.sheasy.model.Event
+import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
 import de.jensklingenberg.sheasy.ui.MainActivity
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
@@ -28,10 +25,11 @@ class FilesFragment : BaseFragment(), FilesAdapter.OnEntryClickListener, ITabVie
 
     }
 
+
     override fun getTabNameResId() = R.string.main_frag_tab_name
 
 
-    lateinit var profileViewModel: ProfileViewModel
+    lateinit var profileViewModel: CommonViewModel
 
     val filesAdapter = FilesAdapter()
 

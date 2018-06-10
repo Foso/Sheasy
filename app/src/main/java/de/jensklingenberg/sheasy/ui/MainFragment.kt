@@ -5,13 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
+import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
 import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.utils.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
@@ -32,7 +30,7 @@ class MainFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
         return R.string.main_frag_tab_name
     }
 
-    lateinit var profileViewModel: ProfileViewModel
+    lateinit var commonViewModel: CommonViewModel
 
     override fun onTagClicked(tag: Event) {
         activity?.getClipboardMangaer()?.apply {
@@ -46,14 +44,15 @@ class MainFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
         super.onViewCreated(view, savedInstanceState)
         edPath.setText(Environment.getExternalStorageDirectory().toString())
         initIPAddress()
-        profileViewModel = obtainProfileViewModel()
-        // profileViewModel.startService(Intent(activity, HTTPServerService::class.java))
+        commonViewModel = obtainProfileViewModel()
+        commonViewModel.startService(Intent(activity, HTTPServerService::class.java))
+
 
         // markdownView.loadMarkdownFile("https://raw.githubusercontent.com/wiki/Foso/Notes/Android-Studio.md")
         serverSwitch?.setOnCheckedChangeListener { buttonView, isChecked ->
             when (isChecked) {
                 true -> {
-                    profileViewModel.startService(Intent(activity, HTTPServerService::class.java))
+                    commonViewModel.startService(Intent(activity, HTTPServerService::class.java))
                     App.instance.sendBroadcast(
                         Event(
                             EventCategory.SERVER,
@@ -81,7 +80,7 @@ class MainFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
                 false -> {
                     App.instance.sendBroadcast(EventCategory.SERVER, "stopped")
 
-                    profileViewModel.stopService(Intent(activity, HTTPServerService::class.java))
+                    commonViewModel.stopService(Intent(activity, HTTPServerService::class.java))
 
                 }
 
@@ -104,20 +103,13 @@ class MainFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
 
     }
 
-    fun handleSendImage(intent: Intent) {
-        val imageUri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
-        if (imageUri != null) {
-            // Update UI to reflect image being shared
-        }
-    }
-
 
     fun handleSendMultipleImages(intent: Intent) {
         val imageUris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
         if (imageUris != null) {
             // Update UI to reflect multiple images being shared
             val path = imageUris.first().path
-            profileViewModel.setSharedFolder(path)
+            commonViewModel.setSharedFolder(path)
             changeFragment(ShareFragment.newInstance(), false)
         }
     }

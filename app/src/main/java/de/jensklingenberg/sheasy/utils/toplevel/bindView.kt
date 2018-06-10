@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.ui.common
+package de.jensklingenberg.sheasy.utils.toplevel
 
 import android.app.Activity
 import android.app.Dialog
@@ -12,14 +12,16 @@ import android.support.v4.app.DialogFragment as SupportDialogFragment
 import android.support.v4.app.Fragment as SupportFragment
 
 fun <V : View> View.bindView(id: Int)
-        : ReadOnlyProperty<View, V> = required(id, viewFinder)
+        : ReadOnlyProperty<View, V> =
+    required(id, viewFinder)
 
 fun <V : View> Activity.bindView(id: Int)
         : ReadOnlyProperty<Activity, V> =
     required(id, viewFinder)
 
 fun <V : View> Dialog.bindView(id: Int)
-        : ReadOnlyProperty<Dialog, V> = required(id, viewFinder)
+        : ReadOnlyProperty<Dialog, V> =
+    required(id, viewFinder)
 
 fun <V : View> DialogFragment.bindView(id: Int)
         : ReadOnlyProperty<DialogFragment, V> =
@@ -42,7 +44,8 @@ fun <V : View> ViewHolder.bindView(id: Int)
     required(id, viewFinder)
 
 fun <V : View> View.bindOptionalView(id: Int)
-        : ReadOnlyProperty<View, V?> = optional(id, viewFinder)
+        : ReadOnlyProperty<View, V?> =
+    optional(id, viewFinder)
 
 fun <V : View> Activity.bindOptionalView(id: Int)
         : ReadOnlyProperty<Activity, V?> =

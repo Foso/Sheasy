@@ -24,6 +24,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.annotation.VisibleForTesting
 import android.support.v4.app.FragmentActivity
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.network.api.ChangeableBaseUrlInterceptor
+import de.jensklingenberg.sheasy.network.api.SheasyAPI
 import javax.inject.Inject
 
 
@@ -33,10 +35,22 @@ class ViewModelFactory private constructor() :
     @Inject
     lateinit var application: Application
 
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
 
-            return ProfileViewModel(application) as T
+    @Inject
+    lateinit var hostSelectionInterceptor: ChangeableBaseUrlInterceptor
+
+    @Inject
+    lateinit var retrofit: SheasyAPI
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(CommonViewModel::class.java)) {
+
+            return CommonViewModel(application) as T
+        }
+
+        if (modelClass.isAssignableFrom(NetworkViewModel::class.java)) {
+
+            return NetworkViewModel(application, hostSelectionInterceptor, retrofit) as T
         }
 
         if (modelClass.isAssignableFrom(ShareScreenViewModel::class.java)) {
@@ -47,6 +61,11 @@ class ViewModelFactory private constructor() :
         if (modelClass.isAssignableFrom(PermissionViewModel::class.java)) {
 
             return PermissionViewModel(application) as T
+        }
+
+        if (modelClass.isAssignableFrom(AppsViewModel::class.java)) {
+
+            return AppsViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
@@ -80,10 +99,16 @@ class ViewModelFactory private constructor() :
             INSTANCE = null
         }
 
-        fun obtainProfileViewModel(activity: FragmentActivity?): ProfileViewModel {
+        fun obtainProfileViewModel(activity: FragmentActivity?): CommonViewModel {
             // Use a Factory to inject dependencies into the ViewModel
             val factory = ViewModelFactory.getInstance(activity!!.application)
-            return ViewModelProviders.of(activity!!, factory).get(ProfileViewModel::class.java)
+            return ViewModelProviders.of(activity!!, factory).get(CommonViewModel::class.java)
+        }
+
+        fun obtainNetworkViewModel(activity: FragmentActivity?): NetworkViewModel {
+            // Use a Factory to inject dependencies into the ViewModel
+            val factory = ViewModelFactory.getInstance(activity!!.application)
+            return ViewModelProviders.of(activity!!, factory).get(NetworkViewModel::class.java)
         }
 
         fun obtainPermissionViewModel(activity: FragmentActivity?): PermissionViewModel {
@@ -96,6 +121,11 @@ class ViewModelFactory private constructor() :
             // Use a Factory to inject dependencies into the ViewModel
             val factory = ViewModelFactory.getInstance(activity!!.application)
             return ViewModelProviders.of(activity!!, factory).get(ShareScreenViewModel::class.java)
+        }
+
+        fun obtainAppsViewModel(activity: FragmentActivity?): AppsViewModel {
+            val factory = ViewModelFactory.getInstance(activity!!.application)
+            return ViewModelProviders.of(activity!!, factory).get(AppsViewModel::class.java)
         }
     }
 

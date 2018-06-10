@@ -1,5 +1,7 @@
 package de.jensklingenberg.sheasy.utils.toplevel
 
+import android.view.View
+import de.jensklingenberg.sheasy.utils.extension.setVisible
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 
@@ -18,3 +20,17 @@ public fun runInBackground(function: () -> Unit) {
             //Use result for something
         }
 }
+
+fun setViewVisible(view: View) {
+    view.visibility = View.VISIBLE
+}
+
+fun setViewInvisible(view: View) {
+    view.visibility = View.INVISIBLE
+}
+
+fun setViewGone(view: View) {
+    view.visibility = View.INVISIBLE
+}
+
+

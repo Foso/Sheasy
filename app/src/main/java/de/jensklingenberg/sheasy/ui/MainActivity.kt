@@ -13,11 +13,11 @@ import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
+import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 import de.jensklingenberg.sheasy.ui.apps.AppsFragment
 import de.jensklingenberg.sheasy.ui.filemanager.FilesFragment
-import de.jensklingenberg.sheasy.ui.main.LogFragment
+import de.jensklingenberg.sheasy.ui.EventLog.LogFragment
 import de.jensklingenberg.sheasy.ui.screenshare.RecordClientFragment
 import de.jensklingenberg.sheasy.ui.screenshare.RecordFragment
 import de.jensklingenberg.sheasy.ui.main.SettingsFragment
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     lateinit var permissionOverViewFragment: PermissionOverViewFragment
     lateinit var mainFragment: MainFragment
     var fragmentPagerAdapter: FragmentPagerAdapter? = null
-    lateinit var profileViewModel: ProfileViewModel
+    lateinit var profileViewModel: CommonViewModel
 
     companion object {
         val REQUEST_PERMISSIONS = 100
@@ -58,11 +58,17 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         val filesFragment = FilesFragment.newInstance()
         val recordFragment = RecordFragment.newInstance()
         val recordClientFragment = RecordClientFragment.newInstance()
+        val shareFragment = ShareFragment.newInstance()
 
         permissionOverViewFragment = PermissionOverViewFragment.newInstance()
         fragmentPagerAdapter = OverviewPagerAdapter(
             supportFragmentManager,
-            listOf(mainFragment, appsFragment, recordClientFragment, permissionOverViewFragment)
+            listOf(
+
+                appsFragment,
+                filesFragment,
+                permissionOverViewFragment
+            )
         )
         viewpager.adapter = fragmentPagerAdapter
     }

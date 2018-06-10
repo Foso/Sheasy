@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.di
 import android.arch.lifecycle.ViewModel
 import dagger.Component
 import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
+import de.jensklingenberg.sheasy.factories.RetrofitFactory
 import de.jensklingenberg.sheasy.handler.RequestHandlerFactory
 import de.jensklingenberg.sheasy.network.service.HTTPServerService
 import de.jensklingenberg.sheasy.network.websocket.MyHttpServerImpl
@@ -41,6 +42,10 @@ interface AppComponent {
     }
 
     fun inject(screenSharWebsocket: MyWebSocket) {
+
+    }
+
+    fun inject(retrofitFactory: RetrofitFactory) {
 
     }
 

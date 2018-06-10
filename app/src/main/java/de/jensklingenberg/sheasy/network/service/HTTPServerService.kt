@@ -12,7 +12,10 @@ import de.jensklingenberg.sheasy.BackportWebSocket
 import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.factories.ServerFactory
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
-import de.jensklingenberg.sheasy.model.DeviceResponse
+import de.jensklingenberg.sheasy.model.ConnectionInfo
+import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.network.service.apiv1.file
+import de.jensklingenberg.sheasy.network.service.apiv1.media
 import de.jensklingenberg.sheasy.network.websocket.NanoWsdWebSocketListener
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import de.jensklingenberg.sheasy.utils.*
@@ -50,19 +53,18 @@ import javax.inject.Inject
  * Created by jens on 25/2/18.
  */
 
-data class ConnectionInfo(val result: String, val deviceName: String)
-
 
 class HTTPServerService : Service(), NanoWsdWebSocketListener {
 
 
     @Inject
     lateinit var moshi: Moshi
+    val APIV1 = "/api/v1/"
+
 
     val app by lazy { App.instance }
     private val mBinder = ServiceBinder()
     private var serverImpl: MyHttpServer? = null
-    private val APIV1 = "/api/v1/"
     var serv: NettyApplicationEngine? = null
 
     init {
@@ -120,221 +122,18 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
     override fun onCreate() {
         super.onCreate()
 
-        serverImpl = ServerFactory.createHTTPServer(this)
-        serverImpl?.start(10000)
-
         runInBackground {
             serv = embeddedServer(Netty, App.port) {
                 routing {
-                    get("/") {
-                        app.sendBroadcast(
-                            EventCategory.CONNECTION,
-                            "from IP:" + call.request.origin.host
-                        )
-
-                        call.respond(this@HTTPServerService.assets.open("web/index.html").readBytes())
-                    }
-
-
-
-                    get("swagger") {
-                        app.sendBroadcast(EventCategory.REQUEST, "swagger")
-
-                        call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-
-                        call.respond(this@HTTPServerService.assets.open("swagger/SwaggerUI.html").readBytes())
-
-
-                    }
-
-                    get("swagger/{filepath...}") {
-                        var test = call.request.uri.replaceFirst("/", "")
-                        Log.d("SWAGGER", test)
-                        call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-
-                        call.respond(this@HTTPServerService.assets.open("swagger/" + test).readBytes())
-
-                    }
-
-
-                    get("web/{filepath...}") {
-                        var test = call.request.uri.replaceFirst("/", "")
-                        call.respond(this@HTTPServerService.assets.open(test).readBytes())
-                    }
-
+                    general(app, moshi)
 
                     route(APIV1) {
-                        get("apps") {
-                            app.sendBroadcast(EventCategory.REQUEST, "/apps")
-
-                            val appsResponse =
-                                moshi.toJson(AppUtils.getAppsResponseList(app))
-
-
-                            call.apply {
-                                response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-                                respondText(appsResponse, ContentType.Text.JavaScript)
-                            }
-
-
-                        }
-
-                        get("connect") {
-                            app.sendBroadcast(
-                                EventCategory.REQUEST,
-                                "Device Info REQUESTED"
-                            )
-                            val deviceInfo = ConnectionInfo("OK", "Frist")
-
-
-                            call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-                            call.respondText(
-                                moshi?.toJson(deviceInfo) ?: "",
-                                ContentType.Text.JavaScript
-                            )
-                        }
-
-                        get("contacts") {
-                            app.sendBroadcast(EventCategory.REQUEST, "/contacts")
-
-                            val contacts = ContactUtils.readContacts(app.contentResolver)
-                            val response = moshi.toJson(contacts)
-                            call.respondText(response, ContentType.Text.JavaScript)
-                        }
-
-                        route("file") {
-
-
-                            param("apk") {
-                                get {
-                                    val login = call.parameters["apk"] ?: ""
-
-                                    val test = FUtils.returnAPK(app, login)
-                                    val mimeType = test?.mimeType
-                                    val fileInputStream = test?.fileInputStream
-
-                                    call.respond(fileInputStream?.readBytes() ?: "apk Not found")
-                                }
-
-                            }
-
-                            param("upload") {
-                                post {
-                                    val filePath = call.parameters["upload"] ?: ""
-
-
-                                    val multipart = call.receiveMultipart()
-                                    multipart.forEachPart { part ->
-                                        when (part) {
-                                            is PartData.FormItem -> {
-
-                                            }
-                                            is PartData.FileItem -> {
-                                                val ext = File(part.originalFileName).extension
-
-                                                val sourceFile = File(filePath)
-                                                val destinationFile = File(filePath)
-                                                sourceFile.copyTo(destinationFile, true)
-
-                                                part.streamProvider().use { its ->
-                                                    its.copyTo(sourceFile.outputStream())
-                                                }
-                                            }
-
-                                        }
-
-                                    }
-                                }
-                            }
-
-
-                            param("download") {
-                                get {
-                                    val login = call.parameters["download"] ?: ""
-
-                                    if (login.contains(".")) {
-
-                                        val test = FUtils.returnAPK(app, login)
-                                        val mimeType = test?.mimeType
-                                        val fileInputStream = FileInputStream(File(login))
-
-                                        call.respond(
-                                            fileInputStream.readBytes()
-                                        )
-                                    } else {
-                                        app.sendBroadcast("FilePath Requested", login)
-
-                                        val fileList = FUtils.getFilesReponseList(login)
-
-                                        if (fileList.isEmpty()) {
-                                            call.respondText(
-                                                "path not found",
-                                                ContentType.Text.JavaScript
-                                            )
-
-                                        } else {
-
-
-                                            call.apply {
-                                                response.header(
-                                                    HttpHeaders.AccessControlAllowOrigin,
-                                                    "*"
-                                                )
-                                                respondText(
-                                                    moshi.toJson(fileList),
-                                                    ContentType.Text.JavaScript
-                                                )
-                                            }
-
-                                        }
-
-
-                                    }
-
-                                }
-                            }
-                        }
-
-                        route("media") {
-                            val audioManager = app.getAudioManager()
-
-                            get("louder") {
-                                app.sendBroadcast(EventCategory.MEDIA, "louder")
-
-                                MediaUtils(audioManager).louder()
-                                app.sendBroadcast(EventCategory.MEDIA, "Media louder")
-                                call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-
-                                call.respondText("Louder", ContentType.Text.JavaScript)
-                            }
-
-                            get("pause") {
-                                app.sendBroadcast(EventCategory.MEDIA, "puase")
-
-                                KeyUtils.sendKeyEvent(app, KeyEvent.KEYCODE_MEDIA_PAUSE)
-                                app.sendBroadcast(EventCategory.MEDIA, "Media pause")
-
-                                call.respondText("Pause", ContentType.Text.JavaScript)
-                            }
-
-                        }
-
-                        get("device") {
-                            App.instance.sendBroadcast(
-                                EventCategory.REQUEST,
-                                "Device Info REQUESTED"
-                            )
-                            val deviceInfo = DeviceUtils.getDeviceInfo()
-
-
-                            call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-                            call.respondText(
-                                moshi?.toJson(deviceInfo) ?: "",
-                                ContentType.Text.JavaScript
-                            )
-                        }
+                        apps(app, moshi)
+                        file(app, moshi)
+                        media(app, moshi)
+                        device(moshi)
+                        contacts(app, moshi)
                     }
-
                 }
             }
             serv?.start(wait = true)

@@ -12,10 +12,7 @@ class BroadcastReceiverModule {
 
     @Provides
     @Singleton
-    fun provideMySharedMessageBroadcastReceiver(): MySharedMessageBroadcastReceiver {
-        return MySharedMessageBroadcastReceiver()
-
-    }
+    fun provideMySharedMessageBroadcastReceiver() = MySharedMessageBroadcastReceiver()
 
 
 }

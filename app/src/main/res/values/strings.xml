@@ -14,4 +14,5 @@
             This sample demonstrates how to record video using Camera2 API.
         ]]>
     </string>
+    <string name="share">Share</string>
 </resources>

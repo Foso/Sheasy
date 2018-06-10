@@ -47,4 +47,17 @@ ext {
 
     rxjava2Adapter = '1.0.0'
     timberVersion = '4.6.0'
+
+
+    testingDependencies = {
+        dependencies {
+            testImplementation "org.json:json:20140107"
+            testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.8.9'
+            testImplementation 'junit:junit:4.12'
+            androidTestImplementation 'com.android.support.test:runner:1.0.1'
+            androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+            testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
+            testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${configuration.kotlin_version}"
+        }
+    }
 }

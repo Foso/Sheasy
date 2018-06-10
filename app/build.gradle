@@ -88,6 +88,8 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
     implementation "com.squareup.retrofit2:retrofit:${libs.retrofitVersion}"
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${rxjava2Adapter}"
+    implementation "com.squareup.retrofit2:converter-scalars:${libs.retrofitVersion}"
+
     implementation "com.squareup.retrofit2:converter-moshi:${moshiConverterVersion}"
     implementation "com.serjltt.moshi:moshi-lazy-adapters:${moshilazyadapters}"
     implementation "androidx.core:core-ktx:${libs.ktx}"
@@ -102,7 +104,7 @@ dependencies {
     implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
-  //  compile 'com.github.ar-android:libstreaming:1.0.0'
+    //  compile 'com.github.ar-android:libstreaming:1.0.0'
 
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
     implementation "com.google.dagger:dagger-android:${libs.dagger_version}"
@@ -115,7 +117,8 @@ dependencies {
     implementation("com.mikepenz:materialdrawer:6.0.6@aar") {
         transitive = true
     }
-    compile 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    testingDependencies()
 }
 
 

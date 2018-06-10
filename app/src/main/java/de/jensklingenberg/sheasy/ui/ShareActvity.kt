@@ -1,20 +1,18 @@
 package de.jensklingenberg.sheasy.ui
 
-import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
+import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_share_actvity.*
 
 class ShareActvity : AppCompatActivity() {
 
 
-    lateinit var profileViewModel: ProfileViewModel
+    lateinit var profileViewModel: CommonViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,10 +40,6 @@ class ShareActvity : AppCompatActivity() {
             }
         }
 
-        profileViewModel.sharedFolder.observe(this, Observer {
-            fileTv?.text = it
-
-        })
 
     }
 

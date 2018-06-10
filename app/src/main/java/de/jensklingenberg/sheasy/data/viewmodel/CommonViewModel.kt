@@ -1,13 +1,14 @@
 package de.jensklingenberg.sheasy.data.viewmodel
 
+import android.app.Activity
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.support.v7.widget.PopupMenu
+import android.view.MenuItem
 import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
@@ -16,20 +17,23 @@ import de.jensklingenberg.sheasy.interfaces.ApiEventListener
 import de.jensklingenberg.sheasy.model.AppsResponse
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.SingleLiveEvent
 import de.jensklingenberg.sheasy.utils.AppUtils
 import de.jensklingenberg.sheasy.utils.FUtils
+import de.jensklingenberg.sheasy.utils.ShareUtils
 import javax.inject.Inject
 
 
-class ProfileViewModel @Inject constructor(val application2: Application) : ViewModel(),
+class CommonViewModel @Inject constructor(val application2: Application) : ViewModel(),
     ApiEventListener {
-    
+
     var shareMessage: MutableLiveData<ArrayList<Event>> = MutableLiveData()
+    var shareEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    var clickedMenuItem: SingleLiveEvent<MenuItem> = SingleLiveEvent()
 
     var sharedFolder: MutableLiveData<String> = MutableLiveData()
 
     var files: MutableLiveData<List<FileResponse>> = MutableLiveData()
-    var apps: MutableLiveData<List<AppsResponse>> = MutableLiveData()
 
 
     init {
@@ -45,17 +49,33 @@ class ProfileViewModel @Inject constructor(val application2: Application) : View
     fun showPopup(context: Context?, v: View) {
         context?.let {
             PopupMenu(context, v).apply {
-                inflate(R.menu.actions)
+                inflate(R.menu.apps_actions)
                 show()
+                setOnMenuItemClickListener {
+
+                    when (it.itemId) {
+                        R.id.menu_share -> {
+                            clickedMenuItem.value = it
+                            shareEvent.value = true
+                        }
+                        else -> {
+                        }
+                    }
+                    true
+                }
             }
         }
 
     }
 
+    fun share(activity: Activity, selected: String) {
+        ShareUtils.appDownload(activity, selected)
+        ShareUtils.share(
+            activity, ShareUtils.appDownload(activity, selected)
+        )
 
-    fun getApps() {
-        apps.value = AppUtils.getAppsResponseList(application2)
     }
+
 
     override fun onShare(test: Event) {
         events.add(test)
@@ -92,8 +112,6 @@ class ProfileViewModel @Inject constructor(val application2: Application) : View
 
     companion object {
         var events = arrayListOf<Event>()
-
-
     }
 
 

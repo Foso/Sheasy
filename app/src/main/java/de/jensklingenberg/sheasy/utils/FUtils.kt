@@ -56,10 +56,7 @@ class FUtils {
         fun returnAPK(context: Context, apkPackageName: String): ResponseFile? {
             AppUtils.getAllInstalledApplications(context).forEach {
                 if (it.packageName == apkPackageName) {
-
-                    val responseFile =
-                        ResponseFile(FileInputStream(it.sourceDir), getMimeType(it.sourceDir))
-                    return responseFile
+                    return ResponseFile(FileInputStream(it.sourceDir), getMimeType(it.sourceDir))
                 }
 
             }

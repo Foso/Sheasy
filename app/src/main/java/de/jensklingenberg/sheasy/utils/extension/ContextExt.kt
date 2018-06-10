@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.media.AudioManager
 import android.media.projection.MediaProjectionManager
+import android.net.wifi.WifiManager
 import java.io.File
 import java.io.InputStream
 
@@ -26,6 +27,10 @@ public fun Context.notifcationManager(): NotificationManager {
 
 public fun Context.mediaProjectionManager(): MediaProjectionManager {
     return this.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+}
+
+public fun Context.wifiManager(): WifiManager {
+    return this.getSystemService(Context.WIFI_SERVICE) as WifiManager
 }
 
 
