@@ -28,9 +28,11 @@ import de.jensklingenberg.sheasy.utils.AppUtils
 import de.jensklingenberg.sheasy.utils.FUtils
 import de.jensklingenberg.sheasy.utils.PermissionUtils.Companion.MY_PERMISSIONS_REQUEST_READ_CONTACTS
 import de.jensklingenberg.sheasy.utils.extension.ResourceMediatorLiveData
+import javax.inject.Inject
 
 
-class PermissionViewModel(val application2: Application) : BaseViewModel(application2) {
+class PermissionViewModel @Inject constructor(val application2: Application) :
+    BaseViewModel(application2) {
 
     var storagePermission: MutableLiveData<Resource<Boolean>> = MutableLiveData()
     var notificationPermissionStatus: MutableLiveData<Resource<Boolean>> = MutableLiveData()

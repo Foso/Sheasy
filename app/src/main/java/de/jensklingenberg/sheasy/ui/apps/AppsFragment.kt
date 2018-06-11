@@ -63,7 +63,7 @@ class AppsFragment : BaseFragment(), AppsAdapter.OnTagClickListener, ITabView {
                 }
 
                 R.id.menu_extract -> {
-                    appsViewModel.extractApk(apkPackageName)
+                    appsViewModel.extractApk(context!!, apkPackageName)
 
                 }
 

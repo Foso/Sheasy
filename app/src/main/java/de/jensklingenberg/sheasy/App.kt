@@ -53,8 +53,10 @@ class App : Application() {
     fun initializeDagger() {
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(this))
+
             // .serviceModule(ServiceModule())
             .remoteModule(RemoteModule())
+
             .build()
     }
 

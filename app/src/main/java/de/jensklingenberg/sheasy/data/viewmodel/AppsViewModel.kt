@@ -16,9 +16,11 @@ import de.jensklingenberg.sheasy.model.SingleLiveEvent
 import de.jensklingenberg.sheasy.utils.AppUtils
 import de.jensklingenberg.sheasy.utils.FUtils
 import java.io.File
+import javax.inject.Inject
 
 
-class AppsViewModel(val application2: Application) : AndroidViewModel(application2) {
+class AppsViewModel @Inject constructor(val application2: Application) :
+    AndroidViewModel(application2) {
 
     var apps: MutableLiveData<List<AppsResponse>> = MutableLiveData()
 
@@ -45,7 +47,7 @@ class AppsViewModel(val application2: Application) : AndroidViewModel(applicatio
         val test = FUtils.returnAPK(context, packageName)
         val mimeType = test?.mimeType
         val fileInputStream = test?.fileInputStream
-        File()
+
 
     }
 

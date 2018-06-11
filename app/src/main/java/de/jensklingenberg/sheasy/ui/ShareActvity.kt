@@ -6,19 +6,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
-import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 
 class ShareActvity : AppCompatActivity() {
-
-
-    lateinit var profileViewModel: CommonViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share_actvity)
-        profileViewModel = ViewModelFactory.obtainProfileViewModel(this)
 
 
         intent?.let {
