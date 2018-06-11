@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.data.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.preference.PreferenceManager
 import android.support.v7.widget.PopupMenu
@@ -19,8 +20,11 @@ import java.io.File
 import javax.inject.Inject
 
 
-class AppsViewModel @Inject constructor(val application2: Application) :
-    AndroidViewModel(application2) {
+class AppsViewModel @Inject constructor() : ViewModel() {
+
+    @Inject
+    lateinit var application: Application
+
 
     var apps: MutableLiveData<List<AppsResponse>> = MutableLiveData()
 
@@ -52,7 +56,7 @@ class AppsViewModel @Inject constructor(val application2: Application) :
     }
 
     fun getApps() {
-        apps.value = AppUtils.getAppsResponseList(application2)
+        apps.value = AppUtils.getAppsResponseList(application)
     }
 
 }

@@ -24,23 +24,18 @@ import de.jensklingenberg.sheasy.utils.ShareUtils
 import javax.inject.Inject
 
 
-class CommonViewModel @Inject constructor(val application2: Application) : ViewModel(),
+class CommonViewModel @Inject constructor() : ViewModel(),
     ApiEventListener {
 
     var shareMessage: MutableLiveData<ArrayList<Event>> = MutableLiveData()
     var shareEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var clickedMenuItem: SingleLiveEvent<MenuItem> = SingleLiveEvent()
-
     var sharedFolder: MutableLiveData<String> = MutableLiveData()
-
     var files: MutableLiveData<List<FileResponse>> = MutableLiveData()
 
 
-    init {
-        initializeDagger()
-    }
-
-    private fun initializeDagger() = App.appComponent.inject(this)
+    @Inject
+    lateinit var application: Application
 
     fun getFiles(folderPath: String) {
         files.value = FUtils.getFilesReponseList(folderPath)
@@ -92,8 +87,8 @@ class CommonViewModel @Inject constructor(val application2: Application) : ViewM
         val mySharedMessageBroadcastReceiver = App.instance.mySharedMessageBroadcastReceiver
         mySharedMessageBroadcastReceiver.apiEventListener = this
 
-        application2.registerReceiver(mySharedMessageBroadcastReceiver, filter)
-        application2.startService(intent)
+        application.registerReceiver(mySharedMessageBroadcastReceiver, filter)
+        application.startService(intent)
 
 
     }
@@ -104,8 +99,8 @@ class CommonViewModel @Inject constructor(val application2: Application) : ViewM
         tt.apiEventListener = this
 
 
-        application2.registerReceiver(tt, filter)
-        application2.stopService(intent)
+        application.registerReceiver(tt, filter)
+        application.stopService(intent)
 
     }
 
