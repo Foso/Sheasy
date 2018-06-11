@@ -47,6 +47,12 @@ class PermissionOverViewFragment : BaseFragment(), ITabView {
         permissionViewModel.checkContactsPermission()
         profileViewModel = obtainProfileViewModel()
         profileViewModel.startService(Intent(activity, HTTPServerService::class.java))
+        profileViewModel.shareService(
+            Intent(
+                activity,
+                HTTPServerService::class.java
+            ).apply { putExtra("TEST", "HALLO") })
+
         initIPAddress()
 
 

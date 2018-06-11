@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
+import android.os.Environment
 import android.preference.PreferenceManager
 import android.support.v7.widget.PopupMenu
 import android.view.MenuItem
@@ -15,7 +16,9 @@ import de.jensklingenberg.sheasy.model.AppsResponse
 import de.jensklingenberg.sheasy.model.SingleLiveEvent
 import de.jensklingenberg.sheasy.utils.AppUtils
 import de.jensklingenberg.sheasy.utils.FUtils
+import de.jensklingenberg.sheasy.utils.ResponseFile
 import java.io.File
+import java.io.FileInputStream
 
 
 class AppsViewModel(val application2: Application) : AndroidViewModel(application2) {
@@ -23,6 +26,7 @@ class AppsViewModel(val application2: Application) : AndroidViewModel(applicatio
     var apps: MutableLiveData<List<AppsResponse>> = MutableLiveData()
 
     var clickedMenuItem: SingleLiveEvent<MenuItem> = SingleLiveEvent()
+    var toastMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
 
     fun showPopup(context: Context?, v: View) {
@@ -41,11 +45,15 @@ class AppsViewModel(val application2: Application) : AndroidViewModel(applicatio
 
     fun extractApk(context: Context, packageName: String) {
 
+        when (AppUtils.extractApk(context, packageName)) {
+            true -> {
+                toastMessage.value = R.string.Success
+            }
+            false -> {
+                toastMessage.value = R.string.Failed
+            }
+        }
 
-        val test = FUtils.returnAPK(context, packageName)
-        val mimeType = test?.mimeType
-        val fileInputStream = test?.fileInputStream
-        File()
 
     }
 

@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.Toast
+import androidx.core.widget.toast
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.viewmodel.AppsViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.NetworkViewModel
@@ -54,6 +56,11 @@ class AppsFragment : BaseFragment(), AppsAdapter.OnTagClickListener, ITabView {
     }
 
     private fun initObserver() {
+
+        appsViewModel.toastMessage.observe(
+            this,
+            Observer { context?.toast(getString(it!!), Toast.LENGTH_SHORT) })
+
         appsViewModel.apps.observe(this, Observer { appsAdapter.setItems(it!!) })
         appsViewModel.clickedMenuItem.observe(this, Observer {
             when (it?.itemId) {
@@ -63,7 +70,7 @@ class AppsFragment : BaseFragment(), AppsAdapter.OnTagClickListener, ITabView {
                 }
 
                 R.id.menu_extract -> {
-                    appsViewModel.extractApk(apkPackageName)
+                    appsViewModel.extractApk(context!!, apkPackageName)
 
                 }
 

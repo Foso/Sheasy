@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.network.service.apiv1
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.EventCategory
+import de.jensklingenberg.sheasy.network.service.HTTPServerService
 import de.jensklingenberg.sheasy.utils.FUtils
 import de.jensklingenberg.sheasy.utils.extension.toJson
 import io.ktor.application.call
@@ -19,7 +20,7 @@ import java.io.File
 import java.io.FileInputStream
 
 
-fun Route.file(app: App, moshi: Moshi) {
+fun Route.file(app: App, moshi: Moshi, httpServerService: HTTPServerService) {
     route("file") {
 
 
@@ -70,7 +71,13 @@ fun Route.file(app: App, moshi: Moshi) {
             get {
                 val filePath = call.parameters["download"] ?: ""
 
-                if (filePath.startsWith("/storage/emulated/0/") == false) {
+                val newList = httpServerService.sharedFolder.filter {
+                    if (filePath.startsWith(it)) {
+                        return@filter true
+                    }
+                    return@filter false
+                }
+                if (newList.isEmpty()) {
                     call.respondText(
                         "path not allowed",
                         ContentType.Text.JavaScript

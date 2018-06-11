@@ -1,26 +1,16 @@
-package de.jensklingenberg.sheasy.network.service
+package de.jensklingenberg.sheasy.network.service.apiv1
 
-import android.view.KeyEvent
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.EventCategory
-import de.jensklingenberg.sheasy.network.service.apiv1.file
-import de.jensklingenberg.sheasy.network.service.apiv1.media
 import de.jensklingenberg.sheasy.utils.*
-import de.jensklingenberg.sheasy.utils.extension.getAudioManager
 import de.jensklingenberg.sheasy.utils.extension.toJson
 import io.ktor.application.call
-import io.ktor.content.PartData
-import io.ktor.content.forEachPart
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
-import io.ktor.request.receiveMultipart
 import io.ktor.response.header
-import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.*
-import java.io.File
-import java.io.FileInputStream
 
 
 fun Route.contacts(app: App, moshi: Moshi) {
@@ -47,7 +37,7 @@ fun Route.device(moshi: Moshi) {
 
         call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
         call.respondText(
-            moshi?.toJson(deviceInfo) ?: "",
+            moshi.toJson(deviceInfo),
             ContentType.Text.JavaScript
         )
     }

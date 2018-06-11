@@ -5,45 +5,25 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
-import android.view.KeyEvent
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BackportWebSocket
-import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.factories.ServerFactory
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
-import de.jensklingenberg.sheasy.model.ConnectionInfo
-import de.jensklingenberg.sheasy.model.FileResponse
-import de.jensklingenberg.sheasy.network.service.apiv1.file
-import de.jensklingenberg.sheasy.network.service.apiv1.media
+import de.jensklingenberg.sheasy.network.service.apiv1.*
 import de.jensklingenberg.sheasy.network.websocket.NanoWsdWebSocketListener
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
-import de.jensklingenberg.sheasy.utils.*
-import de.jensklingenberg.sheasy.utils.extension.getAudioManager
-import de.jensklingenberg.sheasy.utils.extension.toJson
-import io.ktor.application.call
 import io.ktor.application.install
-import io.ktor.content.PartData
-import io.ktor.content.forEachPart
 import io.ktor.features.CORS
 import io.ktor.features.DefaultHeaders
 import io.ktor.features.PartialContent
-import io.ktor.features.origin
-import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
-import io.ktor.request.receiveMultipart
-import io.ktor.request.uri
-import io.ktor.response.header
-import io.ktor.response.respond
-import io.ktor.response.respondText
 import io.ktor.routing.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
 import org.threeten.bp.Duration
-import java.io.File
-import java.io.FileInputStream
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -60,27 +40,38 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
     @Inject
     lateinit var moshi: Moshi
     val APIV1 = "/api/v1/"
-
+    val TEST = "TEST"
 
     val app by lazy { App.instance }
-    private val mBinder = ServiceBinder()
+    val mBinder = ServiceBinder(this)
     private var serverImpl: MyHttpServer? = null
     var serv: NettyApplicationEngine? = null
 
+    var sharedFolder = ArrayList<String>()
+
+
+    fun setShared(string: String) {
+        sharedFolder.add(string)
+    }
+
+    companion object {
+        lateinit var bind: ServiceBinder
+    }
+
+
     init {
         initializeDagger()
+
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-    inner class ServiceBinder : Binder() {
-        val playerService: HTTPServerService
-            get() = this@HTTPServerService
-    }
+    class ServiceBinder(val httpServerService: HTTPServerService) : Binder()
 
 
     override fun onBind(p0: Intent?): IBinder {
+        bind = mBinder
         return mBinder
     }
 
@@ -118,9 +109,21 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
 
     }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        intent?.let {
+            if (it.hasExtra(TEST)) {
+                Log.d("THIS", "YES")
+            }
+        }
+
+        return super.onStartCommand(intent, flags, startId)
+    }
+
 
     override fun onCreate() {
         super.onCreate()
+        //  sharedFolder.add("/storage/emulated/0/")
 
         runInBackground {
             serv = embeddedServer(Netty, App.port) {
@@ -129,7 +132,7 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
 
                     route(APIV1) {
                         apps(app, moshi)
-                        file(app, moshi)
+                        file(app, moshi, this@HTTPServerService)
                         media(app, moshi)
                         device(moshi)
                         contacts(app, moshi)

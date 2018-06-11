@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
             supportFragmentManager,
             listOf(
 
-                appsFragment,
+                
                 filesFragment,
                 permissionOverViewFragment
             )
