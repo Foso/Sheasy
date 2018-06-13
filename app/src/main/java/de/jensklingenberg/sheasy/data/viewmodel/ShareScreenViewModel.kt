@@ -6,9 +6,11 @@ import android.arch.lifecycle.AndroidViewModel
 import android.preference.PreferenceManager
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.utils.extension.mediaProjectionManager
+import javax.inject.Inject
 
 
-class ShareScreenViewModel(val application2: Application) : AndroidViewModel(application2) {
+class ShareScreenViewModel @Inject constructor(val application2: Application) :
+    AndroidViewModel(application2) {
     fun requestScreenRecord(activity: Activity, request: Int) {
         val permissionIntent =
             activity.mediaProjectionManager().createScreenCaptureIntent()

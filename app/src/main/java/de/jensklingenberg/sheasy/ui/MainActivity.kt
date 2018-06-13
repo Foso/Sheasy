@@ -13,11 +13,10 @@ import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
-import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 import de.jensklingenberg.sheasy.ui.apps.AppsFragment
 import de.jensklingenberg.sheasy.ui.filemanager.FilesFragment
 import de.jensklingenberg.sheasy.ui.EventLog.LogFragment
+import de.jensklingenberg.sheasy.ui.help.HelpFragment
 import de.jensklingenberg.sheasy.ui.screenshare.RecordClientFragment
 import de.jensklingenberg.sheasy.ui.screenshare.RecordFragment
 import de.jensklingenberg.sheasy.ui.main.SettingsFragment
@@ -38,7 +37,6 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     lateinit var permissionOverViewFragment: PermissionOverViewFragment
     lateinit var mainFragment: MainFragment
     var fragmentPagerAdapter: FragmentPagerAdapter? = null
-    lateinit var profileViewModel: CommonViewModel
 
     companion object {
         val REQUEST_PERMISSIONS = 100
@@ -56,6 +54,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         val settingsFragment = SettingsFragment.newInstance()
         val appsFragment = AppsFragment.newInstance()
         val filesFragment = FilesFragment.newInstance()
+        val helpFragment = HelpFragment.newInstance()
         val recordFragment = RecordFragment.newInstance()
         val recordClientFragment = RecordClientFragment.newInstance()
         val shareFragment = ShareFragment.newInstance()
@@ -65,8 +64,8 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
             supportFragmentManager,
             listOf(
 
-                
-                filesFragment,
+
+                recordFragment, recordClientFragment,
                 permissionOverViewFragment
             )
         )
@@ -126,7 +125,6 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        profileViewModel = ViewModelFactory.obtainProfileViewModel(this)
         initViewPager()
         initDrawer()
         initBottomBar()

@@ -22,7 +22,7 @@ import de.jensklingenberg.sheasy.utils.ShareUtils
 import javax.inject.Inject
 
 
-class CommonViewModel @Inject constructor(val application2: Application) : ViewModel(),
+class CommonViewModel @Inject constructor() : ViewModel(),
     ApiEventListener, ServiceConnection {
 
 
@@ -39,10 +39,10 @@ class CommonViewModel @Inject constructor(val application2: Application) : ViewM
         }
     }
 
+
     var shareMessage: MutableLiveData<ArrayList<Event>> = MutableLiveData()
     var shareEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var clickedMenuItem: SingleLiveEvent<MenuItem> = SingleLiveEvent()
-
     var sharedFolder: MutableLiveData<String> = MutableLiveData()
     var folderPath: MutableLiveData<String> = MutableLiveData()
     val defaultPath = "/storage/emulated/0/"
@@ -57,6 +57,10 @@ class CommonViewModel @Inject constructor(val application2: Application) : ViewM
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)
+
+
+    @Inject
+    lateinit var application: Application
 
     fun getFiles(folderPath: String = defaultPath) {
         this.folderPath.value = defaultPath
@@ -105,15 +109,8 @@ class CommonViewModel @Inject constructor(val application2: Application) : ViewM
         val mySharedMessageBroadcastReceiver = App.instance.mySharedMessageBroadcastReceiver
         mySharedMessageBroadcastReceiver.apiEventListener = this
 
-        application2.registerReceiver(mySharedMessageBroadcastReceiver, filter)
-        application2.bindService(intent, this, 0)
-
-
-    }
-
-
-    fun shareService(intent: Intent) {
-        application2.startService(intent)
+        application.registerReceiver(mySharedMessageBroadcastReceiver, filter)
+        application.bindService(intent, this, 0)
 
 
     }
@@ -125,8 +122,8 @@ class CommonViewModel @Inject constructor(val application2: Application) : ViewM
         tt.apiEventListener = this
 
 
-        application2.registerReceiver(tt, filter)
-        application2.stopService(intent)
+        application.registerReceiver(tt, filter)
+        application.stopService(intent)
 
     }
 

@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.data.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.os.Environment
 import android.preference.PreferenceManager
@@ -18,10 +19,15 @@ import de.jensklingenberg.sheasy.utils.AppUtils
 import de.jensklingenberg.sheasy.utils.FUtils
 import de.jensklingenberg.sheasy.utils.ResponseFile
 import java.io.File
-import java.io.FileInputStream
+
+import javax.inject.Inject
 
 
-class AppsViewModel(val application2: Application) : AndroidViewModel(application2) {
+class AppsViewModel @Inject constructor() : ViewModel() {
+
+    @Inject
+    lateinit var application: Application
+
 
     var apps: MutableLiveData<List<AppsResponse>> = MutableLiveData()
 
@@ -58,7 +64,7 @@ class AppsViewModel(val application2: Application) : AndroidViewModel(applicatio
     }
 
     fun getApps() {
-        apps.value = AppUtils.getAppsResponseList(application2)
+        apps.value = AppUtils.getAppsResponseList(application)
     }
 
 }

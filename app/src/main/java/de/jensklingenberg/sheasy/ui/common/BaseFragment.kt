@@ -1,5 +1,7 @@
 package de.jensklingenberg.sheasy.ui.common
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -8,12 +10,15 @@ import android.view.ViewGroup
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.viewmodel.*
 import de.jensklingenberg.sheasy.ui.RootFragment
+import javax.inject.Inject
 
 /**
  * Created by jens on 1/4/18.
  */
 open class BaseFragment : Fragment() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     init {
         initializeDagger()
@@ -32,21 +37,25 @@ open class BaseFragment : Fragment() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    fun obtainPermissionViewModel(): PermissionViewModel {
+        return ViewModelProviders.of(this, viewModelFactory)[PermissionViewModel::class.java]
+    }
+
 
     fun obtainProfileViewModel(): CommonViewModel {
-        return ViewModelFactory.obtainProfileViewModel(activity)
+        return ViewModelProviders.of(this, viewModelFactory)[CommonViewModel::class.java]
     }
 
     fun obtainAppsViewModel(): AppsViewModel {
-        return ViewModelFactory.obtainAppsViewModel(activity)
+        return ViewModelProviders.of(this, viewModelFactory)[AppsViewModel::class.java]
     }
 
     fun obtainNetworkViewModel(): NetworkViewModel {
-        return ViewModelFactory.obtainNetworkViewModel(activity)
+        return ViewModelProviders.of(this, viewModelFactory)[NetworkViewModel::class.java]
     }
 
     fun obtainShareScreenViewModel(): ShareScreenViewModel {
-        return ViewModelFactory.obtainShareScreenViewModel(activity)
+        return ViewModelProviders.of(this, viewModelFactory)[ShareScreenViewModel::class.java]
     }
 
     fun changeFragment(fragment: Fragment, keepInstance: Boolean = false) {
@@ -65,3 +74,4 @@ open class BaseFragment : Fragment() {
     }
 
 }
+

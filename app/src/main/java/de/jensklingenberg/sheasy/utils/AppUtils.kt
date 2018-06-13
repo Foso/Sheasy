@@ -50,7 +50,7 @@ class AppUtils {
                 if (it.packageName == packageName) {
                     val file = File(it.sourceDir)
                     val file2 = File(path + it.packageName + ".apk")
-                    file.copyTo(file2)
+                    file.copyTo(file2, true)
                     return true
                 }
 

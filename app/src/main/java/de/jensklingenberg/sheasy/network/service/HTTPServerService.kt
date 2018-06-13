@@ -43,7 +43,6 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
     val TEST = "TEST"
 
     val app by lazy { App.instance }
-    val mBinder = ServiceBinder(this)
     private var serverImpl: MyHttpServer? = null
     var serv: NettyApplicationEngine? = null
 
@@ -61,6 +60,8 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
 
     init {
         initializeDagger()
+        bind = ServiceBinder(this)
+
 
     }
 
@@ -71,8 +72,7 @@ class HTTPServerService : Service(), NanoWsdWebSocketListener {
 
 
     override fun onBind(p0: Intent?): IBinder {
-        bind = mBinder
-        return mBinder
+        return bind
     }
 
 

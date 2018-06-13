@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_files.*
 class FilesFragment : BaseFragment(), FilesAdapter.OnEntryClickListener, ITabView {
     override fun onItemClicked(view: View, tag: FileResponse) {
         commonViewModel.showPopup(context, view)
-        commonViewModel.setSharedFolder2("/storage/emulated/0/")
+        //commonViewModel.setSharedFolder2("/storage/emulated/0/")
 
     }
 

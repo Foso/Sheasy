@@ -10,7 +10,6 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
 import de.jensklingenberg.sheasy.data.viewmodel.PermissionViewModel
 import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
-import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 import de.jensklingenberg.sheasy.enums.EventCategory
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.NotificationResponse
@@ -40,21 +39,21 @@ class PermissionOverViewFragment : BaseFragment(), ITabView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        permissionViewModel = ViewModelFactory.obtainPermissionViewModel(activity)
+        permissionViewModel = obtainPermissionViewModel()
         initObserver()
         permissionViewModel.checkStoragePermission()
         permissionViewModel.checkNotifcationPermission(context!!)
         permissionViewModel.checkContactsPermission()
         profileViewModel = obtainProfileViewModel()
         profileViewModel.startService(Intent(activity, HTTPServerService::class.java))
-        profileViewModel.shareService(
-            Intent(
-                activity,
-                HTTPServerService::class.java
-            ).apply { putExtra("TEST", "HALLO") })
+        /*  profileViewModel.shareService(
+              Intent(
+                  activity,
+                  HTTPServerService::class.java
+              ).apply { putExtra("TEST", "HALLO") })
 
+          initIPAddress()*/
         initIPAddress()
-
 
     }
 

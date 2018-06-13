@@ -2,7 +2,6 @@ package de.jensklingenberg.sheasy.di
 
 import android.arch.lifecycle.ViewModel
 import dagger.Component
-import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
 import de.jensklingenberg.sheasy.factories.RetrofitFactory
 import de.jensklingenberg.sheasy.handler.RequestHandlerFactory
 import de.jensklingenberg.sheasy.network.service.HTTPServerService
@@ -12,7 +11,7 @@ import de.jensklingenberg.sheasy.network.websocket.NotificationWebsocket
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import javax.inject.Singleton
 
-@Component(modules = [(AppModule::class), (RemoteModule::class), (BroadcastReceiverModule::class)])
+@Component(modules = [(AppModule::class), (RemoteModule::class), (BroadcastReceiverModule::class), (ViewModelModule::class)])
 @Singleton
 interface AppComponent {
 

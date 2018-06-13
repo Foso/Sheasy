@@ -12,9 +12,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
+import javax.inject.Inject
 
 
-class NetworkViewModel(
+class NetworkViewModel @Inject constructor(
     val application2: Application,
     val changeableBaseUrlInterceptor: ChangeableBaseUrlInterceptor,
     val sheasyAPI: SheasyAPI
