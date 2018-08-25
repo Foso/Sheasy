@@ -507,12 +507,12 @@ when{
 
     private fun setup(prefix: String,filePath: String): String {
         val directory = File(filePath)
-        val files = directory.listFiles()
-        Log.d("Files", "Size: " + files?.size)
+        val devices = directory.listFiles()
+        Log.d("Files", "Size: " + devices?.size)
         var fileses = arrayListOf<FileResponse>()
         var s2 = ""
-        if (files != null) {
-            for (file in files) {
+        if (devices != null) {
+            for (file in devices) {
                 fileses.add(FileResponse(file.name,file.path))
                 Log.d("Files", "FileName:" + file.getName())
 

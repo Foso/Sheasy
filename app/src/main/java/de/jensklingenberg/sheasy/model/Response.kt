@@ -10,13 +10,20 @@ import android.os.Parcelable
  * Created by jens on 16/2/18.
  */
 
-data class NotificationResponse(val packageName: String, val title: String, val text: String, val subText: String, val postTime: Long) : Parcelable {
+data class NotificationResponse(
+    val packageName: String,
+    val title: String,
+    val text: String,
+    val subText: String,
+    val postTime: Long
+) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readLong()) {
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readLong()
+    ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -44,7 +51,15 @@ data class NotificationResponse(val packageName: String, val title: String, val 
 
 data class AppsResponse(val name: String, val packageName: String, val installTime: String)
 
-data class DeviceResponse(val manufacturer: String, val model: String, val busySpace: Int, val totalSpace: Int, val freeSpace: Int, val androidVersion: String)
+data class DeviceResponse(
+    val manufacturer: String,
+    val model: String,
+    val busySpace: Int,
+    val totalSpace: Int,
+    val freeSpace: Int,
+    val androidVersion: String
+)
+
 data class ServiceResponse(val name: String)
 data class FileResponse(val name: String, val path: String)
 data class CommandResponse(val name: String)

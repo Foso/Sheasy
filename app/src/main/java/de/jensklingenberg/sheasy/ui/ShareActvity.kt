@@ -1,40 +1,32 @@
 package de.jensklingenberg.sheasy.ui
 
-import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
-import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_share_actvity.*
 
 class ShareActvity : AppCompatActivity() {
-
-
-    lateinit var profileViewModel: ProfileViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share_actvity)
-        profileViewModel = ViewModelFactory.obtainProfileViewModel(this)
 
 
         intent?.let {
-        val action = it.action
+            val action = it.action
             val type = it.type
 
-            when(action){
-                Intent.ACTION_SEND->{
+            when (action) {
+                Intent.ACTION_SEND -> {
                     handleSendImage(it)
 
-                    Toast.makeText(this,"Hallo",Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Hallo", Toast.LENGTH_LONG).show()
                 }
 
-                Intent.ACTION_SEND_MULTIPLE->{
+                Intent.ACTION_SEND_MULTIPLE -> {
                     handleSendMultipleImages(it)
                 }
                 else -> {
@@ -42,10 +34,6 @@ class ShareActvity : AppCompatActivity() {
             }
         }
 
-profileViewModel.sharedFolder.observe(this, Observer {
-    fileTv?.text= it
-
-})
 
     }
 
@@ -55,7 +43,6 @@ profileViewModel.sharedFolder.observe(this, Observer {
             // Update UI to reflect image being shared
         }
     }
-
 
 
     fun handleSendMultipleImages(intent: Intent) {

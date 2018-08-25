@@ -1,70 +1,85 @@
 package de.jensklingenberg.sheasy.ui.filemanager
 
 import android.arch.lifecycle.Observer
-import android.content.ClipData
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.extension.getClipboardMangaer
-import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.ui.EventLog.EventAdapter
+import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
+import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.ui.MainActivity
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
-import de.jensklingenberg.sheasy.utils.FUtils
-import kotlinx.android.synthetic.main.component_toolbar.*
-import kotlinx.android.synthetic.main.fragment_share_with.*
+import kotlinx.android.synthetic.main.component_toolbar_standard.*
+import kotlinx.android.synthetic.main.fragment_files.*
+
 
 /**
  * Created by jens on 1/4/18.
  */
-class FilesFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
-    override fun getTabName(): Int {
-      return R.string.main_frag_tab_name
-    }
-    lateinit var profileViewModel: ProfileViewModel
+class FilesFragment : BaseFragment(), FilesAdapter.OnEntryClickListener, ITabView {
+    override fun onItemClicked(view: View, tag: FileResponse) {
+        commonViewModel.showPopup(context, view)
+        //commonViewModel.setSharedFolder2("/storage/emulated/0/")
 
-    val filesAdapter= FilesAdapter()
-
-    override fun onTagClicked(tag: Event) {
-      activity?.getClipboardMangaer()?.apply {
-            primaryClip = ClipData.newPlainText("simple text", tag.text)
-        }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
 
-        return  inflater.inflate(R.layout.fragment_files, container, false)
+    lateinit var commonViewModel: CommonViewModel
+
+    val filesAdapter = FilesAdapter()
+
+
+    override fun onTagClicked(filePath: String) {
+        commonViewModel.getFiles(filePath)
+
+
     }
+
+
+    override fun getTabNameResId() = R.string.main_frag_tab_name
+
+
+    override fun getLayoutId() = R.layout.fragment_files
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profileViewModel = obtainProfileViewModel()
-        recyclerView.adapter = filesAdapter
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        commonViewModel = obtainProfileViewModel()
+
+        menuBtn?.apply {
+            visibility = View.VISIBLE
+            setOnClickListener { (activity as MainActivity).showMenu() }
+        }
+
+        upBtn?.apply {
+            setOnClickListener { commonViewModel.goFolderUp() }
+        }
+
+        filesAdapter.onEntryClickListener = this
+
+        recyclerView?.apply {
+            adapter = filesAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+
         initObserver()
-        val folderPath = "/storage/emulated/0/"
-        pageTitleTv.text = folderPath
-        profileViewModel.getFiles(folderPath)
+
+        commonViewModel.getFiles()
 
 
     }
 
     private fun initObserver() {
-        profileViewModel.files.observe(this, Observer { filesAdapter.setItems(it!!) })
+        commonViewModel.files.observe(this, Observer { filesAdapter.setItems(it!!) })
+
+        commonViewModel.folderPath.observe(this, Observer { pageTitleTv.text = it })
     }
 
 
-
-
     companion object {
-       @JvmStatic fun newInstance()= FilesFragment()
-        }
+        @JvmStatic
+        fun newInstance() = FilesFragment()
+    }
 
 
 }

@@ -4,38 +4,33 @@ import android.arch.lifecycle.Observer
 import android.content.ClipData
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.extension.getClipboardMangaer
+import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
+import de.jensklingenberg.sheasy.utils.extension.getClipboardMangaer
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.ui.EventLog.EventAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_share_with.*
 
 /**
  * Created by jens on 1/4/18.
  */
 class ShareWithFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabView {
-    override fun getTabName(): Int {
-      return R.string.main_frag_tab_name
+    override fun getTabNameResId(): Int {
+        return R.string.main_frag_tab_name
     }
-    lateinit var profileViewModel: ProfileViewModel
+
+    lateinit var profileViewModel: CommonViewModel
 
     override fun onTagClicked(tag: Event) {
-      activity?.getClipboardMangaer()?.apply {
+        activity?.getClipboardMangaer()?.apply {
             primaryClip = ClipData.newPlainText("simple text", tag.text)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-
-        return  inflater.inflate(R.layout.fragment_share_with, container, false)
-    }
+    override fun getLayoutId() = R.layout.fragment_share_with
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,11 +49,10 @@ class ShareWithFragment : BaseFragment(), EventAdapter.OnTagClickListener, ITabV
     }
 
 
-
-
     companion object {
-       @JvmStatic fun newInstance()= ShareWithFragment()
-        }
+        @JvmStatic
+        fun newInstance() = ShareWithFragment()
+    }
 
 
 }

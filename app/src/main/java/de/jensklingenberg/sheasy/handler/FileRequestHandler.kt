@@ -6,14 +6,14 @@ import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.enums.ApiFileCommand
 import de.jensklingenberg.sheasy.enums.EventCategory
-import de.jensklingenberg.sheasy.extension.getParameterQueryMap
+import de.jensklingenberg.sheasy.utils.extension.NanoHTTPDExt
+import de.jensklingenberg.sheasy.utils.extension.getParameterQueryMap
+import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.utils.FUtils
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoHTTPD.ResponseException
-import java.io.IOException
-import de.jensklingenberg.sheasy.extension.NanoHTTPDExt
-import de.jensklingenberg.sheasy.model.FileResponse
 import java.io.File
+import java.io.IOException
 
 
 /**
@@ -35,11 +35,11 @@ class FileRequestHandler {
             when (session.method) {
 
                 NanoHTTPD.Method.GET -> {
-                    return handleGET(App.instance,session,query)
+                    return handleGET(App.instance, session, query)
                 }
 
                 NanoHTTPD.Method.POST -> {
-                    return handlePOST(App.instance,session)
+                    return handlePOST(App.instance, session)
                 }
 
                 else -> {
@@ -51,7 +51,7 @@ class FileRequestHandler {
 
         }
 
-        private fun handlePOST(app: App,session: NanoHTTPD.IHTTPSession): NanoHTTPD.Response? {
+        private fun handlePOST(app: App, session: NanoHTTPD.IHTTPSession): NanoHTTPD.Response? {
             var files: Map<String, String> = HashMap()
             val destinationPath = session.getParameterQueryMap()["file"]
 
@@ -60,7 +60,10 @@ class FileRequestHandler {
                 val sourceFile = File(files["file"])
                 val destinationFile = File(destinationPath)
                 sourceFile.copyTo(destinationFile, true)
-                app.sendBroadcast(EventCategory.REQUEST,"File Received ${destinationFile.name}to: $destinationPath")
+                app.sendBroadcast(
+                    EventCategory.REQUEST,
+                    "File Received ${destinationFile.name}to: $destinationPath"
+                )
                 return NanoHTTPDExt.debugResponse("OK")
 
             } catch (ioe: IOException) {
@@ -74,7 +77,11 @@ class FileRequestHandler {
             }
         }
 
-        private fun handleGET(app: App,session: NanoHTTPD.IHTTPSession, query: String): NanoHTTPD.Response? {
+        private fun handleGET(
+            app: App,
+            session: NanoHTTPD.IHTTPSession,
+            query: String
+        ): NanoHTTPD.Response? {
             var map = session.getParameterQueryMap()
             val apiFileCommand = ApiFileCommand.get(query.substringBefore("="))
             when (apiFileCommand) {
@@ -89,8 +96,12 @@ class FileRequestHandler {
 
                         }
                         else -> {
-                            val(fileInputStream,mimeType) = handleApkDowload
-                            NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, mimeType, fileInputStream)
+                            val (fileInputStream, mimeType) = handleApkDowload
+                            NanoHTTPD.newChunkedResponse(
+                                NanoHTTPD.Response.Status.OK,
+                                mimeType,
+                                fileInputStream
+                            )
                         }
                     }
 
@@ -102,31 +113,36 @@ class FileRequestHandler {
                 ApiFileCommand.FILE -> {
                     val pathEnding = session.queryParameterString.substringAfterLast("/")
                     return if (pathEnding.contains(".")) {
-                        val filePath= map["file"] ?: ""
-                        app.sendBroadcast("File Requested",filePath)
+                        val filePath = map["file"] ?: ""
+                        app.sendBroadcast(EventCategory.REQUEST, filePath)
                         val returnFile = FUtils.returnFile(filePath)
 
-                            returnFile?.let {
-                                val(fileInputStream,mimeType) = it
-                                val response = NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, FUtils.getMimeType(filePath), fileInputStream)
-                                val fileName = "Hallo.txt"
-                                response.addHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
-                                return response
-                            }
+                        returnFile?.let {
+                            val (fileInputStream, mimeType) = it
+                            val response = NanoHTTPD.newChunkedResponse(
+                                NanoHTTPD.Response.Status.OK,
+                                FUtils.getMimeType(filePath),
+                                fileInputStream
+                            )
+                            val fileName = "Hallo.txt"
+                            response.addHeader(
+                                "Content-Disposition",
+                                "attachment; filename=\"" + fileName + "\""
+                            )
+                            return response
+                        }
 
                         return NanoHTTPD.newFixedLengthResponse("File $query not found")
 
 
-
-
-
                     } else {
-                        val folderPath= map["file"] ?: ""
-                        app.sendBroadcast("FilePath Requested",folderPath)
+                        val folderPath = map["file"] ?: ""
+                        app.sendBroadcast(EventCategory.REQUEST, folderPath)
 
                         val fileList = FUtils.getFilesReponseList(folderPath)
                         val moshi = Moshi.Builder().build()
-                        val listMyData = Types.newParameterizedType(List::class.java, FileResponse::class.java)
+                        val listMyData =
+                            Types.newParameterizedType(List::class.java, FileResponse::class.java)
                         val adapter = moshi.adapter<List<FileResponse>>(listMyData)
 
                         return NanoHTTPDExt.debugResponse(adapter.toJson(fileList))

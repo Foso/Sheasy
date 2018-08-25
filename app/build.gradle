@@ -1,4 +1,5 @@
 apply from: '../constants.gradle'
+apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 apply plugin: 'com.android.application'
 
@@ -54,12 +55,19 @@ repositories {
 
     jcenter()
     mavenCentral()
+    mavenRepos.each { buildMaven(it) }
 
-    maven { url "https://dl.bintray.com/kotlin/ktor" }
-    maven { url "https://dl.bintray.com/kotlin/kotlinx" }
 
 }
-
+ktlint {
+    version = "0.23.1"
+    debug = true
+    verbose = true
+    android = true
+    outputToConsole = true
+    reporters = ["PLAIN", "CHECKSTYLE"]
+    ignoreFailures = false
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -73,19 +81,22 @@ dependencies {
     implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
     implementation "io.ktor:ktor-websockets:$libs.ktor_version"
     //implementation "io.ktor:ktor-locations:$libs.ktor_version"
-    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    // implementation 'org.nanohttpd:nanohttpd:2.3.1'
     implementation 'org.nanohttpd:nanohttpd-websocket:2.3.1'
     implementation "com.squareup.moshi:moshi-kotlin:${libs.moshikotlin}"
     implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
     implementation "com.squareup.retrofit2:retrofit:${libs.retrofitVersion}"
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${rxjava2Adapter}"
+    implementation "com.squareup.retrofit2:converter-scalars:${libs.retrofitVersion}"
+
     implementation "com.squareup.retrofit2:converter-moshi:${moshiConverterVersion}"
     implementation "com.serjltt.moshi:moshi-lazy-adapters:${moshilazyadapters}"
     implementation "androidx.core:core-ktx:${libs.ktx}"
     implementation "com.android.support:recyclerview-v7:${libs.supportLibVersion}"
     implementation "com.android.support:support-annotations:${libs.supportLibVersion}"
     implementation "com.android.support:cardview-v7:${libs.supportLibVersion}"
+    implementation 'us.feras.mdv:markdownview:1.1.0'
     implementation "com.android.support:appcompat-v7:${libs.supportLibVersion}"
     implementation "android.arch.lifecycle:extensions:${lifeCycleExtension}"
     implementation "android.arch.lifecycle:reactivestreams:${lifeCycleExtension}"
@@ -93,9 +104,12 @@ dependencies {
     implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
+    //  compile 'com.github.ar-android:libstreaming:1.0.0'
+
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
     implementation "com.google.dagger:dagger-android:${libs.dagger_version}"
-    implementation "com.google.dagger:dagger-android-support:${libs.dagger_version}" // if you use the support libraries
+    implementation "com.google.dagger:dagger-android-support:${libs.dagger_version}"
+    // if you use the support libraries
     kapt "com.google.dagger:dagger-android-processor:${libs.dagger_version}"
     kapt "com.google.dagger:dagger-compiler:${libs.dagger_version}"
     //implementation 'com.google.android.material:material:1.0.0-alpha1'
@@ -103,6 +117,11 @@ dependencies {
     implementation("com.mikepenz:materialdrawer:6.0.6@aar") {
         transitive = true
     }
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    testingDependencies()
+    compile 'ru.noties:markwon:1.0.5'
+    compile 'ru.noties:markwon-image-loader:1.0.5' // optional
+    compile 'ru.noties:markwon-view:1.0.5' // optional
 }
 
 

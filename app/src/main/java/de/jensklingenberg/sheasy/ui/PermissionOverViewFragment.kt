@@ -1,59 +1,112 @@
 package de.jensklingenberg.sheasy.ui
 
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.broReceiver.MySharedMessageBroadcastReceiver
+import de.jensklingenberg.sheasy.data.viewmodel.PermissionViewModel
+import de.jensklingenberg.sheasy.data.viewmodel.CommonViewModel
+import de.jensklingenberg.sheasy.enums.EventCategory
+import de.jensklingenberg.sheasy.model.Event
+import de.jensklingenberg.sheasy.model.NotificationResponse
 import de.jensklingenberg.sheasy.model.Status
+import de.jensklingenberg.sheasy.network.service.HTTPServerService
+import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.ITabView
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
-import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.fragment_log.*
+import de.jensklingenberg.sheasy.utils.NetworkUtils
+import de.jensklingenberg.sheasy.utils.extension.nonNull
 import kotlinx.android.synthetic.main.fragment_permission_overview.*
-import android.R.array
-import android.widget.ArrayAdapter
-
+import org.threeten.bp.LocalDateTime
 
 
 /**
  * Created by jens on 1/4/18.
  */
-class PermissionOverViewFragment : Fragment(), ITabView {
-    override fun getTabName(): Int {
+class PermissionOverViewFragment : BaseFragment(), ITabView {
+    lateinit var permissionViewModel: PermissionViewModel
+    lateinit var profileViewModel: CommonViewModel
+
+    override fun getTabNameResId(): Int {
         return R.string.main_frag_tab_name
     }
 
-    lateinit var profileViewModel: ProfileViewModel
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-
-        return inflater.inflate(R.layout.fragment_permission_overview, container, false)
-    }
+    override fun getLayoutId() = R.layout.fragment_permission_overview
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        profileViewModel = ViewModelFactory.obtainProfileViewModel(activity)
-
+        permissionViewModel = obtainPermissionViewModel()
         initObserver()
-        profileViewModel.checkStoragePermission()
-        profileViewModel.checkNotifcationPermission(context!!)
-        profileViewModel.checkContactsPermission()
+        permissionViewModel.checkStoragePermission()
+        permissionViewModel.checkNotifcationPermission(context!!)
+        permissionViewModel.checkContactsPermission()
+        profileViewModel = obtainProfileViewModel()
+        profileViewModel.startService(Intent(activity, HTTPServerService::class.java))
+        /*  profileViewModel.shareService(
+              Intent(
+                  activity,
+                  HTTPServerService::class.java
+              ).apply { putExtra("TEST", "HALLO") })
 
-
-
-
-
+          initIPAddress()*/
+        initIPAddress()
 
     }
 
+    private fun initIPAddress() {
+        serverEd.text = "Meine IP Adresse: " + NetworkUtils.getIP(App.instance) + ":" + App.port
+    }
+
     private fun initObserver() {
-        profileViewModel.storagePermission.observe(this, Observer {
+
+        serverBtn?.setOnCheckedChangeListener { buttonView, isChecked ->
+            when (isChecked) {
+                true -> {
+                    profileViewModel.startService(Intent(activity, HTTPServerService::class.java))
+                    App.instance.sendBroadcast(
+                        Event(
+                            EventCategory.SERVER,
+                            "started",
+                            LocalDateTime.now().toString()
+                        )
+                    )
+
+                    Intent(MySharedMessageBroadcastReceiver.MESSAGE).apply {
+                        putExtra(
+                            MySharedMessageBroadcastReceiver.MESSAGE,
+                            NotificationResponse(
+                                "test.package",
+                                serverEd.text.toString(),
+                                "2",
+                                "3",
+                                0L
+                            )
+                        )
+                        activity?.sendBroadcast(this)
+                    }
+
+                }
+
+                false -> {
+                    App.instance.sendBroadcast(EventCategory.SERVER, "stopped")
+
+                    profileViewModel.stopService(Intent(activity, HTTPServerService::class.java))
+
+                }
+
+
+            }
+        }
+
+
+
+
+
+        permissionViewModel.storagePermission.nonNull().observe(this, Observer {
 
             when (it?.status) {
                 Status.SUCCESS -> {
@@ -62,7 +115,12 @@ class PermissionOverViewFragment : Fragment(), ITabView {
                             toggleButton.isActivated = true
                         }
                         false -> {
-                            toggleButton.isActivated = false
+                            toggleButton.apply {
+                                isActivated = false
+                                setOnClickListener {
+                                    permissionViewModel.requestStorage(activity as AppCompatActivity)
+                                }
+                            }
                         }
                     }
 
@@ -70,50 +128,23 @@ class PermissionOverViewFragment : Fragment(), ITabView {
             }
         })
 
-        profileViewModel.notificationPermissionStatus.observe(this, Observer { it ->
-            when(it?.status){
-               Status.SUCCESS->{
-                    when (it.data) {
-                       true -> {
-                           notificationBtn?.apply {
-                               isActivated = true
-                               setOnClickListener {
-                                   profileViewModel.disableNotificationPermission()
-                               }
-                           }
-                       }
-                       false -> {
-                           notificationBtn?.apply {
-                               isActivated = false
-                               setOnClickListener {
-                                   profileViewModel.requestNotificationPermission(context)
-                               }
-                           }
-                       }
-                       null -> ""
-                   }
-               }
-           }
-        })
-
-
-        profileViewModel.contactsPermissionStatus.observe(this, Observer { it ->
-            when(it?.status){
-                Status.SUCCESS->{
+        permissionViewModel.notificationPermissionStatus.observe(this, Observer { it ->
+            when (it?.status) {
+                Status.SUCCESS -> {
                     when (it.data) {
                         true -> {
-                            contactsBtn?.apply {
+                            notificationBtn?.apply {
                                 isActivated = true
                                 setOnClickListener {
-                                   // profileViewModel.disableNotificationPermission()
+                                    permissionViewModel.disableNotificationPermission()
                                 }
                             }
                         }
                         false -> {
-                            contactsBtn?.apply {
+                            notificationBtn?.apply {
                                 isActivated = false
                                 setOnClickListener {
-                                    profileViewModel.requestContactsPermission(activity as AppCompatActivity)
+                                    permissionViewModel.requestNotificationPermission(context)
                                 }
                             }
                         }
@@ -122,17 +153,14 @@ class PermissionOverViewFragment : Fragment(), ITabView {
                 }
             }
         })
+
+
     }
 
 
     companion object {
         @JvmStatic
-        fun newInstance(): PermissionOverViewFragment {
-            val args = Bundle()
-            val fragment = PermissionOverViewFragment()
-            fragment.arguments = args
-            return fragment
-        }
+        fun newInstance() = PermissionOverViewFragment()
     }
 
 }

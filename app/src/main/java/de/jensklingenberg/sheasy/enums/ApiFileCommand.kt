@@ -9,7 +9,7 @@ enum class ApiFileCommand {
 
     companion object {
         fun get(str: String): ApiFileCommand {
-            return values().firstOrNull { it.name.toLowerCase() == str }?: INVALID
+            return values().firstOrNull { it.name.toLowerCase() == str } ?: INVALID
         }
 
     }

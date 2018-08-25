@@ -7,7 +7,7 @@
   <a href="https://twitter.com/intent/tweet?text=Hey, check out Sheasy - Share Easy Android App https://github.com/Foso/Sheasy via @jklingenberg_ #Android 
 "><img src="https://img.shields.io/twitter/url/https/github.com/angular-medellin/meetup.svg?style=social" alt="Tweet"></a>
 
-This an Android App like Airdroid to manage files on your Android Device through a WebInterface in the Browser
+> This an Android App like Airdroid to manage files on your Android Device through a WebInterface in the Browser
 
 ## 🚩 Table of Contents
 

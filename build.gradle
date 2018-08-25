@@ -16,12 +16,14 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$configuration.kotlin_version"
         classpath 'com.benjaminsproule:swagger-gradle-plugin:+'
         classpath "gradle.plugin.org.hidetake:gradle-swagger-generator-plugin:2.11.0"
-
+        classpath "gradle.plugin.org.jlleitschuh.gradle:ktlint-gradle:4.0.0"
 
     }
 }
 
 allprojects {
+    ext.buildMaven = { p -> repositories { maven { url p } } }
+
     repositories {
         google()
         mavenCentral()

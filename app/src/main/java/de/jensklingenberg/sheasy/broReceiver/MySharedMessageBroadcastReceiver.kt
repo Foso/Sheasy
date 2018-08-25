@@ -3,68 +3,69 @@ package de.jensklingenberg.sheasy.broReceiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import de.jensklingenberg.sheasy.interfaces.OnNotificationReceivedListener
+import de.jensklingenberg.sheasy.interfaces.ApiEventListener
 import de.jensklingenberg.sheasy.interfaces.NotifyClientEventListener
+import de.jensklingenberg.sheasy.interfaces.OnNotificationReceivedListener
+import de.jensklingenberg.sheasy.interfaces.OnScreenShareEventListener
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.NotificationResponse
-import de.jensklingenberg.sheasy.interfaces.ApiEventListener
 
-class MySharedMessageBroadcastReceiver() : BroadcastReceiver() {
+class MySharedMessageBroadcastReceiver : BroadcastReceiver() {
 
-    var onNotificationReceivedListener: OnNotificationReceivedListener?=null
-    var notifyClientEventListener: NotifyClientEventListener?=null
-    var apiEventListener: ApiEventListener?=null
-
-        override fun onReceive(context: Context, intent: Intent) {
+    var onNotificationReceivedListener: OnNotificationReceivedListener? = null
+    var notifyClientEventListener: NotifyClientEventListener? = null
+    var apiEventListener: ApiEventListener? = null
+    var onScreenShareEventListener: OnScreenShareEventListener? = null
 
 
-            intent.extras?.let {
-                when{
-                    intent.hasExtra(MESSAGE)->{
-                        val test: NotificationResponse = intent.extras.getParcelable(MESSAGE)
-                            notifyClientEventListener?.onMessageForClientReceived(test)
+    override fun onReceive(context: Context, intent: Intent) {
 
-                    }
 
-                    intent.hasExtra(ACTION_NOTIFICATION)->{
-                        val test: NotificationResponse = intent.extras.getParcelable(ACTION_NOTIFICATION)
+        intent.extras?.let {
+            when {
+                intent.hasExtra(MESSAGE) -> {
+                    val test: NotificationResponse = intent.extras.getParcelable(MESSAGE)
+                    notifyClientEventListener?.onMessageForClientReceived(test)
 
-                            onNotificationReceivedListener?.onNotificationReceived(test)
+                }
 
-                    }
+                intent.hasExtra(ACTION_NOTIFICATION) -> {
+                    val test: NotificationResponse =
+                        intent.extras.getParcelable(ACTION_NOTIFICATION)
 
-                    intent.hasExtra(ACTION_SHARE)->{
-                        val test: Event = intent.extras.getParcelable(ACTION_SHARE)
+                    onNotificationReceivedListener?.onNotificationReceived(test)
 
-                        apiEventListener?.onShare(test)
+                }
 
-                    }
-                    else -> {
-                    }
+                intent.hasExtra(ACTION_SHARE) -> {
+                    val test: Event = intent.extras.getParcelable(ACTION_SHARE)
+
+                    apiEventListener?.onShare(test)
+
+                }
+
+                intent.hasExtra(EVENT_SCREENSHARE) -> {
+                    val test: String = intent.extras.getString(EVENT_SCREENSHARE)
+
+                    onScreenShareEventListener?.onDataForClientReceived(test)
+
+                }
+                else -> {
                 }
             }
-
-
         }
 
-    fun addSharedMessageListener(notifyClientEventListener: NotifyClientEventListener){
-        this.notifyClientEventListener=notifyClientEventListener
+
     }
 
-    fun add(onNotificationReceivedListener: OnNotificationReceivedListener){
-        this.onNotificationReceivedListener=onNotificationReceivedListener
-    }
-
-    fun addd(apiEventListener: ApiEventListener){
-        this.apiEventListener=apiEventListener
-    }
 
     companion object {
         const val MESSAGE = "MESSAGE.ACTION"
         val ACTION_NOTIFICATION = "ACTION_NOTIFICATION"
         val ACTION_SHARE = "seven.notificationlistenerdemo.NLSCONTROL"
+        val EVENT_SCREENSHARE = "SCREENSHARE"
 
     }
 
 
-    }
+}

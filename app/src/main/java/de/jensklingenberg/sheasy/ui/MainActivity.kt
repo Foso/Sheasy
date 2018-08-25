@@ -1,52 +1,152 @@
 package de.jensklingenberg.sheasy.ui
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.Toast
+import com.mikepenz.materialdrawer.AccountHeader
+import com.mikepenz.materialdrawer.AccountHeaderBuilder
+import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.DrawerBuilder
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.viewmodel.ProfileViewModel
-import de.jensklingenberg.sheasy.data.viewmodel.ViewModelFactory
+import de.jensklingenberg.sheasy.ui.apps.AppsFragment
+import de.jensklingenberg.sheasy.ui.filemanager.FilesFragment
+import de.jensklingenberg.sheasy.ui.EventLog.LogFragment
+import de.jensklingenberg.sheasy.ui.help.HelpFragment
+import de.jensklingenberg.sheasy.ui.screenshare.RecordClientFragment
+import de.jensklingenberg.sheasy.ui.screenshare.RecordFragment
+import de.jensklingenberg.sheasy.ui.main.SettingsFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
-lateinit var permissionOverViewFragment: PermissionOverViewFragment
+class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
+
+    val PAGE_ID_0 = 0
+    val PAGE_ID_1 = 1
+    val PAGE_ID_2 = 2
+
+    override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*, *>?): Boolean {
+
+        return true
+    }
+
+    lateinit var permissionOverViewFragment: PermissionOverViewFragment
     lateinit var mainFragment: MainFragment
     var fragmentPagerAdapter: FragmentPagerAdapter? = null
-    lateinit var profileViewModel: ProfileViewModel
 
     companion object {
         val REQUEST_PERMISSIONS = 100
+        val DEBUG = true
+        val TAG = "MainActivity"
+    }
+
+    lateinit var result: Drawer
+    lateinit var headerResult: AccountHeader
+
+
+    fun initViewPager() {
+        mainFragment = MainFragment.newInstance()
+        val logFragment = LogFragment.newInstance()
+        val settingsFragment = SettingsFragment.newInstance()
+        val appsFragment = AppsFragment.newInstance()
+        val filesFragment = FilesFragment.newInstance()
+        val helpFragment = HelpFragment.newInstance()
+        val recordFragment = RecordFragment.newInstance()
+        val recordClientFragment = RecordClientFragment.newInstance()
+        val shareFragment = ShareFragment.newInstance()
+
+        permissionOverViewFragment = PermissionOverViewFragment.newInstance()
+        fragmentPagerAdapter = OverviewPagerAdapter(
+            supportFragmentManager,
+            listOf(
+
+
+                recordFragment, recordClientFragment,
+                permissionOverViewFragment
+            )
+        )
+        viewpager.adapter = fragmentPagerAdapter
+    }
+
+
+    private fun initDrawer() {
+
+        // Create the AccountHeader
+        headerResult = AccountHeaderBuilder()
+            .withActivity(this)
+            // .withHeaderBackground(R.drawable.blue_button)
+            .withSelectionListEnabledForSingleProfile(false)
+            .withOnAccountHeaderListener(
+                { _, _, _ -> false })
+            .build()
+
+
+        result = DrawerBuilder()
+            .withAccountHeader(headerResult)
+            .withActivity(this)
+            .withOnDrawerItemClickListener(this)
+            .build()
+
+        result.addItem(
+            SecondaryDrawerItem().withIdentifier(1).withName(
+                "Hallo"
+            )
+        )
+
 
     }
+
+    private fun initBottomBar() {
+        navigation?.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_location -> {
+                    viewpager.setCurrentItem(PAGE_ID_0, false)
+                }
+                R.id.menu_profile -> {
+                    viewpager.setCurrentItem(PAGE_ID_1, false)
+                }
+                R.id.menu_catalog -> {
+                    viewpager.setCurrentItem(PAGE_ID_2, false)
+                }
+
+            }
+
+            true
+        }
+
+
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        profileViewModel = ViewModelFactory.obtainProfileViewModel(this)
-
+        initViewPager()
+        initDrawer()
+        initBottomBar()
         when (intent.extras) {
-             null -> {
-                 changeFragment(RootFragment.newInstance(),false)
+            null -> {
+                // changeFragment(RootFragment.newInstance(), false)
 
-             }
+            }
             else -> {
                 intent?.let {
                     val action = it.action
                     val type = it.type
 
-                    when(action){
-                        Intent.ACTION_SEND->{
-                            handleSendImage(it)
+                    when (action) {
+                        Intent.ACTION_SEND -> {
+                            //handleSendImage(it)
 
-                            Toast.makeText(this,"Hallo", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Hallo", Toast.LENGTH_LONG).show()
                         }
 
-                        Intent.ACTION_SEND_MULTIPLE->{
-                            handleSendMultipleImages(it)
+                        Intent.ACTION_SEND_MULTIPLE -> {
+                            //handleSendMultipleImages(it)
                         }
                         else -> {
                         }
@@ -56,48 +156,13 @@ lateinit var permissionOverViewFragment: PermissionOverViewFragment
         }
 
 
-
-
-
-
         //initViewPager()
     }
 
-    fun handleSendImage(intent: Intent) {
-        val imageUri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
-        if (imageUri != null) {
-            // Update UI to reflect image being shared
-        }
-    }
-
-
-
-    fun handleSendMultipleImages(intent: Intent) {
-        val imageUris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
-        if (imageUris != null) {
-            // Update UI to reflect multiple images being shared
-            val path = imageUris.first().path
-            profileViewModel.setSharedFolder(path)
-changeFragment(ShareFragment.newInstance(),false)
-        }
-    }
-
-    fun changeFragment(fragment: Fragment, keepInstance: Boolean) {
-
-            val trans = supportFragmentManager.beginTransaction()
-            if (keepInstance) {
-                trans.add(R.id.profileContainer, fragment)
-            } else {
-                trans.replace(R.id.profileContainer, fragment)
-            }
-
-            trans.addToBackStack(null)
-
-            trans.commit()
-
+    fun showMenu() {
+        result.openDrawer()
 
     }
-
 
 
 }

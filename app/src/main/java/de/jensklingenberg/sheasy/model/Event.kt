@@ -10,10 +10,10 @@ import kotlinx.android.parcel.Parcelize
  */
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class Event(val category: EventCategory, val text: String) : Parcelable{
-var time = ""
+data class Event(val category: EventCategory, val text: String) : Parcelable {
+    var time = ""
 
-    constructor(category: EventCategory,text: String,time:String) : this(category,text){
-        this.time=time
+    constructor(category: EventCategory, text: String, time: String) : this(category, text) {
+        this.time = time
     }
 }

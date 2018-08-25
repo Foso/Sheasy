@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/standardToolbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    android:background="#008cc5"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/backBtn"
+        android:layout_width="48dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:src="@drawable/ic_arrow_back_white_24dp"
+        android:visibility="gone"
+
+        />
+
+    <ImageView
+        android:id="@+id/menuBtn"
+        android:layout_width="48dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/backBtn"
+
+        android:adjustViewBounds="true"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+
+        android:src="@drawable/ic_menu_white_24dp"
+        android:visibility="gone" />
+
+
+    <ImageView
+        android:id="@+id/upBtn"
+        android:layout_width="48dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_toLeftOf="@id/pageTitleTv"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:src="@drawable/ic_arrow_upward_white_24dp"
+        android:visibility="visible"
+
+        />
+
+    <ImageView
+        android:id="@+id/settingsBtn"
+        android:layout_width="48dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_centerVertical="true"
+
+
+        android:adjustViewBounds="true"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:src="@drawable/ic_settings_white_24dp"
+        android:visibility="gone"
+
+        />
+
+    <TextView
+        android:id="@+id/pageTitleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/toolbar_height"
+
+
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:lineSpacingExtra="8sp"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        tools:text="Pagetitle"
+        tools:visibility="visible" />
+
+
+    <ImageView
+        android:id="@+id/shareBtn"
+        android:layout_width="48dp"
+        android:layout_height="@dimen/toolbar_height"
+
+        android:adjustViewBounds="true"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:src="@drawable/ic_share_white_24dp"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

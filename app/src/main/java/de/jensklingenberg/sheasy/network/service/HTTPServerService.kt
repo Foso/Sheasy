@@ -5,298 +5,149 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
-import android.view.KeyEvent
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.enums.EventCategory
-import de.jensklingenberg.sheasy.extension.getAudioManager
+import de.jensklingenberg.sheasy.BackportWebSocket
 import de.jensklingenberg.sheasy.factories.ServerFactory
-import de.jensklingenberg.sheasy.handler.MediaRequestHandler
-import de.jensklingenberg.sheasy.helpers.MoshiHelper
 import de.jensklingenberg.sheasy.interfaces.MyHttpServer
-import de.jensklingenberg.sheasy.model.DeviceResponse
-import de.jensklingenberg.sheasy.model.FileResponse
-import de.jensklingenberg.sheasy.toplevel.runInBackground
-import de.jensklingenberg.sheasy.utils.*
-import io.ktor.application.call
-import io.ktor.content.PartData
-import io.ktor.content.forEachPart
-import io.ktor.features.origin
-import io.ktor.http.ContentType
+import de.jensklingenberg.sheasy.network.service.apiv1.*
+import de.jensklingenberg.sheasy.network.websocket.NanoWsdWebSocketListener
+import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
+import io.ktor.application.install
+import io.ktor.features.CORS
+import io.ktor.features.DefaultHeaders
+import io.ktor.features.PartialContent
 import io.ktor.http.HttpHeaders
-import io.ktor.request.receiveMultipart
-import io.ktor.request.uri
-import io.ktor.response.header
-import io.ktor.response.respond
-import io.ktor.response.respondText
+import io.ktor.http.HttpMethod
 import io.ktor.routing.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import java.io.File
-import java.io.FileInputStream
+import io.ktor.server.netty.NettyApplicationEngine
+import org.threeten.bp.Duration
 import java.io.IOException
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 /**
  * Created by jens on 25/2/18.
  */
 
-data class ConnectionInfo(val result: String,val deviceName:String)
+
+class HTTPServerService : Service(), NanoWsdWebSocketListener {
 
 
+    @Inject
+    lateinit var moshi: Moshi
+    val APIV1 = "/api/v1/"
+    val TEST = "TEST"
 
-class HTTPServerService : Service() {
-    private val mBinder = ServiceBinder()
+    val app by lazy { App.instance }
     private var serverImpl: MyHttpServer? = null
-    private val app by lazy { App.instance }
-    private val APIV1 = "/api/v1/"
+    var serv: NettyApplicationEngine? = null
+
+    var sharedFolder = ArrayList<String>()
 
 
+    fun setShared(string: String) {
+        sharedFolder.add(string)
+    }
 
-private var serverRunning = true
-
-    inner class ServiceBinder : Binder() {
-        val playerService: HTTPServerService
-            get() = this@HTTPServerService
+    companion object {
+        lateinit var bind: ServiceBinder
     }
 
 
+    init {
+        initializeDagger()
+        bind = ServiceBinder(this)
+
+
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
+
+
+    class ServiceBinder(val httpServerService: HTTPServerService) : Binder()
+
+
     override fun onBind(p0: Intent?): IBinder {
-        return mBinder
+        return bind
+    }
+
+
+    override fun onNotificationWebSocketRequest() {
+
+
+    }
+
+    fun io.ktor.application.Application.main() {
+        install(DefaultHeaders)
+        install(PartialContent) {
+            maxRangeCount = 10
+        }
+
+        install(CORS) {
+            anyHost()
+            header(HttpHeaders.AccessControlAllowOrigin)
+            allowCredentials = true
+            listOf(
+                HttpMethod.Get,
+                HttpMethod.Put,
+                HttpMethod.Delete,
+                HttpMethod.Options
+            ).forEach { method(it) }
+        }
+
+        install(BackportWebSocket) {
+            pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
+            timeout = Duration.ofSeconds(15)
+            maxFrameSize =
+                    Long.MAX_VALUE // Disabled (max value). The connection will be closed if surpassed this length.
+            masking = false
+        }
+
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        intent?.let {
+            if (it.hasExtra(TEST)) {
+                Log.d("THIS", "YES")
+            }
+        }
+
+        return super.onStartCommand(intent, flags, startId)
     }
 
 
     override fun onCreate() {
         super.onCreate()
-        //app = App.instance
-
-
-        serverImpl = ServerFactory.createHTTPServer(this)
-       // serverImpl?.start(10000)
-
-        Log.d("PORT:",App.port.toString())
+        //  sharedFolder.add("/storage/emulated/0/")
 
         runInBackground {
-           val server = embeddedServer(Netty, App.port) {
+            serv = embeddedServer(Netty, App.port) {
                 routing {
-                    get("/") {
-                        app.sendBroadcast(EventCategory.CONNECTION, "from IP:"+call.request.origin.host)
-
-                        call.respond(this@HTTPServerService.assets.open("web/index.html").readBytes())
-                    }
-
-
-
-                    get("swagger") {
-                        app.sendBroadcast(EventCategory.REQUEST, "swagger")
-
-                        call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-
-                        call.respond(this@HTTPServerService.assets.open("swagger/SwaggerUI.html").readBytes())
-
-
-                    }
-
-                    get("swagger/{filepath...}") {
-                        var test = call.request.uri.replaceFirst("/", "")
-                        Log.d("SWAGGER",test)
-                        call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-
-                        call.respond(this@HTTPServerService.assets.open("swagger/"+test).readBytes())
-
-                    }
-
-
-                    get("web/{filepath...}") {
-                        var test = call.request.uri.replaceFirst("/", "")
-                        call.respond(this@HTTPServerService.assets.open(test).readBytes())
-                    }
-
+                    general(app, moshi)
 
                     route(APIV1) {
-                        get("apps") {
-                            app.sendBroadcast(EventCategory.REQUEST, "/apps")
-
-                            val appsResponse =
-                                MoshiHelper.appsToJson(app.moshi, AppUtils.handleApps(app))
-
-                            call.apply {
-                                response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-                                respondText(appsResponse, ContentType.Text.JavaScript)
-                            }
-
-
-                        }
-
-                        get("connect") {
-                            App.instance.sendBroadcast(EventCategory.REQUEST,"Device Info REQUESTED")
-                            val deviceInfo = ConnectionInfo("OK","Frist")
-                            val jsonAdapter = App.instance.moshi.adapter(ConnectionInfo::class.java)
-
-
-                            call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-                            call.respondText(
-                                jsonAdapter?.toJson(deviceInfo) ?: "",
-                                ContentType.Text.JavaScript
-                            )
-                        }
-
-                        get("contacts") {
-                            app.sendBroadcast(EventCategory.REQUEST, "/contacts")
-
-                            val contacts = ContactUtils.readContacts(app.contentResolver)
-                            val response = MoshiHelper.contactsToJson(app.moshi, contacts)
-                            call.respondText(response, ContentType.Text.JavaScript)
-                        }
-
-                        route("file") {
-
-
-                            param("apk") {
-                                get {
-                                    val login = call.parameters["apk"] ?: ""
-
-                                    val test = FUtils.returnAPK(app, login)
-                                    val mimeType = test?.mimeType
-                                    val fileInputStream = test?.fileInputStream
-
-                                    call.respond(fileInputStream?.readBytes() ?: "apk Not found")
-                                }
-
-                            }
-
-                            param("upload") {
-                                post {
-                                    val filePath = call.parameters["upload"] ?: ""
-
-
-                                    val multipart = call.receiveMultipart()
-                                    multipart.forEachPart { part ->
-                                        when (part) {
-                                            is PartData.FormItem -> {
-
-                                            }
-                                            is PartData.FileItem -> {
-                                                val ext = File(part.originalFileName).extension
-
-                                                val sourceFile = File(filePath)
-                                                val destinationFile = File(filePath)
-                                                sourceFile.copyTo(destinationFile, true)
-
-                                                part.streamProvider().use { its ->
-                                                    its.copyTo(sourceFile.outputStream())
-                                                }
-                                            }
-
-                                        }
-
-                                    }
-                                }
-                            }
-
-
-                            param("download") {
-                                get {
-                                    val login = call.parameters["download"] ?: ""
-
-                                    if (login.contains(".")) {
-
-                                        val test = FUtils.returnAPK(app, login)
-                                        val mimeType = test?.mimeType
-                                        val fileInputStream = FileInputStream(File(login))
-
-                                        call.respond(
-                                            fileInputStream.readBytes()
-                                        )
-                                    } else {
-                                        app.sendBroadcast("FilePath Requested", login)
-
-                                        val fileList = FUtils.getFilesReponseList(login)
-
-                                        if (fileList.isEmpty()) {
-                                            call.respondText(
-                                                "path not found",
-                                                ContentType.Text.JavaScript
-                                            )
-
-                                        } else {
-                                            val moshi = Moshi.Builder().build()
-                                            val listMyData = Types.newParameterizedType(
-                                                List::class.java,
-                                                FileResponse::class.java
-                                            )
-                                            val adapter =
-                                                moshi.adapter<List<FileResponse>>(listMyData)
-                                                    .toJson(fileList)
-
-                                            call.apply {
-                                                response.header(
-                                                    HttpHeaders.AccessControlAllowOrigin,
-                                                    "*"
-                                                )
-                                                respondText(adapter, ContentType.Text.JavaScript)
-                                            }
-
-                                        }
-
-
-                                    }
-
-                                }
-
-                            }
-
-
-                            // call.respondText(response, ContentType.Text.JavaScript)
-                        }
-
-                        route("media") {
-                            val audioManager = app.getAudioManager()
-
-                            get("louder") {
-                                app.sendBroadcast(EventCategory.MEDIA, "louder")
-
-                                MediatUtils(audioManager).louder()
-                                app.sendBroadcast(MediaRequestHandler.CATEGORY, "Media louder")
-                                call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-
-                                call.respondText("Louder", ContentType.Text.JavaScript)
-                            }
-
-                            get("pause") {
-                                app.sendBroadcast(EventCategory.MEDIA, "puase")
-
-                                KeyUtils.sendKeyEvent(app, KeyEvent.KEYCODE_MEDIA_PAUSE)
-                                app.sendBroadcast("MEDIA", "Media pause")
-
-                                call.respondText("Pause", ContentType.Text.JavaScript)
-                            }
-
-                        }
-
-                        get("device") {
-                            App.instance.sendBroadcast(EventCategory.REQUEST,"Device Info REQUESTED")
-                            val deviceInfo = DeviceUtils.getDeviceInfo()
-                            val jsonAdapter = App.instance.moshi.adapter(DeviceResponse::class.java)
-
-
-                            call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-                            call.respondText(
-                                jsonAdapter?.toJson(deviceInfo) ?: "",
-                                ContentType.Text.JavaScript
-                            )
-                        }
+                        apps(app, moshi)
+                        file(app, moshi, this@HTTPServerService)
+                        media(app, moshi)
+                        device(moshi)
+                        contacts(app, moshi)
                     }
-
                 }
-            }.start(wait = true)
+            }
+            serv?.start(wait = true)
+
+
         }
 
         try {
 
-            // serverImpl = ServerFactory.createHTTPServer(this)
-            //  serverImpl?.start(10000)
+            serverImpl = ServerFactory.createHTTPServer(this)
+            serverImpl?.start(10000)
             Log.i("TAG", "Server is started: " + serverImpl?.getHostname())
 
         } catch (e: IOException) {
@@ -307,10 +158,17 @@ private var serverRunning = true
     }
 
     override fun stopService(name: Intent?): Boolean {
-        serverRunning=false
+        serv?.stop(0L, 0L, TimeUnit.SECONDS)
         serverImpl?.stop()
         return super.stopService(name)
 
+    }
+
+    override fun onDestroy() {
+        serv?.stop(0L, 0L, TimeUnit.SECONDS)
+        serverImpl?.stop()
+        Log.d("hhh", "ddd")
+        super.onDestroy()
     }
 
 
