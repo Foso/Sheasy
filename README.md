@@ -62,7 +62,6 @@ The App is completely written in Kotlin (except the used JVM/JS libraries)
 
 ### Backend
 * [Ktor](https://github.com/ktorio/ktor) - Used as Backend
-* [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - Only used for WebSockets, because Ktor's websocket need API23
 
 ### Frontend
 * [Kotlin React](https://kotlinlang.org/docs/tutorials/javascript/kotlin-to-javascript/kotlin-to-javascript.html) - Used for Web Frontend
