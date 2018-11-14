@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.*
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.legacy.utils.toplevel.runInBackground
+import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import io.ktor.server.netty.NettyApplicationEngine
 import java.io.IOException
 import java.util.concurrent.TimeUnit

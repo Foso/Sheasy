@@ -2,9 +2,9 @@ package de.jensklingenberg.sheasy.network.routes
 
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.data.SheasyPreferences
-import de.jensklingenberg.sheasy.legacy.utils.AppUtils
-import de.jensklingenberg.sheasy.legacy.utils.FUtils
-import de.jensklingenberg.sheasy.legacy.utils.extension.toJson
+import de.jensklingenberg.sheasy.utils.AppUtils
+import de.jensklingenberg.sheasy.utils.FUtils
+import de.jensklingenberg.sheasy.utils.extension.toJson
 import io.ktor.application.call
 import io.ktor.http.ContentDisposition
 import io.ktor.http.ContentType

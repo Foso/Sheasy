@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.legacy.utils.extension
+package de.jensklingenberg.sheasy.utils.extension
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types

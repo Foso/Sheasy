@@ -1,7 +1,7 @@
-package de.jensklingenberg.sheasy.legacy.utils.toplevel
+package de.jensklingenberg.sheasy.utils.toplevel
 
 import com.squareup.moshi.Moshi
-import de.jensklingenberg.sheasy.legacy.utils.extension.toJson
+import de.jensklingenberg.sheasy.utils.extension.toJson
 import io.ktor.application.ApplicationCall
 import io.ktor.http.ContentType
 import io.ktor.response.respondText

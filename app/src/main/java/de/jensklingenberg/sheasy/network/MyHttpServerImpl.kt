@@ -6,9 +6,9 @@ import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.data.SheasyPreferences
-import de.jensklingenberg.sheasy.legacy.utils.AppUtils
-import de.jensklingenberg.sheasy.legacy.utils.FUtils
-import de.jensklingenberg.sheasy.legacy.utils.NotifUtils
+import de.jensklingenberg.sheasy.utils.AppUtils
+import de.jensklingenberg.sheasy.utils.FUtils
+import de.jensklingenberg.sheasy.utils.NotifUtils
 import de.jensklingenberg.sheasy.network.routes.apps
 import de.jensklingenberg.sheasy.network.routes.file
 import de.jensklingenberg.sheasy.network.routes.general
@@ -45,7 +45,6 @@ class MyHttpServerImpl {
 
 
     companion object {
-        val PORT = BuildConfig.WEBSOCKET_PORT
 
         fun getNetty(
             moshi: Moshi,

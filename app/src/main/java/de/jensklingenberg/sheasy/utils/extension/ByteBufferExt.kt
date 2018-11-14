@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.legacy.utils.extension
+package de.jensklingenberg.sheasy.utils.extension
 
 import java.nio.ByteBuffer
 import java.nio.charset.Charset

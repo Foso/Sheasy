@@ -1,8 +1,8 @@
 package de.jensklingenberg.sheasy.network.routes
 
 import com.squareup.moshi.Moshi
-import de.jensklingenberg.sheasy.legacy.utils.AppUtils
-import de.jensklingenberg.sheasy.legacy.utils.toplevel.respondWithJSON
+import de.jensklingenberg.sheasy.utils.AppUtils
+import de.jensklingenberg.sheasy.utils.toplevel.respondWithJSON
 import io.ktor.application.call
 import io.ktor.http.HttpHeaders
 import io.ktor.response.header

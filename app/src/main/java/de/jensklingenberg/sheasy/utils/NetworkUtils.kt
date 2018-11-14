@@ -1,8 +1,8 @@
-package de.jensklingenberg.sheasy.legacy.utils
+package de.jensklingenberg.sheasy.utils
 
 import android.content.Context
 import android.text.format.Formatter
-import de.jensklingenberg.sheasy.legacy.utils.extension.wifiManager
+import de.jensklingenberg.sheasy.utils.extension.wifiManager
 
 /**
  * Created by jens on 24/2/18.

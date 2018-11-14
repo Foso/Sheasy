@@ -11,7 +11,7 @@ import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.SheasyPreferences
-import de.jensklingenberg.sheasy.legacy.utils.extension.notificationManager
+import de.jensklingenberg.sheasy.utils.extension.notificationManager
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 

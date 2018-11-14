@@ -4,8 +4,8 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.data.SheasyPreferences
-import de.jensklingenberg.sheasy.legacy.utils.FUtils
-import de.jensklingenberg.sheasy.legacy.utils.NotifUtils
+import de.jensklingenberg.sheasy.utils.FUtils
+import de.jensklingenberg.sheasy.utils.NotifUtils
 import de.jensklingenberg.sheasy.network.MyHttpServerImpl
 import io.ktor.server.netty.NettyApplicationEngine
 import javax.inject.Singleton

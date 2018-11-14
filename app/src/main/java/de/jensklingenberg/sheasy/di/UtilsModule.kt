@@ -2,9 +2,9 @@ package de.jensklingenberg.sheasy.di
 
 import dagger.Module
 import dagger.Provides
-import de.jensklingenberg.sheasy.legacy.utils.AppUtils
-import de.jensklingenberg.sheasy.legacy.utils.FUtils
-import de.jensklingenberg.sheasy.legacy.utils.NotifUtils
+import de.jensklingenberg.sheasy.utils.AppUtils
+import de.jensklingenberg.sheasy.utils.FUtils
+import de.jensklingenberg.sheasy.utils.NotifUtils
 import javax.inject.Singleton
 
 @Module

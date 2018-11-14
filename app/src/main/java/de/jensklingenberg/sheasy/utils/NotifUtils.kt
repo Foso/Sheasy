@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.legacy.utils
+package de.jensklingenberg.sheasy.utils
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
