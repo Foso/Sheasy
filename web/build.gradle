@@ -1,0 +1,118 @@
+buildscript {
+
+    apply from: './constants.gradle'
+
+
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlinx' }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:$kotlin_frontend_version"
+    }
+
+}
+
+apply plugin: 'org.jetbrains.kotlin.frontend'
+apply plugin: 'kotlin2js'
+apply plugin: 'kotlin-dce-js'
+
+
+version '0.0.1'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    maven { url 'https://dl.bintray.com/kotlinx/kotlinx' }
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-js-wrappers' }
+}
+
+dependencies {
+    implementation project(':SharedCode')
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
+    compile "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
+    compile "org.jetbrains:kotlin-react:$kotlin_react_version"
+    compile "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
+}
+
+kotlinFrontend {
+    // downloadNodeJsVersion = 'latest'
+
+    npm {
+        dependency("bootstrap", "${libs.bootstrap}")
+        dependency("style-loader")
+        dependency("@material-ui/core")
+        dependency("@material-ui/icons")
+        dependency("axios", "${libs.axios}")
+        dependency("core-js", "${libs.core_js}")
+        dependency("rxjs", "${libs.rxjs}")
+      //  dependency("qrcode.react")
+        dependency("react-autosuggest")
+        dependency("history", "${libs.history}")
+        dependency("react-router-dom", "${libs.react_router_dom}")
+        dependency("react-dev-utils", "^5.0.2")
+        dependency("react-draggable")
+        dependency("react-dropzone", "${libs.react_dropzone}")
+        dependency("react-lottie")
+        dependency("react-web-notification", "${libs.react_web_notification}")
+        dependency("reactstrap", "${libs.reactstrap}")
+        dependency("simple-websocket", "${libs.simple_websocket}")
+        dependency('react', react_version)
+        dependency('react-dom', react_version)
+        devDependency("css-loader")
+        devDependency("style-loader")
+
+    }
+
+    sourceMaps = true
+
+    webpackBundle {
+
+        port= 8088
+        bundleName = "main"
+        contentPath = file('src/main/web')
+        publicPath = "/web"
+        proxyUrl = 'http://localhost:8080'
+    }
+}
+
+compileKotlin2Js {
+    kotlinOptions.metaInfo = true
+    kotlinOptions.outputFile = "${project.buildDir.path}/js/${project.name}.js"
+    kotlinOptions.sourceMap = true
+    kotlinOptions.moduleKind = 'commonjs'
+    kotlinOptions.main = 'call'
+}
+
+
+
+sourceSets {
+    main {
+        kotlin.srcDirs += "src"
+        resources.srcDirs += "resources"
+        output.resourcesDir = "build/js/resources"
+    }
+    test {
+        kotlin.srcDirs += "test"
+        resources.srcDirs += "testResources"
+    }
+}
+
+kotlin {
+    experimental {
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.9' //version required
+}
+
+task serverPrepare(type: Copy, dependsOn: ["build"]) {
+    from "${project.buildDir.path}/build/bundle", "$rootDir/src/main/web"
+    into "${project.buildDir.path}/deploy"
+}

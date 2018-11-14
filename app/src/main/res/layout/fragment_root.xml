@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+
+  <include
+      android:id="@+id/toolbar"
+      layout="@layout/component_toolbar"
+
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rvGrid"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/navigation"
+      android:layout_below="@id/toolbar"
+      >
+
+  </androidx.recyclerview.widget.RecyclerView>
+
+
+  <androidx.viewpager.widget.ViewPager
+      android:id="@+id/viewpager"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_below="@id/rvGrid"
+      android:background="#ffffff"
+      android:layout_above="@id/navigation">
+
+
+  </androidx.viewpager.widget.ViewPager>
+
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+      android:id="@+id/navigation"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:layout_alignParentBottom="true"
+      android:layout_gravity="start"
+      android:background="@android:color/white"
+      app:elevation="24dp"
+      app:itemIconTint="@drawable/nav_item_color_state"
+      app:itemTextColor="@drawable/nav_item_color_state"
+      app:menu="@menu/my_navigation_items"
+
+      />
+
+
+</RelativeLayout>

@@ -1,0 +1,258 @@
+apply from: '../constants.gradle'
+
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'io.gitlab.arturbosch.detekt'
+
+apply plugin: 'org.hidetake.swagger.generator'
+apply plugin: 'base'
+apply plugin: 'changelog'
+
+
+
+android {
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/io.netty.versions.properties'
+
+    }
+    compileSdkVersion configuration.compileSdk
+    defaultConfig {
+        buildConfigField "int", "SERVER_PORT", configuration.serverPort
+        buildConfigField "int", "WEBSOCKET_PORT", configuration.websocketPort
+        buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+
+        applicationId configuration.applicationId
+        minSdkVersion configuration.minSdk
+        targetSdkVersion configuration.targetSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+
+    }
+    androidExtensions {
+        experimental = true
+    }
+}
+
+
+repositories {
+
+    jcenter()
+    mavenCentral()
+    mavenRepos.each { buildMaven(it) }
+
+
+}
+
+
+detekt {
+    version = "1.0.0.RC8"
+    input = files("src/main/kotlin")
+    filters = ".*/resources/.*,.*/build/.*"
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":models")
+    implementation project(':SharedCode')
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.3.0'
+
+    //AndroidX
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.0.0'
+    implementation "androidx.core:core-ktx:$libs.ktx"
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation "androidx.appcompat:appcompat:$libs.androidX"
+    implementation "androidx.recyclerview:recyclerview:${libs.androidX}"
+    implementation "androidx.annotation:annotation:${libs.androidX}"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha1"
+
+
+    //Moshi
+    implementation "com.serjltt.moshi:moshi-lazy-adapters:${libs.moshilazyadapters}"
+    implementation "com.squareup.moshi:moshi-kotlin:${libs.moshikotlin}"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:converter-moshi:${libs.moshiConverterVersion}"
+    implementation "com.squareup.retrofit2:converter-scalars:${libs.retrofitVersion}"
+    implementation "com.squareup.retrofit2:retrofit:${libs.retrofitVersion}"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${libs.rxjava2Adapter}"
+
+
+    //Ktor
+    implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
+    implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+    implementation "io.ktor:ktor:$libs.ktor_version"
+    implementation "io.ktor:ktor-gson:$libs.ktor_version"
+    implementation "io.ktor:ktor-network-tls:$libs.ktor_version"
+
+
+    //RxJava
+    implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
+    implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+
+    //Dagger
+    implementation "com.google.dagger:dagger-android:${libs.dagger}"
+    implementation "com.google.dagger:dagger-android-support:${libs.dagger}" // if you use the support libraries
+    kapt "com.google.dagger:dagger-compiler:${libs.dagger}"
+    kapt "com.google.dagger:dagger-android-processor:${libs.dagger}"
+
+    //Other
+    implementation "org.nanohttpd:nanohttpd-websocket:$libs.nanohttpdwebsocket"
+    swaggerCodegen 'io.swagger:swagger-codegen-cli:2.3.1'
+    testImplementation "junit:junit:${libs.junit}"
+    implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
+        transitive = true
+    }
+    implementation 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.4'
+    implementation "com.jakewharton.threetenabp:threetenabp:$libs.threetenabp"
+    implementation 'co.zsmb:materialdrawer-kt:2.0.1'
+
+
+
+
+    //implementation 'com.google.android.material:material:1.0.0-alpha1'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
+    implementation 'ru.noties:markwon:1.0.5'
+    implementation 'ru.noties:markwon-image-loader:1.0.5' // optional
+    implementation 'ru.noties:markwon-view:1.0.5' // optional
+
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'us.feras.mdv:markdownview:1.1.0'
+
+
+    //Testing
+    testImplementation "org.json:json:20140107"
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: "$libs.mockitoVersion"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${configuration.kotlin_version}"
+    androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
+}
+
+
+swaggerSources {
+    petstore {
+        inputFile = file('../documentation/API/swagger-ui/swagger.yaml')
+        code {
+            language = 'nodejs-server'
+            // configFile = file('config.json')
+            outputDir = file("../documentation/API/swagger-ui/swagger-node")
+        }
+    }
+}
+
+task copyFiles(type: Copy) {
+    from '../documentation/API/1'
+    into '../documentation/API/2'
+}
+
+
+
+changelog {
+    //the name of the file where to write the changelog.
+    file "CHANGELOG.md" //Defaults to "CHANGELOG.md"
+
+    //the name of the app/project for which you are generating a changelog.
+    appName "Sheasy" //Defaults to an empty string.
+
+    //version number for this changelog
+    versionNum readVersionName() //Defaults to an empty string.
+
+    //version name
+    //versionText "Electric Lama" //Defaults to an empty string.
+
+    //URL of the repository where the commits can be found. Plugin will append /commits at the end.
+    repoUrl "https://github.com/Foso/Sheasy.git"
+    //Defaults to an empty string.
+
+    //URL of the bug tracker where closed issues can be found. Plugin will append /issues at the end.
+    //trackerUrl "https://github.com/marcpoppleton/gradle-changelog-plugin" //Defaults to an empty string.
+
+    //lower limit to filter the git log command
+    from readOldVersionName() //Defaults to previous git tag found or first commit if none found.
+
+    //upper limito filter the git log command.
+    to "HEAD" //Defaults to HEAD.
+
+    //regex used to filter the conventional changelog commits for this changelog
+    match "^fix|^feat|^fix|^perf|^refactor|BREAKING" //Defaults to the value in the example.
+}
+
+def readVersionName() {
+    return "${getProperty("version_major")}.${getProperty("version_minor")}.${getProperty("version_patch")}"
+}
+
+def readAdditionalVersionInfo() {
+    def hash = 'git rev-parse --verify --short HEAD'.execute().text.trim() ?: ''
+    def buildNumber = System.env.TRAVIS_BUILD_NUMBER ?: hash
+
+    def date = new Date().format('yyyy-MM-dd-HH_mm')
+    return date + "-#" + buildNumber
+}
+
+def readOldVersionName() {
+    if (!hasProperty("version_oldmajor")) {
+        return ""
+    }
+    return "${getProperty("version_oldmajor")}.${getProperty("version_oldminor")}.${getProperty("version_oldpatch")}"
+}
+
+def updateVersionPart(String updateType) {
+
+    def propsFile = file('../gradle.properties')
+
+    if (propsFile.canRead()) {
+        Properties props = new Properties()
+
+        props.load(new FileInputStream(propsFile))
+
+        def patch = props["version_$updateType"].toInteger() + 1
+
+        props["version_oldmajor"] = props["version_major"]
+        props["version_oldminor"] = props["version_minor"]
+        props["version_oldpatch"] = props["version_patch"]
+
+        props["version_$updateType"] = patch.toString()
+        props.store(propsFile.newWriter(), null)
+    } else {
+        throw new GradleException("Could not read gradle.properties!")
+    }
+}
+
+task("incrementVersionNamePatch") << {
+    def updateType = 'patch'
+    updateVersionPart(updateType)
+}
+
+task("incrementVersionNameMinor") << {
+    def updateType = 'minor'
+    updateVersionPart(updateType)
+}
+
+task("incrementVersionNameMajor") << {
+    def updateType = 'major'
+    updateVersionPart(updateType)
+}
