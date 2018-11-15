@@ -8,7 +8,6 @@ import de.jensklingenberg.sheasy.di.DaggerAppComponent
 import de.jensklingenberg.sheasy.di.ServiceModule
 import io.ktor.application.install
 import io.ktor.features.*
-import io.ktor.gson.gson
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 
@@ -20,12 +19,12 @@ import io.ktor.http.HttpMethod
 class App : Application() {
 
     companion object {
-        lateinit var oldAppComponent: AppComponent
+        lateinit var appComponent: AppComponent
     }
 
 
     fun initializeDagger() {
-        oldAppComponent = DaggerAppComponent.builder()
+        appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(this))
             .serviceModule(ServiceModule())
             .build()
@@ -51,9 +50,6 @@ fun io.ktor.application.Application.main() {
     install(Compression) {
         gzip()
     }
-    /*install(HttpsRedirect) {
-        sslPort = 8443
-    }*/
     install(PartialContent) {
         maxRangeCount = 10
     }

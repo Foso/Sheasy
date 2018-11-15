@@ -101,7 +101,6 @@ dependencies {
     implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
     implementation "io.ktor:ktor-websockets:$libs.ktor_version"
     implementation "io.ktor:ktor:$libs.ktor_version"
-    implementation "io.ktor:ktor-gson:$libs.ktor_version"
     implementation "io.ktor:ktor-network-tls:$libs.ktor_version"
 
 

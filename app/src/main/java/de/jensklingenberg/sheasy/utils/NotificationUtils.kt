@@ -17,7 +17,7 @@ import de.jensklingenberg.sheasy.ui.NewMainActivity
 import javax.inject.Inject
 
 
-class NotifUtils {
+class NotificationUtils {
 
 
     @Inject
@@ -31,7 +31,7 @@ class NotifUtils {
         initializeDagger()
     }
 
-    private fun initializeDagger() = App.oldAppComponent.inject(this)
+    private fun initializeDagger() = App.appComponent.inject(this)
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(channelId: String, nameResId: Int): NotificationChannel {

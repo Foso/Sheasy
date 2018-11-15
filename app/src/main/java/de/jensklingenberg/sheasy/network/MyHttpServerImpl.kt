@@ -4,11 +4,10 @@ package de.jensklingenberg.sheasy.network
 import android.content.Context
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.data.SheasyPreferences
-import de.jensklingenberg.sheasy.utils.AppUtils
+import de.jensklingenberg.sheasy.utils.AppsRepository
 import de.jensklingenberg.sheasy.utils.FUtils
-import de.jensklingenberg.sheasy.utils.NotifUtils
+import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.network.routes.apps
 import de.jensklingenberg.sheasy.network.routes.file
 import de.jensklingenberg.sheasy.network.routes.general
@@ -33,15 +32,15 @@ class MyHttpServerImpl {
     lateinit var context: Context
 
     @Inject
-    lateinit var notifUtils1: NotifUtils
+    lateinit var notificationUtils1: NotificationUtils
 
 
     init {
         initializeDagger()
-        notifUtils1.generateBundle()
+        notificationUtils1.generateBundle()
     }
 
-    private fun initializeDagger() = App.oldAppComponent.inject(this)
+    private fun initializeDagger() = App.appComponent.inject(this)
 
 
     companion object {
@@ -49,7 +48,7 @@ class MyHttpServerImpl {
         fun getNetty(
             moshi: Moshi,
             sheasyPref: SheasyPreferences,
-            notifUtils: NotifUtils,
+            notificationUtils: NotificationUtils,
             futils: FUtils
         ): NettyApplicationEngine {
 
@@ -66,7 +65,7 @@ class MyHttpServerImpl {
                             if (sheasyPref.authorizedDevices.contains(call.request.origin.remoteHost)) {
 
                             } else {
-                                notifUtils.showConnectionRequest(call.request.origin.remoteHost)
+                                notificationUtils.showConnectionRequest(call.request.origin.remoteHost)
                                 sheasyPref.addAuthorizedDevice(call.request.origin.remoteHost)
 
                             }
@@ -78,8 +77,8 @@ class MyHttpServerImpl {
                         general(moshi, futils)
 
                         route(APIV1) {
-                            apps(AppUtils(), moshi)
-                            file(AppUtils(), moshi, sheasyPref, futils)
+                            apps(AppsRepository(), moshi)
+                            file(AppsRepository(), moshi, sheasyPref, futils)
 
                         }
                     }

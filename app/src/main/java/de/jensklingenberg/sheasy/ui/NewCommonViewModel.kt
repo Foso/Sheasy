@@ -42,7 +42,7 @@ class NewCommonViewModel @Inject constructor() : ViewModel(),
         folderPath.value = defaultPath
     }
 
-    private fun initializeDagger() = App.oldAppComponent.inject(this)
+    private fun initializeDagger() = App.appComponent.inject(this)
 
 
     fun startService(intent: Intent) {

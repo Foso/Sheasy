@@ -21,7 +21,7 @@ class ServerFragment : BaseFragment() {
         initializeDagger()
     }
 
-    private fun initializeDagger() = App.oldAppComponent.inject(this)
+    private fun initializeDagger() = App.appComponent.inject(this)
 
     @Inject
     lateinit var sheasyPreferences: SheasyPreferences

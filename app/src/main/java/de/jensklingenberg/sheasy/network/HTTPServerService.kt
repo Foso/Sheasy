@@ -34,7 +34,7 @@ class HTTPServerService : Service() {
         bind = ServiceBinder()
     }
 
-    private fun initializeDagger() = App.oldAppComponent.inject(this)
+    private fun initializeDagger() = App.appComponent.inject(this)
 
     override fun onBind(p0: Intent?): IBinder = bind
 

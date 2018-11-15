@@ -2,7 +2,7 @@ package de.jensklingenberg.sheasy.network.routes
 
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.data.SheasyPreferences
-import de.jensklingenberg.sheasy.utils.AppUtils
+import de.jensklingenberg.sheasy.utils.AppsRepository
 import de.jensklingenberg.sheasy.utils.FUtils
 import de.jensklingenberg.sheasy.utils.extension.toJson
 import io.ktor.application.call
@@ -22,7 +22,7 @@ import java.io.FileInputStream
 
 
 fun Route.file(
-    appUtils: AppUtils,
+    appsRepository: AppsRepository,
     moshi: Moshi,
     sheasyPref: SheasyPreferences,
     futils: FUtils
@@ -33,7 +33,7 @@ fun Route.file(
 
                 val packageName = call.parameters["apk"] ?: ""
 
-                val apk = appUtils.returnAPK(packageName)
+                val apk = appsRepository.returnAPK(packageName)
                 val fileInputStream = FileInputStream(apk?.sourceDir)
                 with(call) {
                     response.header(
@@ -99,7 +99,7 @@ fun Route.file(
                         fileInputStream.readBytes()
                     )
                 } else {
-                    //appUtils.sendBroadcast(EventCategory.REQUEST, filePath)
+                    //appsRepository.sendBroadcast(EventCategory.REQUEST, filePath)
 
                     val fileList = FUtils.getFilesReponseList(filePath)
 

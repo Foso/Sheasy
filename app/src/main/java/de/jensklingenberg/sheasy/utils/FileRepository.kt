@@ -13,8 +13,6 @@ import javax.inject.Inject
 
 class FUtils {
 
-    @Inject
-    lateinit var appUtils: AppUtils
 
     @Inject
     lateinit var context: Context
@@ -23,12 +21,10 @@ class FUtils {
         initializeDagger()
     }
 
-    private fun initializeDagger() = App.oldAppComponent.inject(this)
+    private fun initializeDagger() = App.appComponent.inject(this)
 
 
-    fun returnAPK(apkPackageName: String): ApplicationInfo? {
-        return appUtils.returnAPK(apkPackageName)
-    }
+
 
     fun returnAssetFile(filePath: String) = context.assets.open(filePath)
 
