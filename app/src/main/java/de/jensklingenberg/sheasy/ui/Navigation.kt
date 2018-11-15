@@ -1,14 +1,10 @@
-package de.jensklingenberg.sheasy.legacy.ui.common
+package de.jensklingenberg.sheasy.ui
 
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.mikepenz.aboutlibraries.LibsBuilder
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.RootFragment
-
-import de.jensklingenberg.sheasy.ui.ServerFragment
-import de.jensklingenberg.sheasy.ui.newFragmentInstance
 
 
 interface INavigation {
@@ -23,7 +19,8 @@ interface INavigation {
     fun toServer()
 }
 
-class Navigation(val fragmentManager: FragmentManager, id: Int) : INavigation {
+class Navigation(val fragmentManager: FragmentManager, id: Int) :
+    INavigation {
     override fun toSettings() {
 
 

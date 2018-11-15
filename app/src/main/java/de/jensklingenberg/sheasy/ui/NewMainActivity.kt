@@ -10,7 +10,6 @@ import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.legacy.ui.common.Navigation
 
 class NewMainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
 

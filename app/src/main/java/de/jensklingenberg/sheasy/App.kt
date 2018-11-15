@@ -47,7 +47,6 @@ class App : Application() {
  */
 fun io.ktor.application.Application.main() {
     install(DefaultHeaders) {
-        header("X-Developer", "John Doe")
     }
     install(Compression) {
         gzip()
@@ -73,15 +72,7 @@ fun io.ktor.application.Application.main() {
     }
 
 
-    install(ContentNegotiation) {
-        gson {
-            setPrettyPrinting()
 
-
-        }
-
-
-    }
 
 
 }
