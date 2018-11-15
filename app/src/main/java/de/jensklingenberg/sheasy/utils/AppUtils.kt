@@ -7,6 +7,7 @@ import android.os.Environment
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.AppsResponse
+import io.reactivex.Single
 import model.AppFile
 import java.io.File
 import javax.inject.Inject
