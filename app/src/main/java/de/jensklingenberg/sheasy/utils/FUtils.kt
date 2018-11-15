@@ -2,13 +2,9 @@ package de.jensklingenberg.sheasy.utils
 
 import android.content.Context
 import android.content.pm.ApplicationInfo
-import android.webkit.MimeTypeMap
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.model.ResponseFile
-import fi.iki.elonen.NanoHTTPD
 import model.FileResponse
 import java.io.File
-import java.io.FileInputStream
 import javax.inject.Inject
 
 /**
@@ -39,30 +35,8 @@ class FUtils {
 
     companion object {
 
-        fun returnFile2(filePath: String): FileInputStream? {
-            var fis: FileInputStream? = FileInputStream(filePath)
 
-            return fis
-        }
 
-        fun returnFile(filePath: String): ResponseFile? {
-            var fis: FileInputStream? = FileInputStream(filePath)
-
-            return when (fis) {
-                null -> {
-                    null
-
-                }
-                else -> {
-                    ResponseFile(FileInputStream(filePath), getMimeType(filePath))
-                }
-            }
-        }
-
-        fun getMimeType(fileUrl: String): String {
-            val extension = MimeTypeMap.getFileExtensionFromUrl(fileUrl)
-            return NanoHTTPD.mimeTypes().get(extension) ?: "*"
-        }
 
 
         fun getFilesReponseList(folderPath: String): List<FileResponse> {

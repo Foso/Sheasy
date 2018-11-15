@@ -15,7 +15,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'com.benjaminsproule:swagger-gradle-plugin:+'
-        classpath "gradle.plugin.org.hidetake:gradle-swagger-generator-plugin:2.11.0"
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$configuration.detektVersion"
         classpath 'com.github.marcpoppleton:git-changelog:0.1.3'
 
