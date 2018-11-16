@@ -6,10 +6,6 @@ import de.jensklingenberg.sheasy.di.AppComponent
 import de.jensklingenberg.sheasy.di.AppModule
 import de.jensklingenberg.sheasy.di.DaggerAppComponent
 import de.jensklingenberg.sheasy.di.ServiceModule
-import io.ktor.application.install
-import io.ktor.features.*
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpMethod
 
 
 /**
@@ -37,38 +33,6 @@ class App : Application() {
         initializeDagger()
 
     }
-
-
-}
-
-/**
- * KTOR APPLICATION
- */
-fun io.ktor.application.Application.main() {
-    install(DefaultHeaders) {
-    }
-    install(Compression) {
-        gzip()
-    }
-    install(PartialContent) {
-        maxRangeCount = 10
-    }
-
-    install(CORS) {
-        anyHost()
-        header(HttpHeaders.AccessControlAllowOrigin)
-        header(HttpHeaders.ContentType)
-        allowCredentials = true
-        listOf(
-            HttpMethod.Get,
-            HttpMethod.Put,
-            HttpMethod.Delete,
-            HttpMethod.Options
-        ).forEach { method(it) }
-    }
-
-
-
 
 
 }

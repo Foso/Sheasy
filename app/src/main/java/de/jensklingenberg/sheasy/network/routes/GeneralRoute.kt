@@ -1,22 +1,17 @@
 package de.jensklingenberg.sheasy.network.routes
 
-import com.squareup.moshi.Moshi
-import de.jensklingenberg.sheasy.utils.FUtils
-import de.jensklingenberg.sheasy.utils.extension.toJson
+import de.jensklingenberg.sheasy.utils.FileRepository
 import io.ktor.application.call
-import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.request.uri
 import io.ktor.response.header
 import io.ktor.response.respond
-import io.ktor.response.respondText
 import io.ktor.routing.Route
 import io.ktor.routing.get
 import model.ConnectionInfo
 
 fun Route.general(
-    moshi: Moshi,
-    futils: FUtils
+    futils: FileRepository
 ) {
 
     get("/") {
@@ -37,10 +32,7 @@ fun Route.general(
 
         call.apply {
             response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-            respondText(
-                moshi.toJson(listOf(deviceInfo)),
-                ContentType.Text.JavaScript
-            )
+            respond(deviceInfo)
         }
     }
 }

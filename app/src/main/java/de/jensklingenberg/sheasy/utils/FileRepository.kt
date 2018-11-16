@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.utils
 
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import de.jensklingenberg.sheasy.App
 import model.FileResponse
 import java.io.File
@@ -11,7 +10,7 @@ import javax.inject.Inject
  * Created by jens on 25/2/18.
  */
 
-class FUtils {
+class FileRepository {
 
 
     @Inject

@@ -1,10 +1,7 @@
 package de.jensklingenberg.sheasy.network.routes
 
-import com.squareup.moshi.Moshi
-import de.jensklingenberg.sheasy.data.SheasyPreferences
-import de.jensklingenberg.sheasy.utils.AppsRepository
-import de.jensklingenberg.sheasy.utils.FUtils
-import de.jensklingenberg.sheasy.utils.extension.toJson
+import de.jensklingenberg.sheasy.utils.FileRepository
+import de.jensklingenberg.sheasy.utils.IAppsRepostitoy
 import io.ktor.application.call
 import io.ktor.http.ContentDisposition
 import io.ktor.http.ContentType
@@ -22,11 +19,7 @@ import java.io.FileInputStream
 
 
 fun Route.file(
-    appsRepository: AppsRepository,
-    moshi: Moshi,
-    sheasyPref: SheasyPreferences,
-    futils: FUtils
-) {
+    appsRepository: IAppsRepostitoy) {
     route("file") {
         param("apk") {
             get {
@@ -101,7 +94,7 @@ fun Route.file(
                 } else {
                     //appsRepository.sendBroadcast(EventCategory.REQUEST, filePath)
 
-                    val fileList = FUtils.getFilesReponseList(filePath)
+                    val fileList = FileRepository.getFilesReponseList(filePath)
 
                     if (fileList.isEmpty()) {
                         call.respondText(
@@ -117,10 +110,7 @@ fun Route.file(
                                 HttpHeaders.AccessControlAllowOrigin,
                                 "*"
                             )
-                            respondText(
-                                moshi.toJson(fileList),
-                                ContentType.Text.JavaScript
-                            )
+                            respond(fileList)
                         }
 
                     }
@@ -155,7 +145,7 @@ fun Route.file(
                     )
                 } else {
 
-                    val fileList = FUtils.getFilesReponseList(filePath)
+                    val fileList = FileRepository.getFilesReponseList(filePath)
 
                     if (fileList.isEmpty()) {
                         call.respondText(
@@ -171,10 +161,9 @@ fun Route.file(
                                 HttpHeaders.AccessControlAllowOrigin,
                                 "*"
                             )
-                            respondText(
-                                moshi.toJson(fileList),
-                                ContentType.Text.JavaScript
-                            )
+
+
+                            respond(fileList)
                         }
 
                     }

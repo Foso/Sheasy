@@ -10,10 +10,8 @@ import javax.inject.Inject
 /**
  * Created by jens on 18/2/18.
  */
-class AppsRepository {
+class AppsRepository :IAppsRepostitoy{
 
-    @Inject
-    lateinit var context: Context
 
     @Inject
     lateinit var pm: PackageManager
@@ -25,7 +23,7 @@ class AppsRepository {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    fun getApps(): List<AppFile> {
+    override fun getApps(): List<AppFile> {
         return getAllInstalledApplications()
             .map {
                 val name = pm.getApplicationLabel(it).toString()
@@ -40,7 +38,7 @@ class AppsRepository {
         }
     }
 
-    fun returnAPK(apkPackageName: String): ApplicationInfo? {
+    override fun returnAPK(apkPackageName: String): ApplicationInfo? {
         return getAllInstalledApplications().first { it.packageName == apkPackageName }
     }
 

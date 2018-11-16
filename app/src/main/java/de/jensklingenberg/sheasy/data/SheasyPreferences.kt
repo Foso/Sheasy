@@ -1,15 +1,16 @@
 package de.jensklingenberg.sheasy.data
 
-import android.content.SharedPreferences
-
 
 enum class MyPermission {
     READ_FILES
 }
 
-class SheasyPreferences(sharedPreferences: SharedPreferences) {
+class SheasyPreferences() {
 
-    val port = sharedPreferences.getInt("PORT", 8766)
+    val APIV1 = "/api/v1/"
+
+
+    val port = 8766
 
 
     val activePermission = hashMapOf(MyPermission.READ_FILES to false)

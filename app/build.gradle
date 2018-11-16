@@ -50,16 +50,41 @@ android {
     androidExtensions {
         experimental = true
     }
+
+    flavorDimensions 'buildType'
+
+
+    productFlavors {
+        mock {
+            dimension 'buildType'
+            applicationIdSuffix = ".mock"
+        }
+        prod {
+            dimension 'buildType'
+        }
+    }
+
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if(variant.buildType.name.equals('release')
+                && variant.getFlavors().get(0).name.equals('mock')) {
+            variant.setIgnore(true)
+        }
+    }
+
+    // Always show the result of every unit test, even if it passes.
+    testOptions.unitTests.all {
+        testLogging {
+            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+        }
+    }
 }
 
 
 repositories {
-
     jcenter()
     mavenCentral()
     mavenRepos.each { buildMaven(it) }
-
-
 }
 
 
@@ -71,9 +96,9 @@ detekt {
 
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':SharedCode')
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.3.0'
+    compile 'org.jetbrains.kotlin:kotlin-reflect:1.3.0'
 
     //AndroidX
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
@@ -83,8 +108,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$libs.androidX"
     implementation "androidx.recyclerview:recyclerview:${libs.androidX}"
     implementation "androidx.annotation:annotation:${libs.androidX}"
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha1"
-
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha1'
 
     //Moshi
     implementation "com.serjltt.moshi:moshi-lazy-adapters:${libs.moshilazyadapters}"
@@ -96,13 +120,12 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${libs.retrofitVersion}"
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${libs.rxjava2Adapter}"
 
-
     //Ktor
     implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
     implementation "io.ktor:ktor-websockets:$libs.ktor_version"
     implementation "io.ktor:ktor:$libs.ktor_version"
     implementation "io.ktor:ktor-network-tls:$libs.ktor_version"
-
+    implementation "io.ktor:ktor-gson:$libs.ktor_version"
 
     //RxJava
     implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
@@ -111,7 +134,9 @@ dependencies {
 
     //Dagger
     implementation "com.google.dagger:dagger-android:${libs.dagger}"
-    implementation "com.google.dagger:dagger-android-support:${libs.dagger}" // if you use the support libraries
+    implementation "com.google.dagger:dagger-android-support:${libs.dagger}"
+
+    // if you use the support libraries
     kapt "com.google.dagger:dagger-compiler:${libs.dagger}"
     kapt "com.google.dagger:dagger-android-processor:${libs.dagger}"
 
@@ -124,22 +149,15 @@ dependencies {
     implementation "com.jakewharton.threetenabp:threetenabp:$libs.threetenabp"
     implementation 'co.zsmb:materialdrawer-kt:2.0.1'
 
-
-
-
     //implementation 'com.google.android.material:material:1.0.0-alpha1'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-
-
-
     implementation 'com.google.android.material:material:1.0.0'
 
-
     //Testing
-    testImplementation "org.json:json:20140107"
+    testImplementation 'org.json:json:20140107'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "$libs.mockitoVersion"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
+    testImplementation 'com.nhaarman:mockito-kotlin:1.5.0'
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${configuration.kotlin_version}"
     androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
 }
@@ -149,6 +167,7 @@ task copyFiles(type: Copy) {
     from '../documentation/API/1'
     into '../documentation/API/2'
 }
+
 
 
 

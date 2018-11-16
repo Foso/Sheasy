@@ -48,8 +48,8 @@ class AppModule(private val application: App) {
 
     @Provides
     @Singleton
-    fun provideSheasyPreferences(sharedPreferences: SharedPreferences): SheasyPreferences =
-        SheasyPreferences(sharedPreferences)
+    fun provideSheasyPreferences(): SheasyPreferences =
+        SheasyPreferences()
 
 
     @Provides

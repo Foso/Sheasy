@@ -2,8 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="fullstack-mpp_backendMain" target="1.6" />
+      <module name="fullstack-mpp_backendTest" target="1.6" />
+      <module name="ktor_androidMain" target="1.6" />
+      <module name="ktor_androidTest" target="1.6" />
       <module name="SharedCode_androidMain" target="1.6" />
       <module name="SharedCode_androidTest" target="1.6" />
+      <module name="Sheasy-ktor_androidMain" target="1.6" />
+      <module name="Sheasy-ktor_androidTest" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

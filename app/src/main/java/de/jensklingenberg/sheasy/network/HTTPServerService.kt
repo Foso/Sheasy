@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.*
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import io.ktor.server.netty.NettyApplicationEngine
 import java.io.IOException
@@ -20,6 +21,9 @@ class ServiceBinder : Binder()
 
 class HTTPServerService : Service() {
 
+
+    @Inject
+    lateinit var notificationUtils1: NotificationUtils
 
     @Inject
     lateinit var nettyApplicationEngine: NettyApplicationEngine
@@ -44,6 +48,8 @@ class HTTPServerService : Service() {
 
         runInBackground {
             nettyApplicationEngine.start(wait = true)
+            notificationUtils1.generateBundle()
+
         }
 
         try {
