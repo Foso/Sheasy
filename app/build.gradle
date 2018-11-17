@@ -9,6 +9,7 @@ apply plugin: 'io.gitlab.arturbosch.detekt'
 
 apply plugin: 'base'
 apply plugin: 'changelog'
+apply plugin: "androidx.navigation.safeargs"
 
 
 
@@ -98,7 +99,7 @@ detekt {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':SharedCode')
-    compile 'org.jetbrains.kotlin:kotlin-reflect:1.3.0'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.3.0'
 
     //AndroidX
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
@@ -114,19 +115,13 @@ dependencies {
     implementation "com.serjltt.moshi:moshi-lazy-adapters:${libs.moshilazyadapters}"
     implementation "com.squareup.moshi:moshi-kotlin:${libs.moshikotlin}"
 
-    //Retrofit
-    implementation "com.squareup.retrofit2:converter-moshi:${libs.moshiConverterVersion}"
-    implementation "com.squareup.retrofit2:converter-scalars:${libs.retrofitVersion}"
-    implementation "com.squareup.retrofit2:retrofit:${libs.retrofitVersion}"
-    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${libs.rxjava2Adapter}"
 
     //Ktor
     implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
-    implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+   // implementation "io.ktor:ktor-websockets:$libs.ktor_version"
     implementation "io.ktor:ktor:$libs.ktor_version"
     implementation "io.ktor:ktor-network-tls:$libs.ktor_version"
     implementation "io.ktor:ktor-gson:$libs.ktor_version"
-
     //RxJava
     implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
@@ -141,25 +136,35 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:${libs.dagger}"
 
     //Other
-    testImplementation "junit:junit:${libs.junit}"
     implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
-    implementation 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.4'
     implementation "com.jakewharton.threetenabp:threetenabp:$libs.threetenabp"
     implementation 'co.zsmb:materialdrawer-kt:2.0.1'
 
     //implementation 'com.google.android.material:material:1.0.0-alpha1'
-    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.google.android.material:material:1.0.0'
 
-    //Testing
+
+    //NavigationLib
+
+    implementation "android.arch.navigation:navigation-fragment-ktx:$libs.nav_version"
+    implementation "android.arch.navigation:navigation-ui-ktx:$libs.nav_version"
+    // optional - Test helpers
+    // this library depends on the Kotlin standard library
+
+
+
+//Testing
     testImplementation 'org.json:json:20140107'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "$libs.mockitoVersion"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     testImplementation 'com.nhaarman:mockito-kotlin:1.5.0'
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${configuration.kotlin_version}"
     androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
+    testImplementation "junit:junit:${libs.junit}"
+    androidTestImplementation "android.arch.navigation:navigation-testing:$libs.nav_version"
+
 }
 
 

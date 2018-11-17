@@ -1,14 +1,15 @@
 package de.jensklingenberg.sheasy.network
 
 import android.app.Service
-import android.content.Context
 import android.content.Intent
-import android.os.*
+import android.os.Binder
+import android.os.IBinder
+import androidx.fragment.app.FragmentActivity
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.utils.NotificationUtils
+import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import io.ktor.server.netty.NettyApplicationEngine
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -26,10 +27,14 @@ class HTTPServerService : Service() {
     lateinit var notificationUtils1: NotificationUtils
 
     @Inject
+    lateinit var vibrationUseCase: VibrationUseCase
+
+    @Inject
     lateinit var nettyApplicationEngine: NettyApplicationEngine
 
     companion object {
         lateinit var bind: ServiceBinder
+        fun startIntent(activity: FragmentActivity?) = Intent(activity, HTTPServerService::class.java)
     }
 
 
@@ -45,28 +50,13 @@ class HTTPServerService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        notificationUtils1.generateBundle()
 
         runInBackground {
             nettyApplicationEngine.start(wait = true)
-            notificationUtils1.generateBundle()
 
         }
-
-        try {
-
-            val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
-            } else {
-                //deprecated in API 26
-                v.vibrate(500)
-            }
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-
+        vibrationUseCase.vibrate()
     }
 
     override fun stopService(name: Intent?): Boolean {

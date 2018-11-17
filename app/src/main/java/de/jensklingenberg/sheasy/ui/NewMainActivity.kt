@@ -1,15 +1,23 @@
 package de.jensklingenberg.sheasy.ui
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.mikepenz.materialdrawer.AccountHeader
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.R
+import kotlinx.android.synthetic.main.activity_main.*
 
 class NewMainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
 
@@ -22,7 +30,7 @@ class NewMainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*, *>?): Boolean {
         when (drawerItem?.tag) {
             SideMenuEntry.SETTINGS -> {
-                navigation.toSettings()
+
                 closeDrawer()
 
             }
@@ -45,18 +53,25 @@ class NewMainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     lateinit var result: Drawer
     lateinit var headerResult: AccountHeader
 
-    val navigation: Navigation  by lazy {
-        Navigation(
-            supportFragmentManager,
-            R.id.container
-        )
-    }
+    override fun onSupportNavigateUp() =
+        findNavController(R.id.mainNavigationFragment).navigateUp()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        navigation.toServer()
         initDrawer()
+        setSupportActionBar(toolbar)
+        setupNavigation()
+    }
+
+
+    private fun setupNavigation() {
+        val navController = findNavController( R.id.mainNavigationFragment)
+        setupActionBarWithNavController( navController)
+navController.addOnNavigatedListener { _, destination ->
+    supportActionBar?.setDisplayShowHomeEnabled(false)
+    supportActionBar?.setDisplayHomeAsUpEnabled(false)
+}
     }
 
     private fun initDrawer() {

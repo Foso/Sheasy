@@ -11,8 +11,8 @@ import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.SheasyPreferences
+import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import de.jensklingenberg.sheasy.utils.extension.notificationManager
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -56,10 +56,9 @@ class AppModule(private val application: App) {
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder().build()
 
-
     @Provides
     @Singleton
-    fun provideMoshiConverter() = MoshiConverterFactory.create()
+    fun provideVibrationUseCase(context: Context): VibrationUseCase = VibrationUseCase(context)
 
 
 }
