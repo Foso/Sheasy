@@ -1,21 +1,27 @@
-package de.jensklingenberg.sheasy.utils
+package de.jensklingenberg.sheasy.data
 
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import de.jensklingenberg.sheasy.App
 import model.AppFile
+import model.FileResponse
+import java.io.File
+import java.io.InputStream
 import javax.inject.Inject
 
 /**
- * Created by jens on 18/2/18.
+ * Created by jens on 25/2/18.
  */
-class AppsRepository :IAppsRepostitoy{
+
+open class FileRepository : FileDataSource {
 
 
     @Inject
     lateinit var pm: PackageManager
 
+    @Inject
+    lateinit var context: Context
 
     init {
         initializeDagger()
@@ -23,12 +29,26 @@ class AppsRepository :IAppsRepostitoy{
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
+    override fun returnAssetFile(filePath: String): InputStream = context.assets.open(filePath)
+
+    override fun getFiles(folderPath: String): List<FileResponse> {
+        return File(folderPath).listFiles()?.map {
+            FileResponse(
+                it.name,
+                it.path
+            )
+        } ?: emptyList()
+
+    }
+
+
     override fun getApps(): List<AppFile> {
         return getAllInstalledApplications()
             .map {
                 val name = pm.getApplicationLabel(it).toString()
                 val installTime = pm.getPackageInfo(it.packageName, 0).firstInstallTime.toString()
-                AppFile(name, it.packageName, installTime)
+                val packageName= it.packageName
+                AppFile(name, packageName, installTime)
             }
     }
 
@@ -38,11 +58,9 @@ class AppsRepository :IAppsRepostitoy{
         }
     }
 
-    override fun returnAPK(apkPackageName: String): ApplicationInfo? {
+    override fun getApplicationInfo(apkPackageName: String): ApplicationInfo? {
         return getAllInstalledApplications().first { it.packageName == apkPackageName }
     }
 
 
-
 }
-

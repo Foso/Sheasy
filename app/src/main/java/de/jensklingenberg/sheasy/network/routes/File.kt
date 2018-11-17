@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.network.routes
 
-import de.jensklingenberg.sheasy.utils.FileRepository
-import de.jensklingenberg.sheasy.utils.IAppsRepostitoy
+import de.jensklingenberg.sheasy.data.FileDataSource
 import io.ktor.application.call
 import io.ktor.http.ContentDisposition
 import io.ktor.http.ContentType
@@ -19,14 +18,16 @@ import java.io.FileInputStream
 
 
 fun Route.file(
-    appsRepository: IAppsRepostitoy) {
+
+    fileRepository: FileDataSource
+    ) {
     route("file") {
         param("apk") {
             get {
 
                 val packageName = call.parameters["apk"] ?: ""
 
-                val apk = appsRepository.returnAPK(packageName)
+                val apk = fileRepository.getApplicationInfo(packageName)
                 val fileInputStream = FileInputStream(apk?.sourceDir)
                 with(call) {
                     response.header(
@@ -94,7 +95,7 @@ fun Route.file(
                 } else {
                     //appsRepository.sendBroadcast(EventCategory.REQUEST, filePath)
 
-                    val fileList = FileRepository.getFilesReponseList(filePath)
+                    val fileList = fileRepository.getFiles(filePath)
 
                     if (fileList.isEmpty()) {
                         call.respondText(
@@ -145,7 +146,7 @@ fun Route.file(
                     )
                 } else {
 
-                    val fileList = FileRepository.getFilesReponseList(filePath)
+                    val fileList = fileRepository.getFiles(filePath)
 
                     if (fileList.isEmpty()) {
                         call.respondText(

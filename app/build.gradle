@@ -106,10 +106,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.0.0'
     implementation "androidx.core:core-ktx:$libs.ktx"
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation "androidx.appcompat:appcompat:$libs.androidX"
-    implementation "androidx.recyclerview:recyclerview:${libs.androidX}"
-    implementation "androidx.annotation:annotation:${libs.androidX}"
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha1'
+    implementation "androidx.appcompat:appcompat:$libs.androidX.general"
+    implementation "androidx.recyclerview:recyclerview:${libs.androidX.general}"
+    implementation "androidx.annotation:annotation:${libs.androidX.general}"
+    implementation "androidx.constraintlayout:constraintlayout:${libs.androidX.constraintLayout}"
 
     //Moshi
     implementation "com.serjltt.moshi:moshi-lazy-adapters:${libs.moshilazyadapters}"
@@ -126,6 +126,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
 
     //Dagger
     implementation "com.google.dagger:dagger-android:${libs.dagger}"
@@ -148,7 +149,7 @@ dependencies {
 
     //NavigationLib
 
-    implementation "android.arch.navigation:navigation-fragment-ktx:$libs.nav_version"
+    implementation "android.arch.navigation:navigation-fragment-ktx:$libs.androidX.nav_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$libs.nav_version"
     // optional - Test helpers
     // this library depends on the Kotlin standard library

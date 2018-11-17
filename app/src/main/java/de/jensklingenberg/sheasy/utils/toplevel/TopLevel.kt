@@ -1,10 +1,5 @@
 package de.jensklingenberg.sheasy.utils.toplevel
 
-import com.squareup.moshi.Moshi
-import de.jensklingenberg.sheasy.utils.extension.toJson
-import io.ktor.application.ApplicationCall
-import io.ktor.http.ContentType
-import io.ktor.response.respondText
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
@@ -22,15 +17,4 @@ fun runInBackground(function: () -> Unit) {
         .subscribe { result ->
             //Use result for something
         }
-}
-
-
-suspend fun ApplicationCall.respondWithJSON(
-    moshi: Moshi,
-    appsResponseList2: List<Any>
-) {
-    val appsResponse =
-        moshi.toJson(appsResponseList2)
-    respondText(appsResponse, ContentType.Text.JavaScript)
-
 }

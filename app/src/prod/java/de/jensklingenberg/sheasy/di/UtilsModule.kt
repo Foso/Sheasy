@@ -12,9 +12,7 @@ import javax.inject.Singleton
 class UtilsModule {
 
 
-    @Provides
-    @Singleton
-    fun provideAppUtils(): IAppsRepostitoy = AppsRepository()
+
 
     @Provides
     @Singleton

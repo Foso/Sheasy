@@ -5,8 +5,7 @@ import de.jensklingenberg.sheasy.data.SheasyPreferences
 import de.jensklingenberg.sheasy.network.routes.apps
 import de.jensklingenberg.sheasy.network.routes.file
 import de.jensklingenberg.sheasy.network.routes.general
-import de.jensklingenberg.sheasy.utils.FileRepository
-import de.jensklingenberg.sheasy.utils.IAppsRepostitoy
+import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import io.ktor.application.ApplicationCallPipeline
 import io.ktor.application.call
@@ -23,8 +22,7 @@ import io.ktor.server.netty.NettyApplicationEngine
 fun getNetty(
     sheasyPref: SheasyPreferences,
     notificationUtils: NotificationUtils,
-    fileRepository: FileRepository,
-    iAppsRepostitoy: IAppsRepostitoy
+    fileRepository: FileDataSource
 ): NettyApplicationEngine {
 
 
@@ -63,8 +61,8 @@ fun getNetty(
                 general(fileRepository)
 
                 route(sheasyPref.APIV1) {
-                    apps(iAppsRepostitoy)
-                    file(iAppsRepostitoy)
+                    apps(fileRepository)
+                    file(fileRepository)
 
                 }
             }
