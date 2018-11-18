@@ -6,6 +6,7 @@
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$USER_HOME$/.gradle" />
+        <option name="gradleJvm" value="IntelliJ IDEA Community Edition IC-181.4203.550" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />

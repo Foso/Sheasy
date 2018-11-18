@@ -10,5 +10,7 @@ class NetworkUtil {
 
         val getApps = baseUrl + "apps"
         fun appDownloadUrl(packageName: String) = baseUrl + "file?apk=" + packageName
+        fun appIconUrl(packageName: String) = baseUrl + "file?icon=" + packageName
+
     }
 }

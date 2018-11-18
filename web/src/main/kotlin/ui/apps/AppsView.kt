@@ -120,7 +120,7 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
 
                 Row {
                     Col {
-                        initAppIconView()
+                        initAppIconView(item)
                     }
                     Col {
 
@@ -157,11 +157,13 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
 
     }
 
-    private fun RElementBuilder<ColProps>.initAppIconView() {
+    private fun RElementBuilder<ColProps>.initAppIconView(item: AppFile) {
         div {
             img {
                 attrs {
-                    src = "./img/ic_launcher.png"
+                    src = NetworkUtil.appIconUrl(item.packageName ?: "")
+                    height = "50"
+                    width = "50"
                     style = kotlinext.js.js {
                         display = "block"
                         margin = 0
