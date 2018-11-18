@@ -58,8 +58,11 @@ open class FileRepository : FileDataSource {
         }
     }
 
-    override fun getApplicationInfo(apkPackageName: String): ApplicationInfo? {
-        return getAllInstalledApplications().first { it.packageName == apkPackageName }
+    override fun getApplicationInfo(apkPackageName: String): AppInfo {
+        return getAllInstalledApplications().first { it.packageName == apkPackageName }.run {
+            val icon = pm.getApplicationIcon(this)
+            return@run AppInfo(this.sourceDir, icon)
+        }
     }
 
 

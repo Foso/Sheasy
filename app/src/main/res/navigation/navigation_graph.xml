@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
-    app:startDestination="@id/serverFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/serverFragment"
+        android:id="@+id/settingsFragment"
+        android:name="de.jensklingenberg.sheasy.ui.settings.SettingsFragment"
+
+        android:label="Settings" />
+
+
+    <fragment
+        android:id="@+id/homeFragment"
         android:label="Sheasy"
 
-        android:name="de.jensklingenberg.sheasy.ui.ServerFragment" >
+        android:name="de.jensklingenberg.sheasy.ui.HomeFragment" />
 
-    </fragment>
+
+    <fragment
+        android:id="@+id/appsFragment"
+        android:name="de.jensklingenberg.sheasy.ui.apps.AppsFragment"
+
+        android:label="Apps" />
+
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="de.jensklingenberg.sheasy.ui.about.AboutFragment"
+
+        android:label="Apps" />
 </navigation>

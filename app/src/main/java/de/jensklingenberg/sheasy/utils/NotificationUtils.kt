@@ -13,7 +13,7 @@ import androidx.core.app.NotificationCompat
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.NewMainActivity
+import de.jensklingenberg.sheasy.ui.MainActivity
 import javax.inject.Inject
 
 
@@ -121,7 +121,7 @@ class NotificationUtils {
         val pIntent = PendingIntent.getActivity(
             context,
             System.currentTimeMillis().toInt(),
-            Intent(context, NewMainActivity::class.java), 0
+            Intent(context, MainActivity::class.java), 0
         )
 
         // Add to your action, enabling Direct Reply for it

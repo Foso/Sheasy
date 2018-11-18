@@ -28,12 +28,14 @@ android {
         buildConfigField "int", "WEBSOCKET_PORT", configuration.websocketPort
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+        buildConfigField "String", "APP_VERSION", "\"${configuration.appVersion}\""
+
 
         applicationId configuration.applicationId
         minSdkVersion configuration.minSdk
         targetSdkVersion configuration.targetSdk
         versionCode 1
-        versionName "1.0"
+        versionName configuration.appVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }

@@ -7,7 +7,7 @@ import de.jensklingenberg.sheasy.App
 import javax.inject.Inject
 
 
-class NewCommonViewModel @Inject constructor() : ViewModel()
+class MainViewModel @Inject constructor() : ViewModel()
      {
 
     @Inject

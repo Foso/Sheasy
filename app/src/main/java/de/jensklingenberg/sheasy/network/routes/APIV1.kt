@@ -16,7 +16,6 @@ fun Route.apps(fileDataSource: FileDataSource) {
 
 
         call.respond(fileDataSource.getApps())
-
     }
 }
 

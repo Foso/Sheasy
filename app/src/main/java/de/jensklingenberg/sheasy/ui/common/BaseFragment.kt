@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.ui
+package de.jensklingenberg.sheasy.ui.common
 
 import android.os.Bundle
 import android.view.LayoutInflater
