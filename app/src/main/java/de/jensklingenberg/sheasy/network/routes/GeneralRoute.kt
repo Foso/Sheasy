@@ -1,10 +1,11 @@
 package de.jensklingenberg.sheasy.network.routes
 
-import de.jensklingenberg.sheasy.data.FileDataSource
+import de.jensklingenberg.sheasy.data.file.FileDataSource
 import io.ktor.application.call
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
+import kotlinx.coroutines.rx2.await
 
 
 fun Route.general(
@@ -12,12 +13,26 @@ fun Route.general(
 ) {
 
     get("/") {
-        call.respond(fileDataSource.returnAssetFile("web/index.html").readBytes())
+        fileDataSource
+            .returnAssetFile("web/index.html")
+            .map { it.readBytes() }
+            .await()
+            .run {
+                call.respond(this)
+            }
     }
 
     get("web/{filepath...}") {
         val filepath = "web/" + call.parameters["filepath"]
-        call.respond(fileDataSource.returnAssetFile(filepath).readBytes())
+
+        fileDataSource
+            .returnAssetFile(filepath)
+            .map { it.readBytes() }
+            .await()
+            .run {
+                call.respond(this)
+
+            }
     }
 
 }

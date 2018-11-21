@@ -11,5 +11,4 @@ data class DeviceResponse(
     val androidVersion: String
 )
 
-data class AppFile(val name: String, val packageName: String, val installTime: String)
 data class FileResponse(val name: String, val path: String)

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="search_title"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom" />
+
+    <item
+        android:id="@+id/menu_server"
+        android:checked="false"
+        android:enabled="true"
+        android:icon="@drawable/server_icon_selector"
+        android:title="Home"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_log"
+        android:enabled="true"
+
+
+        android:icon="@drawable/ic_history_white_24dp"
+        android:title="Settings"
+        app:showAsAction="never" />
+</menu>

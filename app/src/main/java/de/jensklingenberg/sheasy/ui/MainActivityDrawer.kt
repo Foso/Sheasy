@@ -5,6 +5,7 @@ import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
+import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.SideMenuEntry
 
 
@@ -25,23 +26,27 @@ class MainActivityDrawer(val activity: MainActivity) {
         // Create the AccountHeader
         headerResult = AccountHeaderBuilder()
             .withActivity(activity)
-            // .withHeaderBackground(R.drawable.blue_button)
+            .withHeaderBackground(R.drawable.gradient)
+
             .withSelectionListEnabledForSingleProfile(false)
             .build()
 
 
         result = DrawerBuilder()
-            .withAccountHeader(headerResult)
+            //  .withAccountHeader(headerResult)
             .withActivity(activity)
+            .withSliderBackgroundDrawableRes(R.drawable.gradient)
             .withOnDrawerItemClickListener(activity)
             .build()
 
 
         SideMenuEntry.values().forEachIndexed { index, sideMenuEntry ->
             result.addItem(
-                SecondaryDrawerItem().withIdentifier(index.toLong()).withName(
-                    sideMenuEntry.title
-                ).withTag(sideMenuEntry)
+                SecondaryDrawerItem()
+                    .withIdentifier(index.toLong())
+                    .withName(sideMenuEntry.title)
+                    .withTag(sideMenuEntry)
+                    .withIcon(sideMenuEntry.iconRes)
             )
         }
 

@@ -1,10 +1,11 @@
 package de.jensklingenberg.sheasy.model
 
+import androidx.annotation.DrawableRes
 import de.jensklingenberg.sheasy.R
 
-enum class SideMenuEntry(val title: String, val id: Int) {
-    Home("Home", R.id.homeFragment),
-    APPS("Apps", R.id.appsFragment),
-    ABOUT("About", R.id.aboutFragment)
+enum class SideMenuEntry(val title: String, val id: Int, @DrawableRes val iconRes: Int) {
+    Home("Home", R.id.homeFragment, R.drawable.ic_home_black_24dp),
+    APPS("Apps", R.id.appsFragment, R.drawable.ic_smartphone_black_24dp),
+    ABOUT("About", R.id.aboutFragment, R.drawable.ic_info_outline_black_24dp)
 
 }

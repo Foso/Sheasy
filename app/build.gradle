@@ -112,6 +112,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:${libs.androidX.general}"
     implementation "androidx.annotation:annotation:${libs.androidX.general}"
     implementation "androidx.constraintlayout:constraintlayout:${libs.androidX.constraintLayout}"
+    implementation "com.shopify:livedata-ktx:2.0.1"
 
     //Moshi
     implementation "com.serjltt.moshi:moshi-lazy-adapters:${libs.moshilazyadapters}"
@@ -124,6 +125,7 @@ dependencies {
     implementation "io.ktor:ktor:$libs.ktor_version"
     implementation "io.ktor:ktor-network-tls:$libs.ktor_version"
     implementation "io.ktor:ktor-gson:$libs.ktor_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1"
     //RxJava
     implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"

@@ -8,7 +8,7 @@
         android:id="@+id/settingsFragment"
         android:name="de.jensklingenberg.sheasy.ui.settings.SettingsFragment"
 
-        android:label="Settings" />
+        android:label="Settings"></fragment>
 
 
     <fragment
@@ -22,12 +22,14 @@
         android:id="@+id/appsFragment"
         android:name="de.jensklingenberg.sheasy.ui.apps.AppsFragment"
 
-        android:label="Apps" />
+        android:label="Apps">
+
+    </fragment>
 
 
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="de.jensklingenberg.sheasy.ui.about.AboutFragment"
+        android:name="de.jensklingenberg.sheasy.ui.about.AboutFragment" />
 
-        android:label="Apps" />
+
 </navigation>

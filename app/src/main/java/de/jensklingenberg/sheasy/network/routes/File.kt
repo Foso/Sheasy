@@ -2,7 +2,7 @@ package de.jensklingenberg.sheasy.network.routes
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import de.jensklingenberg.sheasy.data.FileDataSource
+import de.jensklingenberg.sheasy.data.file.FileDataSource
 import io.ktor.application.call
 import io.ktor.http.ContentDisposition
 import io.ktor.http.ContentType
@@ -15,6 +15,7 @@ import io.ktor.response.header
 import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.*
+import kotlinx.coroutines.rx2.await
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
@@ -23,23 +24,27 @@ import java.io.FileInputStream
 fun Route.file(
 
     fileRepository: FileDataSource
-    ) {
+) {
     route("file") {
         param("apk") {
             get {
 
                 val packageName = call.parameters["apk"] ?: ""
 
-                val apk = fileRepository.getApplicationInfo(packageName)
-                val fileInputStream = FileInputStream(apk.sourceDir)
-                with(call) {
-                    response.header(
-                        HttpHeaders.ContentDisposition, ContentDisposition.Attachment.withParameter(
-                            ContentDisposition.Parameters.FileName,
-                            "$packageName.apk"
-                        ).toString()
-                    )
-                    respond(fileInputStream.readBytes())
+                fileRepository
+                    .getApplicationInfo(packageName)
+                    .map { FileInputStream(it.sourceDir) }
+                    .await()?.let {
+                        with(call) {
+                            response.header(
+                                HttpHeaders.ContentDisposition,
+                                ContentDisposition.Attachment.withParameter(
+                                    ContentDisposition.Parameters.FileName,
+                                    "$packageName.apk"
+                                ).toString()
+                            )
+                            respond(it.readBytes())
+                        }
                 }
 
 
@@ -53,27 +58,30 @@ fun Route.file(
 
                 val packageName = call.parameters["icon"] ?: ""
 
-                val apk = fileRepository.getApplicationInfo(packageName)
+                val apk = fileRepository.getApplicationInfo(packageName).await()
+                apk?.let {
+                    val anImage = (apk.icon as BitmapDrawable).bitmap
 
 
-                val anImage = (apk.icon as BitmapDrawable).bitmap
+                    val bmp: Bitmap? = anImage
+                    val stream = ByteArrayOutputStream()
+                    bmp!!.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                    val byteArray = stream.toByteArray()
 
+                    val fileInputStream = FileInputStream(apk.sourceDir)
+                    with(call) {
+                        response.header(
+                            HttpHeaders.ContentDisposition,
+                            ContentDisposition.Attachment.withParameter(
+                                ContentDisposition.Parameters.FileName,
+                                "$packageName.png"
+                            ).toString()
+                        )
+                        respond(byteArray)
+                    }
 
-                val bmp: Bitmap? = anImage
-                val stream = ByteArrayOutputStream()
-                bmp!!.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                val byteArray = stream.toByteArray()
-
-                val fileInputStream = FileInputStream(apk.sourceDir)
-                with(call) {
-                    response.header(
-                        HttpHeaders.ContentDisposition, ContentDisposition.Attachment.withParameter(
-                            ContentDisposition.Parameters.FileName,
-                            "$packageName.png"
-                        ).toString()
-                    )
-                    respond(byteArray)
                 }
+
 
 
             }

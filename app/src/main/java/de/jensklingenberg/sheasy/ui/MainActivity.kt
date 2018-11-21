@@ -1,11 +1,11 @@
 package de.jensklingenberg.sheasy.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -14,6 +14,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.SideMenuEntry
 import de.jensklingenberg.sheasy.network.HTTPServerService
+import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -29,8 +30,9 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         when (val item = drawerItem?.tag) {
 
             is SideMenuEntry -> {
-                navController.navigate(item.id)
                 mainActivityDrawer.closeDrawer()
+
+                navController.navigate(item.id)
             }
         }
 
@@ -45,9 +47,20 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         setupNavigation()
+        handleIntent(intent)
         mainActivityDrawer = MainActivityDrawer(this)
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        mainViewModel = obtainViewModel(MainViewModel::class.java)
 
+    }
+
+
+    fun handleIntent(intent: Intent) {
+        intent.let {
+            val action = it.action
+            val type = it.type
+
+
+        }
     }
 
 
@@ -58,6 +71,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
             supportActionBar?.setDisplayShowHomeEnabled(true)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
+
         }
     }
 

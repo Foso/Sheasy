@@ -35,7 +35,7 @@ ext {
             dagger               : '2.16',
             espressocore         : '3.0.1',
             junit                : '4.12',
-            ktor_version         : '1.0.0-beta-3',
+            ktor_version         : '1.0.0-beta-4',
             ktx                  : '1.0.0-alpha1',
             leakcanaryVersion    : '1.5.4',
             lifeCycleExtension   : '1.1.1',
