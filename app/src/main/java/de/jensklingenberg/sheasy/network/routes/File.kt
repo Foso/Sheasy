@@ -139,7 +139,9 @@ fun Route.file(
                 } else {
                     //appsRepository.sendBroadcast(EventCategory.REQUEST, filePath)
 
-                    val fileList = fileRepository.getFiles(filePath)
+                    val fileList = fileRepository
+                        .getFiles(filePath)
+                        .await()
 
                     if (fileList.isEmpty()) {
                         call.respondText(
@@ -190,7 +192,9 @@ fun Route.file(
                     )
                 } else {
 
-                    val fileList = fileRepository.getFiles(filePath)
+                    val fileList = fileRepository
+                        .getFiles(filePath)
+                        .await()
 
                     if (fileList.isEmpty()) {
                         call.respondText(

@@ -37,15 +37,18 @@ open class FileRepository : FileDataSource {
         }
     }
 
-    override fun getFiles(folderPath: String): List<FileResponse> {
-        return File(folderPath)
-            .listFiles()
-            ?.map {
-                FileResponse(
-                    it.name,
-                    it.path
-                )
-            } ?: emptyList()
+    override fun getFiles(folderPath: String): Single<List<FileResponse>> {
+        return Single.create<List<FileResponse>> { singleEmitter ->
+            val files = File(folderPath)
+                .listFiles()
+                ?.map {
+                    FileResponse(
+                        it.name,
+                        it.path
+                    )
+                } ?: emptyList()
+            singleEmitter.onSuccess(files)
+        }
 
     }
 
@@ -54,18 +57,15 @@ open class FileRepository : FileDataSource {
         return Single.create<List<AppInfo>> { singleEmitter ->
             val appsList = getAllInstalledApplications()
                 .map {
-                    val name = pm.getApplicationLabel(it).toString()
-                    val installTime =
-                        pm.getPackageInfo(it.packageName, 0).firstInstallTime.toString()
-                    val packageName = it.packageName
-                    val icon = pm.getApplicationIcon(it.packageName)
-                    val source = it.sourceDir
                     AppInfo(
-                        sourceDir = source,
-                        icon = icon,
-                        packageName = packageName,
-                        installTime = installTime,
-                        name = name
+                        sourceDir = it.sourceDir,
+                        icon = pm.getApplicationIcon(it.packageName),
+                        packageName = it.packageName,
+                        installTime = pm.getPackageInfo(
+                            it.packageName,
+                            0
+                        ).firstInstallTime.toString(),
+                        name = pm.getApplicationLabel(it).toString()
                     )
                 }
             singleEmitter.onSuccess(appsList)
@@ -74,13 +74,17 @@ open class FileRepository : FileDataSource {
     }
 
     fun getAllInstalledApplications(): List<ApplicationInfo> {
-        return pm.getInstalledApplications(PackageManager.PERMISSION_GRANTED)
+        return pm
+            .getInstalledApplications(PackageManager.PERMISSION_GRANTED)
             .filter { pm.getLaunchIntentForPackage(it.packageName) != null }
     }
 
     override fun getApplicationInfo(apkPackageName: String): Maybe<AppInfo> {
-        return getApps().toObservable().flatMapIterable { x -> x }
-            .filter { it.packageName == apkPackageName }.firstElement()
+        return getApps()
+            .toObservable()
+            .flatMapIterable { x -> x }
+            .filter { it.packageName == apkPackageName }
+            .firstElement()
 
 
 

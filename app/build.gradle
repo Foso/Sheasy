@@ -112,20 +112,24 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:${libs.androidX.general}"
     implementation "androidx.annotation:annotation:${libs.androidX.general}"
     implementation "androidx.constraintlayout:constraintlayout:${libs.androidX.constraintLayout}"
-    implementation "com.shopify:livedata-ktx:2.0.1"
+    implementation 'com.shopify:livedata-ktx:2.0.1'
 
     //Moshi
     implementation "com.serjltt.moshi:moshi-lazy-adapters:${libs.moshilazyadapters}"
     implementation "com.squareup.moshi:moshi-kotlin:${libs.moshikotlin}"
 
-
     //Ktor
     implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
-   // implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+
+     implementation "io.ktor:ktor-websockets:$libs.ktor_version"
     implementation "io.ktor:ktor:$libs.ktor_version"
     implementation "io.ktor:ktor-network-tls:$libs.ktor_version"
     implementation "io.ktor:ktor-gson:$libs.ktor_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
+
+    //NanoHTTPD
+    implementation "org.nanohttpd:nanohttpd-websocket:$libs.nanohttpdwebsocket"
+    implementation 'org.nanohttpd:nanohttpd:2.3.1'
     //RxJava
     implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
@@ -150,17 +154,15 @@ dependencies {
     //implementation 'com.google.android.material:material:1.0.0-alpha1'
     implementation 'com.google.android.material:material:1.0.0'
 
-
     //NavigationLib
-
     implementation "android.arch.navigation:navigation-fragment-ktx:$libs.androidX.nav_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$libs.nav_version"
+
     // optional - Test helpers
+
     // this library depends on the Kotlin standard library
 
-
-
-//Testing
+    //Testing
     testImplementation 'org.json:json:20140107'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "$libs.mockitoVersion"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'

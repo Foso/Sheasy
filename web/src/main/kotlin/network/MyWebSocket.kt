@@ -11,8 +11,8 @@ class MyWebSocket(url: String) {
     val webSocket = WebSocket(url)
 
     init {
-        webSocket.onmessage = { tt: Event ->
-            listener?.onMessage((tt as MessageEvent))
+        webSocket.onmessage = { event: Event ->
+            listener?.onMessage((event as MessageEvent))
         }
     }
 

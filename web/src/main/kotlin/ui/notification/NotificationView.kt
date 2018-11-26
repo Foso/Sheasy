@@ -18,6 +18,7 @@ interface NotificationVState : RState {
 
 
 class NotificationView : RComponent<RProps, NotificationVState>(), NotificationContract.View {
+    private var presenter: NotificationContract.Presenter? = null
 
 
     override fun NotificationVState.init(props: RProps) {
@@ -36,19 +37,17 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
     }
 
 
-    override fun showNotification(text: ReactNotificationOptions) {
+    override fun showNotification(reactNotificationOptions: ReactNotificationOptions) {
 
         setState {
-            notiTitle = "JETZT GETH ER"
-            notiOptions = text
+            notiTitle = reactNotificationOptions.title ?: ""
+            notiOptions = reactNotificationOptions
             console.log("HKjldfjkslajflajslkjdfs" + ignoreNotification)
-
             this.ignoreNotification = false
         }
 
     }
 
-    private var presenter: NotificationContract.Presenter? = null
 
 
     override fun componentDidMount() {
@@ -87,6 +86,4 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
 
 }
 
-fun RBuilder.NotificationView() = child(NotificationView::class) {
-
-}
+fun RBuilder.NotificationView() = child(NotificationView::class) {}

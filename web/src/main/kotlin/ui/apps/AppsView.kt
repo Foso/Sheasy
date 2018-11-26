@@ -161,7 +161,7 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
         div {
             img {
                 attrs {
-                    src = NetworkUtil.appIconUrl(item.packageName ?: "")
+                    src = NetworkUtil.appIconUrl(item.packageName)
                     height = "50"
                     width = "50"
                     style = kotlinext.js.js {
@@ -182,7 +182,7 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
             attrs {
                 onClickFunction = {
                     window.location.href =
-                            NetworkUtil.appDownloadUrl(item.packageName ?: "")
+                            NetworkUtil.appDownloadUrl(item.packageName)
                 }
                 style = kotlinext.js.js {
                     textAlign = "center"
@@ -201,7 +201,7 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
             attrs {
                 onClickFunction = {
                     window.location.href =
-                            NetworkUtil.appDownloadUrl(item.packageName ?: "")
+                            NetworkUtil.appDownloadUrl(item.packageName)
                 }
                 style = kotlinext.js.js {
                     textAlign = "center"

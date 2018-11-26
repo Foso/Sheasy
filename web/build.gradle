@@ -2,8 +2,6 @@ buildscript {
 
     apply from: './constants.gradle'
 
-
-
     repositories {
         mavenCentral()
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
@@ -21,17 +19,17 @@ apply plugin: 'kotlin2js'
 apply plugin: 'kotlin-dce-js'
 
 
-version '0.0.1'
+version "${configuration.versionName}"
 
 repositories {
+    ext.buildMaven = { p -> repositories { maven { url p } } }
+
     mavenCentral()
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-    maven { url 'https://dl.bintray.com/kotlinx/kotlinx' }
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-js-wrappers' }
+    mavenRepos.each { buildMaven(it) }
+
 }
 
 dependencies {
-    implementation project(':SharedCode')
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
     compile "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
@@ -103,10 +101,7 @@ sourceSets {
     }
 }
 
-kotlin {
-    experimental {
-    }
-}
+
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.9' //version required

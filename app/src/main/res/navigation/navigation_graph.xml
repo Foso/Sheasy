@@ -7,29 +7,35 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="de.jensklingenberg.sheasy.ui.settings.SettingsFragment"
-
-        android:label="Settings"></fragment>
+        android:label="Settings" />
 
 
     <fragment
         android:id="@+id/homeFragment"
         android:label="Sheasy"
-
         android:name="de.jensklingenberg.sheasy.ui.HomeFragment" />
 
 
     <fragment
         android:id="@+id/appsFragment"
         android:name="de.jensklingenberg.sheasy.ui.apps.AppsFragment"
-
-        android:label="Apps">
-
-    </fragment>
+        android:label="Apps" />
 
 
     <fragment
-        android:id="@+id/aboutFragment"
-        android:name="de.jensklingenberg.sheasy.ui.about.AboutFragment" />
+        android:id="@+id/filesFragment"
+        android:name="de.jensklingenberg.sheasy.ui.files.FilesFragment"
 
+        android:label="Files">
+        <argument
+            android:name="filePath"
+            android:defaultValue="''"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="de.jensklingenberg.sheasy.ui.about.AboutFragment"
+        android:label="About" />
 
 </navigation>

@@ -13,6 +13,12 @@ class StringResource {
         const val APPS_OVERVIEW_TABLE_ROW_HEADER_DOWNLOAD = "Download"
         const val APPS_OVERVIEW_TABLE_ROW_HEADER_UNINSTALL = "Uninstall"
 
+        /**
+         * TOOLBAR
+         */
+        const val TOOLBAR_HOME = "Home"
+        const val TOOLBAR_APPS = "Apps"
+        const val TOOLBAR_ABOUT = "About"
 
     }
 

@@ -1,16 +1,18 @@
 package de.jensklingenberg.sheasy.data
 
 
-class SheasyPreferences() {
+class SheasyPreferences : SheasyPrefDataSource {
+    override val webSocketPort = 8765
 
-    val APIV1 = "/api/v1/"
 
-    val defaultPath = "/storage/emulated/0/"
-    val port = 8766
+    override val APIV1 = "/api/v1/"
 
-    val authorizedDevices = mutableListOf<String>()
+    override val defaultPath = "/storage/emulated/0/"
+    override val port = 8766
 
-    fun addAuthorizedDevice(ip: String) {
+    override val authorizedDevices = mutableListOf<String>()
+
+    override fun addAuthorizedDevice(ip: String) {
         authorizedDevices.add(ip)
     }
 }

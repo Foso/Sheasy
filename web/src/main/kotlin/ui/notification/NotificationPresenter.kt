@@ -1,43 +1,40 @@
 package ui.notification
 
 import components.Notification.ReactNotificationOptions
+import model.NotificationResponse
 import network.MyWebSocket
+import network.NetworkUtil.Companion.notificationWebSocketURL
 import org.w3c.dom.MessageEvent
 
 class NotificationPresenter(val view: NotificationContract.View) : NotificationContract.Presenter, MyWebSocket.WebSocketListener {
+    var myWebSocket = MyWebSocket(notificationWebSocketURL)
+
+    init {
+        myWebSocket.listener = this
+    }
+
 
     override fun onMessage(messageEvent: MessageEvent) {
+
+        val notificationResponse = JSON.parse<NotificationResponse>(messageEvent.data.toString())
 
         val notiOptions = object : ReactNotificationOptions {
             override var tag: String? = "dd"
             override var icon: String? = "https://avatars3.githubusercontent.com/u/1381907?s=40&v=4"
-            override var body: String? = messageEvent.data.toString()
-            override var title: String? = messageEvent.data.toString()
-
+            override var body: String? = notificationResponse.subText
+            override var title: String? = notificationResponse.title
         }
 
         view.showNotification(notiOptions)
-
         console.log(messageEvent.data)
     }
 
-    var abc = MyWebSocket("wss://echo.websocket.org")
 
-
-    init {
-        abc.listener = this
-
-
-    }
-
-    override fun componentWillUnmount() {
-
-
-    }
+    override fun componentWillUnmount() {}
 
 
     override fun componentDidMount() {
-        abc.open()
+        myWebSocket.open()
     }
 
 

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <!-- Text Sizes -->
+    <dimen name="text_size_large">24sp</dimen>
+    <dimen name="text_size_title">18sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_sub_medium">14sp</dimen>
+
     <dimen name="drawer_width">304dp</dimen>
     <dimen name="fastscroller_track_height">70dp</dimen>
     <dimen name="fastscroller_track_padding">3dp</dimen>
@@ -46,5 +53,25 @@
     <dimen name="material_appbar_elevation">4dp</dimen>
     <dimen name="toolbar_height">48dp</dimen>
     <dimen name="bottom_bar_height">49dp</dimen>
+
+    <!-- Timeline Header -->
+    <dimen name="timeline_header_text_padding">10dp</dimen>
+    <dimen name="timeline_decorator_spacing">1dp</dimen>
+
+    <dimen name="big_background_icon">72dp</dimen>
+    <dimen name="big_icon">36dp</dimen>
+    <dimen name="big_spacing">24dp</dimen>
+    <dimen name="big_text">24sp</dimen>
+
+    <dimen name="medium_small_text">10sp</dimen>
+    <dimen name="medium_spacing">16dp</dimen>
+    <dimen name="medium_text">16sp</dimen>
+    <dimen name="sub_medium_spacing">10dp</dimen>
+    <dimen name="sub_medium_spacing_2">14dp</dimen>
+    <dimen name="sub_medium_text">14sp</dimen>
+    <dimen name="sub_small_spacing">5dp</dimen>
+    <dimen name="icon_elevation">10dp</dimen>
+    <dimen name="icon_margin">24dp</dimen>
+    <dimen name="icon_size">20dp</dimen>
 
 </resources>

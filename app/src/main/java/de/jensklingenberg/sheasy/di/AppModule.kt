@@ -10,6 +10,7 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.data.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.data.SheasyPreferences
 import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import de.jensklingenberg.sheasy.utils.extension.notificationManager
@@ -48,7 +49,7 @@ class AppModule(private val application: App) {
 
     @Provides
     @Singleton
-    fun provideSheasyPreferences(): SheasyPreferences =
+    fun provideSheasyPreferences(): SheasyPrefDataSource =
         SheasyPreferences()
 
 

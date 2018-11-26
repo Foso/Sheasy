@@ -26,16 +26,15 @@ class MainActivityDrawer(val activity: MainActivity) {
         // Create the AccountHeader
         headerResult = AccountHeaderBuilder()
             .withActivity(activity)
-            .withHeaderBackground(R.drawable.gradient)
-
+            .withHeaderBackground(R.color.primary)
             .withSelectionListEnabledForSingleProfile(false)
             .build()
 
 
         result = DrawerBuilder()
-            //  .withAccountHeader(headerResult)
+            .withAccountHeader(headerResult)
             .withActivity(activity)
-            .withSliderBackgroundDrawableRes(R.drawable.gradient)
+            .withSliderBackgroundColorRes(R.color.md_white_1000)
             .withOnDrawerItemClickListener(activity)
             .build()
 
@@ -45,8 +44,10 @@ class MainActivityDrawer(val activity: MainActivity) {
                 SecondaryDrawerItem()
                     .withIdentifier(index.toLong())
                     .withName(sideMenuEntry.title)
+                    .withTextColorRes(R.color.md_dark_background)
                     .withTag(sideMenuEntry)
                     .withIcon(sideMenuEntry.iconRes)
+
             )
         }
 

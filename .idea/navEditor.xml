@@ -54,6 +54,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="filesFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="192" />
+                            <option name="y" value="302" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="homeFragment">
                     <value>
                       <LayoutPositions>

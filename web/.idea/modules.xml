@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/web/sheasy-react-client-web.iml" filepath="$PROJECT_DIR$/.idea/modules/web/sheasy-react-client-web.iml" group="web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_main.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_main.iml" group="sheasy-react-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_test.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_test.iml" group="sheasy-react-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/web.iml" filepath="$PROJECT_DIR$/.idea/web.iml" />
+    </modules>
+  </component>
+</project>

@@ -6,8 +6,10 @@ import ui.ReactPresenter
 interface NotificationContract {
 
     interface View {
-
-        fun showNotification(text: ReactNotificationOptions)
+        /**
+         *
+         */
+        fun showNotification(reactNotificationOptions: ReactNotificationOptions)
     }
 
     interface Presenter : ReactPresenter {

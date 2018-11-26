@@ -8,9 +8,6 @@ import androidx.fragment.app.FragmentActivity
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
-import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
-import io.ktor.server.netty.NettyApplicationEngine
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -30,7 +27,7 @@ class HTTPServerService : Service() {
     lateinit var vibrationUseCase: VibrationUseCase
 
     @Inject
-    lateinit var nettyApplicationEngine: NettyApplicationEngine
+    lateinit var nettyApplicationEngine: Server
 
     companion object {
         lateinit var bind: ServiceBinder
@@ -52,21 +49,21 @@ class HTTPServerService : Service() {
         super.onCreate()
         notificationUtils1.generateBundle()
 
-        runInBackground {
-            nettyApplicationEngine.start(wait = true)
 
-        }
+        nettyApplicationEngine.start()
+
+
         vibrationUseCase.vibrate()
     }
 
     override fun stopService(name: Intent?): Boolean {
-        nettyApplicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+        nettyApplicationEngine.stop()
         return super.stopService(name)
 
     }
 
     override fun onDestroy() {
-        nettyApplicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+        nettyApplicationEngine.stop()
         super.onDestroy()
     }
 

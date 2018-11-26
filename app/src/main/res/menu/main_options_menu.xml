@@ -10,12 +10,5 @@
         android:title="Home"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/menu_log"
-        android:enabled="true"
 
-
-        android:icon="@drawable/ic_history_white_24dp"
-        android:title="Settings"
-        app:showAsAction="never" />
 </menu>

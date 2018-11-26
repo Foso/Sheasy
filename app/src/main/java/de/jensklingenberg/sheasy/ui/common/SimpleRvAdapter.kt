@@ -8,10 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 open class SimpleRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    open fun getLayoutId(): Int {
-        throw NotImplementedError()
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    open fun getLayoutId(): Int = throw NotImplementedError()
 
     class DefaultTagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
