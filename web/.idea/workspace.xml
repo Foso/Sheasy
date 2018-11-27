@@ -2,74 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afdaf4e2-5abf-48c5-ae28-eba7721732ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/data/SheasyPrefDataSource.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/MyWebSocket.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/Server.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/common/BaseAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/common/BaseDataSource.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/common/BaseDataSourceItem.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/common/BaseViewHolder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/common/OnEntryClickListener.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FileResponseSourceItem.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FileResponseViewHolder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable/ic_block_black_24dp.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/layout/list_item_empty.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_extensions_1_0_1_pre_58_kotlin_1_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_common_1_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_js_1_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_test_annotations_common_1_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_test_common_1_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_test_js_1_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_react_16_5_2_pre_58_kotlin_1_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_react_dom_16_5_2_pre_58_kotlin_1_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_html_common_0_6_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_html_js_0_6_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ui/about/AboutView.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/home/HomeViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable/ic_folder_grey_700_24dp.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deploy/main.bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/navEditor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/navEditor.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/data/SheasyPreferences.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/data/SheasyPreferences.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/data/file/FileDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/data/file/FileDataSource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/data/file/FileRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/data/file/FileRepository.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/AppComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/AppComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/AppModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/AppModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/ServiceModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/ServiceModule.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/model/SideMenuEntry.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/model/SideMenuEntry.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/HTTPServerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/HTTPServerService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/ServerProvider.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/routes/File.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/routes/File.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/MainActivityDrawer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/MainActivityDrawer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/apps/AppsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/apps/AppsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/common/SimpleRvAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/common/SimpleRvAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/home/HomeFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/about/AboutFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/about/AboutFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FileResponseViewHolder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FileResponseViewHolder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesAdapter.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/settings/SettingsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/settings/SettingsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_files.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_files.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_settings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/res/navigation/navigation_graph.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/navigation/navigation_graph.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../constants.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../constants.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/constants.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/app/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/app/Dropzone.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/components/Dropzone.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/app/MainComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/MainComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/StringResource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/StringResource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/index.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/index.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/model/AppFile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/model/AppFile.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/network/NetworkUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/network/NetworkUtil.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/network/WebSocket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/network/MyWebSocket.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/Header.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/ReactPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/common/ReactPresenter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/Toolbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/Toolbar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/apps/AppsView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/apps/AppsView.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/common/Navigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/common/Navigation.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationContract.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationContract.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationPresenter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy/web/main.bundle.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -140,6 +96,37 @@
                 <item name="main" type="396b929e:GradleViewContributor$SourceSetNode" />
                 <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
+                <item name="sheasy-react-client" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
+                <item name="sheasy-react-client" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
+                <item name=":web" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
+                <item name=":web" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
+                <item name=":web" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -151,22 +138,25 @@
     <session id="440061959">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.28" value="1" />
           <entry key="project.open.time.31" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.open.time.80" value="1" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gradle" value="11" />
+          <entry key="js" value="1" />
           <entry key="kt" value="63" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Groovy" value="11" />
+          <entry key="JavaScript" value="1" />
           <entry key="Kotlin" value="63" />
         </counts>
       </usages-collector>
@@ -185,26 +175,7 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/constants.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -490,118 +461,6 @@
                 <option name="description" value="Displays the properties of root project 'sheasy-react-client'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="properties" />
-              </ExternalTaskPojo>
-            </list>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/common">
-          <value>
-            <list>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the components produced by project ':common'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="components" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the sub-projects of project ':common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="projects" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the dependent components of components in project ':common'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="dependentComponents" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays all buildscript dependencies declared in project ':common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="buildEnvironment" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the insight into a specific dependency in project ':common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="dependencyInsight" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays all dependencies declared in project ':common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="dependencies" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays a help message." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="help" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the configuration model of project ':common'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="model" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the properties of project ':common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="properties" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the tasks runnable from project ':common'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/common" />
-                <option name="name" value="tasks" />
-              </ExternalTaskPojo>
-            </list>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/models">
-          <value>
-            <list>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the components produced by project ':models'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/models" />
-                <option name="name" value="components" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the sub-projects of project ':models'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/models" />
-                <option name="name" value="projects" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the dependent components of components in project ':models'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/models" />
-                <option name="name" value="dependentComponents" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays all buildscript dependencies declared in project ':models'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/models" />
-                <option name="name" value="buildEnvironment" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the insight into a specific dependency in project ':models'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/models" />
-                <option name="name" value="dependencyInsight" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays all dependencies declared in project ':models'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/models" />
-                <option name="name" value="dependencies" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays a help message." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/models" />
-                <option name="name" value="help" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the configuration model of project ':models'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/models" />
-                <option name="name" value="model" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the properties of project ':models'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/models" />
-                <option name="name" value="properties" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the tasks runnable from project ':models'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/models" />
-                <option name="name" value="tasks" />
               </ExternalTaskPojo>
             </list>
           </value>
@@ -987,33 +846,60 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="bundle" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="deploy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543099954975" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543353605836" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
     <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.52249134" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/deploy" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -1027,7 +913,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.web [run]">
+  <component name="RunManager" selected="Gradle.web [serverPrepare]">
     <configuration name="web [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -1064,12 +950,32 @@
       </ExternalSystemSettings>
       <method v="2" />
     </configuration>
+    <configuration name="web [serverPrepare]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="serverPrepare" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Gradle.web [build]" />
       <item itemvalue="Gradle.web [run]" />
+      <item itemvalue="Gradle.web [serverPrepare]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.web [serverPrepare]" />
         <item itemvalue="Gradle.web [run]" />
         <item itemvalue="Gradle.web [build]" />
       </list>
@@ -1091,7 +997,7 @@
   <component name="ToolWindowManager">
     <frame x="-3" y="-2" width="2566" height="1420" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14138205" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14217633" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -1105,7 +1011,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32872504" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32872504" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32949308" />
       <window_info anchor="bottom" id="Build" order="10" weight="0.32872504" />
@@ -1177,9 +1083,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
-          <folding>
-            <element signature="e#0#272#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1214,16 +1117,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/Header.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding>
-            <element signature="e#12#298#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/Header.kt" />
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/Toolbar.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="475">
@@ -1273,9 +1167,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#13#147#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1300,10 +1191,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/deploy/main.bundle.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="682">
+          <caret line="111" column="42" selection-start-line="111" selection-start-column="42" selection-end-line="111" selection-end-column="42" />
         </state>
       </provider>
     </entry>

@@ -39,5 +39,10 @@ class FilesViewModel : ViewModel() {
             .subscribeBy(onSuccess = { files.postValue(it) })
     }
 
+    fun folderUp() {
+        filePath = filePath.replaceAfterLast("/", "")
+        loadFiles()
+    }
+
 
 }

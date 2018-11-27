@@ -19,8 +19,7 @@ import model.FileResponse
 class FilesFragment : BaseFragment(), OnEntryClickListener {
 
     lateinit var filesViewModel: FilesViewModel
-
-    val baseAdapter = BaseAdapter()
+    private val baseAdapter = BaseAdapter()
 
     override fun getLayoutId() = R.layout.fragment_files
 
@@ -39,18 +38,23 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
                 )
             )
         }
+        updateFolderPathInfo(filesViewModel.filePath)
 
         initObserver()
         filesViewModel.loadFiles()
+        folderUpIv.setOnClickListener { filesViewModel.folderUp() }
 
     }
 
-    fun initObserver() {
+    private fun initObserver() {
         filesViewModel
             .files
             .nonNull()
             .observe {
+                updateFolderPathInfo(filesViewModel.filePath)
+
                 it
+                    .sortedBy { it.name }
                     .map { file ->
                         file.toSourceitem(this)
                     }
@@ -66,8 +70,12 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
         val item = payload as FileResponse
         filesViewModel.filePath = item.path
         filesViewModel.loadFiles()
+        updateFolderPathInfo(item.path)
+    }
+
+    fun updateFolderPathInfo(path: String) {
         folderPathLayout?.apply {
-            title.text = item.path
+            title.text = path
         }
     }
 

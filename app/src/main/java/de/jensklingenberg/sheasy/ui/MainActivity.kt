@@ -26,13 +26,12 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
 
 
     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*, *>?): Boolean {
-
         when (val item = drawerItem?.tag) {
 
             is SideMenuEntry -> {
                 mainActivityDrawer.closeDrawer()
 
-                navController.navigate(item.id)
+                navController.navigate(item.navId)
             }
         }
 
@@ -58,8 +57,6 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         intent.let {
             val action = it.action
             val type = it.type
-
-
         }
     }
 

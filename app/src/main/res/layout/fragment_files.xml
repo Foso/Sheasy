@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/folderPathLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="#3F51B5"
         android:orientation="horizontal"
         android:paddingTop="@dimen/sub_medium_spacing"
@@ -16,7 +16,7 @@
         android:paddingBottom="@dimen/sub_medium_spacing">
 
         <ImageView
-            android:id="@+id/icon"
+            android:id="@+id/folderUpIv"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_gravity="center_horizontal|center_vertical"

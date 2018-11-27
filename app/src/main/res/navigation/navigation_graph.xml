@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/homeFragment">
 
@@ -13,7 +14,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:label="Sheasy"
-        android:name="de.jensklingenberg.sheasy.ui.HomeFragment" />
+        android:name="de.jensklingenberg.sheasy.ui.home.HomeFragment" />
 
 
     <fragment
@@ -37,5 +38,11 @@
         android:id="@+id/aboutFragment"
         android:name="de.jensklingenberg.sheasy.ui.about.AboutFragment"
         android:label="About" />
+
+    <fragment
+        android:id="@+id/libsSupportFragment"
+        android:name="com.mikepenz.aboutlibraries.ui.LibsSupportFragment"
+        android:label="About Libraries"
+        tools:layout="@layout/fragment_opensource" />
 
 </navigation>

@@ -5,7 +5,6 @@ import de.jensklingenberg.sheasy.data.file.FileRepository
 import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.network.MyWebSocket
 import de.jensklingenberg.sheasy.network.Server
-import de.jensklingenberg.sheasy.ui.HomeFragment
 import de.jensklingenberg.sheasy.ui.MainViewModel
 import de.jensklingenberg.sheasy.ui.about.AboutFragment
 import de.jensklingenberg.sheasy.ui.about.AboutViewModel
@@ -13,6 +12,7 @@ import de.jensklingenberg.sheasy.ui.apps.AppsFragment
 import de.jensklingenberg.sheasy.ui.apps.AppsViewModel
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.files.FilesViewModel
+import de.jensklingenberg.sheasy.ui.home.HomeFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import javax.inject.Singleton

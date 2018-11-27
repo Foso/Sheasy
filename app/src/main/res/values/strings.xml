@@ -20,4 +20,16 @@
     <string name="Success">Erfolg</string>
     <string name="Failed">Failed</string>
     <string name="path_general_main">/</string>
+
+
+    <!-- About -->
+
+    <string name="about_libraries">Libraries</string>
+    <string name="About_Changelog">Changelog</string>
+    <string name="about_changelog_link">https://github.com/Foso/Sheasy/commits/develop</string>
+
+    <string name="about_License">License</string>
+    <string name="about_license_link">https://github.com/Foso/Sheasy/blob/develop/LICENSE</string>
+    <string name="about_license_caption">Sheasy is licensed under Apache License 2.0</string>
+
 </resources>

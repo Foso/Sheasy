@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
-import kotlinx.android.synthetic.main.fragment_settings.view.*
+import kotlinx.android.synthetic.main.list_item_generic.view.*
 
 class FileResponseViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<FileResponseSourceItem>(viewParent, R.layout.list_item_generic) {
@@ -16,8 +16,9 @@ class FileResponseViewHolder(viewParent: ViewGroup) :
 
         fileResponse?.let {
             itemView.apply {
-                title.text = fileResponse?.name
-                caption.text = fileResponse?.path
+                title.text = fileResponse.name
+                caption.text = fileResponse.path
+                icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
                 setOnClickListener {
                     item2.onEntryClickListener?.onItemClicked(fileResponse)
                 }
