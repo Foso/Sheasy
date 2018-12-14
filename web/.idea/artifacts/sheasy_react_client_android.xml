@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="sheasy-react-client-android">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="sheasy-react-client-android.jar">
+      <element id="module-output" name="sheasy-react-client_androidMain" />
+    </root>
+  </artifact>
+</component>

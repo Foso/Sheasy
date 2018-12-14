@@ -13,6 +13,7 @@ apply plugin: "androidx.navigation.safeargs"
 
 
 
+
 android {
     packagingOptions {
         exclude 'META-INF/LICENSE'

@@ -42,9 +42,11 @@
             </intent-filter>
             <nav-graph android:value="@navigation/navigation_graph" />
         </activity>
+        <activity android:name=".network.OnResultActivity" />
 
 
         <service android:name="de.jensklingenberg.sheasy.network.HTTPServerService" />
+        <service android:name=".network.ScreenShareService" />
 
 
     </application>

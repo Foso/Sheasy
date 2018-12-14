@@ -19,6 +19,7 @@ open class MyWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocket(h
     var isClosed = false
     val TAG = javaClass.simpleName
 
+
     @Inject
     lateinit var moshi: Moshi
 

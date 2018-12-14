@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.network
 
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.data.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.data.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.data.file.FileDataSource
 import de.jensklingenberg.sheasy.network.routes.apps
@@ -8,6 +9,7 @@ import de.jensklingenberg.sheasy.network.routes.file
 import de.jensklingenberg.sheasy.network.routes.general
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
+import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import io.ktor.application.ApplicationCallPipeline
 import io.ktor.application.call
@@ -22,39 +24,65 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
-class Server(
-    val sheasyPref: SheasyPrefDataSource
-) : NanoWSD(sheasyPref.webSocketPort) {
+class Server : WebSocketListener {
+
+    enum class DataDestination {
+        SCREENSHARE
+    }
+
+    @Inject
+    lateinit var sheasyPref: SheasyPrefDataSource
 
     @Inject
     lateinit var notificationUtils: NotificationUtils
 
     @Inject
-    lateinit var fileRepository: FileDataSource
+    lateinit var fileDataSource: FileDataSource
+
+
+    @Inject
+    lateinit var nanoWSDWebSocketDataSource: NanoWSDWebSocketDataSource
+
+    @Inject
+    lateinit var app: App
+
+    val screenShareWebSocketMap = hashMapOf<String, ScreenShareWebSocket>()
+
 
     init {
         initializeDagger()
+        nanoWSDWebSocketDataSource.addListener(this)
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
+    fun sendData(dataDestination: DataDestination, data: String) {
+        when (dataDestination) {
 
-    override fun openWebSocket(handshake: IHTTPSession?): WebSocket {
-        return MyWebSocket(handshake)
+            DataDestination.SCREENSHARE -> {
+                screenShareWebSocketMap.values.forEach {
+                    it.send(data)
+                }
+            }
+        }
     }
 
-    override fun start() {
+    fun start() {
         runInBackground {
             netty.start(wait = true)
         }
+        nanoWSDWebSocketDataSource.start()
 
-        super.start(10000)
     }
 
-    override fun stop() {
+    fun stop() {
         netty.stop(0L, 0L, TimeUnit.SECONDS)
+        nanoWSDWebSocketDataSource.stop()
+        screenShareWebSocketMap.values.forEach {
+            it.isClosed = true
+        }
+        screenShareWebSocketMap.clear()
 
-        super.stop()
     }
 
 
@@ -91,17 +119,39 @@ class Server(
                     }
                 }
 
-                general(fileRepository)
+                general(fileDataSource)
 
                 route(sheasyPref.APIV1) {
-                    apps(fileRepository)
-                    file(fileRepository)
+                    apps(fileDataSource)
+                    file(fileDataSource)
 
                 }
             }
 
 
         }
+    }
+
+
+    override fun openWebSocket(session: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket {
+        when (session.uri) {
+            "/screenshare" -> {
+
+                if (screenShareWebSocketMap.containsKey(session.remoteIpAddress)) {
+                    return screenShareWebSocketMap[session.remoteIpAddress]!!
+                } else {
+                    val screenShareWebSocket = ScreenShareWebSocket(session)
+                    screenShareWebSocketMap[session.remoteIpAddress] = screenShareWebSocket
+                    return screenShareWebSocket
+                }
+
+            }
+            else -> {
+                return MyWebSocket(session)
+            }
+
+        }
+
     }
 
 

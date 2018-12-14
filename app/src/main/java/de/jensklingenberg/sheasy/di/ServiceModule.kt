@@ -17,7 +17,7 @@ class ServiceModule {
         sheasyPrefDataSource: SheasyPrefDataSource,
         notificationUtils: NotificationUtils
     ): Server =
-        Server(sheasyPrefDataSource)
+        Server()
 
 
 }

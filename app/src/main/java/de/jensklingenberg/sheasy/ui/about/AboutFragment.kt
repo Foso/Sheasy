@@ -25,49 +25,15 @@ import kotlinx.android.synthetic.main.fragment_apps.*
 class AboutFragment : BaseFragment(), OnEntryClickListener {
 
 
-    override fun onItemClicked(payload: Any) {
-        when (val item = payload) {
-
-            is GenericListItemSourceItem -> {
-                val genericListItem = item.getPayload()
-                when (genericListItem?.title) {
-                    getString(R.string.about_libraries) -> {
-                        LibsBuilder()
-                            .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                            .start(requireActivity())
-                    }
-
-                    getString(R.string.About_Changelog) -> {
-                        val browserIntent =
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(getString(R.string.about_changelog_link))
-                            )
-                        startActivity(browserIntent)
-                    }
-                    getString(R.string.about_License) -> {
-                        val browserIntent =
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(getString(R.string.about_license_link))
-                            )
-                        startActivity(browserIntent)
-                    }
-                }
-
-            }
-        }
-
-    }
-
     private val aboutAdapter = BaseAdapter()
     lateinit var aboutViewModel: AboutViewModel
+
+
+    /****************************************** Fragment Lifecycle methods  */
 
     init {
         initializeDagger()
     }
-
-    private fun initializeDagger() = App.appComponent.inject(this)
 
     override fun getLayoutId(): Int = R.layout.fragment_about
 
@@ -124,6 +90,47 @@ class AboutFragment : BaseFragment(), OnEntryClickListener {
 
 
     }
+
+
+    override fun onItemClicked(payload: Any) {
+        when (val item = payload) {
+
+            is GenericListItemSourceItem -> {
+                val genericListItem = item.getPayload()
+                when (genericListItem?.title) {
+                    getString(R.string.about_libraries) -> {
+                        LibsBuilder()
+                            .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                            .start(requireActivity())
+                    }
+
+                    getString(R.string.About_Changelog) -> {
+                        val browserIntent =
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(getString(R.string.about_changelog_link))
+                            )
+                        startActivity(browserIntent)
+                    }
+                    getString(R.string.about_License) -> {
+                        val browserIntent =
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(getString(R.string.about_license_link))
+                            )
+                        startActivity(browserIntent)
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
+
+
+
 
 
 }

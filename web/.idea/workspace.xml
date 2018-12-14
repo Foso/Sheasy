@@ -2,30 +2,267 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afdaf4e2-5abf-48c5-ae28-eba7721732ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/home/HomeViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../app/src/main/res/drawable/ic_folder_grey_700_24dp.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/deploy/main.bundle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/data/NanoWSDWebSocketDataSource.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/data/NanoWSDWebSocketRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/OnResultActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/ScreenShareWebSocket.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/WebSocketListener.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/settings/RecordFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/settings/ScreenCaptureImage.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/settings/ScreenRecord.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/settings/ScreenViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_screen.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_record.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_annotations_13_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_extensions_1_0_1_pre_63_kotlin_1_3_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_common_1_3_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_test_annotations_common_1_3_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_react_16_6_0_pre_63_kotlin_1_3_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_react_dom_16_6_0_pre_63_kotlin_1_3_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_coroutines_core_1_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_coroutines_core_common_1_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_coroutines_core_js_1_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/screenshare/ScreenShareView.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/screenshare/ScreenshareContract.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/screenshare/ScreensharePresenter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsMain/resources/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsMain/resources/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsMain/web/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsMain/web/img/ic_launcher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsMain/web/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsMain/web/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/navEditor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/navEditor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/AppComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/AppComponent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/AppModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/AppModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/ServiceModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/di/ServiceModule.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/model/SideMenuEntry.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/model/SideMenuEntry.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/home/HomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/HTTPServerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/HTTPServerService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/MyWebSocket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/MyWebSocket.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/Server.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/Server.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/routes/APIV1.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/network/routes/APIV1.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/about/AboutFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/about/AboutFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FileResponseViewHolder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FileResponseViewHolder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesViewModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/settings/SettingsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/ui/settings/SettingsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_files.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_files.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/utils/extension/ContextExt.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/de/jensklingenberg/sheasy/utils/extension/ContextExt.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_settings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/src/main/res/navigation/navigation_graph.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/navigation/navigation_graph.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../constants.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../constants.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_extensions_1_0_1_pre_58_kotlin_1_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_common_1_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_js_1_3_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_js_1_3_11.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_test_annotations_common_1_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_test_common_1_3_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_test_common_1_3_11.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_test_js_1_3_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_test_js_1_3_11.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_react_16_5_2_pre_58_kotlin_1_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_react_dom_16_5_2_pre_58_kotlin_1_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy/web/main.bundle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/constants.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/Autosuggest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/Autosuggest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/Draggable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/Draggable.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/Dropzone.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/Dropzone.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/Lottie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/Lottie.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/Notification/Notification.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/Notification/Notification.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/AppBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/AppBar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Avatar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Avatar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Backdrop.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Backdrop.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/BottomNavigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/BottomNavigation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/BottomNavigationAction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/BottomNavigationAction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Button.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Button.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Card.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Card.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/CardActions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/CardActions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/CardContent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/CardContent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/CardHeader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/CardHeader.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/CardMedia.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/CardMedia.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Checkbox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Checkbox.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Chip.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Chip.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Divider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Divider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Drawer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Drawer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/ExpansionPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ExpansionPanel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/ExpansionPanelActions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ExpansionPanelActions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/ExpansionPanelDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ExpansionPanelDetails.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/ExpansionPanelSummary.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ExpansionPanelSummary.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/FormControl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/FormControl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/FormControlLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/FormControlLabel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/FormLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/FormLabel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Grid.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Grid.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Icon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Icon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/IconButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/IconButton.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Input.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Input.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/InputLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/InputLabel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/List.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/List.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/ListItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ListItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/ListItemIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ListItemIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/ListItemText.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ListItemText.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Menu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Menu.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/MenuItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/MenuItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/MenuList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/MenuList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Modal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Modal.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/ModalManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ModalManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Paper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Paper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Select.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Select.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Step.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Step.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/StepButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/StepButton.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/StepConnector.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/StepConnector.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/StepContent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/StepContent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/StepIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/StepIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/StepLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/StepLabel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Stepper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Stepper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Switch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Switch.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Table.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Table.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/TableBody.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/TableBody.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/TableCell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/TableCell.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/TableHead.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/TableHead.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/TableRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/TableRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/TextField.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/TextField.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Toolbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Toolbar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/Typography.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/Typography.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/enums.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/enums.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/icons/DeleteIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/icons/DeleteIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/icons/DownloadIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/icons/DownloadIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/icons/MenuIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/icons/MenuIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/icons/PauseIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/icons/PauseIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/icons/PlayArrowIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/icons/PlayArrowIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/icons/PreviousIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/icons/PreviousIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/icons/SkipNextIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/icons/SkipNextIcon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/materialui/typealiases.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/typealiases.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Alert.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Alert.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Alerts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Alerts.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Badge.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Badge.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Breadcrumb.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Breadcrumb.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/BreadcrumbItem.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/BreadcrumbItem.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Button.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Button.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Button.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Button.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ButtonDropdown.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ButtonDropdown.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ButtonGroup.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ButtonGroup.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ButtonToolbar.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ButtonToolbar.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Card.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Card.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardBody.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardBody.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardColumns.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardColumns.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardDeck.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardDeck.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardFooter.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardFooter.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardGroup.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardGroup.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardHeader.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardHeader.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardImg.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardImg.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardImgOverlay.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardImgOverlay.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardLink.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardLink.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardSubtitle.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardSubtitle.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardText.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardText.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CardTitle.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CardTitle.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Carousel.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Carousel.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CarouselCaption.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CarouselCaption.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CarouselControl.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CarouselControl.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CarouselIndicators.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CarouselIndicators.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CarouselItem.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CarouselItem.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Col.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Col.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Col.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Col.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Collapse.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Collapse.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Container.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Container.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Container.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Container.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/CustomInput.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/CustomInput.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Dropdown.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Dropdown.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/DropdownItem.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/DropdownItem.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/DropdownMenu.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/DropdownMenu.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/DropdownToggle.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/DropdownToggle.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Fade.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Fade.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Form.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Form.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/FormFeedback.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/FormFeedback.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/FormGroup.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/FormGroup.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/FormGroup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/FormGroup.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/FormText.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/FormText.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Input.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Input.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Input.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Input.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/InputGroup.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/InputGroup.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/InputGroupAddon.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/InputGroupAddon.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/InputGroupButtonDropdown.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/InputGroupButtonDropdown.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/InputGroupText.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/InputGroupText.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Jumbotron.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Jumbotron.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Label.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Label.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ListGroup.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ListGroup.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ListGroupItem.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ListGroupItem.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ListGroupItemHeading.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ListGroupItemHeading.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ListGroupItemText.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ListGroupItemText.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Media.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Media.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Modal.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Modal.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Modal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Modal.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ModalBody.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ModalBody.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ModalBody.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ModalBody.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ModalFooter.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ModalFooter.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ModalFooter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ModalFooter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ModalHeader.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ModalHeader.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ModalHeader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ModalHeader.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Nav.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Nav.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Nav.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Nav.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/NavBarBrand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/NavBarBrand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/NavItem.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/NavItem.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/NavItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/NavItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/NavLink.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/NavLink.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/NavLink.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/NavLink.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Navbar.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Navbar.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Navbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Navbar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/NavbarBrand.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/NavbarBrand.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/NavbarToggler.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/NavbarToggler.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Pagination.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Pagination.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/PaginationItem.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/PaginationItem.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/PaginationLink.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/PaginationLink.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Popover.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Popover.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/PopoverBody.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/PopoverBody.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/PopoverHeader.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/PopoverHeader.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Progress.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Progress.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/ReactStrapImport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/ReactStrapImport.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Row.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Row.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Row.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Row.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/TabContent.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/TabContent.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/TabPane.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/TabPane.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Table.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Table.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Tag.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Tag.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Tooltip.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Tooltip.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Tooltip.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Tooltip.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/components/reactstrap/Uncontrolled.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/components/reactstrap/Uncontrolled.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ApiConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/data/ApiConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/StringResource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/data/StringResource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/index.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/index.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/model/AppFile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/model/AppFile.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/network/MyWebSocket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/network/MyWebSocket.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/network/NetworkUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/network/NetworkUtil.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/network/Socket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/network/Socket.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/network/axios.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/network/axios.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/reactwm/Manager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/reactwm/ReactWM.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/router/routing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/router/routing.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/router/routingDsl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/router/routingDsl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/MainComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/MainComponent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/Toolbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/Toolbar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/about/AboutView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/about/AboutView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/apps/AppsContract.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/apps/AppsContract.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/apps/AppsModal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/apps/AppsModal.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/apps/AppsPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/apps/AppsPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/apps/AppsView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/apps/AppsView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/common/Navigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/common/Navigation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/common/ReactPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/common/ReactPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/media/MediaView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/media/MediaView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationContract.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/notification/NotificationContract.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/notification/NotificationPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/ui/notification/NotificationView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/webapi/Notification.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/webapi/Notification.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/web/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/resources/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/web/img/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/resources/img/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/web/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/kotlin/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/web/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsMain/resources/manifest.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -73,59 +310,30 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
-                <item name="sheasy-react-client" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
-                <item name="sheasy-react-client" type="2d1252cf:ModuleNode" />
-                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
-                <item name="sheasy-react-client" type="2d1252cf:ModuleNode" />
-                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
-                <item name="main" type="396b929e:GradleViewContributor$SourceSetNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
-                <item name="sheasy-react-client" type="2d1252cf:ModuleNode" />
-                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
-                <item name="main" type="396b929e:GradleViewContributor$SourceSetNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
-                <item name="sheasy-react-client" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
-                <item name="sheasy-react-client" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
-                <item name=":web" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="npm" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
-                <item name=":web" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="webpack" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="sheasy-react-client" type="f1a62948:ProjectNode" />
-                <item name=":web" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="help" type="c8890929:TasksNode$1" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
             <select />
@@ -138,44 +346,86 @@
     <session id="440061959">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="6" />
+          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.28" value="1" />
           <entry key="project.open.time.31" value="1" />
+          <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.80" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="gradle" value="11" />
-          <entry key="js" value="1" />
-          <entry key="kt" value="63" />
+          <entry key="css" value="4" />
+          <entry key="gradle" value="18" />
+          <entry key="html" value="5" />
+          <entry key="js" value="8" />
+          <entry key="json" value="8" />
+          <entry key="kjsm" value="3" />
+          <entry key="kt" value="73" />
+          <entry key="log" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Groovy" value="11" />
-          <entry key="JavaScript" value="1" />
-          <entry key="Kotlin" value="63" />
+          <entry key="CSS" value="4" />
+          <entry key="Groovy" value="18" />
+          <entry key="HTML" value="5" />
+          <entry key="JSON" value="8" />
+          <entry key="JavaScript" value="8" />
+          <entry key="KJSM" value="3" />
+          <entry key="Kotlin" value="73" />
+          <entry key="PLAIN_TEXT" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="gradle" value="47" />
-          <entry key="kt" value="342" />
+          <entry key="gradle" value="51" />
+          <entry key="html" value="7" />
+          <entry key="kt" value="361" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Groovy" value="47" />
-          <entry key="Kotlin" value="342" />
+          <entry key="Groovy" value="51" />
+          <entry key="HTML" value="7" />
+          <entry key="Kotlin" value="361" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/jsMain/kotlin/index.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="495">
+              <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#310#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ModalManager.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="24" lean-forward="true" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>managerim</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -183,12 +433,12 @@
   <component name="GradleLocalSettings">
     <option name="myGradleHomes">
       <map>
-        <entry key="$PROJECT_DIR$" value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9" />
+        <entry key="$PROJECT_DIR$" value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0" />
       </map>
     </option>
     <option name="myGradleVersions">
       <map>
-        <entry key="$PROJECT_DIR$" value="4.9" />
+        <entry key="$PROJECT_DIR$" value="5.0" />
       </map>
     </option>
     <option name="availableProjects">
@@ -206,10 +456,6 @@
                 <option name="name" value="sheasy-react-client" />
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
-              <ExternalProjectPojo>
-                <option name="name" value=":web" />
-                <option name="path" value="$PROJECT_DIR$/web" />
-              </ExternalProjectPojo>
             </list>
           </value>
         </entry>
@@ -221,17 +467,18 @@
           <value>
             <list>
               <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="inspectClassesForKotlinIC" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
                 <option name="description" value="Displays the sub-projects of root project 'sheasy-react-client'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="projects" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="runDceKotlinJs" />
+                <option name="name" value="jsSourcesJar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles the compilation 'main' (target jvm (jvm))." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileKotlinJvm" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs dev-server in background and bundles all if required (possibly in-memory)" />
@@ -239,17 +486,38 @@
                 <option name="name" value="run" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Generates Gradle wrapper files." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="wrapper" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Runs the unit tests." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="mainClasses" />
+                <option name="name" value="jvmTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Start webpack dev server (if not yet running)" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="webpack-run" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="cleanJsTestSourceMap" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles outputs for compilation 'test' of target 'jvm'" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jvmTestClasses" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles the compilation 'test' (target android (jvm))." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileTestKotlinAndroid" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles a jar archive containing the main classes." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jsJar" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles a jar archive containing the main classes." />
@@ -267,7 +535,7 @@
                 <option name="name" value="processResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the tasks runnable from root project 'sheasy-react-client' (some of the displayed tasks may belong to subprojects)." />
+                <option name="description" value="Displays the tasks runnable from root project 'sheasy-react-client'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="tasks" />
               </ExternalTaskPojo>
@@ -282,9 +550,24 @@
                 <option name="name" value="init" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Assembles outputs for compilation 'main' of target 'jvm'" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jvmMainClasses" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Runs the unit tests." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="test" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Runs the unit tests." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jsTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles the kotlin sources in compilation 'main' (target metadata (common)) to Metadata." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileKotlinMetadata" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Compiles main Java source." />
@@ -292,9 +575,18 @@
                 <option name="name" value="compileJava" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Assembles a jar archive containing the main classes." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jvmJar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Runs all checks." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="check" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="cleanJsSourceMap" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Gather and install all JS dependencies (npm)" />
@@ -312,6 +604,15 @@
                 <option name="name" value="processTestResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Assembles outputs for compilation 'main' of target 'metadata'" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="metadataMainClasses" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="androidSourcesJar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Stops dev-server running in background if running" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="stop" />
@@ -322,14 +623,42 @@
                 <option name="name" value="buildNeeded" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Compiles the Kotlin sources in compilation 'test' (target 2Js (js)) to JavaScript." />
+                <option name="description" value="Processes file collection." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="compileTestKotlin2Js" />
+                <option name="name" value="jvmTestProcessResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles a jar archive containing the main classes." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="androidJar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles outputs for compilation 'main' of target 'js'" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jsMainClasses" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="metadataSourcesJar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles the compilation 'main' (target android (jvm))." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileKotlinAndroid" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Runs the unit tests." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="androidTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Displays the components produced by root project 'sheasy-react-client'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="components" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="nodejs-download" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -360,6 +689,11 @@
                 <option name="name" value="buildEnvironment" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Compiles the Kotlin sources in compilation 'main' (target js (js)) to JavaScript." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileKotlinJs" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Assembles test classes." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="testClasses" />
@@ -370,16 +704,23 @@
                 <option name="name" value="javadoc" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Compiles the compilation 'test' (target jvm (jvm))." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="cleanTestSourceMap" />
+                <option name="name" value="compileTestKotlinJvm" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Processes file collection." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="androidProcessResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="webpack-config" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Assembles outputs for compilation 'test' of target 'js'" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="runDceTestKotlinJs" />
+                <option name="name" value="jsTestClasses" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Bundles all scripts and resources" />
@@ -387,14 +728,28 @@
                 <option name="name" value="bundle" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Compiles the Kotlin sources in compilation 'test' (target js (js)) to JavaScript." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileTestKotlinJs" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles a jar archive containing the main classes." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="metadataJar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Generate package.json and prepare for npm" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="npm-configure" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Compiles the Kotlin sources in compilation 'main' (target 2Js (js)) to JavaScript." />
+                <option name="description" value="Assembles outputs for compilation 'test' of target 'android'" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="compileKotlin2Js" />
+                <option name="name" value="androidTestClasses" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jvmSourcesJar" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Displays the insight into a specific dependency in root project 'sheasy-react-client'." />
@@ -426,6 +781,11 @@
                 <option name="name" value="compileTestJava" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Processes file collection." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="androidTestProcessResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="npm-preunpack" />
               </ExternalTaskPojo>
@@ -433,6 +793,11 @@
                 <option name="description" value="Displays a help message." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="help" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles outputs for compilation 'main' of target 'android'" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="androidMainClasses" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project." />
@@ -445,8 +810,9 @@
                 <option name="name" value="npm-install" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Processes file collection." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="cleanSourceMap" />
+                <option name="name" value="jvmProcessResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -465,72 +831,16 @@
             </list>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/web">
-          <value>
-            <list>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the components produced by project ':web'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/web" />
-                <option name="name" value="components" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the sub-projects of project ':web'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/web" />
-                <option name="name" value="projects" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the dependent components of components in project ':web'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/web" />
-                <option name="name" value="dependentComponents" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays all buildscript dependencies declared in project ':web'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/web" />
-                <option name="name" value="buildEnvironment" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the insight into a specific dependency in project ':web'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/web" />
-                <option name="name" value="dependencyInsight" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays all dependencies declared in project ':web'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/web" />
-                <option name="name" value="dependencies" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays a help message." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/web" />
-                <option name="name" value="help" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the configuration model of project ':web'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/web" />
-                <option name="name" value="model" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the properties of project ':web'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/web" />
-                <option name="name" value="properties" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the tasks runnable from project ':web'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/web" />
-                <option name="name" value="tasks" />
-              </ExternalTaskPojo>
-            </list>
-          </value>
-        </entry>
       </map>
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="7712363419000" />
+        <entry key="$PROJECT_DIR$" value="7723831030000" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="4276334358" />
-        <entry key="$PROJECT_DIR$/constants.gradle" value="3091674905" />
-        <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="4171081951" />
-        <entry key="$PROJECT_DIR$/settings.gradle" value="3798348241" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="2419828189" />
+        <entry key="$PROJECT_DIR$/constants.gradle" value="1279537326" />
+        <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="3763183252" />
+        <entry key="$PROJECT_DIR$/settings.gradle" value="1235434878" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -545,39 +855,39 @@
                       <ExternalModuleBuildClasspathPojo>
                         <option name="entries">
                           <list>
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.3.0/b378dac6a689f1c74bca6dc0acd266af57c79748/kotlin-gradle-plugin-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-frontend-plugin/0.0.37/dadd003061abb42f48a8891cf44c9c4b25c835a8/kotlin-frontend-plugin-0.0.37-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.3.0/6da72eda558a132e46f4f4a8527dde32b8f32943/kotlin-gradle-plugin-api-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-model/1.3.0/b1c6ce3d2a8e715cec9847e98333ecbb2648d323/kotlin-gradle-plugin-model-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.3.0/c56ca8dafc29e93b3a216b62168e658e7bff657d/kotlin-compiler-embeddable-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.3.0/eb75ce3fdf49a526de475d0ff6b397f0593f2893/kotlin-annotation-processing-gradle-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.3.0/de508fd043c780bb0b62d3271bffd85c08facf5a/kotlin-android-extensions-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.3.0/a39743e43de106b0e5b942c1030a452f64353fc9/kotlin-compiler-runner-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-compiler-embeddable/1.3.0/d3ff8096e57851fffcf6851d4b7b0cc65c843734/kotlin-scripting-compiler-embeddable-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.0/98515ba3feb571f93b923e61f643bdaed59d14ac/kotlin-stdlib-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-native-utils/1.3.0/5584413479b93a0d5edeb37c0179e4abd805acd4/kotlin-native-utils-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.3.0/9f968a154aa662ae26a78396f56e46086eb0bef9/kotlin-script-runtime-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.0/2c0e9afd8097b36a2288df59af219bfe2b78ab6d/kotlin-reflect-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.3.0/312cc4787b4d17a71069dad2b1df71882c173ad3/kotlin-build-common-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.3.0/815fb5d9a0d09660cf13d065d40ed879fe600d03/kotlin-daemon-client-1.3.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0/8bee30ce9d075088b3d590488a270e2c3ea39b3a/kotlin-stdlib-common-1.3.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.3.11/adc9725c1141faab03119eb736bd442091df482e/kotlin-gradle-plugin-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-frontend-plugin/0.0.44/39fdb3a7b9a8c70807346b7890a67f27423825be/kotlin-frontend-plugin-0.0.44-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.3.11/fdcd9662f2657f6b029b7f3e343d83ede0c526c5/kotlin-gradle-plugin-api-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-model/1.3.11/c1804b2613b09038bc3fccd7345a9171ff7b7e74/kotlin-gradle-plugin-model-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.3.11/86e3750eb7fc889a61af127ef5b2b843d141ba09/kotlin-compiler-embeddable-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.3.11/3bdbbc48bb50a8d9587683c189018f0179601ddf/kotlin-annotation-processing-gradle-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.3.11/462cbc8554774bfad3f1c8c0a0050a21fc660859/kotlin-android-extensions-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.3.11/a8c5e5fb1c5ee7119d4e6f4d5792749cee5a4d46/kotlin-compiler-runner-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-compiler-embeddable/1.3.11/9ed059e6df49c3e812b4a8d9431287a629a0e5bb/kotlin-scripting-compiler-embeddable-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.11/d46e00faac79f8ec6bb956154ecde4282871a6bf/kotlin-stdlib-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-native-utils/1.3.11/b1624d3a8865c695dd0de683b5aa92fe676be22b/kotlin-native-utils-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.3.11/819822a4658989d09761f8e3e9d31b4743897b22/kotlin-script-runtime-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.11/92835479c406bf6b1d55c41b0013f238a5ed5bd8/kotlin-reflect-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.3.11/566df1f6d68e8d743879dcb00a3fa866a16325c6/kotlin-build-common-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.3.11/8d8dd1cd119bbddb6be6e60077d4c8f80f9d475b/kotlin-daemon-client-1.3.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.11/e49742d3259938ea3539346c8ca3babb54a5140f/kotlin-stdlib-common-1.3.11-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/5991ca87ef1fb5544943d9abc5a9a37583fabe03/annotations-13.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.3.0/7e11e020c6d35f9f5aee917f0654e121ec93b3c6/kotlin-gradle-plugin-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-frontend-plugin/0.0.37/b33a234dbd3ba19c6c01161d0608dcc424c6ee98/kotlin-frontend-plugin-0.0.37.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.3.0/b166fab9f3ae23caa2f6c731803114cc39a6a70c/kotlin-gradle-plugin-api-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-model/1.3.0/7fdf2669ecfe739646e7307036bb3588e2047453/kotlin-gradle-plugin-model-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.3.0/6e8167f9aab0f6cfec309c2722f72dc26572a782/kotlin-compiler-embeddable-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.3.0/d348139d1750895f6081773c5ef6392cba7139ae/kotlin-annotation-processing-gradle-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.3.0/87970b36b9e1855d0d0e4942865f63a1015026c9/kotlin-android-extensions-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.3.0/aed39acd6a672619377e5a90d0d9aed7a37e1426/kotlin-compiler-runner-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-compiler-embeddable/1.3.0/ac82572a3016d6fd4a3ab00edafb6604fb70aa0a/kotlin-scripting-compiler-embeddable-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.0/a134b0cfe9bb44f98b0b3e889cda07923eea9428/kotlin-stdlib-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-native-utils/1.3.0/a96fcab88b5546fca05ef7e4f3a87f5a84aa9541/kotlin-native-utils-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.3.0/c7173ea6208fa189fb56d679624fbc5e2026187f/kotlin-script-runtime-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.0/6fd129fd9ba8581f2cb9c58bfd431dda4ee0457e/kotlin-reflect-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.3.0/b4ac03101fd9e1b9aab001e62a3adc8e85ab7c43/kotlin-build-common-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.3.0/f1abc91057f86f98a661dd9d83ab90562f921e2a/kotlin-daemon-client-1.3.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.0/84a2e0288dc17cd64d692eb1e5e0de8cd5ff0846/kotlin-stdlib-common-1.3.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.3.11/f0e095e14206ddef1758b78716230f849a96946/kotlin-gradle-plugin-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-frontend-plugin/0.0.44/cfa3b8f38ba2eca7ea8a5350bfa3ad74cd0d0e63/kotlin-frontend-plugin-0.0.44.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.3.11/38f283ecc2289c83bbc7b7f7605e0a38dcc74970/kotlin-gradle-plugin-api-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-model/1.3.11/500c0449ce2d8a77e1e03c9229f151dfdba6cec8/kotlin-gradle-plugin-model-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.3.11/a8db6c14f8b8ed74aa11b8379f961587b639c571/kotlin-compiler-embeddable-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.3.11/1eee30c359110c9a5232f7b3948d3728be328fa3/kotlin-annotation-processing-gradle-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.3.11/61615dc1b4490a6a1940454da57496356067e488/kotlin-android-extensions-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.3.11/8f242c562646e3bc9931b8903372280a71bd9ba2/kotlin-compiler-runner-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-compiler-embeddable/1.3.11/d7d145f70c063e3bb2edb41b766971e359155b99/kotlin-scripting-compiler-embeddable-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.11/4cbc5922a54376018307a731162ccaf3ef851a39/kotlin-stdlib-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-native-utils/1.3.11/232ad407df56ef5d930f36e89feb19b3d699ab93/kotlin-native-utils-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.3.11/1ef3a816aeacb9cd051b3ed37e2abf88910f1503/kotlin-script-runtime-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.11/aae7b33412715e9ed441934c4ffaad1bb80e9d36/kotlin-reflect-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.3.11/2e6bf3b5e3d9de2ad8f9c1de6d4887fc57b784c2/kotlin-build-common-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.3.11/7e15845130e93b3c7d3cf21ef65228dba0d3f9a2/kotlin-daemon-client-1.3.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.11/d8b8e746e279f1c4f5e08bc14a96b82e6bb1de02/kotlin-stdlib-common-1.3.11.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" />
                           </list>
                         </option>
@@ -725,82 +1035,159 @@
               <option name="name" value="sheasy-react-client" />
               <option name="projectBuildClasspath">
                 <list>
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/ant-launcher-1.9.11.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-kotlin-dsl-tooling-builders-0.18.4.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-kotlin-dsl-tooling-models-0.18.4.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-wrapper-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-model-core-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-installation-beacon-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/ant-1.9.11.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-process-services-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-runtime-api-info-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-core-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-docs-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-core-api-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-launcher-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-kotlin-dsl-0.18.4.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-tooling-api-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-logging-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/groovy-all-2.4.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-kotlin-dsl-provider-plugins-0.18.4.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-messaging-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-model-groovy-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-jvm-services-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-base-services-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-cli-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-persistent-cache-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-build-cache-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-native-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-build-option-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-resources-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/gradle-base-services-groovy-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-resources-s3-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-maven-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-announce-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-osgi-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-signing-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/ivy-2.2.0.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-workers-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-build-init-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-plugin-use-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-scala-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-platform-native-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-code-quality-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-testing-native-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-jacoco-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-ide-native-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-resources-sftp-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-build-comparison-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-testing-jvm-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-platform-jvm-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-plugins-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-language-scala-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-test-kit-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-language-jvm-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-dependency-management-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-composite-builds-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-diagnostics-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-version-control-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-platform-base-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-ear-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-ivy-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-javascript-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-reporting-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-resources-http-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-plugin-development-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-language-java-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-ide-play-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-language-groovy-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-language-native-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-testing-junit-platform-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-resources-gcs-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-ide-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-testing-base-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-publish-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-antlr-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-platform-play-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-tooling-api-builders-4.9.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.9-bin/e9cinqnqvph59rr7g70qubb4t/gradle-4.9/lib/plugins/gradle-build-cache-http-4.9.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/publish" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/ide-play" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/launcher" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/ide-native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/internal-integ-testing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/build-init" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/ivy" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/wrapper" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/workers" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/build-option" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/logging" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/installation-beacon" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/javascript" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/cli" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/internal-testing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/language-java" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/ide" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/announce" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/base-services-groovy" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/persistent-cache" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/platform-native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/testing-base" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/tooling-native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/testing-junit-platform" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/build-comparison" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/resources-http" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/snapshots" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/docs" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/ear" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/build-cache" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/diagnostics" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/internal-android-performance-testing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/resources-sftp" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/testing-jvm" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/plugin-use" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/osgi" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/language-scala" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/base-services" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/files" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/language-groovy" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/jacoco" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/dependency-management" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/antlr" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/model-groovy" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/tooling-api-builders" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/platform-play" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/internal-performance-testing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/core" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/composite-builds" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/platform-base" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/testing-native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/resources" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/plugins" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/reporting" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/language-native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/code-quality" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/jvm-services" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/resources-s3" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/model-core" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/maven" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/resources-gcs" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/core-api" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/language-jvm" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/messaging" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/process-services" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/plugin-development" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/tooling-api" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/signing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/scala" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/version-control" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/test-kit" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/platform-jvm" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/src/build-cache-http" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-kotlin-dsl-1.0.4.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-model-groovy-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-installation-beacon-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-build-cache-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/ant-launcher-1.9.13.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-jvm-services-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-tooling-api-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-snapshots-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-kotlin-dsl-tooling-models-1.0.4.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-cli-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-build-option-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-files-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-runtime-api-info-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-api-metadata-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-core-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-docs-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-persistent-cache-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-resources-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-base-services-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/ant-1.9.13.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-messaging-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-kotlin-dsl-provider-plugins-1.0.4.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-wrapper-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-process-services-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-core-api-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-base-services-groovy-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-kotlin-dsl-tooling-builders-1.0.4.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-model-core-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-logging-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/gradle-launcher-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-testing-jvm-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-javascript-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-resources-s3-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-dependency-management-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-testing-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-maven-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-platform-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-jacoco-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-resources-gcs-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-platform-jvm-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-testing-base-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-antlr-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-testing-junit-platform-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-ivy-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-version-control-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-code-quality-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-ide-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-signing-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-language-groovy-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-tooling-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-build-cache-http-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-resources-http-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-composite-builds-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-plugin-development-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-language-native-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-workers-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-build-init-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-platform-base-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-plugin-use-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-publish-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-language-jvm-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-diagnostics-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-test-kit-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-language-java-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-ear-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-ide-play-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-platform-play-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-scala-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-reporting-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-build-comparison-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-announce-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-osgi-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-ide-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/ivy-2.3.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-resources-sftp-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-language-scala-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-plugins-5.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.0-all/4mxuau4c77thx8zlvtz4xiez7/gradle-5.0/lib/plugins/gradle-tooling-api-builders-5.0.jar" />
                 </list>
               </option>
             </ExternalProjectBuildClasspathPojo>
@@ -831,7 +1218,11 @@
         <option value="$PROJECT_DIR$/src/main/kotlin/ui/Toolbar.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ui/MainComponent.kt" />
         <option value="$PROJECT_DIR$/constants.gradle" />
+        <option value="$PROJECT_DIR$/src/jsMain/kotlin/ui/MainComponent.kt" />
+        <option value="$PROJECT_DIR$/src/jsMain/web/index.html" />
         <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/jsMain/kotlin/index.kt" />
+        <option value="$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ModalManager.kt" />
       </list>
     </option>
   </component>
@@ -846,13 +1237,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name=".gradle" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
@@ -868,28 +1263,45 @@
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="deploy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="jsMain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="jsMain" type="462c0819:PsiDirectoryNode" />
+              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="jsMain" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="jsMain" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543353605836" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544824808059" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
     <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.0" />
@@ -898,6 +1310,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/jsMain/resources" />
       <recent name="$PROJECT_DIR$/deploy" />
     </key>
   </component>
@@ -913,7 +1326,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.web [serverPrepare]">
+  <component name="RunManager" selected="Gradle.web [webpack-bundle]">
     <configuration name="web [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -932,7 +1345,7 @@
       </ExternalSystemSettings>
       <method v="2" />
     </configuration>
-    <configuration name="web [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="web [bundle]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -943,14 +1356,14 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="run" />
+            <option value="bundle" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
       <method v="2" />
     </configuration>
-    <configuration name="web [serverPrepare]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="web [compileKotlinJs]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -961,7 +1374,43 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="serverPrepare" />
+            <option value="compileKotlinJs" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="web [npm-install]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="npm-install" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="web [webpack-bundle]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="webpack-bundle" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -970,13 +1419,17 @@
     </configuration>
     <list>
       <item itemvalue="Gradle.web [build]" />
-      <item itemvalue="Gradle.web [run]" />
-      <item itemvalue="Gradle.web [serverPrepare]" />
+      <item itemvalue="Gradle.web [compileKotlinJs]" />
+      <item itemvalue="Gradle.web [npm-install]" />
+      <item itemvalue="Gradle.web [bundle]" />
+      <item itemvalue="Gradle.web [webpack-bundle]" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.web [serverPrepare]" />
-        <item itemvalue="Gradle.web [run]" />
+        <item itemvalue="Gradle.web [webpack-bundle]" />
+        <item itemvalue="Gradle.web [bundle]" />
+        <item itemvalue="Gradle.web [npm-install]" />
+        <item itemvalue="Gradle.web [compileKotlinJs]" />
         <item itemvalue="Gradle.web [build]" />
       </list>
     </recent_temporary>
@@ -996,8 +1449,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="-2" width="2566" height="1420" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14217633" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14654487" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -1006,14 +1460,14 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32872504" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49960285" weight="0.32872504" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32872504" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32949308" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50039715" side_tool="true" visible="true" weight="0.32872504" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" sideWeight="0.49960285" visible="true" weight="0.32872504" />
       <window_info anchor="bottom" id="Build" order="10" weight="0.32872504" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1037,153 +1491,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/components/Notification/Notification.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="31" column="10" selection-start-line="31" selection-start-column="10" selection-end-line="31" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationContract.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/apps/AppsPresenter.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/common/ReactPresenter.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/common/Navigation.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="16" lean-forward="true" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/media/MediaView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/index.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/data/ApiConfig.kt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/about/AboutView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/apps/AppsView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="88" column="25" lean-forward="true" selection-start-line="88" selection-start-column="25" selection-end-line="88" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/data/StringResource.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationPresenter.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/components/Notification/Notification.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationContract.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/apps/AppsPresenter.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/common/ReactPresenter.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/common/Navigation.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/media/MediaView.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/index.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/data/ApiConfig.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/about/AboutView.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/apps/AppsView.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/data/StringResource.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationPresenter.kt" />
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/Header.kt" />
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/Toolbar.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="106" column="28" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1245">
-          <caret line="88" column="20" selection-start-line="88" selection-start-column="20" selection-end-line="88" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/network/NetworkUtil.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="13" column="55" lean-forward="true" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/reactwm/Manager.kt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/model/AppFile.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/network/MyWebSocket.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/MainComponent.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/network/Socket.kt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/webapi/Notification.kt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/components/Draggable.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-118" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/components/Lottie.kt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/Toolbar.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/notification/NotificationView.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/network/NetworkUtil.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/reactwm/Manager.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/model/AppFile.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/network/MyWebSocket.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ui/MainComponent.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/network/Socket.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/webapi/Notification.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/components/Draggable.kt" />
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/components/Lottie.kt" />
     <entry file="file://$PROJECT_DIR$/constants.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -1191,13 +1522,111 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deploy/main.bundle.js">
+    <entry file="file://$PROJECT_DIR$/deploy/main.bundle.js" />
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="40" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/js/sheasy-react-client/root-package.kjsm">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jsMain/kotlin/webapi/Notification.kt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jsMain/kotlin/ui/App.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jsMain/kotlin/ui/Toolbar.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="e#12#386#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jsMain/kotlin/ui/MainComponent.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="8" selection-start-column="8" selection-end-column="8" />
+          <folding>
+            <element signature="e#13#168#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jsMain/web/index.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jsMain/web/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jsMain/web/manifest.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/js/sheasy-react-client/ui/ui.kjsm">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/logs/webpack-dev-server.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/resources/main/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack-dev-server-run.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="39" lean-forward="true" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/webpack.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
-          <caret line="111" column="42" selection-start-line="111" selection-start-column="42" selection-end-line="111" selection-end-column="42" />
+        <state relative-caret-position="510">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jsMain/kotlin/index.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#310#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jsMain/kotlin/components/materialui/ModalManager.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="24" lean-forward="true" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
         </state>
       </provider>
     </entry>

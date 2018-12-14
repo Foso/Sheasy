@@ -6,6 +6,7 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.projection.MediaProjectionManager
 import android.net.wifi.WifiManager
+import android.view.WindowManager
 import java.io.File
 import java.io.InputStream
 
@@ -25,6 +26,9 @@ fun Context.mediaProjectionManager() =
     this.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
 
 fun Context.wifiManager(): WifiManager = this.getSystemService(Context.WIFI_SERVICE) as WifiManager
+
+fun Context.windowManager(): WindowManager =
+    this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
 
 fun InputStream.toFile(path: String) {

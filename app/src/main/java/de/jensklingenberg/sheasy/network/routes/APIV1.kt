@@ -23,3 +23,15 @@ fun Route.apps(fileDataSource: FileDataSource) {
     }
 }
 
+fun Route.screenshare(fileDataSource: FileDataSource) {
+    get("screenshare") {
+        fileDataSource.getApps()
+            .await()
+            .map {
+                AppResponse(it.name, it.packageName, it.installTime)
+            }.run {
+                call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
+                call.respond(this)
+            }
+    }
+}

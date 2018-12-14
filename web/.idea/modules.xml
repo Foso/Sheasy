@@ -3,7 +3,15 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/web/sheasy-react-client-web.iml" filepath="$PROJECT_DIR$/.idea/modules/web/sheasy-react-client-web.iml" group="web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/web/sheasy-react-client-web.iml" filepath="$PROJECT_DIR$/.idea/modules/web/sheasy-react-client-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_androidMain.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_androidMain.iml" group="sheasy-react-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_androidTest.iml" group="sheasy-react-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_commonMain.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_commonMain.iml" group="sheasy-react-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_commonTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_commonTest.iml" group="sheasy-react-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_jsMain.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_jsMain.iml" group="sheasy-react-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_jsTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_jsTest.iml" group="sheasy-react-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_jvmMain.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_jvmMain.iml" group="sheasy-react-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_jvmTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_jvmTest.iml" group="sheasy-react-client" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_main.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_main.iml" group="sheasy-react-client" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/sheasy-react-client_test.iml" filepath="$PROJECT_DIR$/.idea/modules/sheasy-react-client_test.iml" group="sheasy-react-client" />
       <module fileurl="file://$PROJECT_DIR$/.idea/web.iml" filepath="$PROJECT_DIR$/.idea/web.iml" />

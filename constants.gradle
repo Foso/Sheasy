@@ -11,7 +11,7 @@ ext {
 
 
     configuration = [buildTools         : '28.0.3',
-                     kotlin_version     : '1.3.10',
+                     kotlin_version     : '1.3.11',
                      detektVersion      : '1.0.0.RC9.2',
                      buildGradle_version: '3.4.0-alpha01',
                      appVersion         : '0.1',
