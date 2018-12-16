@@ -10,4 +10,3 @@ data class AppInfo(
     val installTime: String
 )
 
-data class AppResponse(val name: String, val packageName: String, val installTime: String)

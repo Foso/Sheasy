@@ -5,11 +5,11 @@ import router.hashRouter
 import router.route
 import router.switch
 import ui.App
+import ui.about.AboutView
 import ui.apps.AppsView
+import ui.screenshare.ScreenShareView
 import kotlin.browser.document
 import kotlin.browser.window
-import ui.about.AboutView
-import ui.screenshare.ScreenShareView
 
 fun main(args: Array<String>) {
 

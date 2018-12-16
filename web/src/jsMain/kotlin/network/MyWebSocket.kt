@@ -4,6 +4,7 @@ import org.w3c.dom.MessageEvent
 import org.w3c.dom.WebSocket
 
 import org.w3c.dom.events.Event
+import org.w3c.dom.events.EventListener
 
 class MyWebSocket(url: String) {
 
@@ -14,6 +15,12 @@ class MyWebSocket(url: String) {
         webSocket.onmessage = { event: Event ->
             listener?.onMessage((event as MessageEvent))
         }
+
+        webSocket.onerror = { event: Event ->
+            listener?.onError((event))
+        }
+
+        webSocket.addEventListener("dd", EventListener { })
     }
 
 
@@ -26,6 +33,7 @@ class MyWebSocket(url: String) {
 
     interface WebSocketListener {
         fun onMessage(messageEvent: MessageEvent)
+        fun onError(messageEvent: Event)
     }
 
 

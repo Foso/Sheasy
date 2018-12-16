@@ -1,4 +1,11 @@
-@file:Suppress("INTERFACE_WITH_SUPERCLASS", "OVERRIDING_FINAL_MEMBER", "RETURN_TYPE_MISMATCH_ON_OVERRIDE", "CONFLICTING_OVERLOADS", "EXTERNAL_DELEGATION", "NESTED_CLASS_IN_EXTERNAL_INTERFACE")
+@file:Suppress(
+    "INTERFACE_WITH_SUPERCLASS",
+    "OVERRIDING_FINAL_MEMBER",
+    "RETURN_TYPE_MISMATCH_ON_OVERRIDE",
+    "CONFLICTING_OVERLOADS",
+    "EXTERNAL_DELEGATION",
+    "NESTED_CLASS_IN_EXTERNAL_INTERFACE"
+)
 
 package components.materialui
 
@@ -7,8 +14,6 @@ import react.RClass
 import react.RComponent
 import react.RProps
 import react.RState
-import react.materialui.BackdropProps
-import react.materialui.EventHandlerFunction
 
 @JsModule("@material-ui/core/Modal/Modal")
 external val ModalImport: dynamic

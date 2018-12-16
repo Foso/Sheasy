@@ -12,9 +12,9 @@ import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.files.FilesViewModel
 import de.jensklingenberg.sheasy.ui.home.HomeFragment
 import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureImage
-import de.jensklingenberg.sheasy.ui.settings.ScreenRecord
 import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
 import de.jensklingenberg.sheasy.utils.NotificationUtils
+import de.jensklingenberg.sheasy.utils.ScreenRecord
 import javax.inject.Singleton
 
 @Component(modules = [(AppModule::class), (UtilsModule::class), (ServiceModule::class)])

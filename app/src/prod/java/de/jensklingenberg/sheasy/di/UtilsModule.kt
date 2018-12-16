@@ -2,9 +2,9 @@ package de.jensklingenberg.sheasy.di
 
 import dagger.Module
 import dagger.Provides
-import de.jensklingenberg.sheasy.utils.AppsRepository
-import de.jensklingenberg.sheasy.utils.FileRepository
-import de.jensklingenberg.sheasy.utils.IAppsRepostitoy
+import de.jensklingenberg.sheasy.data.file.FileDataSource
+import de.jensklingenberg.sheasy.data.file.FileRepository
+
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import javax.inject.Singleton
 
@@ -20,7 +20,7 @@ class UtilsModule {
 
     @Provides
     @Singleton
-    fun provideFUtils() = FileRepository()
+    fun provideFUtils(): FileDataSource = FileRepository()
 
 
 }

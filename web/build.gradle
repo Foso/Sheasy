@@ -1,10 +1,10 @@
 buildscript {
-    apply from: './constants.gradle'
+    apply from: './webConstants.gradle'
 }
 
 plugins {
-    id 'kotlin-multiplatform' version '1.3.11'
-    id 'org.jetbrains.kotlin.frontend' version '0.0.44'
+    id 'org.jetbrains.kotlin.multiplatform'
+    id 'org.jetbrains.kotlin.frontend'
 }
 
 repositories {
@@ -15,10 +15,13 @@ repositories {
 
 }
 
-dependencies {
-
-    testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
+detekt {
+    toolVersion = "1.0.0.RC9.2"
+    input = files("src/jsMain/kotlin")
+    filters = ".*/resources/.*,.*/build/.*"
+    config = files("./default-detekt-config.yml")
 }
+
 
 kotlin {
     targets {
@@ -26,8 +29,9 @@ kotlin {
 
         fromPreset(presets.jvm, 'jvm')
         fromPreset(presets.js, 'js') {
-            configure([compilations.main, compilations.test]) {
+            configure([compilations.main]) {
                 tasks.getByName(compileKotlinTaskName).kotlinOptions {
+                    languageVersion = "1.3"
                     sourceMap = true
                     moduleKind = "commonjs"
                     metaInfo = true
@@ -47,41 +51,36 @@ kotlin {
     }
 
     sourceSets {
+
         commonMain {
             dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
-            }
-        }
-        commonTest {
-            dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-test-common'
-                implementation 'org.jetbrains.kotlin:kotlin-test-annotations-common'
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-js'
+
             }
         }
 
         jsMain {
-            kotlin.srcDirs += "src"
-            resources.srcDirs += "web"
+            kotlin.srcDirs += "kotlin"
+            resources.srcDirs += "resources"
 
             dependencies {
+
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-js'
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
                 implementation "org.jetbrains:kotlin-react:$kotlin_react_version"
                 implementation "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
+                implementation "io.ktor:ktor-client-js:$libs.ktor_version"
+                implementation("io.ktor:ktor-client:$libs.ktor_version")
+                implementation 'org.kodein.di:kodein-di-erased-jvm:6.0.1'
             }
         }
 
-        jsTest {
-            dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-test-js'
-            }
-        }
     }
 }
 
 kotlinFrontend {
-     downloadNodeJsVersion = 'latest'
+    downloadNodeJsVersion = 'latest'
 
     npm {
         dependency("bootstrap", "${libs.bootstrap}")
@@ -91,7 +90,7 @@ kotlinFrontend {
         dependency("axios", "${libs.axios}")
         dependency("core-js", "${libs.core_js}")
         dependency("rxjs", "${libs.rxjs}")
-      //  dependency("qrcode.react")
+        //  dependency("qrcode.react")
         dependency("react-autosuggest")
         dependency("history", "${libs.history}")
         dependency("react-router-dom", "${libs.react_router_dom}")
@@ -111,20 +110,14 @@ kotlinFrontend {
 
 
     webpackBundle {
-        port=8080
+        port = 8080
         bundleName = "jsMain"
         sourceMapEnabled = true
         contentPath = file('src/jsMain/resources')
         publicPath = "/web"
-      //  proxyUrl = 'http://localhost:8080'
+        //  proxyUrl = 'http://localhost:8080'
     }
 }
-
-
-
-
-
-
 
 task serverPrepare(type: Copy, dependsOn: ["build"]) {
     from "${project.buildDir.path}/build/bundle", "$rootDir/src/jsMain/web"

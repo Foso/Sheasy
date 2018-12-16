@@ -1,5 +1,6 @@
 package ui.apps
 
+import components.materialui.Divider
 import components.materialui.icons.DeleteIcon
 import components.materialui.icons.DownloadIcon
 import components.reactstrap.*
@@ -10,20 +11,18 @@ import data.StringResource.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_UNINSTALL
 import kotlinx.html.InputType
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.style
-
-import model.AppFile
+import model.AppResponse
 import network.NetworkUtil
 import org.w3c.dom.HTMLInputElement
 import react.*
 import react.dom.div
 import react.dom.img
-import react.materialui.Divider
 import ui.toolbar
 import kotlin.browser.window
 
 
 interface AppsVState : RState {
-    var appsResult: List<AppFile>
+    var appsResult: List<AppResponse>
     var errorMessage: String
 }
 
@@ -31,7 +30,7 @@ interface AppsVState : RState {
 class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
     private var presenter: AppsPresenter? = null
 
-    override fun setData(apps: List<AppFile>) {
+    override fun setData(apps: List<AppResponse>) {
         setState {
             appsResult = apps
         }
@@ -65,67 +64,38 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
         }
 
         Container {
+
             Row {
-                Col {
-                    div {
-                        +APPS_OVERVIEW_TABLE_ROW_HEADER_ICON
-                        attrs {
-                            style = kotlinext.js.js {
-                                textAlign = "center"
+                listOf(
+                    APPS_OVERVIEW_TABLE_ROW_HEADER_ICON,
+                    APPS_OVERVIEW_TABLE_ROW_HEADER_NAME,
+                    APPS_OVERVIEW_TABLE_ROW_HEADER_DOWNLOAD,
+                    APPS_OVERVIEW_TABLE_ROW_HEADER_UNINSTALL
+                ).forEach {
+                    Col {
+                        div {
+                            +it
+                            attrs {
+                                style = kotlinext.js.js {
+                                    textAlign = "center"
+                                }
+
                             }
-
-                        }
-                    }
-                }
-                Col {
-
-                    div {
-                        +APPS_OVERVIEW_TABLE_ROW_HEADER_NAME
-                        attrs {
-                            style = kotlinext.js.js {
-                                textAlign = "center"
-                            }
-
-                        }
-                    }
-                }
-                Col {
-
-                    div {
-                        +APPS_OVERVIEW_TABLE_ROW_HEADER_DOWNLOAD
-                        attrs {
-                            style = kotlinext.js.js {
-                                textAlign = "center"
-                            }
-
-                        }
-                    }
-                }
-                Col {
-
-                    div {
-                        +APPS_OVERVIEW_TABLE_ROW_HEADER_UNINSTALL
-                        attrs {
-                            style = kotlinext.js.js {
-                                textAlign = "center"
-                            }
-
                         }
                     }
                 }
 
             }
 
-            for (item in state.appsResult) {
-
+            state.appsResult.forEach { app ->
                 Row {
                     Col {
-                        initAppIconView(item)
+                        initAppIconView(app)
                     }
                     Col {
 
                         div {
-                            +item.name.toString()
+                            +app.name
                             attrs {
                                 style = kotlinext.js.js {
                                     textAlign = "center"
@@ -135,10 +105,10 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
                         }
                     }
                     Col {
-                        initDownloadButton(DownloadIcon, item)
+                        initDownloadButton(DownloadIcon, app)
                     }
                     Col {
-                        initDeleteButton(DeleteIcon, item)
+                        initDeleteButton(DeleteIcon, app)
                     }
                     Divider {
                         attrs {
@@ -147,8 +117,6 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
 
                     }
                 }
-
-
             }
 
 
@@ -157,7 +125,7 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
 
     }
 
-    private fun RElementBuilder<ColProps>.initAppIconView(item: AppFile) {
+    private fun RElementBuilder<ColProps>.initAppIconView(item: AppResponse) {
         div {
             img {
                 attrs {
@@ -174,7 +142,7 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
         }
     }
 
-    private fun RElementBuilder<ColProps>.initDownloadButton(DownloadIcon: RClass<dynamic>, item: AppFile) {
+    private fun RElementBuilder<ColProps>.initDownloadButton(DownloadIcon: RClass<dynamic>, item: AppResponse) {
         div {
             DownloadIcon {
 
@@ -193,7 +161,7 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
         }
     }
 
-    private fun RElementBuilder<ColProps>.initDeleteButton(DeleteIcon: RClass<dynamic>, item: AppFile) {
+    private fun RElementBuilder<ColProps>.initDeleteButton(DeleteIcon: RClass<dynamic>, item: AppResponse) {
         div {
             DeleteIcon {
 

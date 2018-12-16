@@ -28,12 +28,16 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
         notiTitle = ""
     }
 
+    override fun componentDidMount() {
+        presenter = NotificationPresenter(this)
+        presenter?.componentDidMount()
+    }
+
 
     private fun handleChange() {
         setState {
             openToolTip = !openToolTip
         }
-
     }
 
 
@@ -48,12 +52,6 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
 
     }
 
-
-
-    override fun componentDidMount() {
-        presenter = NotificationPresenter(this)
-        presenter?.componentDidMount()
-    }
 
     override fun RBuilder.render() {
         Button {

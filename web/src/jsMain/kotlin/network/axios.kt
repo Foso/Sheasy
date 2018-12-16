@@ -1,4 +1,11 @@
-@file:Suppress("INTERFACE_WITH_SUPERCLASS", "OVERRIDING_FINAL_MEMBER", "RETURN_TYPE_MISMATCH_ON_OVERRIDE", "CONFLICTING_OVERLOADS", "EXTERNAL_DELEGATION", "NESTED_CLASS_IN_EXTERNAL_INTERFACE")
+@file:Suppress(
+    "INTERFACE_WITH_SUPERCLASS",
+    "OVERRIDING_FINAL_MEMBER",
+    "RETURN_TYPE_MISMATCH_ON_OVERRIDE",
+    "CONFLICTING_OVERLOADS",
+    "EXTERNAL_DELEGATION",
+    "NESTED_CLASS_IN_EXTERNAL_INTERFACE"
+)
 
 package network
 
@@ -103,7 +110,11 @@ external interface CancelTokenSource {
 }
 
 external interface AxiosInterceptorManager<V> {
-    fun use(onFulfilled: ((value: V) -> dynamic /* V | Promise<V> */)? = definedExternally /* null */, onRejected: ((error: Any) -> Any)? = definedExternally /* null */): Number
+    fun use(
+        onFulfilled: ((value: V) -> dynamic /* V | Promise<V> */)? = definedExternally /* null */,
+        onRejected: ((error: Any) -> Any)? = definedExternally /* null */
+    ): Number
+
     fun eject(id: Number)
 }
 
@@ -125,9 +136,23 @@ external interface AxiosInstance {
     fun <T> get(url: String, config: AxiosRequestConfig? = definedExternally /* null */): AxiosPromise<T>
     fun delete(url: String, config: AxiosRequestConfig? = definedExternally /* null */): AxiosPromise<Any>
     fun head(url: String, config: AxiosRequestConfig? = definedExternally /* null */): AxiosPromise<Any>
-    fun <T> post(url: String, data: Any? = definedExternally /* null */, config: AxiosRequestConfig? = definedExternally /* null */): AxiosPromise<T>
-    fun <T> put(url: String, data: Any? = definedExternally /* null */, config: AxiosRequestConfig? = definedExternally /* null */): AxiosPromise<T>
-    fun <T> patch(url: String, data: Any? = definedExternally /* null */, config: AxiosRequestConfig? = definedExternally /* null */): AxiosPromise<T>
+    fun <T> post(
+        url: String,
+        data: Any? = definedExternally /* null */,
+        config: AxiosRequestConfig? = definedExternally /* null */
+    ): AxiosPromise<T>
+
+    fun <T> put(
+        url: String,
+        data: Any? = definedExternally /* null */,
+        config: AxiosRequestConfig? = definedExternally /* null */
+    ): AxiosPromise<T>
+
+    fun <T> patch(
+        url: String,
+        data: Any? = definedExternally /* null */,
+        config: AxiosRequestConfig? = definedExternally /* null */
+    ): AxiosPromise<T>
 }
 
 external interface AxiosStatic : AxiosInstance {

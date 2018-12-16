@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.ui.settings
+package de.jensklingenberg.sheasy.utils
 
 import android.content.Context
 import android.content.Intent
@@ -19,6 +19,9 @@ import android.view.Display
 import android.view.OrientationEventListener
 import android.view.WindowManager
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureImage
+import io.ktor.util.InternalAPI
+import io.ktor.util.moveToByteArray
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -29,6 +32,7 @@ class ScreenRecord : ImageReader.OnImageAvailableListener {
 
     interface ImageReadyListener {
         fun onImageReady(string: String)
+        fun onImageByte(byteArray: ByteArray)
     }
 
 
@@ -72,6 +76,7 @@ class ScreenRecord : ImageReader.OnImageAvailableListener {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
+    @InternalAPI
     override fun onImageAvailable(reader: ImageReader?) {
         var image: Image? = null
         var fos: FileOutputStream? = null
@@ -86,6 +91,7 @@ class ScreenRecord : ImageReader.OnImageAvailableListener {
                 val rowStride = planes[0].rowStride
                 val rowPadding = rowStride - pixelStride * mWidth
 
+                imageReadyListener?.onImageByte(buffer.moveToByteArray())
                 // create bitmap
                 bitmap = Bitmap.createBitmap(
                     mWidth + rowPadding / pixelStride,
@@ -95,23 +101,22 @@ class ScreenRecord : ImageReader.OnImageAvailableListener {
                 bitmap?.copyPixelsFromBuffer(buffer)
 
                 // write bitmap to a file
-                fos =
-                        FileOutputStream("${STORE_DIRECTORY}/myscreen_${IMAGES_PRODUCED}.png")
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+                //  fos = FileOutputStream("$STORE_DIRECTORY/myscreen_$IMAGES_PRODUCED.png")
+                //  bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
                 val byteArrayOutputStream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+                bitmap.compress(Bitmap.CompressFormat.WEBP, 50, byteArrayOutputStream)
                 val byteArray = byteArrayOutputStream.toByteArray()
 
-                val encoded = Base64.encodeToString(byteArray, Base64.DEFAULT)
+
+                val baseImage = " data:image/webp;base64,"
+
+                val encoded = baseImage + Base64.encodeToString(byteArray, Base64.DEFAULT)
                 imageReadyListener?.onImageReady(encoded)
-                Log.d(
-                    TAG,
-                    "${STORE_DIRECTORY}/myscreen_${IMAGES_PRODUCED}.png"
-                )
+
                 IMAGES_PRODUCED++
                 Log.e(
                     TAG,
-                    "captured image: ${IMAGES_PRODUCED}"
+                    "captured image: $IMAGES_PRODUCED"
                 )
             }
 
@@ -219,6 +224,7 @@ class ScreenRecord : ImageReader.OnImageAvailableListener {
         }
     }
 
+
     fun stopProjection() {
         mHandler?.post {
             sMediaProjection?.stop()
@@ -237,7 +243,7 @@ class ScreenRecord : ImageReader.OnImageAvailableListener {
         mHeight = size.y
 
         // start capture reader
-        mImageReader = ImageReader.newInstance(mWidth, mHeight, PixelFormat.RGBA_8888, 2)
+        mImageReader = ImageReader.newInstance(mWidth, mHeight, PixelFormat.RGBA_8888, 1)
 
 
 

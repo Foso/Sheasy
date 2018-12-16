@@ -5,13 +5,26 @@ import model.NotificationResponse
 import network.MyWebSocket
 import network.NetworkUtil.Companion.notificationWebSocketURL
 import org.w3c.dom.MessageEvent
+import org.w3c.dom.events.Event
 
-class NotificationPresenter(val view: NotificationContract.View) : NotificationContract.Presenter, MyWebSocket.WebSocketListener {
+class NotificationPresenter(private val view: NotificationContract.View) : NotificationContract.Presenter,
+    MyWebSocket.WebSocketListener {
+
     var myWebSocket = MyWebSocket(notificationWebSocketURL)
+
+    /****************************************** React Lifecycle methods  */
 
     init {
         myWebSocket.listener = this
     }
+
+    override fun componentDidMount() {
+        myWebSocket.open()
+    }
+
+    override fun componentWillUnmount() {}
+
+    /****************************************** MyWebSocket methods  */
 
 
     override fun onMessage(messageEvent: MessageEvent) {
@@ -30,12 +43,6 @@ class NotificationPresenter(val view: NotificationContract.View) : NotificationC
     }
 
 
-    override fun componentWillUnmount() {}
-
-
-    override fun componentDidMount() {
-        myWebSocket.open()
-    }
-
+    override fun onError(messageEvent: Event) {}
 
 }

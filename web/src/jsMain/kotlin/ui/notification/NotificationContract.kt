@@ -12,9 +12,6 @@ interface NotificationContract {
         fun showNotification(reactNotificationOptions: ReactNotificationOptions)
     }
 
-    interface Presenter : ReactPresenter {
-
-
-    }
+    interface Presenter : ReactPresenter
 
 }

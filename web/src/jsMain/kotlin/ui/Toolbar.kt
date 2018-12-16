@@ -2,13 +2,10 @@ package ui
 
 import components.materialui.*
 import components.materialui.icons.MenuIcon
-import data.StringResource.Companion.TOOLBAR_ABOUT
-import data.StringResource.Companion.TOOLBAR_APPS
-import data.StringResource.Companion.TOOLBAR_HOME
+import data.DrawerItems
 import react.*
 import react.dom.a
 import react.dom.div
-import ui.common.Navigation
 import ui.media.MediaView
 import ui.notification.NotificationView
 
@@ -45,31 +42,12 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                 onClose = { handleChange() }
             }
 
-            a {
-                +TOOLBAR_HOME
-                attrs {
-                    href = Navigation.navigateToHome
-                }
-            }
-
-            a {
-                +TOOLBAR_APPS
-                attrs {
-                    href = Navigation.navigateToApps
-                }
-            }
-
-            a {
-                +TOOLBAR_ABOUT
-                attrs {
-                    href = Navigation.navigateToAbout
-                }
-            }
-
-            a {
-                +TOOLBAR_ABOUT
-                attrs {
-                    href = Navigation.navigateToScreenShare
+            DrawerItems.values().forEach {
+                a {
+                    +it.title
+                    attrs {
+                        href = it.destination
+                    }
                 }
             }
 

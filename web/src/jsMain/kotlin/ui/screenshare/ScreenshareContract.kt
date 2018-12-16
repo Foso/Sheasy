@@ -6,13 +6,12 @@ interface ScreenshareContract {
 
     interface View {
 
-        fun setData(apps: String)
+        fun setData(base64: String)
     }
 
     interface Presenter : ReactPresenter {
 
 
-        fun onSearch(query: String)
     }
 
 }

@@ -16,7 +16,7 @@ import de.jensklingenberg.sheasy.data.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.data.NanoWSDWebSocketRepository
 import de.jensklingenberg.sheasy.data.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.data.SheasyPreferences
-import de.jensklingenberg.sheasy.ui.settings.ScreenRecord
+import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import de.jensklingenberg.sheasy.utils.extension.mediaProjectionManager
 import de.jensklingenberg.sheasy.utils.extension.notificationManager
@@ -75,7 +75,9 @@ class AppModule(private val application: App) {
 
     @Provides
     @Singleton
-    fun provScreenRecord(): ScreenRecord = ScreenRecord()
+    fun provScreenRecord(): ScreenRecord =
+        ScreenRecord()
+
 
 
     @Provides

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="web-android">
+    <output-path>$PROJECT_DIR$/web/build/libs</output-path>
+    <root id="archive" name="web-android.jar">
+      <element id="module-output" name="web_androidMain" />
+    </root>
+  </artifact>
+</component>

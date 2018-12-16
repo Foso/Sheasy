@@ -15,6 +15,7 @@ ext {
             history               : '^4.7.2',
             core_js               : '2.5.7',
             rxjs                  : '6.3.3',
+            ktor_version: '1.0.1',
             reactstrap            : '^6.5.0',
             react_dropzone        : "7.0.1",
             react_web_notification: '0.3.2',
@@ -30,8 +31,13 @@ ext {
                      versionName        : '1.0.0']
 
     mavenRepos = ["https://dl.bintray.com/kotlin/kotlin-eap",
-                  "https://dl.bintray.com/kotlinx/kotlinx",
-                  "https://dl.bintray.com/kotlin/kotlin-js-wrappers"]
+                  "https://kotlin.bintray.com/kotlin/kotlinx",
+                  "https://kotlin.bintray.com/ktor",
+                  "https://dl.bintray.com/kotlin/kotlin-js-wrappers"
+
+
+
+    ]
     
 
 }

@@ -6,6 +6,7 @@ import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import kotlinx.android.synthetic.main.activity_screen.*
 

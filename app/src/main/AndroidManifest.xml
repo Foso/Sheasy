@@ -46,7 +46,6 @@
 
 
         <service android:name="de.jensklingenberg.sheasy.network.HTTPServerService" />
-        <service android:name=".network.ScreenShareService" />
 
 
     </application>

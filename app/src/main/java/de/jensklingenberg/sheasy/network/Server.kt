@@ -67,6 +67,19 @@ class Server : WebSocketListener {
         }
     }
 
+    fun sendData(dataDestination: DataDestination, data: ByteArray) {
+        when (dataDestination) {
+
+            DataDestination.SCREENSHARE -> {
+                screenShareWebSocketMap.values.forEach {
+                    it.send(data)
+
+                }
+            }
+        }
+    }
+
+
     fun start() {
         runInBackground {
             netty.start(wait = true)

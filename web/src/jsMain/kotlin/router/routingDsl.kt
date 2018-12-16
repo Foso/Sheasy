@@ -10,10 +10,10 @@ fun RBuilder.browserRouter(handler: RHandler<RProps>) = child(BrowserRouterCompo
 fun RBuilder.switch(handler: RHandler<RProps>) = child(SwitchComponent::class, handler)
 
 fun RBuilder.route(
-        path: String,
-        component: KClass<out Component<*, *>>,
-        exact: Boolean = false,
-        strict: Boolean = false
+    path: String,
+    component: KClass<out Component<*, *>>,
+    exact: Boolean = false,
+    strict: Boolean = false
 ): ReactElement {
     return child<RouteProps<RProps>, RouteComponent<RProps>> {
         attrs {
@@ -26,10 +26,10 @@ fun RBuilder.route(
 }
 
 fun <T : RProps> RBuilder.route(
-        path: String,
-        exact: Boolean = false,
-        strict: Boolean = false,
-        render: (props: RouteResultProps<T>) -> ReactElement?
+    path: String,
+    exact: Boolean = false,
+    strict: Boolean = false,
+    render: (props: RouteResultProps<T>) -> ReactElement?
 ): ReactElement {
     return child<RouteProps<T>, RouteComponent<T>> {
         attrs {
@@ -42,10 +42,10 @@ fun <T : RProps> RBuilder.route(
 }
 
 fun RBuilder.route(
-        path: String,
-        exact: Boolean = false,
-        strict: Boolean = false,
-        render: () -> ReactElement?
+    path: String,
+    exact: Boolean = false,
+    strict: Boolean = false,
+    render: () -> ReactElement?
 ): ReactElement {
     return child<RouteProps<RProps>, RouteComponent<RProps>> {
         attrs {
@@ -58,10 +58,10 @@ fun RBuilder.route(
 }
 
 fun RBuilder.routeLink(
-        to: String,
-        replace: Boolean = false,
-        className: String? = null,
-        handler: RHandler<RProps>?
+    to: String,
+    replace: Boolean = false,
+    className: String? = null,
+    handler: RHandler<RProps>?
 ) = child(LinkComponent::class) {
     attrs {
         this.to = to
@@ -72,14 +72,14 @@ fun RBuilder.routeLink(
 }
 
 fun RBuilder.navLink(
-        to: String,
-        replace: Boolean = false,
-        className: String? = null,
-        activeClassName: String = "active",
-        exact: Boolean = false,
-        strict: Boolean = false,
-        isActive: (() -> Unit)? = null,
-        handler: RHandler<RProps>?
+    to: String,
+    replace: Boolean = false,
+    className: String? = null,
+    activeClassName: String = "active",
+    exact: Boolean = false,
+    strict: Boolean = false,
+    isActive: (() -> Unit)? = null,
+    handler: RHandler<RProps>?
 ) = child(NavLinkComponent::class) {
     attrs {
         this.to = to
@@ -94,11 +94,11 @@ fun RBuilder.navLink(
 }
 
 fun RBuilder.redirect(
-        from: String,
-        to: String,
-        push: Boolean = false,
-        exact: Boolean = false,
-        strict: Boolean = false
+    from: String,
+    to: String,
+    push: Boolean = false,
+    exact: Boolean = false,
+    strict: Boolean = false
 ) = child(RedirectComponent::class) {
     attrs {
         this.from = from

@@ -1,35 +1,53 @@
 package ui
 
 
-import components.Draggable
+import components.materialui.List
+import components.materialui.ListItem
+import components.materialui.ListItemText
+import components.reactstrap.Container
+import data.DrawerItems
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import react.dom.div
-import react.dom.img
 
-interface AppState : RState {
-    var open: Boolean
-}
-
-
-class App : RComponent<RProps, AppState>() {
+class App : RComponent<RProps, RState>() {
 
 
     override fun RBuilder.render() {
         toolbar()
 
-        Draggable {
-            div("react-draggable") {
-                +"DRAGi"
+        Container {
+            DrawerItems
+                .values()
+                .forEach {
+                    List {
 
-            }
+                        ListItem {
+                            ListItemText {
+                                attrs {
+                                    this.primary = it.title
+                                }
+                            }
+                            attrs {
+                                href = it.destination
+                                component = "a"
+                            }
+                        }
+
+
+                    }
+
+                }
 
         }
+
+
     }
 }
 
 fun RBuilder.app() = child(App::class) {}
+
+
 
 

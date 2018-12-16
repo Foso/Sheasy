@@ -1,10 +1,10 @@
 package ui.common
 
-class Navigation{
+class Navigation {
     companion object {
-        val navigateToApps= "/#/apps"
+        val navigateToApps = "/#/apps"
         val navigateToAbout = "/#/about"
-        val navigateToHome= "/#"
+        val navigateToHome = "/#"
         val navigateToScreenShare = "/#/screenshare"
 
     }

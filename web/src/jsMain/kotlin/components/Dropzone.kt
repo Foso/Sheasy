@@ -1,4 +1,4 @@
-package app
+package components
 
 import org.w3c.dom.events.Event
 import react.RClass
@@ -20,7 +20,7 @@ external interface DropzoneProps : RProps {
     var disabled: Boolean? get() = definedExternally; set(value) = definedExternally
     var disablePreview: Boolean? get() = definedExternally; set(value) = definedExternally
     var preventDropOnDocument: Boolean? get() = definedExternally; set(value) = definedExternally
-    var inputProps: dynamic? get() = definedExternally; set(value) = definedExternally
+    var inputProps: dynamic get() = definedExternally; set(value) = definedExternally
     var maxSize: Number? get() = definedExternally; set(value) = definedExternally
     var minSize: Number? get() = definedExternally; set(value) = definedExternally
     var activeClassName: String? get() = definedExternally; set(value) = definedExternally

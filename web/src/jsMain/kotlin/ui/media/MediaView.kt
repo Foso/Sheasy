@@ -5,29 +5,13 @@ import components.materialui.icons.PauseIcon
 import components.materialui.icons.PlayArrowIcon
 import components.materialui.icons.SkipNextIcon
 import components.materialui.icons.SkipPreviousIcon
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 
 
-interface vNotificationVState : RState {
-
-}
-
-
-class MediaView : RComponent<RProps, vNotificationVState>() {
-
-
-    override fun vNotificationVState.init(props: RProps) {
-
-    }
-
-
-    private fun handleChange() {
-        setState {
-
-        }
-
-    }
-
+class MediaView : RComponent<RProps, RState>() {
 
     override fun RBuilder.render() {
         SkipPreviousIcon {}
@@ -38,6 +22,4 @@ class MediaView : RComponent<RProps, vNotificationVState>() {
 
 }
 
-fun RBuilder.MediaView() = child(MediaView::class) {
-
-}
+fun RBuilder.MediaView() = child(MediaView::class) {}

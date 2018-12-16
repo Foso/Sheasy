@@ -1,14 +1,17 @@
 package ui.about
 
 
+import kotlinx.html.js.onClickFunction
 import network.NetworkUtil
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
 import react.dom.a
+import react.dom.button
 import react.dom.div
 import ui.toolbar
+import kotlin.browser.window
 
 interface AboutState : RState {
     var open: Boolean
@@ -24,7 +27,16 @@ class AboutView : RComponent<RProps, AboutState>() {
         div {
             +"Sheasy v.0.0.1"
         }
-        div() {
+        button {
+            attrs {
+                text("Download Sheasy Apk")
+                onClickFunction = {
+                    window.location.href =
+                            NetworkUtil.appDownloadUrl("de.jensklingenberg.sheasy")
+                }
+            }
+        }
+        div {
             a {
                 +"GIT PAGE"
                 attrs {

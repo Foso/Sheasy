@@ -1,7 +1,6 @@
 package model
 
 
-
 data class DeviceResponse(
     val manufacturer: String,
     val model: String,
@@ -12,3 +11,4 @@ data class DeviceResponse(
 )
 
 data class FileResponse(val name: String, val path: String)
+data class AppResponse(val name: String, val packageName: String, val installTime: String)

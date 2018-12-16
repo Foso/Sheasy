@@ -1,13 +1,9 @@
 package ui.screenshare
 
 
-import model.AppFile
-import network.NetworkUtil
 import react.*
-import react.dom.a
 import react.dom.div
 import react.dom.img
-import ui.apps.AppsPresenter
 import ui.toolbar
 
 interface AboutState : RState {
@@ -28,13 +24,12 @@ class ScreenShareView : RComponent<RProps, AboutState>(), ScreenshareContract.Vi
     }
 
 
-    override fun setData(apps: String) {
+    override fun setData(base64: String) {
         setState {
-            errorMessage = apps
+            errorMessage = base64
         }
 
     }
-
 
     override fun RBuilder.render() {
         toolbar()
@@ -42,7 +37,7 @@ class ScreenShareView : RComponent<RProps, AboutState>(), ScreenshareContract.Vi
         div {
             +"Sheasy v.0.0.1"
         }
-        div() {
+        div {
 
             img {
                 attrs {

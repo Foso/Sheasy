@@ -2,7 +2,7 @@
 
 buildscript {
 
-    apply from: './constants.gradle'
+    apply from: './buildConstants.gradle'
 
     ext.buildMaven = { p -> repositories { maven { url p } } }
 
@@ -17,16 +17,16 @@ buildscript {
         classpath 'com.benjaminsproule:swagger-gradle-plugin:+'
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$configuration.detektVersion"
         classpath 'com.github.marcpoppleton:git-changelog:0.1.3'
-        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0-alpha07"
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.44"
 
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0-alpha07"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.11" }
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC9.2"
-    id 'org.jetbrains.kotlin.jvm' version '1.3.0'
-}
+    id("io.gitlab.arturbosch.detekt").version("1.0.0-RC12")
 
+}
 
 
 allprojects {
@@ -39,27 +39,15 @@ allprojects {
         mavenRepos.each { buildMaven(it) }
         jcenter()
     }
+
 }
 
 
-repositories {
-    google()
-    mavenCentral()
 
-    mavenRepos.each { buildMaven(it) }
-    jcenter()
+detekt {
+    version = "1.0.0.RC8"
+    input = files("src/main/kotlin")
+    filters = ".*/resources/.*,.*/build/.*"
+}
 
-}
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib"
-}
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
+

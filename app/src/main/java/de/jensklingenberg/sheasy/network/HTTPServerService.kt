@@ -6,8 +6,8 @@ import android.os.Binder
 import android.os.IBinder
 import androidx.fragment.app.FragmentActivity
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.ui.settings.ScreenRecord
 import de.jensklingenberg.sheasy.utils.NotificationUtils
+import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import javax.inject.Inject
 
@@ -19,6 +19,7 @@ import javax.inject.Inject
 class ServiceBinder : Binder()
 
 class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
+
 
 
     companion object {
@@ -54,6 +55,10 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
     override fun onImageReady(string: String) {
         server.sendData(Server.DataDestination.SCREENSHARE, string)
+    }
+
+    override fun onImageByte(byteArray: ByteArray) {
+        server.sendData(Server.DataDestination.SCREENSHARE, byteArray)
     }
 
     override fun onCreate() {
