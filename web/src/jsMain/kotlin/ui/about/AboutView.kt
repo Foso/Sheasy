@@ -10,7 +10,7 @@ import react.RState
 import react.dom.a
 import react.dom.button
 import react.dom.div
-import ui.toolbar
+import ui.common.toolbar
 import kotlin.browser.window
 
 interface AboutState : RState {

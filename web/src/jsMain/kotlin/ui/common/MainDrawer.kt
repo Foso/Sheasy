@@ -1,4 +1,4 @@
-package ui
+package ui.common
 
 import components.materialui.Drawer
 import components.materialui.DrawerProps
@@ -8,7 +8,6 @@ import react.RBuilder
 import react.RComponent
 import react.RState
 import react.dom.a
-import ui.common.Navigation
 
 
 interface MainDrawerState : RState {

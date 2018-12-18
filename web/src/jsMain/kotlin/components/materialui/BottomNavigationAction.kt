@@ -25,7 +25,7 @@ external interface BottomNavigationActionProps : RProps {
     var selected: Boolean? get() = definedExternally; set(value) = definedExternally
 
     var label: String? get() = definedExternally; set(value) = definedExternally
-    var icon: dynamic? get() = definedExternally; set(value) = definedExternally
+    var icon: dynamic get() = definedExternally; set(value) = definedExternally
 
 
 }

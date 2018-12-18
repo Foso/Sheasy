@@ -45,7 +45,7 @@ fun Route.file(
                             )
                             respond(it.readBytes())
                         }
-                }
+                    }
 
 
             }
@@ -81,7 +81,6 @@ fun Route.file(
                     }
 
                 }
-
 
 
             }

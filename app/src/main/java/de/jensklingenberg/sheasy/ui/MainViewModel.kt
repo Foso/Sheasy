@@ -7,8 +7,7 @@ import de.jensklingenberg.sheasy.App
 import javax.inject.Inject
 
 
-class MainViewModel @Inject constructor() : ViewModel()
-     {
+class MainViewModel @Inject constructor() : ViewModel() {
 
     @Inject
     lateinit var application: Application
@@ -34,7 +33,6 @@ class MainViewModel @Inject constructor() : ViewModel()
         application.stopService(intent)
 
     }
-
 
 
 }

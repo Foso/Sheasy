@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="fullstack-mpp-backend">
-    <output-path>$PROJECT_DIR$/fullstack-mpp/build/libs</output-path>
-    <root id="archive" name="fullstack-mpp-backend.jar">
-      <element id="module-output" name="fullstack-mpp_backendMain" />
-    </root>
-  </artifact>
-</component>

@@ -3,13 +3,15 @@ buildscript {
 }
 
 plugins {
+
     id 'org.jetbrains.kotlin.multiplatform'
     id 'org.jetbrains.kotlin.frontend'
 }
 
+
 repositories {
     ext.buildMaven = { p -> repositories { maven { url p } } }
-
+    jcenter()
     mavenCentral()
     mavenRepos.each { buildMaven(it) }
 
@@ -24,10 +26,21 @@ detekt {
 
 
 kotlin {
+
+
     targets {
         fromPreset(presets.jvm, 'android')
 
-        fromPreset(presets.jvm, 'jvm')
+        fromPreset(presets.jvm, 'jvm'){
+            configure([compilations.main]) {
+                tasks.getByName(compileKotlinTaskName).kotlinOptions {
+                    jvmTarget = "1.8"
+
+                }
+
+
+            }
+        }
         fromPreset(presets.js, 'js') {
             configure([compilations.main]) {
                 tasks.getByName(compileKotlinTaskName).kotlinOptions {
@@ -52,27 +65,19 @@ kotlin {
 
     sourceSets {
 
-        commonMain {
-            dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-stdlib-js'
-
-            }
-        }
-
         jsMain {
             kotlin.srcDirs += "kotlin"
             resources.srcDirs += "resources"
 
             dependencies {
 
-                implementation 'org.jetbrains.kotlin:kotlin-stdlib-js'
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
                 implementation "org.jetbrains:kotlin-react:$kotlin_react_version"
                 implementation "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
                 implementation "io.ktor:ktor-client-js:$libs.ktor_version"
                 implementation("io.ktor:ktor-client:$libs.ktor_version")
-                implementation 'org.kodein.di:kodein-di-erased-jvm:6.0.1'
+                implementation 'org.kodein.di:kodein-di-erased-js:6.0.1'
             }
         }
 
@@ -85,7 +90,7 @@ kotlinFrontend {
     npm {
         dependency("bootstrap", "${libs.bootstrap}")
         dependency("style-loader")
-        dependency("@material-ui/core")
+        dependency("@material-ui/core","v3.7.0")
         dependency("@material-ui/icons")
         dependency("axios", "${libs.axios}")
         dependency("core-js", "${libs.core_js}")

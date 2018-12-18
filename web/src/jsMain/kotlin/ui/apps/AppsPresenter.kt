@@ -2,17 +2,14 @@ package ui.apps
 
 import kotlinext.js.jsObject
 import model.AppResponse
+import model.Error
 import network.Axios
 import network.NetworkUtil
 
 class AppsPresenter(private val view: AppsContract.View) : AppsContract.Presenter {
 
-    var appsResult = listOf<AppResponse>()
-    val mockList = listOf(
-        AppResponse("TestData", "11111", "test.package"),
-        AppResponse("ABC", "11111", "test.package")
-    )
 
+    var appsResult = listOf<AppResponse>()
 
     /****************************************** React Lifecycle methods  */
     override fun componentWillUnmount() {}
@@ -35,8 +32,7 @@ class AppsPresenter(private val view: AppsContract.View) : AppsContract.Presente
             appsResult = result.data.sortedBy { it.name }
             view.setData(appsResult)
         }.catch { error ->
-            appsResult = mockList
-            view.setData(appsResult)
+            view.showError(Error.NETWORK_ERROR)
             console.log(error)
         }
     }

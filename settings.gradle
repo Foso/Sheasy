@@ -15,5 +15,6 @@ pluginManagement {
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     }
 }
-include ':app',':web'
+include ':app',':web', ':libshared'
+
 

@@ -20,6 +20,7 @@ import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import de.jensklingenberg.sheasy.model.Device
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -39,12 +40,8 @@ class Server : WebSocketListener {
     @Inject
     lateinit var fileDataSource: FileDataSource
 
-
     @Inject
     lateinit var nanoWSDWebSocketDataSource: NanoWSDWebSocketDataSource
-
-    @Inject
-    lateinit var app: App
 
     val screenShareWebSocketMap = hashMapOf<String, ScreenShareWebSocket>()
 
@@ -115,19 +112,19 @@ class Server : WebSocketListener {
         }
 
 
-        routing {
 
+        routing {
 
             route("") {
 
                 intercept(ApplicationCallPipeline.Call) {
 
-                    if (sheasyPref.authorizedDevices.contains(call.request.origin.remoteHost)) {
+                    if (sheasyPref.authorizedDevices.contains(Device(call.request.origin.remoteHost))) {
 
                     } else {
-                        val cal = call
                         notificationUtils.showConnectionRequest(call.request.origin.remoteHost)
-                        sheasyPref.addAuthorizedDevice(call.request.origin.remoteHost)
+                        val device = Device(call.request.origin.remoteHost)
+                        sheasyPref.addAuthorizedDevice(device)
 
                     }
                 }
@@ -144,6 +141,7 @@ class Server : WebSocketListener {
 
         }
     }
+
 
 
     override fun openWebSocket(session: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket {

@@ -17,8 +17,6 @@ open class BaseFragment : Fragment() {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-
-
     open fun getLayoutId(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

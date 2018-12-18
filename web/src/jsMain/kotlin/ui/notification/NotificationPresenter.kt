@@ -33,7 +33,7 @@ class NotificationPresenter(private val view: NotificationContract.View) : Notif
 
         val notiOptions = object : ReactNotificationOptions {
             override var tag: String? = "dd"
-            override var icon: String? = "https://avatars3.githubusercontent.com/u/1381907?s=40&v=4"
+            override var icon: String? = "https://avatars3.githubusercontent.com/u/5015532?s=40&v=4"
             override var body: String? = notificationResponse.subText
             override var title: String? = notificationResponse.title
         }

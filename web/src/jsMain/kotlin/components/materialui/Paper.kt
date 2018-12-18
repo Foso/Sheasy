@@ -23,5 +23,5 @@ external interface PaperProps : RProps {
     var square: Boolean? get() = definedExternally; set(value) = definedExternally
 }
 
-var Paper: RClass<TableProps> = PaperImport.default
+var Paper: RClass<PaperProps> = PaperImport.default
 

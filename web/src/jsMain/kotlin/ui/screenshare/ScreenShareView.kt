@@ -4,7 +4,7 @@ package ui.screenshare
 import react.*
 import react.dom.div
 import react.dom.img
-import ui.toolbar
+import ui.common.toolbar
 
 interface AboutState : RState {
     var open: Boolean

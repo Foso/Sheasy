@@ -11,6 +11,7 @@ import de.jensklingenberg.sheasy.ui.apps.AppsViewModel
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.files.FilesViewModel
 import de.jensklingenberg.sheasy.ui.home.HomeFragment
+import de.jensklingenberg.sheasy.ui.pairedDevices.PairedViewModel
 import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureImage
 import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
 import de.jensklingenberg.sheasy.utils.NotificationUtils
@@ -23,6 +24,7 @@ interface AppComponent {
 
     fun inject(commonViewModel: MainViewModel)
     fun inject(appsViewModel: AppsViewModel)
+    fun inject(pairedViewModel: PairedViewModel)
 
     fun inject(httpServerService: HTTPServerService)
     fun inject(fileRepository: FileRepository)

@@ -6,7 +6,6 @@ buildscript {
 
 plugins {
     id("com.android.application")
-
     id 'org.jetbrains.kotlin.multiplatform'
     id("kotlin-kapt")
 
@@ -16,13 +15,15 @@ plugins {
     id("changelog")
     id("androidx.navigation.safeargs")
 
+
 }
 
-kotlin {
-    targets.fromPreset(presets.android, 'android')
-}
 
 android {
+    sourceSets {
+        main.java.srcDirs += 'src/main/java'
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/DEPENDENCIES'
@@ -76,15 +77,6 @@ android {
         }
     }
 
-
-    // Remove mockRelease as it's not needed.
-    android.variantFilter { variant ->
-        if (variant.buildType.name.equals('release')
-                && variant.getFlavors().get(0).name.equals('mock')) {
-            variant.setIgnore(true)
-        }
-    }
-
     // Always show the result of every unit test, even if it passes.
     testOptions.unitTests.all {
         testLogging {
@@ -101,12 +93,33 @@ repositories {
 }
 
 
+kotlin {
+    targets.fromPreset(presets.android, 'main') {}
+
+
+    targets.fromPreset(presets.jvm, 'jvm') {
+        configure([compilations.main]) {
+            tasks.getByName(compileKotlinTaskName).kotlinOptions {
+                jvmTarget = "1.8"
+
+            }
+
+
+        }
+    }
+
+}
+
+configurations {
+}
 
 dependencies {
+    implementation project(":libshared")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //  compile "org.jetbrains.kotlin:kotlin-stdlib"
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.3.0'
-
     //AndroidX
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.0.0'
@@ -130,6 +143,7 @@ dependencies {
     implementation "io.ktor:ktor-network-tls:$libs.ktor_version"
     implementation "io.ktor:ktor-gson:$libs.ktor_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
+
 
     //NanoHTTPD
     implementation "org.nanohttpd:nanohttpd-websocket:$libs.nanohttpdwebsocket"
@@ -179,10 +193,10 @@ dependencies {
 }
 
 
+
 task copyFiles(type: Copy) {
     from '../documentation/API/1'
     into '../documentation/API/2'
 }
-
 
 

@@ -10,12 +10,9 @@ import io.reactivex.schedulers.Schedulers
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-
 open class ScreenShareWebSocket(handshake: NanoHTTPD.IHTTPSession) : NanoWSD.WebSocket(handshake) {
     var isClosed = false
     val TAG = javaClass.simpleName
-
-
 
 
     init {
@@ -28,7 +25,6 @@ open class ScreenShareWebSocket(handshake: NanoHTTPD.IHTTPSession) : NanoWSD.Web
         initiatedByRemote: Boolean
     ) {
         isClosed = true
-
     }
 
     override fun onMessage(message: NanoWSD.WebSocketFrame) {

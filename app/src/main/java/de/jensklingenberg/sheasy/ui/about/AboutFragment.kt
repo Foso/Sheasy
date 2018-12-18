@@ -130,7 +130,4 @@ class AboutFragment : BaseFragment(), OnEntryClickListener {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-
-
-
 }

@@ -1,0 +1,55 @@
+buildscript {
+    apply from: './webConstants.gradle'
+}
+
+apply plugin: 'kotlin-multiplatform'
+
+
+kotlin {
+    targets {
+        fromPreset(presets.js, 'js')
+        fromPreset(presets.jvm, 'jvm')
+    }
+
+    sourceSets {
+        commonMain{
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
+                implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
+                implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
+                implementation "io.ktor:ktor-gson:$libs.ktor_version"
+                implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+            }
+
+        }
+
+
+        jvmMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+                implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
+                implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
+                implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
+                implementation "io.ktor:ktor-gson:$libs.ktor_version"
+                implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+            }
+        }
+
+        androidMain.dependencies {
+            api 'org.jetbrains.kotlin:kotlin-stdlib'
+        }
+        jsMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-js'
+            }
+        }
+    }
+}
+
+// workaround for https://youtrack.jetbrains.com/issue/KT-27170
+configurations {
+    compileClasspath
+}

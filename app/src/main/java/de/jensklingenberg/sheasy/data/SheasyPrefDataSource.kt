@@ -1,5 +1,7 @@
 package de.jensklingenberg.sheasy.data
 
+import de.jensklingenberg.sheasy.model.Device
+
 interface SheasyPrefDataSource {
 
     val APIV1: String
@@ -10,8 +12,9 @@ interface SheasyPrefDataSource {
 
     val port: Int
     val webSocketPort: Int
-    val authorizedDevices: MutableList<String>
+    val authorizedDevices: MutableList<Device>
 
 
-    fun addAuthorizedDevice(ip: String)
+    fun addAuthorizedDevice(device: Device)
+    fun removeDevice(device: Device)
 }

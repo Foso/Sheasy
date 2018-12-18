@@ -1,7 +1,10 @@
 package de.jensklingenberg.sheasy.network
 
 import android.app.Service
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Binder
 import android.os.IBinder
 import androidx.fragment.app.FragmentActivity
@@ -19,7 +22,6 @@ import javax.inject.Inject
 class ServiceBinder : Binder()
 
 class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
-
 
 
     companion object {
@@ -73,10 +75,10 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
         vibrationUseCase.vibrate()
 
-        val dialogIntent = screenRecord.createScreenCaptureIntent()
-        dialogIntent.component = ComponentName(baseContext, OnResultActivity::class.java)
-        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        applicationContext.startActivity(dialogIntent)
+        /* val dialogIntent = screenRecord.createScreenCaptureIntent()
+         dialogIntent.component = ComponentName(baseContext, OnResultActivity::class.java)
+         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+         applicationContext.startActivity(dialogIntent)*/
     }
 
     override fun stopService(name: Intent?): Boolean {

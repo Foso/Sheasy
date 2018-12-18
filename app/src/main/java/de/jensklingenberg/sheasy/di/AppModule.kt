@@ -79,7 +79,6 @@ class AppModule(private val application: App) {
         ScreenRecord()
 
 
-
     @Provides
     @Singleton
     fun provideVibrationUseCase(context: Context): VibrationUseCase = VibrationUseCase(context)

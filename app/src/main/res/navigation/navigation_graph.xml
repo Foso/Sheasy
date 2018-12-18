@@ -27,6 +27,11 @@
         android:name="de.jensklingenberg.sheasy.ui.settings.ScreenCaptureImage"
         android:label="Record" />
 
+    <fragment
+            android:id="@+id/pairedFragment"
+            android:name="de.jensklingenberg.sheasy.ui.pairedDevices.PairedFragment"
+            android:label="Paired" />
+
 
     <fragment
         android:id="@+id/filesFragment"

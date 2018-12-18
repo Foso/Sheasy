@@ -1,10 +1,9 @@
-package ui
+package ui.common
 
 import components.materialui.*
 import components.materialui.icons.MenuIcon
-import data.DrawerItems
+import model.DrawerItems
 import react.*
-import react.dom.a
 import react.dom.div
 import ui.media.MediaView
 import ui.notification.NotificationView
@@ -42,14 +41,38 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                 onClose = { handleChange() }
             }
 
-            DrawerItems.values().forEach {
-                a {
-                    +it.title
-                    attrs {
-                        href = it.destination
+
+
+            DrawerItems
+                .values()
+                .forEach {
+                    List {
+                        attrs{
+                            component="nav"
+                        }
+                        ListItem {
+                            attrs {
+                                href = it.destination
+                                component = "a"
+                                divider=true
+                                style = kotlinext.js.js {
+                                    textAlign = "center"
+                                }
+                            }
+
+                            ListItemText {
+                                attrs {
+                                    this.primary = it.title
+
+                                }
+                            }
+
+
+
+                        }
                     }
                 }
-            }
+
 
         }
 
@@ -89,6 +112,9 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                     }
                     Grid {
                         div {
+                            attrs {
+                                styleProps(textAlign = "right")
+                            }
                             MediaView()
                             NotificationView()
 

@@ -31,7 +31,7 @@ external interface InputProps : RProps {
     var id: String? get() = definedExternally; set(value) = definedExternally
     var inputComponent: RComponent<InputComponentProps, RState>? get() = definedExternally; set(value) = definedExternally
     var inputProps: Json? get() = definedExternally; set(value) = definedExternally
-    var inputRef: dynamic? get() = definedExternally; set(value) = definedExternally
+    var inputRef: dynamic get() = definedExternally; set(value) = definedExternally
     var margin: String? /* "dense" */ get() = definedExternally; set(value) = definedExternally
     var multiline: Boolean? get() = definedExternally; set(value) = definedExternally
     var name: String? get() = definedExternally; set(value) = definedExternally

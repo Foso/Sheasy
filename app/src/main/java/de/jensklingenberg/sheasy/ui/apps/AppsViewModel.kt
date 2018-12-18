@@ -32,8 +32,6 @@ class AppsViewModel : ViewModel() {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-
-
     fun searchApp(query: String): LiveData<List<AppInfo>> {
         return Transformations.map(getApps) { app ->
             app

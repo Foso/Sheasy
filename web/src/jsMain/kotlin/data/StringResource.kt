@@ -35,10 +35,3 @@ class StringResource {
 
 
 }
-
-enum class DrawerItems(val title: String, val destination: String) {
-    HOME(TOOLBAR_HOME, Navigation.navigateToHome),
-    APPS(TOOLBAR_APPS, Navigation.navigateToApps),
-    ABOUT(TOOLBAR_ABOUT, Navigation.navigateToAbout),
-    SCREENSHARE(DRAWER_SCREENSHARE, Navigation.navigateToScreenShare)
-}

@@ -1,8 +1,7 @@
-package model
+package de.jensklingenberg.sheasy.model
 
 
-
-data class DeviceResponse(
+ data class DeviceResponse(
     val manufacturer: String,
     val model: String,
     val busySpace: Int,
@@ -12,4 +11,4 @@ data class DeviceResponse(
 )
 
 data class FileResponse(val name: String, val path: String)
-data class AppResponse(val name: String, val packageName: String, val installTime: String)
+
