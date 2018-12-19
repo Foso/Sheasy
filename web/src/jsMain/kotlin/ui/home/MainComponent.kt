@@ -4,11 +4,13 @@ package ui.home
 import components.materialui.List
 import components.materialui.ListItem
 import components.materialui.ListItemText
+import data.hostname
 import model.DrawerItems
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
+import react.dom.div
 import ui.common.styleProps
 import ui.common.toolbar
 

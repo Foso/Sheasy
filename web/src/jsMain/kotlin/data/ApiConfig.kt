@@ -9,6 +9,8 @@ var tt: String = "${window}+${window.location}+${window.location.hostname}"
 var hostname = if (tt.contains("localhost")) {
     "192.168.178.20:8766"
 } else {
-    tt + ":8766"
+
+    window.location.hostname + ":8766"
+
 
 }

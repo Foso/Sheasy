@@ -33,6 +33,17 @@ interface AppsVState : RState {
 
 class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
 
+    private var presenter: AppsPresenter? = null
+
+
+    /****************************************** React Lifecycle methods  */
+    override fun componentDidMount() {
+        presenter = AppsPresenter(this)
+        presenter?.getApps()
+    }
+
+
+
 
     override fun showError(error: Error) {
         setState {
@@ -46,7 +57,6 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
 
     }
 
-    private var presenter: AppsPresenter? = null
 
     override fun setData(apps: List<AppResponse>) {
         setState {
@@ -65,10 +75,7 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
         appsResult = emptyList()
     }
 
-    override fun componentDidMount() {
-        presenter = AppsPresenter(this)
-        presenter?.getApps()
-    }
+
 
     override fun RBuilder.render() {
         toolbar()

@@ -67,16 +67,15 @@ kotlin {
 
         jsMain {
             kotlin.srcDirs += "kotlin"
-            resources.srcDirs += "resources"
+            resources.srcDirs += "web"
 
             dependencies {
+                implementation project(":libshared")
 
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
                 implementation "org.jetbrains:kotlin-react:$kotlin_react_version"
                 implementation "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
-                implementation "io.ktor:ktor-client-js:$libs.ktor_version"
-                implementation("io.ktor:ktor-client:$libs.ktor_version")
                 implementation 'org.kodein.di:kodein-di-erased-js:6.0.1'
             }
         }
@@ -94,7 +93,7 @@ kotlinFrontend {
         dependency("@material-ui/icons")
         dependency("axios", "${libs.axios}")
         dependency("core-js", "${libs.core_js}")
-        dependency("rxjs", "${libs.rxjs}")
+     //   dependency("rxjs", "${libs.rxjs}")
         //  dependency("qrcode.react")
         dependency("react-autosuggest")
         dependency("history", "${libs.history}")
@@ -102,7 +101,7 @@ kotlinFrontend {
         dependency("react-dev-utils", "^5.0.2")
         dependency("react-draggable")
         dependency("react-dropzone", "${libs.react_dropzone}")
-        dependency("react-lottie")
+      //  dependency("react-lottie")
         dependency("react-web-notification", "${libs.react_web_notification}")
         dependency("reactstrap", "${libs.reactstrap}")
         dependency("simple-websocket", "${libs.simple_websocket}")
@@ -116,15 +115,16 @@ kotlinFrontend {
 
     webpackBundle {
         port = 8080
+        mode= "production"
         bundleName = "jsMain"
-        sourceMapEnabled = true
-        contentPath = file('src/jsMain/resources')
+       // sourceMapEnabled = true
+        contentPath = file('src/jsMain/web')
         publicPath = "/web"
         //  proxyUrl = 'http://localhost:8080'
     }
 }
 
 task serverPrepare(type: Copy, dependsOn: ["build"]) {
-    from "${project.buildDir.path}/build/bundle", "$rootDir/src/jsMain/web"
-    into "${project.buildDir.path}/deploy"
+    from "./build/bundle", "./src/jsMain/web"
+    into "./deploy"
 }

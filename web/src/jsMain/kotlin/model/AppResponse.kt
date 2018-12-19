@@ -1,3 +1,3 @@
 package model
 
-data class AppResponse(val name: String, val packageName: String, val installTime: String)
+//data class AppResponse(val name: String, val packageName: String, val installTime: String)

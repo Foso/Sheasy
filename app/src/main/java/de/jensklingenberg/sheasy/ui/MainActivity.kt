@@ -24,6 +24,50 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     lateinit var mainViewModel: MainViewModel
     lateinit var navController: NavController
 
+    /******************************************  Lifecycle methods  */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
+        setupNavigation()
+        handleIntent(intent)
+        mainActivityDrawer = MainActivityDrawer(this)
+        mainViewModel = obtainViewModel(MainViewModel::class.java)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_options_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                mainActivityDrawer.toggleDrawer()
+            }
+            R.id.menu_server -> {
+                when (item.isChecked) {
+                    true -> {
+                        mainViewModel.stopService(HTTPServerService.startIntent(this))
+                        item.isChecked = false
+                        item.setIcon(R.drawable.ic_router_black_24dp)
+                    }
+                    false -> {
+                        mainViewModel.startService(HTTPServerService.startIntent(this))
+
+                        item.isChecked = true
+                        item.setIcon(R.drawable.ic_router_green_700_24dp)
+
+                    }
+                }
+            }
+        }
+
+        return true
+    }
+
+    /******************************************  Listener methods  */
 
     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*, *>?): Boolean {
         when (val item = drawerItem?.tag) {
@@ -40,18 +84,6 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
 
     override fun onSupportNavigateUp() =
         findNavController(R.id.mainNavigationFragment).navigateUp()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
-        setupNavigation()
-        handleIntent(intent)
-        mainActivityDrawer = MainActivityDrawer(this)
-        mainViewModel = obtainViewModel(MainViewModel::class.java)
-
-    }
-
 
     fun handleIntent(intent: Intent) {
         intent.let {
@@ -72,36 +104,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_options_menu, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            android.R.id.home -> {
-                mainActivityDrawer.toggleDrawer()
-            }
-            R.id.menu_server -> {
-                when (item.isChecked) {
-                    true -> {
-                        mainViewModel.stopService(HTTPServerService.startIntent(this))
-                        item.isChecked = false
-                        item.setIcon(R.drawable.ic_storage_white_24dp)
-                    }
-                    false -> {
-                        mainViewModel.startService(HTTPServerService.startIntent(this))
-
-                        item.isChecked = true
-                        item.setIcon(R.drawable.ic_storage_green_a700_24dp)
-
-                    }
-                }
-            }
-        }
-
-        return true
-    }
 
 
 }
