@@ -30,8 +30,10 @@ At this time, this app is in an early stage (work-in-progress👷). I never work
 ## 🎨 Features
 A few of the things you can do with Sheasy:
 - download apks
-
-
+<p align="left">
+    <img src ="https://raw.githubusercontent.com/Foso/Sheasy/develop/documentation/screenshots/app/home_v0.1.png" height=500 />
+  <img src ="https://raw.githubusercontent.com/Foso/Sheasy/develop/documentation/screenshots/app/apps_v0.1.png" height=500 />
+</p>
 
 ## 🗺️ Roadmap
 - [ ] show screen recording in browser
