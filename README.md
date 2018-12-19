@@ -23,7 +23,7 @@
 The goal is to write an open source app that makes it super easy to share files from one device to another
 
 It's a hobby project i started to learn about Kotlin, React(Kotlin-JS) and Ktor. 
-At this time, this app is in an early stage (work-in-progress👷). I never worked with Ktor or Kotlin-React before and i'm still learning. Please keep that in my mind when you see parts in the code that don't follow best pratices (yet).
+At this time, this app is in an early stage (work-in-progress👷). I never worked with Ktor or Kotlin-React before and i'm still learning.
 
 
 
@@ -49,7 +49,7 @@ A few of the things you can do with Sheasy:
 
 ## 🛠️ Built With
 ### Kotlin
-[![jCenter](https://img.shields.io/badge/Kotlin-1.3.0-green.svg
+[![jCenter](https://img.shields.io/badge/Kotlin-1.3.11-green.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
 
 The App is completely written in Kotlin (except the used JVM/JS libraries)
@@ -71,7 +71,7 @@ The App is completely written in Kotlin (except the used JVM/JS libraries)
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Please take a look at the instructions in the [Wiki](https://github.com/Foso/Sheasy/wiki). 
 
 ## 📙 Docs
 Please take a look into the [Wiki](https://github.com/Foso/Sheasy/wiki) 
