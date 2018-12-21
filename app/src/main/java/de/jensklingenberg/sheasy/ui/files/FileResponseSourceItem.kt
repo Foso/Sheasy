@@ -11,18 +11,11 @@ class FileResponseSourceItem(
     BaseDataSourceItem<FileResponse>(FileResponseViewHolder::class.java) {
 
 
-    override fun areItemsTheSameInner(other: BaseDataSourceItem<FileResponse>): Boolean {
-        return false
-    }
+    override fun areItemsTheSameInner(other: BaseDataSourceItem<FileResponse>): Boolean = false
 
-    override fun areContentsTheSameInner(other: BaseDataSourceItem<FileResponse>): Boolean {
-        return false
-    }
-
+    override fun areContentsTheSameInner(other: BaseDataSourceItem<FileResponse>): Boolean = false
 
     init {
         setPayload(fileResponse)
     }
-
-
 }

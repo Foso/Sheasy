@@ -14,12 +14,13 @@ import react.RClass
 import react.RComponent
 import react.RProps
 import react.RState
+import ui.common.LayoutProps
 import kotlin.js.*
 
 @JsModule("@material-ui/core/Input/Input")
 external val InputImport: dynamic
 
-external interface InputProps : RProps {
+external interface InputProps : RProps,LayoutProps {
     var autoComplete: String? get() = definedExternally; set(value) = definedExternally
     var autoFocus: Boolean? get() = definedExternally; set(value) = definedExternally
     var defaultValue: dynamic /* String | Number */ get() = definedExternally; set(value) = definedExternally

@@ -2,9 +2,9 @@ import kotlinext.js.requireAll
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import react.dom.render
-import router.hashRouter
-import router.route
-import router.switch
+import components.router.hashRouter
+import components.router.route
+import components.router.switch
 import ui.home.App
 import ui.about.AboutView
 import ui.apps.AppsView

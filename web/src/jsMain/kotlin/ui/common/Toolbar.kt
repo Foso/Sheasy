@@ -5,8 +5,6 @@ import components.materialui.icons.MenuIcon
 import model.DrawerItems
 import react.*
 import react.dom.div
-import ui.media.MediaView
-import ui.notification.NotificationView
 
 
 interface ToolbarState : RState {
@@ -15,33 +13,24 @@ interface ToolbarState : RState {
 
 class BaseToolbar : RComponent<RProps, ToolbarState>() {
 
+    /****************************************** React Lifecycle methods  */
 
     override fun ToolbarState.init(props: RProps) {
         open = false
 
     }
 
-
     override fun componentDidMount() {}
 
     override fun componentWillUnmount() {}
-
-    private fun handleChange() {
-        setState {
-            open = !open
-        }
-
-    }
 
     override fun RBuilder.render() {
 
         Drawer {
             attrs {
                 open = this@BaseToolbar.state.open
-                onClose = { handleChange() }
+                onClose = { toggleDrawer() }
             }
-
-
 
             DrawerItems
                 .values()
@@ -55,25 +44,17 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                                 href = it.destination
                                 component = "a"
                                 divider=true
-                                style = kotlinext.js.js {
-                                    textAlign = "center"
-                                }
+                                styleProps(textAlign = "center")
                             }
 
                             ListItemText {
                                 attrs {
                                     this.primary = it.title
-
                                 }
                             }
-
-
-
                         }
                     }
                 }
-
-
         }
 
         AppBar {
@@ -85,7 +66,7 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                     attrs {
                         color = "inherit"
 
-                        onClick = { handleChange() }
+                        onClick = { toggleDrawer() }
 
                     }
                     MenuIcon {
@@ -103,6 +84,7 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                             +"Sheasy"
                             attrs {
                                 color = "inherit"
+                                styleProps(textAlign = "right")
                             }
                         }
                         attrs {
@@ -112,11 +94,9 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                     }
                     Grid {
                         div {
-                            attrs {
-                                styleProps(textAlign = "right")
-                            }
-                            MediaView()
-                            NotificationView()
+
+                          //  MediaView()
+                          //  NotificationView()
 
                         }
                         attrs {
@@ -128,6 +108,15 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
 
 
             }
+        }
+
+    }
+
+    /****************************************** Class methods  */
+
+    private fun toggleDrawer() {
+        setState {
+            open = !open
         }
 
     }

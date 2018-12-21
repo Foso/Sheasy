@@ -8,16 +8,17 @@ import de.jensklingenberg.sheasy.di.DaggerAppComponent
 import de.jensklingenberg.sheasy.di.ServiceModule
 
 
-/**
- * Created by jens on 9/2/18.
- */
-
 class App : Application() {
 
     companion object {
         lateinit var appComponent: AppComponent
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        AndroidThreeTen.init(this)
+        initializeDagger()
+    }
 
     fun initializeDagger() {
         appComponent = DaggerAppComponent.builder()
@@ -25,15 +26,5 @@ class App : Application() {
             .serviceModule(ServiceModule())
             .build()
     }
-
-
-    override fun onCreate() {
-        super.onCreate()
-        AndroidThreeTen.init(this)
-        initializeDagger()
-
-
-    }
-
 
 }

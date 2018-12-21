@@ -1,54 +1,56 @@
 package de.jensklingenberg.sheasy.utils
 
-import android.Manifest
-import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 
-/**
- * Created by jens on 21/2/18.
- */
+
 class PermissionUtils {
     companion object {
-        val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 11
+        val MY_PERMISSIONS_REQUEST_CODE = 11
+    }
 
-        private fun checkPermStorage(contentResolver: Activity) {
-            if (ContextCompat.checkSelfPermission(
-                    contentResolver,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
+    fun checkPermStorage(
+        activity: FragmentActivity,
+        permissionName: String
+    ) {
+        if (ContextCompat.checkSelfPermission(
+                activity,
+                permissionName
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    activity,
+                    permissionName
                 )
-                != PackageManager.PERMISSION_GRANTED
             ) {
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(permissionName),
+                    MY_PERMISSIONS_REQUEST_CODE
+                )
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
 
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        contentResolver,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-                ) {
+            } else {
 
-                    // Show an explanation to the user *asynchronously* -- don't block
-                    // this thread waiting for the user's response! After the user
-                    // sees the explanation, try again to request the permission.
+                // No explanation needed, we can request the permission.
 
-                } else {
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(permissionName),
+                    MY_PERMISSIONS_REQUEST_CODE
+                )
 
-                    // No explanation needed, we can request the permission.
-
-                    ActivityCompat.requestPermissions(
-                        contentResolver,
-                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                        MY_PERMISSIONS_REQUEST_READ_CONTACTS
-                    )
-
-                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
-                }
+                // MY_PERMISSIONS_REQUEST_CODE is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
             }
         }
-
-
     }
 }

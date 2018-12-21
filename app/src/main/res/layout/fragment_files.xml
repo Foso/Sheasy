@@ -1,69 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/folderPathLayout"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#3F51B5"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/sub_medium_spacing"
-        android:paddingRight="@dimen/medium_spacing"
-        android:paddingBottom="@dimen/sub_medium_spacing">
+            android:id="@+id/folderPathLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#3F51B5"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/sub_medium_spacing"
+            android:paddingRight="@dimen/medium_spacing"
+            android:paddingBottom="@dimen/sub_medium_spacing"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="0dp" android:layout_marginTop="0dp" app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/folderUpIv"
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginLeft="@dimen/big_spacing"
-            android:layout_marginRight="@dimen/big_spacing"
-            android:src="@drawable/ic_arrow_back_white_24dp" />
+                android:id="@+id/folderUpIv"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginLeft="@dimen/big_spacing"
+                android:layout_marginRight="@dimen/big_spacing"
+                android:contentDescription="TODO" android:src="@drawable/ic_arrow_back_white_24dp"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/title"
-                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/md_dark_primary_text"
-                tools:text="Sicherheit" />
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
             <TextView
-                android:id="@+id/caption"
-                style="@style/TextAppearance.AppCompat.Caption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/md_dark_primary_text"
-                tools:text="Bitte gibt hier ein Passwort ein test ste" />
+                    android:id="@+id/title"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_dark_primary_text"
+                    tools:text="Sicherheit"/>
+
+            <TextView
+                    android:id="@+id/caption"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_dark_primary_text"
+                    tools:text="Bitte gibt hier ein Passwort ein test ste"/>
 
         </LinearLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
 
 
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/folderPathLayout"
-        tools:listitem="@layout/list_item_generic" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/folderPathLayout"
+            tools:listitem="@layout/list_item_generic"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,9 @@ class PairedFragment : BaseFragment(), OnEntryClickListener {
         initializeDagger()
     }
 
+    fun initializeDagger() = App.appComponent.inject(this)
+
+
     override fun getLayoutId(): Int = R.layout.fragment_paired
 
 
@@ -55,6 +58,11 @@ class PairedFragment : BaseFragment(), OnEntryClickListener {
 
     }
 
+    override fun onMoreButtonClicked(view: View, payload: Any) {
+
+
+    }
+
 
     override fun onItemClicked(payload: Any) {
         when (val item = payload) {
@@ -70,7 +78,6 @@ class PairedFragment : BaseFragment(), OnEntryClickListener {
 
     }
 
-    private fun initializeDagger() = App.appComponent.inject(this)
 
 
 }

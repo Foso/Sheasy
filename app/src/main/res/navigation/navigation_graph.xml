@@ -40,8 +40,10 @@
         android:label="Files">
         <argument
             android:name="filePath"
-            android:defaultValue="''"
+            android:defaultValue=" "
             app:argType="string" />
+        <deepLink android:id="@+id/deepLink" app:uri="file://*" android:autoVerify="true"/>
+        <action android:id="@+id/action_filesFragment_self" app:destination="@id/filesFragment"/>
     </fragment>
 
     <fragment
@@ -53,6 +55,6 @@
         android:id="@+id/libsSupportFragment"
         android:name="com.mikepenz.aboutlibraries.ui.LibsSupportFragment"
         android:label="About Libraries"
-        tools:layout="@layout/fragment_opensource" />
+       />
 
 </navigation>

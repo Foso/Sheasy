@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sheasy</string>
+    <string name="app_name">Sheasy - Share Easy</string>
     <string name="app_folder_directory">Sheasy</string>
 
     <string name="main_frag_tab_name">dd</string>
@@ -9,17 +9,13 @@
     <string name="record">Record</string>
     <string name="stop">Stop</string>
     <string name="description_info">Info</string>
-    <string name="permission_request">This sample needs permission for camera and audio recording.</string>
-    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
-    <string name="intro_message">
-        <![CDATA[
-            This sample demonstrates how to record video using Camera2 API.
-        ]]>
-    </string>
+
     <string name="share">Share</string>
     <string name="Success">Erfolg</string>
     <string name="Failed">Failed</string>
+    <string name="loading">Loading</string>
     <string name="path_general_main">/</string>
+    <string name="device_not_authorized">Device is not authorized</string>
 
 
     <!-- About -->

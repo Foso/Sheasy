@@ -12,11 +12,12 @@ package components.materialui
 import react.RClass
 import react.RProps
 import react.ReactElement
+import ui.common.LayoutProps
 
 @JsModule("@material-ui/core/Typography/Typography")
 external val TypographyImport: dynamic
 
-external interface TypographyProps : RProps {
+external interface TypographyProps : RProps,LayoutProps {
     var align: dynamic get() = definedExternally; set(value) = definedExternally
     var color: dynamic /* PropTypes.Color | String /* "textSecondary" */ | String /* "error" */ */ get() = definedExternally; set(value) = definedExternally
     var component: ReactElement? get() = definedExternally; set(value) = definedExternally

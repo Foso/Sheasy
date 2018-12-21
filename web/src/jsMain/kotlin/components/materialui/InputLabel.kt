@@ -19,6 +19,8 @@ external interface InputLabelProps : FormLabelProps {
     var FormLabelClasses: Any? get() = definedExternally; set(value) = definedExternally
     var shrink: Boolean? get() = definedExternally; set(value) = definedExternally
     var htmlFor: String
+    var id: String? get() = definedExternally; set(value) = definedExternally
+
 }
 
 var InputLabel: RClass<InputLabelProps> = InputLabelImport.default

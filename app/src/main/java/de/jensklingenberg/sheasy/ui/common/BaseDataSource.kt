@@ -1,18 +1,12 @@
 package de.jensklingenberg.sheasy.ui.common
 
 
-class BaseDataSource : ArrayList<BaseDataSourceItem<*>> {
+class BaseDataSource internal constructor() : ArrayList<BaseDataSourceItem<*>>() {
 
     /**
      * a @[Map] of @[BaseViewHolder] mapped to viewTypes
      */
     private val viewTypes = HashMap<Class<out BaseViewHolder<*>>, Int>()
-
-    internal constructor() {}
-
-    constructor(baseDataSourceItems: List<BaseDataSourceItem<*>>) {
-        addAll(baseDataSourceItems)
-    }
 
 
     override fun add(item: BaseDataSourceItem<*>): Boolean {

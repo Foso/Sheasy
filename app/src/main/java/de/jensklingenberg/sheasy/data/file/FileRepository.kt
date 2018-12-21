@@ -39,6 +39,7 @@ open class FileRepository : FileDataSource {
 
     override fun getFiles(folderPath: String): Single<List<FileResponse>> {
         return Single.create<List<FileResponse>> { singleEmitter ->
+
             val files = File(folderPath)
                 .listFiles()
                 ?.map {

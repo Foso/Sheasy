@@ -1,6 +1,8 @@
 package de.jensklingenberg.sheasy.ui.files
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
@@ -19,8 +21,12 @@ class FileResponseViewHolder(viewParent: ViewGroup) :
                 title.text = fileResponse.name
                 caption.text = fileResponse.path
                 icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
-                setOnClickListener {
+                item.setOnClickListener {
                     item2.onEntryClickListener?.onItemClicked(fileResponse)
+                }
+                moreBtn.visibility=VISIBLE
+                moreBtn.setOnClickListener {
+                    item2.onEntryClickListener?.onMoreButtonClicked(it,item2)
                 }
             }
         }

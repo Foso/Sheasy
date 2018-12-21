@@ -9,6 +9,7 @@
 
 package components.materialui
 
+import components.StandardProps
 import org.w3c.dom.events.Event
 import react.RClass
 import react.RProps
@@ -17,9 +18,8 @@ import react.RProps
 @JsModule("@material-ui/core/IconButton/IconButton")
 external val IconButtonImport: dynamic
 
-external interface IconButtonProps : RProps {
+external interface IconButtonProps : RProps,StandardProps {
     var color: dynamic /* PropTypes.Color | String /* "textSecondary" */ | String /* "error" */ */ get() = definedExternally; set(value) = definedExternally
-    var onClick: (Event) -> Unit
 
 }
 

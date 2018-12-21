@@ -9,13 +9,14 @@
 
 package components.materialui
 
+import components.StandardProps
 import react.RClass
 import react.RProps
 
 @JsModule("@material-ui/core/ListItemText/ListItemText")
 external val ListItemTextImport: dynamic
 
-external interface ListItemTextProps : RProps {
+external interface ListItemTextProps : RProps,StandardProps {
     var disableTypography: Boolean? get() = definedExternally; set(value) = definedExternally
     var inset: Boolean? get() = definedExternally; set(value) = definedExternally
     var primary: Any? get() = definedExternally; set(value) = definedExternally

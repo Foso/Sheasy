@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.file.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
+import de.jensklingenberg.sheasy.model.Resource
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -19,24 +21,25 @@ class AppsViewModel : ViewModel() {
 
     private var query: String = ""
 
-    private val getApps = MutableLiveData<List<AppInfo>>().apply {
-        value = emptyList()
-    }
+    private val getApps = MutableLiveData<Resource<List<AppInfo>>>()
+
+    /****************************************** Lifecycle methods  */
 
     init {
         initializeDagger()
-        getApps.value = emptyList()
         loadApps()
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-    fun searchApp(query: String): LiveData<List<AppInfo>> {
+    fun searchApp(query: String): LiveData<Resource<List<AppInfo>>> {
         return Transformations.map(getApps) { app ->
-            app
+            app.data!!
                 .filter {
                     it.name.contains(query)
+                }.run {
+                    Resource.success(this)
                 }
         }
 
@@ -44,15 +47,15 @@ class AppsViewModel : ViewModel() {
     }
 
     private fun loadApps() {
-
+        getApps.value = Resource.loading(R.string.loading)
         fileDataSource
             .getApps()
             .subscribeOn(Schedulers.newThread())
             .observeOn(Schedulers.newThread())
-            .subscribeBy(onSuccess = { getApps.postValue(it) })
+            .subscribeBy(onSuccess = { getApps.postValue(Resource.success(it)) })
     }
 
-    fun getApps(): LiveData<List<AppInfo>> {
+    fun getApps(): LiveData<Resource<List<AppInfo>>> {
         loadApps()
         return getApps
     }

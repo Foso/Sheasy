@@ -9,13 +9,17 @@
 
 package components.materialui
 
+import components.StandardProps
+import org.w3c.dom.events.EventTarget
 import react.RClass
 
 @JsModule("@material-ui/core/Menu/Menu")
 external val MenuImport: dynamic
 
-external interface MenuProps : ListItemProps {
+external interface MenuProps : ListItemProps,StandardProps {
+    var open : Boolean? get() = definedExternally; set(value) = definedExternally
+    var anchorEl : EventTarget? get() = definedExternally; set(value) = definedExternally
 
 }
 
-var Menu: RClass<MenuItemProps> = MenuImport.default
+var Menu: RClass<MenuProps> = MenuImport.default

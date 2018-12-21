@@ -13,7 +13,8 @@ import androidx.core.app.NotificationCompat
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.MainActivity
+import de.jensklingenberg.sheasy.network.HTTPServerService
+import de.jensklingenberg.sheasy.network.HTTPServerService.Companion.AUTHORIZE_DEVICE
 import javax.inject.Inject
 
 
@@ -49,11 +50,15 @@ class NotificationUtils {
 
 
     fun showConnectionRequest(ipaddress: String) {
-        val replyPendingIntent = PendingIntent.getBroadcast(
+
+        val intent = HTTPServerService.getIntent(context).apply {
+            putExtra(AUTHORIZE_DEVICE,ipaddress)
+        }
+
+        val replyPendingIntent = PendingIntent.getService(
             context,
-            1,
-            Intent(),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            System.currentTimeMillis().toInt(),
+            intent, 0
         )
 
 
@@ -80,16 +85,14 @@ class NotificationUtils {
 
     }
 
-    fun generateBundle() {
-
-        generateSingleNotification(context)
-
-
-        //create summary notification
-        setSummaryNotification()
-    }
-
     private fun setSummaryNotification() {
+        val replyPendingIntent = PendingIntent.getBroadcast(
+            context,
+            1,
+            Intent(),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
         val summaryNotification = NotificationCompat.Builder(context)
             .setContentText("Server running")
             .setAutoCancel(false)
@@ -115,13 +118,13 @@ class NotificationUtils {
         notificationManager.notify(100, summaryNotification.build())
     }
 
-    private fun generateSingleNotification(context: Context) {
+    fun showServerNotification() {
         BIG_TEXT_NOTIFICATION_KEY++
 
-        val pIntent = PendingIntent.getActivity(
+        val pIntent = PendingIntent.getService(
             context,
             System.currentTimeMillis().toInt(),
-            Intent(context, MainActivity::class.java), 0
+            HTTPServerService.stopIntent(context), 0
         )
 
         // Add to your action, enabling Direct Reply for it
@@ -145,6 +148,8 @@ class NotificationUtils {
                     .setBigContentTitle("Sheasy: ${BIG_TEXT_NOTIFICATION_KEY}")
                     .setSummaryText("Tip to build notification")
             )
+            .addAction(R.mipmap.ic_launcher, "Stop Server", pIntent)
+
             .setContentIntent(pIntent)
             //.addAction(replayAction)
             .setGroup(NOTIFICATION_GROUP_KEY)

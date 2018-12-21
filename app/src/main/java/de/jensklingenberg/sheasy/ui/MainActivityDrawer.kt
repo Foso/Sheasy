@@ -6,7 +6,7 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.model.SideMenuEntry
+import de.jensklingenberg.sheasy.model.sideMenuEntries
 
 
 class MainActivityDrawer(val activity: MainActivity) {
@@ -39,7 +39,7 @@ class MainActivityDrawer(val activity: MainActivity) {
             .build()
 
 
-        SideMenuEntry.values().forEachIndexed { index, sideMenuEntry ->
+        sideMenuEntries.forEachIndexed { index, sideMenuEntry ->
             result.addItem(
                 SecondaryDrawerItem()
                     .withIdentifier(index.toLong())

@@ -13,7 +13,7 @@
 
         <ImageView
             android:id="@+id/iconIv"
-            android:layout_width="50dp"
+            android:layout_width="50dp" android:contentDescription="TODO" 
             android:layout_height="50dp" />
 
         <TextView

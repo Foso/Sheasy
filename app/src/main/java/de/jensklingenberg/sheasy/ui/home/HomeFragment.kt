@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.GenericListItem
 import de.jensklingenberg.sheasy.model.GenericListItemSourceItem
-import de.jensklingenberg.sheasy.model.SideMenuEntry
+import de.jensklingenberg.sheasy.model.sideMenuEntries
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
@@ -18,6 +18,9 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : BaseFragment(), OnEntryClickListener {
+    override fun onMoreButtonClicked(view: View, payload: Any) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private val baseAdapter = BaseAdapter()
     lateinit var homeViewModel: HomeViewModel
@@ -29,8 +32,7 @@ class HomeFragment : BaseFragment(), OnEntryClickListener {
 
             is GenericListItemSourceItem -> {
                 val genericListItem = item.getPayload()
-                SideMenuEntry
-                    .values()
+                sideMenuEntries
                     .first { it.title == genericListItem?.title }
                     .run {
                         findNavController().navigate(this.navId)

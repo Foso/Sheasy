@@ -14,6 +14,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.SideMenuEntry
 import de.jensklingenberg.sheasy.network.HTTPServerService
+import de.jensklingenberg.sheasy.ui.files.FilesFragmentDirections
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -49,12 +50,12 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
             R.id.menu_server -> {
                 when (item.isChecked) {
                     true -> {
-                        mainViewModel.stopService(HTTPServerService.startIntent(this))
+                        mainViewModel.stopService(HTTPServerService.getIntent(this))
                         item.isChecked = false
                         item.setIcon(R.drawable.ic_router_black_24dp)
                     }
                     false -> {
-                        mainViewModel.startService(HTTPServerService.startIntent(this))
+                        mainViewModel.startService(HTTPServerService.getIntent(this))
 
                         item.isChecked = true
                         item.setIcon(R.drawable.ic_router_green_700_24dp)
@@ -82,6 +83,8 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         return true
     }
 
+    /******************************************  Class methods  */
+
     override fun onSupportNavigateUp() =
         findNavController(R.id.mainNavigationFragment).navigateUp()
 
@@ -89,6 +92,25 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         intent.let {
             val action = it.action
             val type = it.type
+
+
+            val clipData = it.clipData;
+            if (clipData != null) {
+
+
+                for (i in 0..clipData.itemCount) {
+                    val item = clipData.getItemAt(i)
+                    val uri = item.uri
+
+                    val filePath = FilesFragmentDirections.ActionFilesFragmentSelf().setFilePath(uri.toString())
+
+                   // var bundle = bundleOf("filePath" to uri)
+                    navController.navigate(R.id.filesFragment, filePath.arguments)
+                    break
+                }
+            }
+
+
         }
     }
 
@@ -96,15 +118,13 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     private fun setupNavigation() {
         navController = findNavController(R.id.mainNavigationFragment)
         setupActionBarWithNavController(navController)
-        navController.addOnNavigatedListener { _, destination ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             supportActionBar?.setDisplayShowHomeEnabled(true)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
 
         }
     }
-
-
 
 
 }

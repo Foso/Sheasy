@@ -9,6 +9,7 @@ import io.ktor.routing.Route
 import io.ktor.routing.get
 import kotlinx.coroutines.rx2.await
 import model.AppResponse
+import model.Response
 
 fun Route.apps(fileDataSource: FileDataSource) {
     get("apps") {
@@ -18,7 +19,7 @@ fun Route.apps(fileDataSource: FileDataSource) {
                 AppResponse(it.name, it.packageName, it.installTime)
             }.run {
                 call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-                call.respond(this)
+                call.respond(Response.success(this))
             }
     }
 }

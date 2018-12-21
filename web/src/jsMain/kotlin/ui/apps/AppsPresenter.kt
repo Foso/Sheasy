@@ -3,6 +3,8 @@ package ui.apps
 import kotlinext.js.jsObject
 import model.AppResponse
 import model.Error
+import model.Respo
+import model.Response
 import network.Axios
 import network.NetworkUtil
 
@@ -26,14 +28,21 @@ class AppsPresenter(private val view: AppsContract.View) : AppsContract.Presente
     }
 
     override fun getApps() {
-        Axios.get<Array<AppResponse>>(NetworkUtil.getApps, jsObject {
+        Axios.get<Response<Array<AppResponse>>>(NetworkUtil.getApps, jsObject {
             timeout = 10000
         }).then { result ->
-            appsResult = result.data.sortedBy { it.name }
-            view.setData(appsResult)
+            if(result.data.status == "SUCCESS"){
+                appsResult = result.data.data!!.toMutableList()
+                view.setData(appsResult)
+
+            }else{
+                view.showError(Error.NOT_AUTHORIZED)
+            }
+
+
         }.catch { error ->
             view.showError(Error.NETWORK_ERROR)
-            console.log(error)
+            console.log("ERROR"+error)
         }
     }
 }

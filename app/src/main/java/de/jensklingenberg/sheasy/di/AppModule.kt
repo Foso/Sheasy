@@ -12,12 +12,11 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.data.NanoWSDWebSocketDataSource
-import de.jensklingenberg.sheasy.data.NanoWSDWebSocketRepository
-import de.jensklingenberg.sheasy.data.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.data.SheasyPreferences
+import de.jensklingenberg.sheasy.data.websocket.NanoWSDWebSocketDataSource
+import de.jensklingenberg.sheasy.data.websocket.NanoWSDWebSocketRepository
+import de.jensklingenberg.sheasy.data.preferences.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.data.preferences.SheasyPreferences
 import de.jensklingenberg.sheasy.utils.ScreenRecord
-import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import de.jensklingenberg.sheasy.utils.extension.mediaProjectionManager
 import de.jensklingenberg.sheasy.utils.extension.notificationManager
 import de.jensklingenberg.sheasy.utils.extension.windowManager
@@ -79,9 +78,7 @@ class AppModule(private val application: App) {
         ScreenRecord()
 
 
-    @Provides
-    @Singleton
-    fun provideVibrationUseCase(context: Context): VibrationUseCase = VibrationUseCase(context)
+
 
 
     @Provides

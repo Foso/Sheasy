@@ -21,6 +21,7 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.websocket.WebSockets
 import io.ktor.websocket.webSocket
+import model.Response
 import java.time.Duration
 
 
@@ -78,7 +79,7 @@ fun main(args: Array<String>) {
 private fun Route.apps() {
     get("/apps"){
         call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-        call.respond(MockTestDataSource.mockList)
+        call.respond(Response.error("NOT AUTHORZIED",""))
     }
 
 }

@@ -27,6 +27,9 @@ open class MyWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocket(h
         initializeDagger()
     }
 
+    private fun initializeDagger() = App.appComponent.inject(this)
+
+
     override fun onClose(
         code: NanoWSD.WebSocketFrame.CloseCode,
         reason: String,
@@ -51,7 +54,6 @@ open class MyWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocket(h
         Log.d(TAG, "onException: " + exception.message)
     }
 
-    private fun initializeDagger() = App.appComponent.inject(this)
 
     override fun onOpen() {
         startRunner()
@@ -82,7 +84,7 @@ open class MyWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocket(h
             .repeatUntil { isClosed }
             .subscribeOn(Schedulers.newThread())
             .observeOn(Schedulers.newThread())
-            .subscribe { result ->
+            .subscribe { _ ->
                 //Use result for something
             }
 

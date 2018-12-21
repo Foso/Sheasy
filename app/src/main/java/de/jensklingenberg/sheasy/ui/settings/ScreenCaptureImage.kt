@@ -27,8 +27,8 @@ class ScreenCaptureImage : BaseFragment() {
     init {
         initializeDagger()
     }
+    fun initializeDagger() = App.appComponent.inject(this)
 
-    private fun initializeDagger() = App.appComponent.inject(this)
 
 
     /****************************************** Activity Lifecycle methods  */

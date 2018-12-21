@@ -9,13 +9,9 @@ class AppInfoSourceItem(appInfo: AppInfo, var onEntryClickListener: OnEntryClick
     BaseDataSourceItem<AppInfo>(AppInfoViewHolder::class.java) {
 
 
-    override fun areItemsTheSameInner(other: BaseDataSourceItem<AppInfo>): Boolean {
-        return false
-    }
+    override fun areItemsTheSameInner(other: BaseDataSourceItem<AppInfo>): Boolean = false
 
-    override fun areContentsTheSameInner(other: BaseDataSourceItem<AppInfo>): Boolean {
-        return false
-    }
+    override fun areContentsTheSameInner(other: BaseDataSourceItem<AppInfo>): Boolean = false
 
 
     init {

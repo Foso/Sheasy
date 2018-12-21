@@ -55,7 +55,7 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
 
     override fun RBuilder.render() {
         Button {
-            +"HHH"
+            +"Notification"
             attrs {
                 id = "HALLOID"
             }

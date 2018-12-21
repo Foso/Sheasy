@@ -8,17 +8,20 @@ import de.jensklingenberg.sheasy.ui.about.AboutFragment
 import de.jensklingenberg.sheasy.ui.about.AboutViewModel
 import de.jensklingenberg.sheasy.ui.apps.AppsFragment
 import de.jensklingenberg.sheasy.ui.apps.AppsViewModel
-import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.ui.common.OnResultActivity
+import de.jensklingenberg.sheasy.ui.files.FilesFragment
 import de.jensklingenberg.sheasy.ui.files.FilesViewModel
 import de.jensklingenberg.sheasy.ui.home.HomeFragment
+import de.jensklingenberg.sheasy.ui.pairedDevices.PairedFragment
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedViewModel
 import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureImage
 import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.ScreenRecord
+import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import javax.inject.Singleton
 
-@Component(modules = [(AppModule::class), (UtilsModule::class), (ServiceModule::class)])
+@Component(modules = [(AppModule::class), (UtilsModule::class),(UseCaseModule::class), (ServiceModule::class)])
 @Singleton
 interface AppComponent {
 
@@ -29,7 +32,7 @@ interface AppComponent {
     fun inject(httpServerService: HTTPServerService)
     fun inject(fileRepository: FileRepository)
     fun inject(aboutFragment: AboutFragment)
-    fun inject(baseFragment: BaseFragment)
+    fun inject(pairedFragment: PairedFragment)
     fun inject(screenCaptureImage: ScreenCaptureImage)
 
 
@@ -44,5 +47,7 @@ interface AppComponent {
     fun inject(screenShareWebSocket: ScreenShareWebSocket)
     fun inject(screenRecord: ScreenRecord)
     fun inject(onResultActivity: OnResultActivity)
+    fun inject(filesFragment: FilesFragment)
+    fun inject(shareUseCase: ShareUseCase)
 
 }

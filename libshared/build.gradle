@@ -1,5 +1,5 @@
 buildscript {
-    apply from: './webConstants.gradle'
+    apply from: './constants.gradle'
 }
 
 apply plugin: 'kotlin-multiplatform'
@@ -17,8 +17,6 @@ kotlin {
                     outputFile = "${project.buildDir.path}/js/${project.name}.js"
 
                 }
-
-
             }
 
             configure(compilations.main) {
@@ -31,12 +29,11 @@ kotlin {
     }
 
     sourceSets {
-        commonMain{
+        commonMain {
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
                 implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
                 implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
-                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
                 implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
                 implementation "io.ktor:ktor-gson:$libs.ktor_version"
                 implementation "io.ktor:ktor-websockets:$libs.ktor_version"
@@ -46,11 +43,11 @@ kotlin {
 
 
         jvmMain {
+            resources.srcDirs += "resources"
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
                 implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
                 implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
-                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
                 implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
                 implementation "io.ktor:ktor-gson:$libs.ktor_version"
                 implementation "io.ktor:ktor-websockets:$libs.ktor_version"

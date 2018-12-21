@@ -10,13 +10,6 @@ import de.jensklingenberg.sheasy.App
 
 open class BaseFragment : Fragment() {
 
-    init {
-        initializeDagger()
-    }
-
-    private fun initializeDagger() = App.appComponent.inject(this)
-
-
     open fun getLayoutId(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

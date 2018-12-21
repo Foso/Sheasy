@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.fragment_apps.*
 
 class AboutFragment : BaseFragment(), OnEntryClickListener {
 
-
     private val aboutAdapter = BaseAdapter()
     lateinit var aboutViewModel: AboutViewModel
 
@@ -34,6 +33,9 @@ class AboutFragment : BaseFragment(), OnEntryClickListener {
     init {
         initializeDagger()
     }
+
+    fun initializeDagger() = App.appComponent.inject(this)
+
 
     override fun getLayoutId(): Int = R.layout.fragment_about
 
@@ -91,6 +93,12 @@ class AboutFragment : BaseFragment(), OnEntryClickListener {
 
     }
 
+    /****************************************** Listener methods  */
+
+    override fun onMoreButtonClicked(view: View, payload: Any) {
+
+
+    }
 
     override fun onItemClicked(payload: Any) {
         when (val item = payload) {
@@ -127,7 +135,6 @@ class AboutFragment : BaseFragment(), OnEntryClickListener {
 
     }
 
-    private fun initializeDagger() = App.appComponent.inject(this)
 
 
 }

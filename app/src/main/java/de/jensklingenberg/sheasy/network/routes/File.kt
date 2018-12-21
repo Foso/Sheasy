@@ -14,7 +14,12 @@ import io.ktor.request.receiveMultipart
 import io.ktor.response.header
 import io.ktor.response.respond
 import io.ktor.response.respondText
-import io.ktor.routing.*
+import io.ktor.routing.Route
+import io.ktor.routing.get
+import io.ktor.routing.param
+import io.ktor.routing.route
+import io.ktor.routing.post
+
 import kotlinx.coroutines.rx2.await
 import java.io.ByteArrayOutputStream
 import java.io.File

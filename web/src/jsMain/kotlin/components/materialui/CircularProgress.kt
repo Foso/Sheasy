@@ -13,10 +13,14 @@ package components.materialui
 import react.RClass
 import react.RProps
 import react.ReactElement
+import ui.common.LayoutProps
 
 @JsModule("@material-ui/core/CircularProgress/CircularProgress")
 external val CircularProgressImport: dynamic
 
+interface CircularProgressProps : RProps,LayoutProps{
+
+}
 
 
-var CircularProgress: RClass<RProps> = CircularProgressImport.default
+var CircularProgress: RClass<CircularProgressProps> = CircularProgressImport.default

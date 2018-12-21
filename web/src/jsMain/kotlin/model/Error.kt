@@ -1,5 +1,5 @@
 package model
 
 enum class Error{
-    NETWORK_ERROR
+    NETWORK_ERROR,NOT_AUTHORIZED
 }

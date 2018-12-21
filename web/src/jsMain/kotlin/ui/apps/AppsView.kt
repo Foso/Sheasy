@@ -14,6 +14,7 @@ import kotlinx.html.InputType
 import kotlinx.html.js.onClickFunction
 import model.AppResponse
 import model.Error
+import model.Status
 import network.NetworkUtil
 import org.w3c.dom.HTMLInputElement
 import react.*
@@ -26,7 +27,7 @@ import kotlin.browser.window
 interface AppsVState : RState {
     var appsResult: List<AppResponse>
     var errorMessage: String
-    var open: Boolean
+    var status: Status
 
 }
 
@@ -35,47 +36,16 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
 
     private var presenter: AppsPresenter? = null
 
-
     /****************************************** React Lifecycle methods  */
+    override fun AppsVState.init() {
+        appsResult = emptyList()
+        status = Status.LOADING
+    }
+
     override fun componentDidMount() {
         presenter = AppsPresenter(this)
         presenter?.getApps()
     }
-
-
-
-
-    override fun showError(error: Error) {
-        setState {
-            open = true
-            when (error) {
-                Error.NETWORK_ERROR -> {
-                    state.errorMessage = "No Connection"
-                }
-            }
-        }
-
-    }
-
-
-    override fun setData(apps: List<AppResponse>) {
-        setState {
-            appsResult = apps
-        }
-    }
-
-    private fun handleChange() {
-        setState {
-            open = !open
-        }
-
-    }
-
-    override fun AppsVState.init() {
-        appsResult = emptyList()
-    }
-
-
 
     override fun RBuilder.render() {
         toolbar()
@@ -119,9 +89,7 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
                     state.appsResult.forEach { app ->
                         TableRow {
                             TableCell {
-
                                 div {
-
                                     attrs {
                                         styleProps(textAlign = "center")
                                     }
@@ -160,30 +128,87 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
                         }
                         Row {
                             Divider {}
-
                         }
                     }
                 }
 
+
             }
 
         }
+        div {
+            CircularProgress {
+                attrs {
+                    styleProps(display = progressVisibiity())
+                }
+            }
+        }
+
 
         Snackbar {
             attrs {
                 this.anchorOrigin = object : SnackbarOrigin {
-                    override var horizontal: String?="center"
+                    override var horizontal: String? = "center"
                     override var vertical: String? = "bottom"
                 }
-                open = state.open
+                open = snackbarVisibility()
                 message = state.errorMessage
                 autoHideDuration = 6000
-                onClose = { handleChange() }
-                variant="error"
+                onClose = { false }
+                variant = "error"
             }
         }
     }
 
+    /****************************************** Presenter methods  */
+
+    override fun showError(error: Error) {
+        setState {
+            when (error) {
+                Error.NETWORK_ERROR -> {
+                    status = Status.ERROR
+                    state.errorMessage = "No Connection"
+                }
+                Error.NOT_AUTHORIZED -> {
+                    status = Status.ERROR
+                    state.errorMessage = "Device is not authorized"
+                }
+            }
+        }
+
+    }
+
+    override fun setData(apps: List<AppResponse>) {
+        setState {
+            status = Status.SUCCESS
+            appsResult = apps
+        }
+    }
+
+    /****************************************** Class methods  */
+
+    fun snackbarVisibility(): Boolean {
+        return when (state.status) {
+            Status.ERROR -> {
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
+
+    fun progressVisibiity(): String {
+        return when (state.status) {
+            Status.LOADING -> {
+                ""
+            }
+            Status.SUCCESS, Status.ERROR -> {
+                "none"
+            }
+        }
+    }
 }
+
 
 fun RBuilder.appsView() = child(AppsView::class) {}

@@ -11,8 +11,5 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    fun provideNettyApplicationEngine(): Server =
-        Server()
-
-
+    fun provideNettyApplicationEngine(): Server = Server()
 }

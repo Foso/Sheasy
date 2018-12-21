@@ -20,30 +20,6 @@
             android:text="Nothing here yet"
             />
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/serverPortTv"
-            android:text="Button" />
-
-
-        <SurfaceView
-            android:id="@+id/surface"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/button4" />
-
-
-        <Button
-            android:id="@+id/toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="top"
-            android:layout_marginBottom="0dp"
-            android:text="start" />
 
     </RelativeLayout>
 

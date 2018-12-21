@@ -4,20 +4,35 @@ import kotlinx.html.CommonAttributeGroupFacade
 import kotlinx.html.style
 
 
-inline fun LayoutProps.styleProps(textAlign:String) {
-    style = kotlinext.js.js {
-        this.textAlign = textAlign
+inline fun LayoutProps.styleProps(textAlign: String = "", display: String = "", width: String = "") {
+    style = ui.common.styleProps(textAlign = textAlign, display = display, width = width)
+
+}
+
+inline fun CommonAttributeGroupFacade.styleProps(textAlign: String = "", display: String = "", width: String = "") {
+    style = ui.common.styleProps(textAlign = textAlign, display = display, width = width)
+
+}
+
+fun styleProps(textAlign: String = "", display: String = "", width: String = ""): String {
+    return kotlinext.js.js {
+        if (textAlign.isNotEmpty()) {
+            this.textAlign = textAlign
+        }
+
+        if (width.isNotEmpty()) {
+            this.width = width
+        }
+
+        if (display.isNotEmpty()) {
+            this.display = display
+        }
     }
 
 }
 
-fun CommonAttributeGroupFacade.styleProps(textAlign:String){
-    style = kotlinext.js.js {
-        this.textAlign = textAlign
-    }
-}
 
-external interface LayoutProps{
-    var style:dynamic get() = definedExternally; set(value) = definedExternally
+external interface LayoutProps {
+    var style: dynamic get() = definedExternally; set(value) = definedExternally
 
 }

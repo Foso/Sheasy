@@ -9,9 +9,11 @@ import android.os.Binder
 import android.os.IBinder
 import androidx.fragment.app.FragmentActivity
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.data.preferences.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.model.Device
+import de.jensklingenberg.sheasy.ui.common.OnResultActivity
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.ScreenRecord
-import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import javax.inject.Inject
 
 
@@ -26,23 +28,31 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
     companion object {
         lateinit var bind: ServiceBinder
-        fun startIntent(activity: FragmentActivity?) =
-            Intent(activity, HTTPServerService::class.java)
+        fun getIntent(context: Context) =
+            Intent(context, HTTPServerService::class.java)
+
+        fun stopIntent(context: Context) =
+            Intent(context, HTTPServerService::class.java).apply {
+                action = "STOP"
+            }
 
         val ACTION_ON_ACTIVITY_RESULT = "ACTION_ON_ACTIVITY_RESULT"
+        val AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
     }
 
     @Inject
     lateinit var notificationUtils1: NotificationUtils
 
     @Inject
-    lateinit var vibrationUseCase: VibrationUseCase
-
-    @Inject
     lateinit var server: Server
 
     @Inject
     lateinit var screenRecord: ScreenRecord
+
+    @Inject
+    lateinit var sheasyPref: SheasyPrefDataSource
+
+    /****************************************** Lifecycle methods  */
 
 
     init {
@@ -54,14 +64,26 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
     override fun onBind(p0: Intent?): IBinder = bind
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-    override fun onImageReady(string: String) {
-        server.sendData(Server.DataDestination.SCREENSHARE, string)
+        intent?.let {
+            if (it.action?.equals("STOP")==true) {
+                stopService(intent)
+                return START_STICKY
+            } else {
+                if(intent.hasExtra(AUTHORIZE_DEVICE)){
+                        val ipAddress = intent.getStringExtra(AUTHORIZE_DEVICE)
+                        sheasyPref.addAuthorizedDevice(Device(ipAddress))
+                }
+                return super.onStartCommand(intent, flags, startId)
+
+            }
+        }
+
+
+
     }
 
-    override fun onImageByte(byteArray: ByteArray) {
-        server.sendData(Server.DataDestination.SCREENSHARE, byteArray)
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -69,11 +91,9 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
         filter.addAction(ACTION_ON_ACTIVITY_RESULT) //further more
         registerReceiver(receiver, filter)
 
-        notificationUtils1.generateBundle()
+        notificationUtils1.showServerNotification()
         server.start()
 
-
-        vibrationUseCase.vibrate()
 
         /* val dialogIntent = screenRecord.createScreenCaptureIntent()
          dialogIntent.component = ComponentName(baseContext, OnResultActivity::class.java)
@@ -83,16 +103,30 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
     override fun stopService(name: Intent?): Boolean {
         server.stop()
+        unregisterReceiver(receiver)
+
         return super.stopService(name)
 
     }
 
     override fun onDestroy() {
+        unregisterReceiver(receiver)
+
         server.stop()
         screenRecord.stopProjection()
         super.onDestroy()
     }
 
+    /****************************************** Listener methods  */
+
+
+    override fun onImageReady(string: String) {
+        server.sendData(Server.DataDestination.SCREENSHARE, string)
+    }
+
+    override fun onImageByte(byteArray: ByteArray) {
+        server.sendData(Server.DataDestination.SCREENSHARE, byteArray)
+    }
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {

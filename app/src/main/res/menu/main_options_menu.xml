@@ -4,8 +4,6 @@
 
     <item
         android:id="@+id/menu_server"
-        android:checked="false"
-        android:enabled="true"
         android:icon="@drawable/server_icon_selector"
         android:title="Home"
         app:showAsAction="always" />

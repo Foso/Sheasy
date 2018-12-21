@@ -9,21 +9,34 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shopify.livedataktx.nonNull
 import com.shopify.livedataktx.observe
+import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
+import de.jensklingenberg.sheasy.utils.extension.requireView
 import de.jensklingenberg.sheasy.utils.extension.toSourceItem
-import kotlinx.android.synthetic.main.fragment_apps.*
+import kotlinx.android.synthetic.mock.fragment_apps.*
+import javax.inject.Inject
 
 
 class AppsFragment : BaseFragment() {
 
     private val baseAdapter = BaseAdapter()
     lateinit var appsViewModel: AppsViewModel
+    @Inject
+    lateinit var messageUseCase: MessageUseCase
+
+    /****************************************** Lifecycle methods  */
+
+    init {
+        initializeDagger()
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
 
     override fun getLayoutId(): Int = R.layout.fragment_apps
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,13 +66,13 @@ class AppsFragment : BaseFragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    /****************************************** Class methods  */
+
+
     private fun initSearchView(menu: Menu?) {
         val search = menu?.findItem(R.id.search)?.actionView as SearchView
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-
-                return true
-            }
+            override fun onQueryTextSubmit(query: String?): Boolean = true
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
@@ -77,14 +90,23 @@ class AppsFragment : BaseFragment() {
             .getApps()
             .nonNull()
             .observe {
-                it
-                    .sortedBy { it.name }
-                    .map { it.toSourceItem() }
-                    .run {
-                        baseAdapter.dataSource.setItems(this)
-                        baseAdapter.notifyDataSetChanged()
+                it.checkState(
+                    onSuccess = { appInfoList ->
+                        appInfoList
+                            .sortedBy { it.name }
+                            .map { it.toSourceItem() }
+                            .run {
+                                baseAdapter.dataSource.setItems(this)
+                                baseAdapter.notifyDataSetChanged()
+                            }
+                    }, onLoading = {
+                        messageUseCase.show(requireView(), "Loading")
                     }
+                )
+
 
             }
     }
+
+
 }
