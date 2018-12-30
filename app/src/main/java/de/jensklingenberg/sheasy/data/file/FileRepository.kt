@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.model.AppInfo
 import io.reactivex.Maybe
 import io.reactivex.Single
-import model.FileResponse
+import de.jensklingenberg.model.AppInfo
+import de.jensklingenberg.model.FileResponse
 import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
@@ -60,7 +60,7 @@ open class FileRepository : FileDataSource {
                 .map {
                     AppInfo(
                         sourceDir = it.sourceDir,
-                        icon = pm.getApplicationIcon(it.packageName),
+                        icon = "",
                         packageName = it.packageName,
                         installTime = pm.getPackageInfo(
                             it.packageName,

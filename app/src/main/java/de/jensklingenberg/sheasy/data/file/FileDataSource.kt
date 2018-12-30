@@ -1,9 +1,9 @@
 package de.jensklingenberg.sheasy.data.file
 
-import de.jensklingenberg.sheasy.model.AppInfo
 import io.reactivex.Maybe
 import io.reactivex.Single
-import model.FileResponse
+import de.jensklingenberg.model.AppInfo
+import de.jensklingenberg.model.FileResponse
 import java.io.InputStream
 
 

@@ -3,6 +3,8 @@ package de.jensklingenberg.sheasy.di
 import dagger.Component
 import de.jensklingenberg.sheasy.data.file.FileRepository
 import de.jensklingenberg.sheasy.network.*
+import de.jensklingenberg.sheasy.network.ktor.KtorFileRouteHandler
+import de.jensklingenberg.sheasy.network.ktor.KtorGeneralRouteHandler
 import de.jensklingenberg.sheasy.ui.MainViewModel
 import de.jensklingenberg.sheasy.ui.about.AboutFragment
 import de.jensklingenberg.sheasy.ui.about.AboutViewModel
@@ -21,7 +23,7 @@ import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import javax.inject.Singleton
 
-@Component(modules = [(AppModule::class), (UtilsModule::class),(UseCaseModule::class), (ServiceModule::class)])
+@Component(modules = [(AppModule::class), (UtilsModule::class),(UseCaseModule::class),(KtorModule::class), (ServiceModule::class)])
 @Singleton
 interface AppComponent {
 
@@ -49,5 +51,8 @@ interface AppComponent {
     fun inject(onResultActivity: OnResultActivity)
     fun inject(filesFragment: FilesFragment)
     fun inject(shareUseCase: ShareUseCase)
+    fun inject(ktorGeneralRouteHandler: KtorGeneralRouteHandler)
+    fun inject(ktorFileRouteHandler: KtorFileRouteHandler)
+
 
 }

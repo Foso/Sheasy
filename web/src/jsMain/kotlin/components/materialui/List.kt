@@ -15,7 +15,7 @@ import react.*
 external val ListImport: dynamic
 
 external interface ListProps : RProps {
-    var component:dynamic get() = definedExternally; set(value) = definedExternally
+    var component: dynamic get() = definedExternally; set(value) = definedExternally
     var dense: Boolean? get() = definedExternally; set(value) = definedExternally
     var disablePadding: Boolean? get() = definedExternally; set(value) = definedExternally
     var subheader: RElementBuilder<RProps>? get() = definedExternally; set(value) = definedExternally

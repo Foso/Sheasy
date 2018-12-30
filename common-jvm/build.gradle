@@ -1,0 +1,43 @@
+buildscript {
+    apply from: './constants.gradle'
+}
+
+apply plugin: 'kotlin-multiplatform'
+
+
+kotlin {
+    targets {
+        fromPreset(presets.jvm, 'jvm')
+    }
+
+    sourceSets {
+       
+
+
+        jvmMain {
+            resources.srcDirs += "resources"
+            dependencies {
+                implementation project(":libshared")
+
+                implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
+
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+                implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
+                implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
+                implementation "io.ktor:ktor-gson:$libs.ktor_version"
+                implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
+
+            }
+        }
+
+
+
+    }
+}
+
+// workaround for https://youtrack.jetbrains.com/issue/KT-27170
+configurations {
+    compileClasspath
+}
+

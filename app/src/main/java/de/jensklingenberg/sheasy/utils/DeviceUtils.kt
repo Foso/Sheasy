@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy.utils
 
 import android.os.Build
-import model.DeviceResponse
+import de.jensklingenberg.model.DeviceResponse
 
 /**
  * Created by jens on 25/2/18.

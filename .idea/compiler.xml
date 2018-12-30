@@ -4,8 +4,16 @@
     <bytecodeTargetLevel>
       <module name="app_jvmMain" target="1.8" />
       <module name="app_jvmTest" target="1.6" />
+      <module name="common-jvm_jvmMain" target="1.6" />
+      <module name="common-jvm_jvmTest" target="1.6" />
+      <module name="common-react-jvm-js_jvmMain" target="1.6" />
+      <module name="common-react-jvm-js_jvmTest" target="1.6" />
+      <module name="desktop_jvmMain" target="1.6" />
+      <module name="desktop_jvmTest" target="1.6" />
       <module name="libshared_jvmMain" target="1.6" />
       <module name="libshared_jvmTest" target="1.6" />
+      <module name="Sheasy-web_jvmMain" target="1.8" />
+      <module name="Sheasy-web_jvmTest" target="1.6" />
       <module name="web_androidMain" target="1.6" />
       <module name="web_androidTest" target="1.6" />
       <module name="web_jvmMain" target="1.8" />

@@ -1,12 +1,11 @@
 package de.jensklingenberg.sheasy.data.websocket
 
-import de.jensklingenberg.sheasy.data.preferences.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.data.websocket.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.network.MyWebSocket
 import de.jensklingenberg.sheasy.network.ScreenShareWebSocket
 import de.jensklingenberg.sheasy.network.WebSocketListener
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
+import repository.SheasyPrefDataSource
 import javax.inject.Inject
 
 class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataSource) :

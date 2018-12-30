@@ -64,36 +64,7 @@ android {
         experimental = true
     }
 
-    flavorDimensions 'static'
 
-
-    productFlavors {
-        mock {
-            dimension 'static'
-            applicationIdSuffix = ".mock"
-        }
-        prod {
-            dimension 'static'
-        }
-    }
-
-   sourceSets{
-
-
-       mock {
-           manifest.srcFile 'src/main/AndroidManifest.xml'
-           java.srcDirs = ['src/mock/java']
-           res.srcDirs = ['src/main/res']
-           assets.srcDirs = ['src/main/assets']
-       }
-
-       prod {
-           manifest.srcFile 'src/main/AndroidManifest.xml'
-           java.srcDirs = ['src/prod/java']
-           res.srcDirs = ['src/main/res']
-           assets.srcDirs = ['src/main/assets']
-       }
-   }
 
     // Always show the result of every unit test, even if it passes.
     testOptions.unitTests.all {
@@ -148,6 +119,9 @@ kotlin {
 
 dependencies {
     implementation project(":libshared")
+    api project(":desktop")
+    api project(":common-jvm")
+
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -202,7 +176,6 @@ dependencies {
     implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
-    implementation "com.jakewharton.threetenabp:threetenabp:$libs.threetenabp"
     implementation 'co.zsmb:materialdrawer-kt:2.0.1'
 
     // optional - Test helpers
@@ -215,7 +188,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     testImplementation "junit:junit:${libs.junit}"
     androidTestImplementation "android.arch.navigation:navigation-testing:$libs.nav_version"
-
+    testImplementation "io.ktor:ktor-server-test-host:$libs.ktor_version"
 }
 
 

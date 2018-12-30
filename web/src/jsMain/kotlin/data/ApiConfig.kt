@@ -6,7 +6,7 @@ const val apiVersion = "v1"
 /**
 Change the testingAddress to the IP of your server
  */
-const val testingAddress =  "192.168.178.20:8766"
+const val testingAddress = "192.168.178.81:8766"
 
 var hostUri: String = "${window}+${window.location}+${window.location.hostname}"
 

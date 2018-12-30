@@ -1,6 +1,5 @@
 package de.jensklingenberg.sheasy.ui.files
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View.VISIBLE
 import android.view.ViewGroup

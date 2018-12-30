@@ -3,10 +3,10 @@ package de.jensklingenberg.sheasy.ui.about
 
 import android.view.View
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.ui.common.SimpleRvAdapter
 
 import kotlinx.android.synthetic.main.list_item_file.view.*
+import de.jensklingenberg.model.AppInfo
 
 class AboutAdapter : SimpleRvAdapter() {
     private val list = ArrayList<AboutItem>()

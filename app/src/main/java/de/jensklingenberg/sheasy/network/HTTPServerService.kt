@@ -7,13 +7,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Binder
 import android.os.IBinder
-import androidx.fragment.app.FragmentActivity
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.data.preferences.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.model.Device
 import de.jensklingenberg.sheasy.ui.common.OnResultActivity
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.ScreenRecord
+import de.jensklingenberg.model.Device
+import repository.SheasyPrefDataSource
 import javax.inject.Inject
 
 
@@ -80,6 +79,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
             }
         }
 
+        return START_STICKY
 
 
     }

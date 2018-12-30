@@ -8,21 +8,9 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
 import kotlinx.coroutines.rx2.await
-import model.AppResponse
-import model.Response
+import de.jensklingenberg.model.AppResponse
+import de.jensklingenberg.model.Response
 
-fun Route.apps(fileDataSource: FileDataSource) {
-    get("apps") {
-        fileDataSource.getApps()
-            .await()
-            .map {
-                AppResponse(it.name, it.packageName, it.installTime)
-            }.run {
-                call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-                call.respond(Response.success(this))
-            }
-    }
-}
 
 fun Route.screenshare(fileDataSource: FileDataSource) {
     get("screenshare") {

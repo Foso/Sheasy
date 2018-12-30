@@ -4,12 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.preferences.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.data.file.FileDataSource
-import de.jensklingenberg.sheasy.model.Resource
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import model.FileResponse
+import de.jensklingenberg.model.FileResponse
+import de.jensklingenberg.model.Resource
+import repository.SheasyPrefDataSource
 import javax.inject.Inject
 
 
@@ -34,7 +34,7 @@ class FilesViewModel : ViewModel() {
     private fun initializeDagger() = App.appComponent.inject(this)
 
     fun loadFiles() {
-        files.value=Resource.loading(R.string.loading)
+        files.value=Resource.loading("loading")
         fileDataSource
             .getFiles(filePath)
             .subscribeOn(Schedulers.newThread())

@@ -18,7 +18,7 @@ import react.RProps
 @JsModule("@material-ui/core/IconButton/IconButton")
 external val IconButtonImport: dynamic
 
-external interface IconButtonProps : RProps,StandardProps {
+external interface IconButtonProps : RProps, StandardProps {
     var color: dynamic /* PropTypes.Color | String /* "textSecondary" */ | String /* "error" */ */ get() = definedExternally; set(value) = definedExternally
 
 }

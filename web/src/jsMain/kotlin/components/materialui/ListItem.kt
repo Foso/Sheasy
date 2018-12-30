@@ -9,12 +9,11 @@
 
 package components.materialui
 
+import de.jensklingenberg.react.ui.common.LayoutProps
 import react.RClass
-import ui.common.LayoutProps
 
 @JsModule("@material-ui/core/ListItem/ListItem")
 external val ListItemImport: dynamic
-
 
 
 external interface ListItemProps : ButtonProps, LayoutProps {

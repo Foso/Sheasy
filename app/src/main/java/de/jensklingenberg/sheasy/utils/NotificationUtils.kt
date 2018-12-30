@@ -15,10 +15,11 @@ import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.network.HTTPServerService.Companion.AUTHORIZE_DEVICE
+import usecase.NotificationUseCase
 import javax.inject.Inject
 
 
-class NotificationUtils {
+class NotificationUtils : NotificationUseCase {
 
 
     @Inject
@@ -49,7 +50,7 @@ class NotificationUtils {
     }
 
 
-    fun showConnectionRequest(ipaddress: String) {
+    override fun showConnectionRequest(ipaddress: String) {
 
         val intent = HTTPServerService.getIntent(context).apply {
             putExtra(AUTHORIZE_DEVICE,ipaddress)

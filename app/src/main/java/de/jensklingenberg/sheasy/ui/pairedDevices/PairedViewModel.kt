@@ -2,8 +2,8 @@ package de.jensklingenberg.sheasy.ui.pairedDevices
 
 import androidx.lifecycle.ViewModel
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.data.preferences.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.model.Device
+import de.jensklingenberg.model.Device
+import repository.SheasyPrefDataSource
 import javax.inject.Inject
 
 typealias AboutItem = Pair<String, String>

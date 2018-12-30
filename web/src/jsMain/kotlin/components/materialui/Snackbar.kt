@@ -18,7 +18,7 @@ import react.RState
 @JsModule("@material-ui/core/Snackbar/Snackbar")
 external val SnackbarImport: dynamic
 
- interface SnackbarOrigin {
+interface SnackbarOrigin {
     var horizontal: String?
     var vertical: String?
 }
@@ -26,11 +26,11 @@ external val SnackbarImport: dynamic
 
 external interface SnackbarProps : RProps {
     var anchorOrigin: SnackbarOrigin? get() = definedExternally; set(value) = definedExternally
-    var autoHideDuration:Int? get() = definedExternally; set(value) = definedExternally
-    var open : Boolean? get() = definedExternally; set(value) = definedExternally
-    var message:String? get() = definedExternally; set(value) = definedExternally
-    var onClose:(Event)->Unit
-    var variant:String? get() = definedExternally; set(value) = definedExternally
+    var autoHideDuration: Int? get() = definedExternally; set(value) = definedExternally
+    var open: Boolean? get() = definedExternally; set(value) = definedExternally
+    var message: String? get() = definedExternally; set(value) = definedExternally
+    var onClose: (Event) -> Unit
+    var variant: String? get() = definedExternally; set(value) = definedExternally
 
 }
 

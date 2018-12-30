@@ -18,7 +18,7 @@ class AppInfoViewHolder(viewParent: ViewGroup) :
             itemView.apply {
                 title.text = it.name
                 caption.text = it.packageName
-                icon.setImageDrawable(it.icon)
+                //icon.setImageDrawable(it.icon)
                 setOnClickListener {
                     item.onEntryClickListener?.onItemClicked(item)
                 }

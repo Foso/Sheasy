@@ -25,7 +25,7 @@
         tools:replace="android:appComponentFactory"
         android:appComponentFactory="whateverString"
         >
-        <activity android:name="de.jensklingenberg.sheasy.ui.MainActivity">
+        <activity android:name="de.jensklingenberg.sheasy.de.jensklingenberg.react.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -53,7 +53,7 @@
             </intent-filter>
             <nav-graph android:value="@navigation/navigation_graph" />
         </activity>
-        <activity android:name=".ui.common.OnResultActivity" />
+        <activity android:name=".de.jensklingenberg.react.ui.common.OnResultActivity" />
 
 
         <service android:name="de.jensklingenberg.sheasy.network.HTTPServerService" />

@@ -10,15 +10,17 @@
 package components.materialui
 
 import components.StandardProps
+import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
 import react.RClass
 
 @JsModule("@material-ui/core/Menu/Menu")
 external val MenuImport: dynamic
 
-external interface MenuProps : ListItemProps,StandardProps {
-    var open : Boolean? get() = definedExternally; set(value) = definedExternally
-    var anchorEl : EventTarget? get() = definedExternally; set(value) = definedExternally
+external interface MenuProps : ListItemProps, StandardProps {
+    var open: Boolean? get() = definedExternally; set(value) = definedExternally
+    var anchorEl: EventTarget? get() = definedExternally; set(value) = definedExternally
+    var onClose: (Event) -> Unit
 
 }
 

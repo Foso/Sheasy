@@ -5,17 +5,16 @@ import react.dom.render
 import components.router.hashRouter
 import components.router.route
 import components.router.switch
-import ui.home.App
-import ui.about.AboutView
-import ui.apps.AppsView
-import ui.files.FileView
-import ui.screenshare.ScreenShareView
+import de.jensklingenberg.react.ui.home.App
+import de.jensklingenberg.react.ui.about.AboutView
+import de.jensklingenberg.react.ui.apps.AppsView
+import de.jensklingenberg.react.ui.files.FileView
+import de.jensklingenberg.react.ui.screenshare.ScreenShareView
 import kotlin.browser.document
 import kotlin.browser.window
 
 class Application : KodeinAware {
     override val kodein = Kodein {
-
 
     }
 
@@ -31,7 +30,7 @@ class Application : KodeinAware {
                     switch {
                         route("/", App::class, exact = true)
                         route("/apps", AppsView::class, exact = true)
-                        route("/files",FileView::class,exact = true)
+                        route("/files", FileView::class, exact = true)
                         route("/about", AboutView::class, exact = true)
                         route("/screenshare", ScreenShareView::class, exact = true)
 

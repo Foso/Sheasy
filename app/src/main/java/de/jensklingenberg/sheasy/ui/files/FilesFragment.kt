@@ -10,13 +10,10 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.shopify.livedataktx.nonNull
 import com.shopify.livedataktx.observe
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.model.Resource
-import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
@@ -26,7 +23,8 @@ import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import de.jensklingenberg.sheasy.utils.extension.toSourceitem
 import kotlinx.android.synthetic.main.fragment_files.*
-import model.FileResponse
+import de.jensklingenberg.model.FileResponse
+import de.jensklingenberg.model.checkState
 import javax.inject.Inject
 
 
@@ -176,8 +174,7 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
     private fun initObserver() {
         filesViewModel
             .files
-            .nonNull()
-            .observe {
+            .nonNull().observe {
                 it.checkState(
                     onSuccess = {
                         it.sortedBy { file -> file.name }

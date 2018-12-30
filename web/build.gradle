@@ -7,7 +7,7 @@ plugins {
     id 'org.jetbrains.kotlin.multiplatform'
     id 'org.jetbrains.kotlin.frontend'
     id("io.gitlab.arturbosch.detekt")
-
+    id('com.moowork.node')
 }
 
 
@@ -28,19 +28,13 @@ detekt {
 
 
 kotlin {
-
-
     targets {
-        fromPreset(presets.jvm, 'android')
 
         fromPreset(presets.jvm, 'jvm'){
             configure([compilations.main]) {
                 tasks.getByName(compileKotlinTaskName).kotlinOptions {
                     jvmTarget = "1.8"
-
                 }
-
-
             }
         }
         fromPreset(presets.js, 'js') {
@@ -51,11 +45,10 @@ kotlin {
                     moduleKind = "commonjs"
                     metaInfo = true
                     outputFile = "${project.buildDir.path}/js/${project.name}.js"
-
                 }
-
-
             }
+
+            
 
             configure(compilations.main) {
                 tasks.getByName(compileKotlinTaskName).kotlinOptions {
@@ -67,18 +60,55 @@ kotlin {
 
     sourceSets {
 
+        commonMain {
+            dependencies {
+
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
+                implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
+                implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
+                implementation "io.ktor:ktor-gson:$libs.ktor_version"
+                implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+            }
+
+        }
+
         jsMain {
             kotlin.srcDirs += "kotlin"
             resources.srcDirs += "web"
 
             dependencies {
-                implementation project(":libshared")
 
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
                 implementation "org.jetbrains:kotlin-react:$kotlin_react_version"
                 implementation "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
                 implementation "org.kodein.di:kodein-di-erased-js:${libs.kodein}"
+                implementation "org.jetbrains.kotlin:kotlin-test-js"
+            }
+        }
+
+
+
+        jvmTest {
+            kotlin.srcDirs += "kotlin"
+
+            resources.srcDirs += "resources"
+            dependencies {
+
+                implementation 'de.jodamob.kotlin:kotlin-runner-junit4:0.3.1'
+
+               // implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+                implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
+                implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
+                implementation "io.ktor:ktor-gson:$libs.ktor_version"
+                implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
+                implementation "org.mockito:mockito-core:2.22.0"
+                implementation "io.mockk:mockk:1.8.13"
+
+                //implementation "org.spekframework.spek2:spek-dsl-jvm:2.0.0-rc.1"
+                //runtimeOnly "org.spekframework.spek2:spek-runner-junit5:2.0.0-rc.1"
             }
         }
 
@@ -106,6 +136,7 @@ kotlinFrontend {
         dependency('react-dom', react_version)
         dependency("css-loader")
         dependency("style-loader")
+        dependency("jest")
 
     }
 
@@ -120,6 +151,8 @@ kotlinFrontend {
         //  proxyUrl = 'http://localhost:8080'
     }
 }
+
+
 
 task serverPrepare(type: Copy, dependsOn: ["build"]) {
     from "./build/bundle", "./src/jsMain/web"

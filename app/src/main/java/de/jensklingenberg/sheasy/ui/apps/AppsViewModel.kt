@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.file.FileDataSource
-import de.jensklingenberg.sheasy.model.AppInfo
-import de.jensklingenberg.sheasy.model.Resource
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import de.jensklingenberg.model.AppInfo
+import de.jensklingenberg.model.Resource
 import javax.inject.Inject
 
 
@@ -47,7 +47,7 @@ class AppsViewModel : ViewModel() {
     }
 
     private fun loadApps() {
-        getApps.value = Resource.loading(R.string.loading)
+        getApps.value = Resource.loading("loading")
         fileDataSource
             .getApps()
             .subscribeOn(Schedulers.newThread())
