@@ -1,8 +1,8 @@
 package network.routehandler
 
-import de.jensklingenberg.model.KtorApplicationCall
-import de.jensklingenberg.model.Resource
-import de.jensklingenberg.model.RouteHandler
+import de.jensklingenberg.sheasy.web.model.KtorApplicationCall
+import de.jensklingenberg.sheasy.web.model.Resource
+import de.jensklingenberg.sheasy.web.model.RouteHandler
 import java.io.InputStream
 
 interface FileRouteHandler : RouteHandler {

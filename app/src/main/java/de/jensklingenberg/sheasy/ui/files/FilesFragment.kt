@@ -23,8 +23,8 @@ import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import de.jensklingenberg.sheasy.utils.extension.toSourceitem
 import kotlinx.android.synthetic.main.fragment_files.*
-import de.jensklingenberg.model.FileResponse
-import de.jensklingenberg.model.checkState
+import de.jensklingenberg.sheasy.web.model.FileResponse
+import de.jensklingenberg.sheasy.web.model.checkState
 import javax.inject.Inject
 
 

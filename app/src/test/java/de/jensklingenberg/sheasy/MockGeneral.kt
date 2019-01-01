@@ -1,8 +1,8 @@
 package de.jensklingenberg.sheasy
 
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
-import de.jensklingenberg.model.KtorApplicationCall
-import de.jensklingenberg.model.Resource
+import de.jensklingenberg.sheasy.web.model.KtorApplicationCall
+import de.jensklingenberg.sheasy.web.model.Resource
 
 class MockGeneral : GeneralRouteHandler {
     override suspend fun intercept(call: KtorApplicationCall): Resource<Any> {

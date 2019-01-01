@@ -18,7 +18,7 @@ import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import de.jensklingenberg.sheasy.utils.extension.toSourceItem
 import kotlinx.android.synthetic.main.fragment_apps.*
-import de.jensklingenberg.model.checkState
+import de.jensklingenberg.sheasy.web.model.checkState
 import javax.inject.Inject
 
 

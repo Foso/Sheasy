@@ -24,10 +24,10 @@ import io.ktor.websocket.WebSockets
 import io.ktor.websocket.webSocket
 import kotlinx.coroutines.launch
 import main.MockTestDataSource
-import de.jensklingenberg.model.KtorApplicationCall
-import de.jensklingenberg.model.Resource
-import de.jensklingenberg.model.Response
-import de.jensklingenberg.model.checkState
+import de.jensklingenberg.sheasy.web.model.KtorApplicationCall
+import de.jensklingenberg.sheasy.web.model.Resource
+import de.jensklingenberg.sheasy.web.model.Response
+import de.jensklingenberg.sheasy.web.model.checkState
 import network.ktor.DesktopFileRouteHandler
 import network.routehandler.FileRouteHandler
 import network.routes.apps

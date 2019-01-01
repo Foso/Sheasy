@@ -1,6 +1,6 @@
 package preferences
 
-import de.jensklingenberg.model.Device
+import de.jensklingenberg.sheasy.web.model.Device
 import repository.SheasyPrefDataSource
 
 

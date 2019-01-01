@@ -4,10 +4,10 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.file.FileDataSource
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import kotlinx.coroutines.rx2.await
-import de.jensklingenberg.model.Device
-import de.jensklingenberg.model.Resource
+import de.jensklingenberg.sheasy.web.model.Device
+import de.jensklingenberg.sheasy.web.model.Resource
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
-import de.jensklingenberg.model.KtorApplicationCall
+import de.jensklingenberg.sheasy.web.model.KtorApplicationCall
 import repository.SheasyPrefDataSource
 import javax.inject.Inject
 

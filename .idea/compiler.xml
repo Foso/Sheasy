@@ -17,7 +17,11 @@
       <module name="web_androidMain" target="1.6" />
       <module name="web_androidTest" target="1.6" />
       <module name="web_jvmMain" target="1.8" />
+      <module name="web_jvmTesMain" target="1.8" />
       <module name="web_jvmTest" target="1.6" />
+      <module name="web_jvmTesTest" target="1.6" />
+      <module name="web_jvmTestMain" target="1.8" />
+      <module name="web_jvmTestTest" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

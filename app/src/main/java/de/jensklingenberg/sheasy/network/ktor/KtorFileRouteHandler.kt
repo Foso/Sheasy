@@ -3,10 +3,10 @@ package de.jensklingenberg.sheasy.network.ktor
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.file.FileDataSource
 import kotlinx.coroutines.rx2.await
-import de.jensklingenberg.model.AppResponse
+import de.jensklingenberg.sheasy.web.model.AppResponse
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
-import de.jensklingenberg.model.KtorApplicationCall
-import de.jensklingenberg.model.Resource
+import de.jensklingenberg.sheasy.web.model.KtorApplicationCall
+import de.jensklingenberg.sheasy.web.model.Resource
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream

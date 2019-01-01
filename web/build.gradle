@@ -90,7 +90,7 @@ kotlin {
 
 
 
-        jvmTest {
+        jvmMain {
             kotlin.srcDirs += "kotlin"
 
             resources.srcDirs += "resources"

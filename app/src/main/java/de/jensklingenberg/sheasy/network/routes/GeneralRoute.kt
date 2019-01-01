@@ -5,7 +5,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
 import kotlinx.coroutines.launch
-import de.jensklingenberg.model.checkState
+import de.jensklingenberg.sheasy.web.model.checkState
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 
 

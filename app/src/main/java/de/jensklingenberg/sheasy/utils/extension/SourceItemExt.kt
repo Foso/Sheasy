@@ -5,8 +5,8 @@ import de.jensklingenberg.sheasy.model.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.apps.AppInfoSourceItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.files.FileResponseSourceItem
-import de.jensklingenberg.model.AppInfo
-import de.jensklingenberg.model.FileResponse
+import de.jensklingenberg.sheasy.web.model.AppInfo
+import de.jensklingenberg.sheasy.web.model.FileResponse
 
 
 fun GenericListItem.toSourceItem(onEntryClickListener: OnEntryClickListener? = null): GenericListItemSourceItem {

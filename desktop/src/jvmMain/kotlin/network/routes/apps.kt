@@ -7,7 +7,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
 import main.MockTestDataSource
-import de.jensklingenberg.model.Resource
+import de.jensklingenberg.sheasy.web.model.Resource
 
 fun Route.apps() {
     get("/apps") {

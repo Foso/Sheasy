@@ -1,6 +1,6 @@
 package repository
 
-import de.jensklingenberg.model.Device
+import de.jensklingenberg.sheasy.web.model.Device
 
 
 interface SheasyPrefDataSource {

@@ -1,7 +1,7 @@
 package main
 
-import de.jensklingenberg.model.AppResponse
-import de.jensklingenberg.model.FileResponse
+import de.jensklingenberg.sheasy.web.model.AppResponse
+import de.jensklingenberg.sheasy.web.model.FileResponse
 
 class MockTestDataSource{
     companion object {

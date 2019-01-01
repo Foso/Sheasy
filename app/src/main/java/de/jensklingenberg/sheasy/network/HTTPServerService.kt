@@ -11,7 +11,7 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.ui.common.OnResultActivity
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.ScreenRecord
-import de.jensklingenberg.model.Device
+import de.jensklingenberg.sheasy.web.model.Device
 import repository.SheasyPrefDataSource
 import javax.inject.Inject
 

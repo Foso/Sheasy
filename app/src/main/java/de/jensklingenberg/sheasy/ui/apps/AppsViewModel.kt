@@ -9,8 +9,8 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.file.FileDataSource
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import de.jensklingenberg.model.AppInfo
-import de.jensklingenberg.model.Resource
+import de.jensklingenberg.sheasy.web.model.AppInfo
+import de.jensklingenberg.sheasy.web.model.Resource
 import javax.inject.Inject
 
 

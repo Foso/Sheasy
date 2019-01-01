@@ -8,8 +8,8 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
 import kotlinx.coroutines.rx2.await
-import de.jensklingenberg.model.AppResponse
-import de.jensklingenberg.model.Response
+import de.jensklingenberg.sheasy.web.model.AppResponse
+import de.jensklingenberg.sheasy.web.model.Response
 
 
 fun Route.screenshare(fileDataSource: FileDataSource) {

@@ -15,7 +15,7 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
 import kotlinx.coroutines.launch
-import de.jensklingenberg.model.checkState
+import de.jensklingenberg.sheasy.web.model.checkState
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import io.ktor.application.Application
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
@@ -27,7 +27,7 @@ import io.ktor.http.content.streamProvider
 import io.ktor.request.receiveMultipart
 import io.ktor.response.header
 import io.ktor.routing.*
-import de.jensklingenberg.model.Resource
+import de.jensklingenberg.sheasy.web.model.Resource
 import repository.SheasyPrefDataSource
 import java.io.InputStream
 
