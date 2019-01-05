@@ -1,14 +1,16 @@
 package de.jensklingenberg.sheasy.data.file
 
-import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.content.res.AssetManager
 import de.jensklingenberg.sheasy.App
-import io.reactivex.Maybe
-import io.reactivex.Single
 import de.jensklingenberg.sheasy.web.model.AppInfo
 import de.jensklingenberg.sheasy.web.model.FileResponse
+import io.reactivex.Maybe
+import io.reactivex.Single
+import repository.SheasyPrefDataSource
 import java.io.File
+import java.io.IOException
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -16,14 +18,19 @@ import javax.inject.Inject
  * Created by jens on 25/2/18.
  */
 
-open class FileRepository : FileDataSource {
+class FileRepository : FileDataSource {
 
+    val cachedApps = mutableListOf<AppInfo>()
 
     @Inject
     lateinit var pm: PackageManager
 
+
     @Inject
-    lateinit var context: Context
+    lateinit var sheasyPrefDataSource: SheasyPrefDataSource
+
+    @Inject
+    lateinit var asset:AssetManager
 
     init {
         initializeDagger()
@@ -31,9 +38,9 @@ open class FileRepository : FileDataSource {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    override fun returnAssetFile(filePath: String): Single<InputStream> {
+    override fun getAssetFile(filePath: String): Single<InputStream> {
         return Single.create<InputStream> { singleEmitter ->
-            singleEmitter.onSuccess(context.assets.open(filePath))
+            singleEmitter.onSuccess(asset.open(filePath))
         }
     }
 
@@ -56,25 +63,41 @@ open class FileRepository : FileDataSource {
 
     override fun getApps(): Single<List<AppInfo>> {
         return Single.create<List<AppInfo>> { singleEmitter ->
+
+            if (cachedApps.isNotEmpty()) {
+                singleEmitter.onSuccess(cachedApps)
+            }
+
             val appsList = getAllInstalledApplications()
                 .map {
+
+
+
                     AppInfo(
                         sourceDir = it.sourceDir,
-                        icon = "",
+                        name = pm.getApplicationLabel(it).toString(),
                         packageName = it.packageName,
                         installTime = pm.getPackageInfo(
                             it.packageName,
                             0
-                        ).firstInstallTime.toString(),
-                        name = pm.getApplicationLabel(it).toString()
+                        ).firstInstallTime.toString()
                     )
                 }
-            singleEmitter.onSuccess(appsList)
+            if (appsList != cachedApps) {
+                cachedApps.clear()
+                cachedApps.addAll(appsList)
+                singleEmitter.onSuccess(cachedApps)
+
+            }
+
+
+
+
         }
 
     }
 
-    fun getAllInstalledApplications(): List<ApplicationInfo> {
+    private fun getAllInstalledApplications(): List<ApplicationInfo> {
         return pm
             .getInstalledApplications(PackageManager.PERMISSION_GRANTED)
             .filter { pm.getLaunchIntentForPackage(it.packageName) != null }
@@ -86,6 +109,28 @@ open class FileRepository : FileDataSource {
             .flatMapIterable { x -> x }
             .filter { it.packageName == apkPackageName }
             .firstElement()
+
+
+    }
+
+    override fun extractApk(appInfo: AppInfo): Boolean {
+        val file = File(appInfo.sourceDir)
+        val file2 = File(sheasyPrefDataSource.appFolder + appInfo.packageName + ".apk")
+        return try {
+            file.copyTo(file2, true)
+            true
+        } catch (ioException: IOException) {
+            false
+        }
+    }
+
+
+    override fun getTempFile(appInfo: AppInfo): File {
+        val file = File(appInfo.sourceDir)
+        val file2 = File(sheasyPrefDataSource.appFolder +"/temp/"+ appInfo.packageName + ".apk")
+
+            file.copyTo(file2, true)
+            return file2
 
 
     }

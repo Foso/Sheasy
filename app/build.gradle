@@ -17,8 +17,6 @@ plugins {
 }
 
 android {
-
-
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/DEPENDENCIES'
@@ -34,8 +32,6 @@ android {
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
         buildConfigField "String", "APP_VERSION", "\"${configuration.appVersion}\""
-
-
         applicationId configuration.applicationId
         minSdkVersion configuration.minSdk
         targetSdkVersion configuration.targetSdk
@@ -43,12 +39,19 @@ android {
         versionName configuration.appVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        signingConfig signingConfigs.debug
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["resourcePackageName": android.defaultConfig.applicationId]
+            }
+        }
     }
     buildTypes {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
             testProguardFile 'tests-proguard.cfg'
+            signingConfig signingConfigs.debug
         }
         release {
             minifyEnabled false
@@ -63,23 +66,21 @@ android {
     androidExtensions {
         experimental = true
     }
-
-
-
     // Always show the result of every unit test, even if it passes.
     testOptions.unitTests.all {
         testLogging {
             events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
         }
     }
-
     signingConfigs {
         debug {
-            storeFile file('../keystore/debug.keystore.jks')
+            storeFile file("../keystore/debug-keystore.jks")
             storePassword "android"
             keyAlias "androiddebugkey"
             keyPassword "android"
         }
+    }
+    productFlavors {
     }
 }
 
@@ -118,12 +119,11 @@ kotlin {
 
 
 dependencies {
-    implementation project(":libshared")
-    api project(":desktop")
-
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation project(':serverJvm')
+    implementation project(':libshared')
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     //AndroidX
     implementation "androidx.annotation:annotation:$libs.androidX.annotation"
     implementation "androidx.appcompat:appcompat:$libs.androidX.appcompat"
@@ -134,7 +134,6 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:${libs.androidX.general}"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.0.0'
-
     implementation 'com.google.android.material:material:1.0.0'
 
     //NavigationLib
@@ -157,6 +156,7 @@ dependencies {
     //NanoHTTPD
     implementation "org.nanohttpd:nanohttpd-websocket:$libs.nanohttpdwebsocket"
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
+
     //RxJava
     implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
@@ -178,6 +178,7 @@ dependencies {
     implementation 'co.zsmb:materialdrawer-kt:2.0.1'
 
     // optional - Test helpers
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
 
     //Testing
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "$libs.mockitoVersion"

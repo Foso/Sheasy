@@ -13,7 +13,7 @@ buildscript {
         mavenRepos.each { buildMaven(it) }
     }
     dependencies {
-             classpath 'com.android.tools.build:gradle:3.2.1'
+             classpath 'com.android.tools.build:gradle:3.3.0-rc03'
     //    classpath 'com.android.tools.build:gradle:3.3.0-rc03'
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$configuration.detektVersion"
         classpath 'com.github.marcpoppleton:git-changelog:0.1.3'

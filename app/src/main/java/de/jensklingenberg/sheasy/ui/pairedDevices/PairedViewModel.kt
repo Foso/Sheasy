@@ -6,7 +6,6 @@ import de.jensklingenberg.sheasy.web.model.Device
 import repository.SheasyPrefDataSource
 import javax.inject.Inject
 
-typealias AboutItem = Pair<String, String>
 
 class PairedViewModel : ViewModel() {
 

@@ -25,7 +25,7 @@
         tools:replace="android:appComponentFactory"
         android:appComponentFactory="whateverString"
         >
-        <activity android:name="de.jensklingenberg.sheasy.de.jensklingenberg.react.ui.MainActivity">
+        <activity android:name="de.jensklingenberg.sheasy.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />

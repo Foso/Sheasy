@@ -1,11 +1,13 @@
 package de.jensklingenberg.sheasy.network
 
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.data.file.FileDataSource
-import de.jensklingenberg.sheasy.data.websocket.NanoWSDWebSocketDataSource
+import de.jensklingenberg.sheasy.network.ktor.initNetty
+import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
-import de.jensklingenberg.sheasy.utils.NotificationUtils
+import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
+import de.jensklingenberg.sheasy.network.websocket.ScreenShareWebSocket
+import de.jensklingenberg.sheasy.network.websocket.WebSocketListener
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
@@ -45,7 +47,11 @@ class Server : WebSocketListener {
 
     init {
         initializeDagger()
-        nettyApplicationEngine = initNetty(sheasyPrefDataSource, generalRouteHandler, fileRouteHandler)
+        nettyApplicationEngine = initNetty(
+            sheasyPrefDataSource,
+            generalRouteHandler,
+            fileRouteHandler
+        )
         nanoWSDWebSocketDataSource.addListener(this)
     }
 

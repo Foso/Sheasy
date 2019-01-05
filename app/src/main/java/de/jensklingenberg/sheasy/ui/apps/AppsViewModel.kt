@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.file.FileDataSource
+import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import de.jensklingenberg.sheasy.web.model.AppInfo
@@ -22,6 +22,9 @@ class AppsViewModel : ViewModel() {
     private var query: String = ""
 
     private val getApps = MutableLiveData<Resource<List<AppInfo>>>()
+
+    @Inject
+    lateinit var shareUseCase: ShareUseCase
 
     /****************************************** Lifecycle methods  */
 
@@ -45,6 +48,15 @@ class AppsViewModel : ViewModel() {
 
 
     }
+
+    fun shareApp(appInfo:AppInfo){
+        shareUseCase.share(fileDataSource.getTempFile(appInfo))
+    }
+
+    fun extractApp(appInfo:AppInfo): Boolean {
+            return fileDataSource.extractApk(appInfo)
+    }
+
 
     private fun loadApps() {
         getApps.value = Resource.loading("loading")

@@ -3,7 +3,7 @@ package de.jensklingenberg.sheasy.web.ui.common
 import components.materialui.*
 import components.materialui.icons.MenuIcon
 import de.jensklingenberg.sheasy.web.model.DrawerItems
-import de.jensklingenberg.sheasy.web.ui.notification.NotificationView
+import org.w3c.dom.events.Event
 import react.*
 import react.dom.div
 
@@ -27,91 +27,74 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
 
     override fun RBuilder.render() {
 
-        Drawer {
-            attrs {
-                open = this@BaseToolbar.state.open
-                onClose = { toggleDrawer() }
-            }
+        Drawer.setupDrawer(
+            this, DrawerItems
+                .values(),this@BaseToolbar.state.open,{toggleDrawer()}
+        )
+        setupAppBar(this)
 
-            DrawerItems
-                .values()
-                .forEach {
-                    List {
+    }
+
+    private fun setupAppBar(rBuilder: RBuilder) {
+        rBuilder.run {
+            AppBar {
+                attrs {
+                    position = "static"
+                }
+                Toolbar {
+                    IconButton {
                         attrs {
-                            component = "nav"
-                        }
-                        ListItem {
-                            attrs {
-                                href = it.destination
-                                component = "a"
-                                divider = true
-                                styleProps(textAlign = "center")
-                            }
+                            color = "inherit"
 
-                            ListItemText {
+                            onClick = { toggleDrawer() }
+
+                        }
+                        MenuIcon {
+
+                        }
+
+                    }
+                    Grid {
+                        attrs {
+                            container = true
+                            spacing = 12
+                        }
+                        Grid {
+                            Typography {
+                                +"Sheasy"
                                 attrs {
-                                    this.primary = it.title
+                                    color = "inherit"
+                                    styleProps(textAlign = "right")
                                 }
                             }
-                        }
-                    }
-                }
-        }
-
-        AppBar {
-            attrs {
-                position = "static"
-            }
-            Toolbar {
-                IconButton {
-                    attrs {
-                        color = "inherit"
-
-                        onClick = { toggleDrawer() }
-
-                    }
-                    MenuIcon {
-
-                    }
-
-                }
-                Grid {
-                    attrs {
-                        container = true
-                        spacing = 12
-                    }
-                    Grid {
-                        Typography {
-                            +"Sheasy"
                             attrs {
-                                color = "inherit"
-                                styleProps(textAlign = "right")
+                                item = true
+                                xs = 6
                             }
                         }
-                        attrs {
-                            item = true
-                            xs = 6
+                        Grid {
+                            div {
+
+                                //  MediaView()
+                               // de.jensklingenberg.sheasy.web.ui.notification.NotificationView()
+
+                            }
+                            attrs {
+                                item = true
+                                xs = 6
+                            }
                         }
                     }
-                    Grid {
-                        div {
 
-                            //  MediaView()
-                            de.jensklingenberg.sheasy.web.ui.notification.NotificationView()
 
-                        }
-                        attrs {
-                            item = true
-                            xs = 6
-                        }
-                    }
                 }
-
-
             }
+
         }
 
     }
+
+
 
     /****************************************** Class methods  */
 

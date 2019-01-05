@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.web.ui.files
 
 import components.materialui.*
+import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.network.ApiEndPoint
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.data.repository.AppsRepository
@@ -8,22 +9,28 @@ import de.jensklingenberg.sheasy.web.model.Error
 import de.jensklingenberg.sheasy.web.model.response.FileResponse
 import de.jensklingenberg.sheasy.web.model.response.Status
 import de.jensklingenberg.sheasy.web.data.AppsDataSource
+import de.jensklingenberg.sheasy.web.data.NetworkPreferences
+import de.jensklingenberg.sheasy.web.model.StringRes
+import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.ListItemBuilder
+import de.jensklingenberg.sheasy.web.ui.common.extension.selectedFile
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.ui.common.toolbar
+import kotlinext.js.asJsObject
 import kotlinx.html.DIV
 import kotlinx.html.InputType
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
+import org.w3c.files.FileReader
 import react.*
 import react.dom.RDOMBuilder
 import react.dom.div
 import kotlin.browser.window
 
 
-interface FilesState : RState {
+interface FileViewState : RState {
     var filesList: List<FileResponse>
     var errorMessage: String
     var status: Status
@@ -32,14 +39,14 @@ interface FilesState : RState {
 }
 
 
-class FileView : RComponent<RProps, FilesState>(), FilesContract.View {
-    val appsDataSource: AppsDataSource = AppsRepository(ReactHttpClient())
-    var presenter =FilesPresenter(this,appsDataSource)
-    val messageUseCase= MessageUseCase()
+class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
+    val appsDataSource: AppsDataSource = AppsRepository(ReactHttpClient(NetworkPreferences()))
+    var presenter = FilesPresenter(this, appsDataSource)
+    val messageUseCase = MessageUseCase()
 
     /****************************************** React Lifecycle methods  */
 
-    override fun FilesState.init() {
+    override fun FileViewState.init() {
         filesList = emptyList()
         status = Status.LOADING
         openMenu = false
@@ -66,7 +73,7 @@ class FileView : RComponent<RProps, FilesState>(), FilesContract.View {
                     styleProps(width = "100%")
 
                     type = InputType.search.realValue
-                    value = presenter.path
+                    value = presenter.folderPath
                 }
             }
         }
@@ -88,55 +95,54 @@ class FileView : RComponent<RProps, FilesState>(), FilesContract.View {
             }
         }
 
-        messageUseCase.showSnackbar(this,state.errorMessage,errorsnackbarVisibility())
+        messageUseCase.showSnackbar(this, state.errorMessage, errorsnackbarVisibility())
 
         setupContextMenu(this)
 
     }
 
     private fun setupContextMenu(rBuilder: RBuilder) {
-            rBuilder.run {
-                div {
-                    Menu {
-                        attrs {
-                            id = "simple-menu"
-                            open = state.openMenu
-                            anchorEl = state.anchor
-                            onClose = {
-                                run {
-                                    setState {
-                                        openMenu = false
-                                    }
-                                }
-                            }
-
-
-                        }
-                        MenuItem {
-                            div {
-                                +"Download"
-                                attrs {
-                                    onClickFunction = {
-                                        window.location.href =
-                                            ApiEndPoint.appDownloadUrl("de.jensklingenberg.sheasy")
-                                    }
-                                    styleProps(textAlign = "center")
+        rBuilder.run {
+            div {
+                Menu {
+                    attrs {
+                        id = "simple-menu"
+                        open = state.openMenu
+                        anchorEl = state.anchor
+                        onClose = {
+                            run {
+                                setState {
+                                    openMenu = false
                                 }
                             }
                         }
-                        MenuItem {
-                            +"Profile"
+
+
+                    }
+                    MenuItem {
+                        div {
+                            +"Download"
                             attrs {
-                                styleProps(textAlign = "right")
-                                onClick = { event: Event -> handleMenuItemClick(event) }
+                                onClickFunction = {
+                                    window.location.href =
+                                            ApiEndPoint.appDownloadUrl("de.jensklingenberg.sheasy")
+                                }
+                                styleProps(textAlign = "center")
                             }
                         }
                     }
+                    MenuItem {
+                        +"Profile"
+                        attrs {
+                            styleProps(textAlign = "right")
+                            onClick = { event: Event -> handleMenuItemClick(event) }
+                        }
+                    }
                 }
-
             }
-    }
 
+        }
+    }
 
 
     private fun setupUploadButton(rdomBuilder: RDOMBuilder<DIV>) {
@@ -146,6 +152,8 @@ class FileView : RComponent<RProps, FilesState>(), FilesContract.View {
                     id = "outlined-button-file"
                     type = "file"
                     styleProps(display = "none")
+                    onChange = { event -> handleFile(event) }
+
                 }
             }
             InputLabel {
@@ -162,6 +170,14 @@ class FileView : RComponent<RProps, FilesState>(), FilesContract.View {
                     }
                 }
             }
+        }
+
+    }
+
+    fun handleFile(event: Event) {
+        event.target.selectedFile?.let {
+            console.log(it)
+
         }
 
     }
@@ -200,7 +216,7 @@ class FileView : RComponent<RProps, FilesState>(), FilesContract.View {
             when (error) {
                 Error.NETWORK_ERROR -> {
                     status = Status.ERROR
-                    state.errorMessage = "No Connection"
+                    state.errorMessage = StringRes.MESSAGE_NO_CONNECTION
                 }
             }
         }
@@ -238,4 +254,5 @@ class FileView : RComponent<RProps, FilesState>(), FilesContract.View {
     }
 
 }
+
 

@@ -1,10 +1,8 @@
 package network.ktor
 
-import kotlinx.coroutines.rx2.await
-import main.MockTestDataSource
+import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
 import de.jensklingenberg.sheasy.web.model.FileResponse
-import network.routehandler.FileRouteHandler
-import de.jensklingenberg.sheasy.web.model.KtorApplicationCall
+import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.web.model.Resource
 import java.io.File
 import java.io.FileInputStream

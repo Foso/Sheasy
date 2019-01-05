@@ -1,50 +1,37 @@
 package network
 
-import io.ktor.application.ApplicationCall
+import de.jensklingenberg.sheasy.network.routehandler.KtorApiHandler
+import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.ContentNegotiation
-import io.ktor.features.origin
 import io.ktor.gson.gson
-import io.ktor.http.ContentDisposition
 import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
 import io.ktor.http.cio.websocket.CloseReason
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readText
-import io.ktor.response.header
-import io.ktor.response.respond
 import io.ktor.response.respondText
-import io.ktor.routing.*
+import io.ktor.routing.get
+import io.ktor.routing.route
+import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import io.ktor.util.flattenForEach
 import io.ktor.websocket.WebSockets
 import io.ktor.websocket.webSocket
-import kotlinx.coroutines.launch
-import main.MockTestDataSource
-import de.jensklingenberg.sheasy.web.model.KtorApplicationCall
-import de.jensklingenberg.sheasy.web.model.Resource
-import de.jensklingenberg.sheasy.web.model.Response
-import de.jensklingenberg.sheasy.web.model.checkState
 import network.ktor.DesktopFileRouteHandler
-import network.routehandler.FileRouteHandler
-import network.routes.apps
-import repository.DesktopSheasyPrefDataSource
+import network.ktor.routes.DesktopKtorApiHandler
+import network.ktor.repository.DesktopSheasyPrefDataSource
 import repository.SheasyPrefDataSource
 import java.time.Duration
-
-
-val ErrorNotAuthorized = Response.error("NOT AUTHORZIED", "")
 
 
 fun main() {
 val sheasyPref : SheasyPrefDataSource = DesktopSheasyPrefDataSource()
 val fileRouteHandler : FileRouteHandler = DesktopFileRouteHandler()
+val ktorApiHandler: KtorApiHandler = DesktopKtorApiHandler()
 
-
-    val server = embeddedServer(Netty, port = sheasyPref.port) {
+    val server = embeddedServer(Netty, port = sheasyPref.httpPort) {
 
 
         install(ContentNegotiation) {
@@ -84,56 +71,13 @@ val fileRouteHandler : FileRouteHandler = DesktopFileRouteHandler()
                 call.respondText("HELLO WORLD!")
             }
             route(sheasyPref.APIV1) {
-                apps()
-                route("/file") {
-                    param("shared") {
-                        get {
-                            val filePath = call.parameters["shared"] ?: ""
-                            val toTo = call.toTo("shared").apply {
-
-                                parameter=filePath
-                            }
-                            val resource= fileRouteHandler.getShared( toTo)
-                            resource.checkState(onError = {
-                                launch {
-                                    call.response.header(
-                                        HttpHeaders.AccessControlAllowOrigin,
-                                        "*"
-                                    )
-                                    call.respond(resource)
-                                }
-                            },onSuccess = {
-                                launch {
-                                    call.response.header(
-                                        HttpHeaders.AccessControlAllowOrigin,
-                                        "*"
-                                    )
-                                    call.respond(resource)
-                                }
-                            })
-                        }
-                    }
-
-
-
-                     }
+                ktorApiHandler.run {
+                    file(fileRouteHandler)
+                }
             }
         }
     }
     server.start(wait = true)
 }
 
-
-public fun ApplicationCall.toTo(apiPath:String=""): KtorApplicationCall {
-
-
-    return KtorApplicationCall(
-        remoteHostIp = this.request.origin.remoteHost,
-        requestedApiPath = apiPath
-
-
-    )
-
-
-}
 

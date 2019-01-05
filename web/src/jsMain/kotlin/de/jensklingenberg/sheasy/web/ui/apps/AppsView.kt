@@ -2,44 +2,45 @@ package de.jensklingenberg.sheasy.web.ui.apps
 
 
 import components.materialui.*
-import de.jensklingenberg.sheasy.web.network.ApiEndPoint
-import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import components.reactstrap.FormGroup
 import components.reactstrap.Input
 import components.reactstrap.Row
-import de.jensklingenberg.sheasy.web.data.StringResource.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_DOWNLOAD
-import de.jensklingenberg.sheasy.web.data.StringResource.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_ICON
-import de.jensklingenberg.sheasy.web.data.StringResource.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_NAME
+import de.jensklingenberg.sheasy.web.data.AppsDataSource
+import de.jensklingenberg.sheasy.web.data.NetworkPreferences
+import de.jensklingenberg.sheasy.web.model.StringRes.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_DOWNLOAD
+import de.jensklingenberg.sheasy.web.model.StringRes.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_ICON
+import de.jensklingenberg.sheasy.web.model.StringRes.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_NAME
 import de.jensklingenberg.sheasy.web.data.repository.AppsRepository
 import de.jensklingenberg.sheasy.web.model.Error
 import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.Status
-import de.jensklingenberg.sheasy.web.data.AppsDataSource
+import de.jensklingenberg.sheasy.web.network.ReactHttpClient
+import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.ListItemBuilder
-import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.ui.common.toolbar
+import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
 import react.*
 import react.dom.div
 
 
-interface AppsVState : RState {
+interface AppsViewState : RState {
     var appsResult: List<App>
     var errorMessage: String
     var status: Status
 }
 
 
-class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
+class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     private var presenter: AppsPresenter? = null
-    val appsDataSource: AppsDataSource = AppsRepository(ReactHttpClient())
+    val appsDataSource: AppsDataSource = AppsRepository(ReactHttpClient(NetworkPreferences()))
     val messageUseCase= MessageUseCase()
 
     /****************************************** React Lifecycle methods  */
-    override fun AppsVState.init() {
+    override fun AppsViewState.init() {
         appsResult = emptyList()
         status = Status.LOADING
     }
@@ -133,9 +134,9 @@ class AppsView : RComponent<RProps, AppsVState>(), AppsContract.View {
 
                 state.appsResult.forEach { app ->
                     ListItemBuilder.listItem(this, app)
-                    Row {
+
                         Divider {}
-                    }
+
                 }
             }
         }

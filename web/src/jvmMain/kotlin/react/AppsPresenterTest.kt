@@ -25,8 +25,8 @@ class AppsPresenterTest  {
     @Before
     fun setup() {
 
-        val response = Response.success(listOf(App("dd","dd","hh")))
-        every { appsDataSource.getApps(onSuccess = {},onError = {}) }
+     //   val response = Response.success(listOf(App("dd","dd","hh")))
+      //  every { appsDataSource.getApps(onSuccess = {},onError = {}) }
 
     }
 

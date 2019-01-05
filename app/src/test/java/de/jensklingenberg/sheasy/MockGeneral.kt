@@ -1,6 +1,5 @@
 package de.jensklingenberg.sheasy
 
-import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import de.jensklingenberg.sheasy.web.model.KtorApplicationCall
 import de.jensklingenberg.sheasy.web.model.Resource
 

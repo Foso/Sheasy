@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,21 +14,25 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import de.jensklingenberg.sheasy.utils.extension.toSourceItem
+import de.jensklingenberg.sheasy.web.model.AppInfo
 import kotlinx.android.synthetic.main.fragment_apps.*
 import de.jensklingenberg.sheasy.web.model.checkState
 import javax.inject.Inject
 
 
-class AppsFragment : BaseFragment() {
+class AppsFragment : BaseFragment(), OnEntryClickListener {
+
 
     private val baseAdapter = BaseAdapter()
     lateinit var appsViewModel: AppsViewModel
     @Inject
     lateinit var messageUseCase: MessageUseCase
+
 
     /****************************************** Lifecycle methods  */
 
@@ -95,7 +100,7 @@ class AppsFragment : BaseFragment() {
                     onSuccess = { appInfoList ->
                         appInfoList
                             .sortedBy { it.name }
-                            .map { it.toSourceItem() }
+                            .map { it.toSourceItem(this) }
                             .run {
                                 baseAdapter.dataSource.setItems(this)
                                 baseAdapter.notifyDataSetChanged()
@@ -107,6 +112,36 @@ class AppsFragment : BaseFragment() {
 
 
             }
+    }
+
+    /****************************************** Listener methods  */
+
+
+    override fun onItemClicked(payload: Any) {
+
+
+    }
+
+    override fun onMoreButtonClicked(view: View, payload: Any) {
+        val item = payload as? AppInfo
+        val popup = PopupMenu(requireActivity(), view)
+        popup.menuInflater
+            .inflate(R.menu.apps_actions, popup.menu);
+        popup.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.menu_share -> {
+                    appsViewModel.shareApp(item!!)
+                    //shareUseCase.share()
+                }
+                R.id.menu_extract->{
+                    if (appsViewModel.extractApp(item!!)) {
+                        messageUseCase.show(requireView(),"Succes")
+                    }
+                }
+            }
+            true
+        }
+        popup.show()
     }
 
 

@@ -30,6 +30,7 @@ kotlin {
             resources.srcDirs += "resources"
             dependencies {
                 implementation project(":libshared")
+                implementation project(":serverJvm")
 
                 implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
 

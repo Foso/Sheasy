@@ -3,11 +3,14 @@ package de.jensklingenberg.sheasy.di
 import dagger.Component
 import de.jensklingenberg.sheasy.data.file.FileRepository
 import de.jensklingenberg.sheasy.network.*
-import de.jensklingenberg.sheasy.network.ktor.KtorFileRouteHandler
-import de.jensklingenberg.sheasy.network.ktor.KtorGeneralRouteHandler
+import de.jensklingenberg.sheasy.network.ktor.AndroidFileRouteHandler
+import de.jensklingenberg.sheasy.network.ktor.AndroidKtorGeneralRouteHandler
+import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
+import de.jensklingenberg.sheasy.network.websocket.ScreenShareWebSocket
 import de.jensklingenberg.sheasy.ui.MainViewModel
 import de.jensklingenberg.sheasy.ui.about.AboutFragment
 import de.jensklingenberg.sheasy.ui.about.AboutViewModel
+import de.jensklingenberg.sheasy.ui.apps.AppInfoViewHolder
 import de.jensklingenberg.sheasy.ui.apps.AppsFragment
 import de.jensklingenberg.sheasy.ui.apps.AppsViewModel
 import de.jensklingenberg.sheasy.ui.common.OnResultActivity
@@ -51,8 +54,9 @@ interface AppComponent {
     fun inject(onResultActivity: OnResultActivity)
     fun inject(filesFragment: FilesFragment)
     fun inject(shareUseCase: ShareUseCase)
-    fun inject(ktorGeneralRouteHandler: KtorGeneralRouteHandler)
-    fun inject(ktorFileRouteHandler: KtorFileRouteHandler)
+    fun inject(androidKtorGeneralRouteHandler: AndroidKtorGeneralRouteHandler)
+    fun inject(androidFileRouteHandler: AndroidFileRouteHandler)
+    fun inject(appInfoViewHolder: AppInfoViewHolder)
 
 
 }

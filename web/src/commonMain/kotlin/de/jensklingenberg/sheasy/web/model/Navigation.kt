@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.web.ui.common
+package de.jensklingenberg.sheasy.web.model
 
 class Navigation {
     companion object {

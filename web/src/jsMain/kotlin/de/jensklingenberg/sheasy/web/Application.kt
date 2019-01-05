@@ -6,7 +6,7 @@ import de.jensklingenberg.sheasy.web.components.router.hashRouter
 import de.jensklingenberg.sheasy.web.components.router.route
 import de.jensklingenberg.sheasy.web.components.router.switch
 import de.jensklingenberg.sheasy.web.model.Route
-import de.jensklingenberg.sheasy.web.ui.home.App
+import de.jensklingenberg.sheasy.web.ui.home.HomeView
 import de.jensklingenberg.sheasy.web.ui.about.AboutView
 import de.jensklingenberg.sheasy.web.ui.apps.AppsView
 import de.jensklingenberg.sheasy.web.ui.files.FileView
@@ -17,7 +17,7 @@ import kotlin.browser.window
 
 class Application : KodeinAware {
     val routeList = listOf(
-        Route("/", App::class, true),
+        Route("/", HomeView::class, true),
         Route("/apps", AppsView::class, exact = true),
         Route("/files", FileView::class, exact = true),
         Route("/about", AboutView::class, exact = true),

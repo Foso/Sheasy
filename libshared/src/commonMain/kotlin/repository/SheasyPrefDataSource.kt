@@ -7,11 +7,12 @@ interface SheasyPrefDataSource {
 
     val APIV1: String
         get() = "/api/v1/"
+    var appFolder: String
 
     val defaultPath: String
 
-    val port: Int
-    val acceptAllConnections:Boolean
+    val httpPort: Int
+    var acceptAllConnections: Boolean
     val webSocketPort: Int
     val authorizedDevices: MutableList<Device>
 

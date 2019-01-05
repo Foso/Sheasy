@@ -9,9 +9,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/common-jvm" />
             <option value="$PROJECT_DIR$/desktop" />
             <option value="$PROJECT_DIR$/libshared" />
+            <option value="$PROJECT_DIR$/libvbnbvn" />
+            <option value="$PROJECT_DIR$/serverJvm" />
             <option value="$PROJECT_DIR$/web" />
           </set>
         </option>

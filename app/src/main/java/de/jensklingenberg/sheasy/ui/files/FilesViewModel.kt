@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModel
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.file.FileDataSource
+import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import de.jensklingenberg.sheasy.web.model.FileResponse
 import de.jensklingenberg.sheasy.web.model.Resource
 import repository.SheasyPrefDataSource
+import java.io.File
 import javax.inject.Inject
 
 
@@ -20,6 +22,9 @@ class FilesViewModel : ViewModel() {
 
     @Inject
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
+
+    @Inject
+    lateinit var shareUseCase: ShareUseCase
 
     var filePath = ""
 
@@ -40,6 +45,10 @@ class FilesViewModel : ViewModel() {
             .subscribeOn(Schedulers.newThread())
             .observeOn(Schedulers.newThread())
             .subscribeBy(onSuccess = { files.postValue(Resource.success(it)) },onError = {})
+    }
+
+    fun shareFile(file: File){
+        shareUseCase.share(file)
     }
 
 

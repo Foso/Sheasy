@@ -14,7 +14,7 @@ class TestSheasyPreferences : SheasyPrefDataSource {
     override val APIV1 = "/api/v1/"
 
     override val defaultPath = "/storage/emulated/0/"
-    override val port = 8766
+    override val httpPort = 8766
 
 
     override val authorizedDevices = mutableListOf<Device>()

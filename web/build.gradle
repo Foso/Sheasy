@@ -158,3 +158,20 @@ task serverPrepare(type: Copy, dependsOn: ["build"]) {
     from "./build/bundle", "./src/jsMain/web"
     into "./deploy"
 }
+
+
+task stopTomcat(type:Exec) {
+//    workingDir '../tomcat/bin'
+
+
+    //on linux
+  //  commandLine 'cd ${project.buildDir.path}'
+    commandLine 'cd ..'
+    commandLine 'pwd'
+
+
+   // commandLine './gradlew -t webpack-run'
+
+
+}
+

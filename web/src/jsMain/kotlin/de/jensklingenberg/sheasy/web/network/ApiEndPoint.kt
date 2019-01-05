@@ -6,8 +6,8 @@ import de.jensklingenberg.sheasy.web.data.apiVersion
 class ApiEndPoint {
 
     companion object {
-        val apps = "apps"
-        val files="file?shared="
+        val apps = "file/apps"
+        val shared="file?shared="
         val repoSite = "https://github.com/Foso/Sheasy"
 
 

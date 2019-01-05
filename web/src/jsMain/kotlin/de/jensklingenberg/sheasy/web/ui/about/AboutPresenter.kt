@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.web.ui.about
 
 import de.jensklingenberg.sheasy.web.components.listview.*
+import de.jensklingenberg.sheasy.web.model.StringSourceItem
 import de.jensklingenberg.sheasy.web.network.ApiEndPoint
 
 class AboutPresenter(val view:AboutContract.View):AboutContract.Presenter, OnEntryClickListener {

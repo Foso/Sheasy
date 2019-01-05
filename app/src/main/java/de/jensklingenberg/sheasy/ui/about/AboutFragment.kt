@@ -10,9 +10,9 @@ import com.mikepenz.aboutlibraries.LibsBuilder
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.model.GenericListHeaderSourceItem
-import de.jensklingenberg.sheasy.model.GenericListItem
-import de.jensklingenberg.sheasy.model.GenericListItemSourceItem
+import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
+import de.jensklingenberg.sheasy.ui.common.GenericListItem
+import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment

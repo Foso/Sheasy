@@ -3,7 +3,7 @@ package de.jensklingenberg.sheasy.web.components.Notification
 import org.w3c.dom.events.Event
 import react.RClass
 import react.RProps
-import webapi.NotificationOptions
+import de.jensklingenberg.sheasy.web.components.webapi.NotificationOptions
 
 
 @JsModule("react-web-notification")

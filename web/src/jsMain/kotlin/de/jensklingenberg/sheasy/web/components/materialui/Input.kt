@@ -7,7 +7,7 @@
     "NESTED_CLASS_IN_EXTERNAL_INTERFACE"
 )
 
-package components.materialui
+package de.jensklingenberg.sheasy.web.components.materialui
 
 import de.jensklingenberg.sheasy.web.ui.common.LayoutProps
 import org.w3c.dom.events.Event

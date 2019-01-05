@@ -5,6 +5,7 @@ import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.model.Error
 import de.jensklingenberg.sheasy.web.model.response.Status
+import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.usecase.NotificationOptions
 import de.jensklingenberg.sheasy.web.usecase.NotificationUseCase
@@ -34,7 +35,7 @@ class AboutView : BaseComponent<RProps, AboutState>(), AboutContract.View {
     override fun RBuilder.render() {
         toolbar()
         state.itemsList.render(this)
-        notificationUseCase.showNotification(this,notificationOptions)
+       // notificationUseCase.showNotification(this,notificationOptions)
     }
 
     /****************************************** Presenter methods  */

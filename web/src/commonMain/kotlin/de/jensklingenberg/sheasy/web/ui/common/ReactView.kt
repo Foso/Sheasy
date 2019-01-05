@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.web.data
+package de.jensklingenberg.sheasy.web.ui.common
 
 import de.jensklingenberg.sheasy.web.model.Foo
 

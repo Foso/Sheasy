@@ -5,8 +5,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.model.GenericListItem
-import de.jensklingenberg.sheasy.model.GenericListItemSourceItem
+import de.jensklingenberg.sheasy.ui.common.GenericListItem
+import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener

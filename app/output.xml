@@ -1,96 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <checkstyle version="4.3">
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/ScreenRecord.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/di/AppComponent.kt">
+	<error line="26" column="1" severity="warning" message="Interface &apos;AppComponent&apos; with &apos;23&apos; functions detected. Defined threshold inside interfaces is set to &apos;15&apos;" source="detekt.TooManyFunctions" />
+	<error line="5" column="1" severity="warning" message="de.jensklingenberg.sheasy.network.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+	<error line="26" column="132" severity="warning" message="Line detected that is longer than the defined maximum line length in the code style." source="detekt.MaxLineLength" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/ScreenRecord.kt">
 	<error line="142" column="5" severity="warning" message="Function startRecord is nested too deeply." source="detekt.NestedBlockDepth" />
 	<error line="123" column="18" severity="error" message="Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled." source="detekt.TooGenericExceptionCaught" />
 	<error line="219" column="26" severity="error" message="Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled." source="detekt.TooGenericExceptionCaught" />
 	<error line="42" column="9" severity="warning" message="Private object property names should match the pattern: (_)?[A-Za-z][A-Za-z0-9]*" source="detekt.ObjectPropertyNaming" />
 	<error line="107" column="61" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/di/AppComponent.kt">
-	<error line="26" column="1" severity="warning" message="Interface &apos;AppComponent&apos; with &apos;23&apos; functions detected. Defined threshold inside interfaces is set to &apos;15&apos;" source="detekt.TooManyFunctions" />
-	<error line="5" column="1" severity="warning" message="de.jensklingenberg.sheasy.network.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
-	<error line="26" column="132" severity="warning" message="Line detected that is longer than the defined maximum line length in the code style." source="detekt.MaxLineLength" />
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/pairedDevices/PairedFragment.kt">
+	<error line="72" column="17" severity="info" message="This when block is empty." source="detekt.EmptyWhenBlock" />
+	<error line="72" column="17" severity="info" message="This when block is empty." source="detekt.EmptyWhenBlock" />
+	<error line="1" column="1" severity="warning" message="Package name should match the pattern: ^[a-z]+(\.[a-z][a-z0-9]*)*$" source="detekt.PackageNaming" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/UseCase/ShareUseCase.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/ktor/AndroidKtorGeneralRouteHandler.kt">
+	<error line="40" column="83" severity="info" message="This empty block of code can be removed." source="detekt.EmptyIfBlock" />
+	<error line="40" column="83" severity="info" message="This empty block of code can be removed." source="detekt.EmptyIfBlock" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/UseCase/ShareUseCase.kt">
 	<error line="9" column="19" severity="info" message="An empty default constructor can be removed." source="detekt.EmptyDefaultConstructor" />
 	<error line="1" column="1" severity="warning" message="Package name should match the pattern: ^[a-z]+(\.[a-z][a-z0-9]*)*$" source="detekt.PackageNaming" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/pairedDevices/PairedFragment.kt">
-	<error line="72" column="17" severity="info" message="This when block is empty." source="detekt.EmptyWhenBlock" />
-	<error line="72" column="17" severity="info" message="This when block is empty." source="detekt.EmptyWhenBlock" />
-	<error line="1" column="1" severity="warning" message="Package name should match the pattern: ^[a-z]+(\.[a-z][a-z0-9]*)*$" source="detekt.PackageNaming" />
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/common/SimpleRvAdapter.kt">
+	<error line="30" column="9" severity="error" message="RuntimeException is a too generic Exception. Prefer throwing specific exceptions that indicate a specific error case." source="detekt.TooGenericExceptionThrown" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/ktor/KtorGeneralRouteHandler.kt">
-	<error line="40" column="83" severity="info" message="This empty block of code can be removed." source="detekt.EmptyIfBlock" />
-	<error line="40" column="83" severity="info" message="This empty block of code can be removed." source="detekt.EmptyIfBlock" />
-</file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/common/BaseAdapter.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/common/BaseAdapter.kt">
 	<error line="14" column="16" severity="error" message="Exception is a too generic Exception. Prefer throwing specific exceptions that indicate a specific error case." source="detekt.TooGenericExceptionThrown" />
 	<error line="31" column="63" severity="error" message="Exception is a too generic Exception. Prefer throwing specific exceptions that indicate a specific error case." source="detekt.TooGenericExceptionThrown" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/common/SimpleRvAdapter.kt">
-	<error line="30" column="9" severity="error" message="RuntimeException is a too generic Exception. Prefer throwing specific exceptions that indicate a specific error case." source="detekt.TooGenericExceptionThrown" />
-</file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/extension/ByteBufferExt.kt">
-	<error line="7" column="1" severity="warning" message="Function names should match the pattern: ^([a-z$][a-zA-Z$0-9]*)|(`.*`)$" source="detekt.FunctionNaming" />
-	<error line="11" column="1" severity="warning" message="Function names should match the pattern: ^([a-z$][a-zA-Z$0-9]*)|(`.*`)$" source="detekt.FunctionNaming" />
-</file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/NotificationUtils.kt">
-	<error line="164" column="9" severity="warning" message="Private object property names should match the pattern: (_)?[A-Za-z][A-Za-z0-9]*" source="detekt.ObjectPropertyNaming" />
-	<error line="74" column="37" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
-	<error line="74" column="43" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
-	<error line="84" column="36" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
-	<error line="119" column="36" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
-</file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/UseCase/MessageUseCase.kt">
-	<error line="1" column="1" severity="warning" message="Package name should match the pattern: ^[a-z]+(\.[a-z][a-z0-9]*)*$" source="detekt.PackageNaming" />
-</file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/UseCase/VibrationUseCase.kt">
-	<error line="1" column="1" severity="warning" message="Package name should match the pattern: ^[a-z]+(\.[a-z][a-z0-9]*)*$" source="detekt.PackageNaming" />
-	<error line="16" column="53" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
-	<error line="19" column="23" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
-</file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/settings/ScreenCaptureImage.kt">
-	<error line="19" column="9" severity="warning" message="Private object property names should match the pattern: (_)?[A-Za-z][A-Za-z0-9]*" source="detekt.ObjectPropertyNaming" />
-</file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/settings/ScreenViewModel.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/settings/ScreenViewModel.kt">
 	<error line="18" column="9" severity="warning" message="Private object property names should match the pattern: (_)?[A-Za-z][A-Za-z0-9]*" source="detekt.ObjectPropertyNaming" />
 	<error line="19" column="9" severity="warning" message="Private object property names should match the pattern: (_)?[A-Za-z][A-Za-z0-9]*" source="detekt.ObjectPropertyNaming" />
 	<error line="20" column="9" severity="warning" message="Private object property names should match the pattern: (_)?[A-Za-z][A-Za-z0-9]*" source="detekt.ObjectPropertyNaming" />
 	<error line="21" column="9" severity="warning" message="Private object property names should match the pattern: (_)?[A-Za-z][A-Za-z0-9]*" source="detekt.ObjectPropertyNaming" />
 	<error line="22" column="9" severity="warning" message="Private object property names should match the pattern: (_)?[A-Za-z][A-Za-z0-9]*" source="detekt.ObjectPropertyNaming" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesFragment.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/settings/ScreenCaptureImage.kt">
+	<error line="19" column="9" severity="warning" message="Private object property names should match the pattern: (_)?[A-Za-z][A-Za-z0-9]*" source="detekt.ObjectPropertyNaming" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesFragment.kt">
 	<error line="40" column="5" severity="warning" message="Private variable names should match the pattern: (_)?[a-z][A-Za-z0-9]*" source="detekt.VariableNaming" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/pairedDevices/PairedViewModel.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/pairedDevices/PairedViewModel.kt">
 	<error line="1" column="1" severity="warning" message="Package name should match the pattern: ^[a-z]+(\.[a-z][a-z0-9]*)*$" source="detekt.PackageNaming" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/ScreenShareWebSocket.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/ScreenShareWebSocket.kt">
 	<error line="15" column="5" severity="warning" message="Variable names should match the pattern: [a-z][A-Za-z0-9]*" source="detekt.VariableNaming" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/routes/toTo.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/routes/toTo.kt">
 	<error line="1" column="1" severity="warning" message="The file name &apos;toTo.kt&apos; does not match the name of the single top-level declaration &apos;Converter&apos;." source="detekt.MatchingDeclarationName" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/MyWebSocket.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/MyWebSocket.kt">
 	<error line="20" column="5" severity="warning" message="Variable names should match the pattern: [a-z][A-Za-z0-9]*" source="detekt.VariableNaming" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/data/websocket/NanoWSDWebSocketRepository.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/UseCase/VibrationUseCase.kt">
+	<error line="1" column="1" severity="warning" message="Package name should match the pattern: ^[a-z]+(\.[a-z][a-z0-9]*)*$" source="detekt.PackageNaming" />
+	<error line="16" column="53" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
+	<error line="19" column="23" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/UseCase/MessageUseCase.kt">
+	<error line="1" column="1" severity="warning" message="Package name should match the pattern: ^[a-z]+(\.[a-z][a-z0-9]*)*$" source="detekt.PackageNaming" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/extension/ByteBufferExt.kt">
+	<error line="7" column="1" severity="warning" message="Function names should match the pattern: ^([a-z$][a-zA-Z$0-9]*)|(`.*`)$" source="detekt.FunctionNaming" />
+	<error line="11" column="1" severity="warning" message="Function names should match the pattern: ^([a-z$][a-zA-Z$0-9]*)|(`.*`)$" source="detekt.FunctionNaming" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/utils/NotificationUtils.kt">
+	<error line="164" column="9" severity="warning" message="Private object property names should match the pattern: (_)?[A-Za-z][A-Za-z0-9]*" source="detekt.ObjectPropertyNaming" />
+	<error line="74" column="37" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
+	<error line="74" column="43" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
+	<error line="84" column="36" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
+	<error line="119" column="36" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/data/websocket/NanoWSDWebSocketRepository.kt">
 	<error line="40" column="21" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/ktor/KtorFileRouteHandler.kt">
-	<error line="33" column="5" severity="warning" message="Function getShared has 4 return statements which exceeds the limit of 2." source="detekt.ReturnCount" />
-	<error line="74" column="5" severity="warning" message="Function getDownload has 4 return statements which exceeds the limit of 2." source="detekt.ReturnCount" />
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/Server.kt">
+	<error line="104" column="5" severity="warning" message="Function openWebSocket has 3 return statements which exceeds the limit of 2." source="detekt.ReturnCount" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/Generate.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/ktor/AndroidFileRouteHandler.kt">
+	<error line="32" column="5" severity="warning" message="Function getShared has 4 return statements which exceeds the limit of 2." source="detekt.ReturnCount" />
+	<error line="73" column="5" severity="warning" message="Function getDownload has 4 return statements which exceeds the limit of 2." source="detekt.ReturnCount" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/Generate.kt">
 	<error line="29" column="1" severity="warning" message="io.ktor.routing.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
 	<error line="152" column="29" severity="warning" message="This expression contains a magic number. Consider defining it to a well named constant." source="detekt.MagicNumber" />
 </file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/Server.kt">
-	<error line="106" column="5" severity="warning" message="Function openWebSocket has 3 return statements which exceeds the limit of 2." source="detekt.ReturnCount" />
-</file>
-<file name="/home/jens/StudioProjects/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/HTTPServerService.kt">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/HTTPServerService.kt">
 	<error line="66" column="5" severity="warning" message="Function onStartCommand has 3 return statements which exceeds the limit of 2." source="detekt.ReturnCount" />
 </file>
 </checkstyle>

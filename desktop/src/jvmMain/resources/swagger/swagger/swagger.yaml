@@ -24,9 +24,9 @@ paths:
   /apps:
     get:
       tags:
-      - "apps"
-      summary: "Get installed apps"
-      description: "Returns a list of the installed apps"
+      - "file"
+      summary: "Get installed file"
+      description: "Returns a list of the installed file"
       operationId: "getPetById"
       produces:
       - "application/json"
@@ -42,9 +42,9 @@ paths:
   /device/:
     get:
       tags:
-      - "apps"
+      - "file"
       summary: "Get device info"
-      description: "Returns a list of the installed apps"
+      description: "Returns a list of the installed file"
       operationId: "aa"
       produces:
       - "application/json"

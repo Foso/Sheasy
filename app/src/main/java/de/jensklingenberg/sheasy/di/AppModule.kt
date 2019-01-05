@@ -4,15 +4,16 @@ import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.AssetManager
 import android.media.projection.MediaProjectionManager
 import android.view.WindowManager
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.data.websocket.NanoWSDWebSocketDataSource
-import de.jensklingenberg.sheasy.data.websocket.NanoWSDWebSocketRepository
-import preferences.SheasyPreferencesRepository
+import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
+import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketRepository
+import de.jensklingenberg.sheasy.data.preferences.SheasyPreferencesRepository
 import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.utils.extension.mediaProjectionManager
 import de.jensklingenberg.sheasy.utils.extension.notificationManager
@@ -50,6 +51,9 @@ class AppModule(private val application: App) {
     @Singleton
     fun provideWindowManager(context: Context): WindowManager = context.windowManager()
 
+    @Provides
+    @Singleton
+    fun provideAssetManger(context: Context):AssetManager=context.assets
 
     @Provides
     @Singleton
@@ -67,7 +71,7 @@ class AppModule(private val application: App) {
 
     @Provides
     @Singleton
-    fun sheasy():SheasyPrefDataSource=SheasyPreferencesRepository()
+    fun sheasy():SheasyPrefDataSource= SheasyPreferencesRepository()
 
 
 

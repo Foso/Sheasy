@@ -3,7 +3,6 @@ package de.jensklingenberg.sheasy.ui.common
 import android.os.Bundle
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.model.GenericListHeaderSourceItem
 import kotlinx.android.synthetic.main.list_item_header_generic.view.*
 
 

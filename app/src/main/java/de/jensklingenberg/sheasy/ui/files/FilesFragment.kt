@@ -22,9 +22,11 @@ import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import de.jensklingenberg.sheasy.utils.extension.toSourceitem
+import de.jensklingenberg.sheasy.web.model.AppInfo
 import kotlinx.android.synthetic.main.fragment_files.*
 import de.jensklingenberg.sheasy.web.model.FileResponse
 import de.jensklingenberg.sheasy.web.model.checkState
+import java.io.File
 import javax.inject.Inject
 
 
@@ -125,18 +127,21 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
         val item = payload as? FileResponse
-        val popup = PopupMenu(requireActivity(), view)
-        popup.menuInflater
-            .inflate(R.menu.files_actions, popup.menu);
-        popup.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_share -> {
-                    shareUseCase.share()
+        item?.let {
+            val popup = PopupMenu(requireActivity(), view)
+            popup.menuInflater
+                .inflate(R.menu.files_actions, popup.menu);
+            popup.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_share -> {
+                        shareUseCase.share(File(item.path))
+                    }
                 }
+                true
             }
-            true
+            popup.show()
         }
-        popup.show()
+
 
     }
 

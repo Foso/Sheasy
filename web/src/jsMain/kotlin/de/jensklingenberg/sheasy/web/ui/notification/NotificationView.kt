@@ -1,11 +1,11 @@
 package de.jensklingenberg.sheasy.web.ui.notification
 
 
+import components.materialui.Button
 import de.jensklingenberg.sheasy.web.components.Notification.Notification
 import de.jensklingenberg.sheasy.web.components.Notification.ReactNotificationOptions
 import de.jensklingenberg.sheasy.web.components.Notification.defaultReactNotificationOptions
-import components.reactstrap.Button
-import components.reactstrap.Tooltip
+import de.jensklingenberg.sheasy.web.components.reactstrap.Tooltip
 import react.*
 
 
@@ -57,7 +57,7 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
         Button {
             +"Notification"
             attrs {
-                id = "HALLOID"
+               
             }
         }
 

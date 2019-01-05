@@ -9,6 +9,7 @@
 
 package components.materialui
 
+import de.jensklingenberg.sheasy.web.components.materialui.InputProps
 import react.RClass
 import react.ReactElement
 
