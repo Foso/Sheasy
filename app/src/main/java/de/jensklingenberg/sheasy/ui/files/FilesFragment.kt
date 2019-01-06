@@ -14,6 +14,7 @@ import com.shopify.livedataktx.nonNull
 import com.shopify.livedataktx.observe
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
@@ -21,21 +22,19 @@ import de.jensklingenberg.sheasy.utils.PermissionUtils
 import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
-import de.jensklingenberg.sheasy.utils.extension.toSourceitem
-import de.jensklingenberg.sheasy.web.model.AppInfo
 import kotlinx.android.synthetic.main.fragment_files.*
-import de.jensklingenberg.sheasy.web.model.FileResponse
-import de.jensklingenberg.sheasy.web.model.checkState
+import de.jensklingenberg.sheasy.model.checkState
+import de.jensklingenberg.sheasy.ui.common.toSourceitem
 import java.io.File
 import javax.inject.Inject
 
 
 class FilesFragment : BaseFragment(), OnEntryClickListener {
 
-    lateinit var filesViewModel: FilesViewModel
-    private val baseAdapter = BaseAdapter()
+
     @Inject
     lateinit var permissionUtils: PermissionUtils
+
     @Inject
     lateinit var shareUseCase: ShareUseCase
 
@@ -43,6 +42,9 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
 
     @Inject
     lateinit var messageUseCase: MessageUseCase
+
+    lateinit var filesViewModel: FilesViewModel
+    private val baseAdapter = BaseAdapter()
 
     /****************************************** Lifecycle methods  */
     init {
@@ -63,7 +65,7 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) !== PackageManager.PERMISSION_GRANTED
         ) {
-            requestCameraPermission()
+            permissionUtils.requestPermission(this,REQUEST_CAMERA_PERMISSION)
         } else {
             1 == 1
         }
@@ -111,7 +113,7 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) !== PackageManager.PERMISSION_GRANTED
         ) {
-            requestCameraPermission()
+            permissionUtils.requestPermission(this,REQUEST_CAMERA_PERMISSION)
         } else {
             1 == 1
         }
@@ -128,17 +130,18 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
     override fun onMoreButtonClicked(view: View, payload: Any) {
         val item = payload as? FileResponse
         item?.let {
-            val popup = PopupMenu(requireActivity(), view)
-            popup.menuInflater
-                .inflate(R.menu.files_actions, popup.menu);
-            popup.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.menu_share -> {
-                        shareUseCase.share(File(item.path))
+            val popup = PopupMenu(requireActivity(), view).apply {
+                menuInflater.inflate(R.menu.files_actions, this.menu);
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.menu_share -> {
+                            shareUseCase.share(File(item.path))
+                        }
                     }
+                    true
                 }
-                true
             }
+
             popup.show()
         }
 
@@ -147,15 +150,7 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
 
     /****************************************** Class methods  */
 
-    private fun requestCameraPermission() {
-        if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CAMERA_PERMISSION)
 
-
-        } else {
-            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CAMERA_PERMISSION)
-        }
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int, @NonNull permissions: Array<String>,
@@ -179,10 +174,11 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
     private fun initObserver() {
         filesViewModel
             .files
-            .nonNull().observe {
+            .nonNull()
+            .observe {
                 it.checkState(
-                    onSuccess = {
-                        it.sortedBy { file -> file.name }
+                    onSuccess = {resource->
+                        resource.data!!.sortedBy { file -> file.name }
                             .map { file ->
                                 file.toSourceitem(this)
                             }
@@ -206,7 +202,7 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
             }
     }
 
-    fun updateFolderPathInfo(path: String) {
+    private fun updateFolderPathInfo(path: String) {
         folderPathLayout?.apply {
             title.text = path
         }

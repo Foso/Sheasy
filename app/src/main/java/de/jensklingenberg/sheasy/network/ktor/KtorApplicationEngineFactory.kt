@@ -5,7 +5,7 @@ import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
-import repository.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 
 
 fun initNetty(
@@ -14,6 +14,6 @@ fun initNetty(
     fileRouteHandler: FileRouteHandler
 ): NettyApplicationEngine {
     return embeddedServer(Netty, port = sheasyPrefDataSource.httpPort, module = {
-        ktorApplicationModule(sheasyPrefDataSource, generalRouteHandler, fileRouteHandler)
+        ktorApplicationModule(generalRouteHandler, fileRouteHandler)
     })
 }

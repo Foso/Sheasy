@@ -1,11 +1,11 @@
 package de.jensklingenberg.sheasy.network.ktor.routes
 
 import de.jensklingenberg.sheasy.network.HttpMethod
-import de.jensklingenberg.sheasy.network.ktor.toTo
+import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.utils.extension.debugCorsHeader
-import de.jensklingenberg.sheasy.web.model.Resource
-import de.jensklingenberg.sheasy.web.model.checkState
+import de.jensklingenberg.sheasy.model.Resource
+import de.jensklingenberg.sheasy.model.checkState
 import io.ktor.application.call
 import io.ktor.http.ContentDisposition
 import io.ktor.http.HttpHeaders
@@ -15,7 +15,11 @@ import io.ktor.http.content.streamProvider
 import io.ktor.request.receiveMultipart
 import io.ktor.response.header
 import io.ktor.response.respond
-import io.ktor.routing.*
+import io.ktor.routing.Route
+import io.ktor.routing.get
+import io.ktor.routing.param
+import io.ktor.routing.post
+import io.ktor.routing.route
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.rx2.await
 import java.io.InputStream
@@ -25,7 +29,10 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
     route("file") {
 
         get("apps") {
-            fileRouteHandler.getApps().await().run {
+            fileRouteHandler
+                .apps(HttpMethod.GET)
+                .await()
+                .run {
                 call.response.debugCorsHeader()
                 call.respond(Resource.success(this))
             }
@@ -35,8 +42,9 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
         param("apk") {
             get {
                 val packageName = call.parameters
-                val resource = fileRouteHandler.apk(HttpMethod.GET,call.toTo())
-                resource.checkState(onError = {
+                fileRouteHandler
+                    .apk(HttpMethod.GET,call.ktorApplicationCall())
+                    .checkState(onSuccess = {resource->
                     launch {
                         call.response.header(
                             HttpHeaders.ContentDisposition,
@@ -53,29 +61,26 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
 
         param("download") {
             get {
-                val resource = fileRouteHandler.getDownload(call.toTo())
-                resource.checkState(onError = {
+                fileRouteHandler.getDownload(call.ktorApplicationCall())
+                    .checkState(onSuccess = {
                     launch {
-                        call.respond(resource)
+                        call.respond(it)
                     }
                 })
             }
         }
 
-        param("shared") {
-            get {
-                val filePath = call.parameters["shared"] ?: ""
-                val toTo = call.toTo("shared").apply {
-                    parameter = filePath
-                }
-                val resource = fileRouteHandler.getShared(toTo)
-                resource.checkState(onError = {
-                    launch {
-                        call.response.debugCorsHeader()
-                        call.respond(resource)
-                    }
-                })
-            }
+        route("shared"){
+           get {
+               fileRouteHandler
+                   .getShared(call.ktorApplicationCall("shared"))
+                   .checkState(onSuccess = {
+                       launch {
+                           call.response.debugCorsHeader()
+                           call.respond(it)
+                       }
+                   })
+           }
         }
 
         param("upload") {

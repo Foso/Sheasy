@@ -1,6 +1,11 @@
 package de.jensklingenberg.sheasy.web.components.router
 
-import react.*
+import react.Component
+import react.RBuilder
+import react.RClass
+import react.RHandler
+import react.RProps
+import react.ReactElement
 import kotlin.reflect.KClass
 
 fun RBuilder.hashRouter(handler: RHandler<RProps>) = child(HashRouterComponent::class, handler)

@@ -2,9 +2,8 @@ package de.jensklingenberg.sheasy.data.preferences
 
 import android.os.Environment
 import de.jensklingenberg.sheasy.BuildConfig
-import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.web.model.Device
-import repository.SheasyPrefDataSource
 
 class SheasyPreferencesRepository : SheasyPrefDataSource {
 
@@ -13,10 +12,11 @@ class SheasyPreferencesRepository : SheasyPrefDataSource {
 
     override var acceptAllConnections= BuildConfig.DEBUG
 
+    override val sharedFolders: List<String>  = mutableListOf("/storage/emulated/0/Music","/storage/emulated/0/Music")
+
+
     override val httpPort = 8766
     override val webSocketPort = 8765
-
-    override val APIV1 = "/api/v1/"
 
     override val defaultPath = "/storage/emulated/0/"
 

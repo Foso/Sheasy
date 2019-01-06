@@ -3,16 +3,11 @@ package de.jensklingenberg.sheasy.network.ktor
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.file.FileDataSource
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
-import de.jensklingenberg.sheasy.utils.NotificationUtils
-import kotlinx.coroutines.rx2.await
-import de.jensklingenberg.sheasy.web.model.Device
-import de.jensklingenberg.sheasy.web.model.Resource
-import io.ktor.application.call
-import io.ktor.response.respond
+import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
+import de.jensklingenberg.sheasy.model.Resource
 import io.reactivex.Single
-import io.reactivex.rxkotlin.subscribeBy
-import repository.SheasyPrefDataSource
-import java.io.File
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.web.model.Device
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -24,7 +19,7 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
     lateinit var sheasyPref: SheasyPrefDataSource
 
     @Inject
-    lateinit var notificationUtils: NotificationUtils
+    lateinit var notificationUseCase: NotificationUseCase
 
     @Inject
     lateinit var fileDataSource: FileDataSource
@@ -47,7 +42,7 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
             } else {
 
-                notificationUtils.showConnectionRequest(call.remoteHostIp)
+                notificationUseCase.showConnectionRequest(call.remoteHostIp)
                 return Resource.error("1", "")
 
             }

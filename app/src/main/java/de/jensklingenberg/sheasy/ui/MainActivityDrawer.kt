@@ -6,7 +6,7 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.model.sideMenuEntries
+import de.jensklingenberg.sheasy.data.sideMenuEntries
 
 
 class MainActivityDrawer(val activity: MainActivity) {

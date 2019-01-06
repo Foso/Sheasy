@@ -2,7 +2,8 @@ package de.jensklingenberg.sheasy.di
 
 import dagger.Component
 import de.jensklingenberg.sheasy.data.file.FileRepository
-import de.jensklingenberg.sheasy.network.*
+import de.jensklingenberg.sheasy.network.HTTPServerService
+import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.ktor.AndroidFileRouteHandler
 import de.jensklingenberg.sheasy.network.ktor.AndroidKtorGeneralRouteHandler
 import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
@@ -26,7 +27,7 @@ import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import javax.inject.Singleton
 
-@Component(modules = [(AppModule::class), (UtilsModule::class),(UseCaseModule::class),(KtorModule::class), (ServiceModule::class)])
+@Component(modules = [(AppModule::class), (UseCaseModule::class),(NetworkModule::class),(AndroidModule::class)])
 @Singleton
 interface AppComponent {
 

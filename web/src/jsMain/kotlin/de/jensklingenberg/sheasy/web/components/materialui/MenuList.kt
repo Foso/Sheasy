@@ -9,6 +9,7 @@
 
 package components.materialui
 
+import de.jensklingenberg.sheasy.web.components.materialui.ListProps
 import react.RClass
 
 @JsModule("@material-ui/core/MenuList/MenuList")

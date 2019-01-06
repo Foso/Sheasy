@@ -83,7 +83,7 @@ kotlin {
                 implementation "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
                 implementation "org.jetbrains:kotlin-react:$kotlin_react_version"
                 implementation "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
-                implementation "org.kodein.di:kodein-di-erased-js:${libs.kodein}"
+                implementation "org.kodein.di:kodein-di-erased-js:$libs.kodein"
                 implementation "org.jetbrains.kotlin:kotlin-test-js"
             }
         }
@@ -99,11 +99,7 @@ kotlin {
                 implementation 'de.jodamob.kotlin:kotlin-runner-junit4:0.3.1'
 
                // implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-                implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
-                implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
-                implementation "io.ktor:ktor-gson:$libs.ktor_version"
-                implementation "io.ktor:ktor-websockets:$libs.ktor_version"
-                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
+
                 implementation "org.mockito:mockito-core:2.22.0"
                 implementation "io.mockk:mockk:1.8.13"
 

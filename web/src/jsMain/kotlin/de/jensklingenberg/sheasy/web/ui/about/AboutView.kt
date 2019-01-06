@@ -9,7 +9,10 @@ import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.usecase.NotificationOptions
 import de.jensklingenberg.sheasy.web.usecase.NotificationUseCase
-import react.*
+import react.RBuilder
+import react.RProps
+import react.RState
+import react.setState
 
 interface AboutState : RState {
     var itemsList: List<SourceItem>

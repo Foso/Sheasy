@@ -15,7 +15,7 @@ import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.network.HTTPServerService.Companion.AUTHORIZE_DEVICE
-import usecase.NotificationUseCase
+import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
 import javax.inject.Inject
 
 
@@ -119,7 +119,7 @@ class NotificationUtils : NotificationUseCase {
         notificationManager.notify(100, summaryNotification.build())
     }
 
-    fun showServerNotification() {
+    override fun showServerNotification() {
         BIG_TEXT_NOTIFICATION_KEY++
 
         val pIntent = PendingIntent.getService(

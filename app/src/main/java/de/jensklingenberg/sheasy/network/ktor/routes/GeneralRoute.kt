@@ -1,8 +1,8 @@
 package de.jensklingenberg.sheasy.network.ktor.routes
 
-import de.jensklingenberg.sheasy.network.ktor.toTo
+import de.jensklingenberg.sheasy.model.checkState
+import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
-import de.jensklingenberg.sheasy.web.model.checkState
 import io.ktor.application.ApplicationCallPipeline
 import io.ktor.application.call
 import io.ktor.response.respond
@@ -17,7 +17,7 @@ fun Route.general(
 ) {
 
       intercept(ApplicationCallPipeline.Call) {
-                      val resource = generalRouteHandler.intercept(call.toTo())
+                      val resource = generalRouteHandler.intercept(call.ktorApplicationCall())
                       resource.checkState(onError = {
                           launch {
                              // call.respond(resource)

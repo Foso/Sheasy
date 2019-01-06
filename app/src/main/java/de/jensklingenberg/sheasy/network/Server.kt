@@ -13,7 +13,6 @@ import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import io.ktor.server.netty.NettyApplicationEngine
-import repository.SheasyPrefDataSource
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

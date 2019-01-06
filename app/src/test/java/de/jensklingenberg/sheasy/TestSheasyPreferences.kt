@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy
 
-import de.jensklingenberg.sheasy.web.model.Device
-import repository.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 
 
 class TestSheasyPreferences : SheasyPrefDataSource {

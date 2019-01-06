@@ -15,7 +15,7 @@ import react.RClass
 import react.RComponent
 import react.RProps
 import react.RState
-import kotlin.js.*
+import kotlin.js.Json
 
 @JsModule("@material-ui/core/Input/Input")
 external val InputImport: dynamic
@@ -39,7 +39,7 @@ external interface InputProps : RProps, LayoutProps {
     var placeholder: String? get() = definedExternally; set(value) = definedExternally
     var rows: dynamic /* String | Number */ get() = definedExternally; set(value) = definedExternally
     var rowsMax: dynamic /* String | Number */ get() = definedExternally; set(value) = definedExternally
-    var startAdornment: dynamic? get() = definedExternally; set(value) = definedExternally
+    var startAdornment: dynamic get() = definedExternally; set(value) = definedExternally
     var type: String? get() = definedExternally; set(value) = definedExternally
     var value: dynamic /* String | Number | Array<dynamic /* String | Number */> */ get() = definedExternally; set(value) = definedExternally
     var onChange: (Event) -> Unit

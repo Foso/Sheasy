@@ -1,8 +1,10 @@
 package de.jensklingenberg.sheasy.utils
 
+import android.Manifest
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
 
@@ -10,6 +12,18 @@ class PermissionUtils {
     companion object {
         val MY_PERMISSIONS_REQUEST_CODE = 11
     }
+
+    fun requestPermission(fragment:Fragment,requestCode:Int) {
+        if (fragment.shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            fragment.requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), requestCode)
+
+
+        } else {
+            fragment.requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), requestCode)
+        }
+    }
+
+
 
     fun checkPermStorage(
         activity: FragmentActivity,

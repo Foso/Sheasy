@@ -1,9 +1,7 @@
 package de.jensklingenberg.sheasy.web.model
 
 import de.jensklingenberg.sheasy.web.ui.common.ReactView
-import react.*
-
-
+import react.RBuilder
 
 
 abstract class SourceItem : ReactView {

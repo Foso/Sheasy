@@ -1,17 +1,24 @@
 package de.jensklingenberg.sheasy.web.ui.apps
 
 
-import components.materialui.*
+import components.materialui.CircularProgress
+import components.materialui.Divider
+import components.materialui.Paper
+import components.materialui.Table
+import components.materialui.TableBody
+import components.materialui.TableCell
+import components.materialui.TableHead
+import components.materialui.TableProps
+import components.materialui.TableRow
 import components.reactstrap.FormGroup
 import components.reactstrap.Input
-import components.reactstrap.Row
 import de.jensklingenberg.sheasy.web.data.AppsDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
+import de.jensklingenberg.sheasy.web.data.repository.AppsRepository
+import de.jensklingenberg.sheasy.web.model.Error
 import de.jensklingenberg.sheasy.web.model.StringRes.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_DOWNLOAD
 import de.jensklingenberg.sheasy.web.model.StringRes.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_ICON
 import de.jensklingenberg.sheasy.web.model.StringRes.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_NAME
-import de.jensklingenberg.sheasy.web.data.repository.AppsRepository
-import de.jensklingenberg.sheasy.web.model.Error
 import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.Status
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
@@ -22,8 +29,12 @@ import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
-import react.*
+import react.RBuilder
+import react.RElementBuilder
+import react.RProps
+import react.RState
 import react.dom.div
+import react.setState
 
 
 interface AppsViewState : RState {
@@ -112,6 +123,8 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
                 Error.NOT_AUTHORIZED -> {
                     status = Status.ERROR
                     state.errorMessage = "Device is not authorized"
+                }
+                else -> {
                 }
             }
         }

@@ -5,11 +5,13 @@ import components.materialui.icons.PauseIcon
 import components.materialui.icons.PlayArrowIcon
 import components.materialui.icons.SkipNextIcon
 import components.materialui.icons.SkipPreviousIcon
-import react.*
-import react.dom.div
-import react.dom.p
-import de.jensklingenberg.sheasy.web.ui.common.ToolbarState
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.dom.p
+import react.setState
 
 interface MediaViewProps : RProps {
     var show: Boolean

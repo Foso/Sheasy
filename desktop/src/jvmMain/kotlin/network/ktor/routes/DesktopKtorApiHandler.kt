@@ -1,7 +1,7 @@
 package network.ktor.routes
 
 import de.jensklingenberg.sheasy.network.routehandler.KtorApiHandler
-import de.jensklingenberg.sheasy.network.ktor.toTo
+import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
 import de.jensklingenberg.sheasy.web.model.Resource
 import de.jensklingenberg.sheasy.web.model.checkState
 import io.ktor.application.call
@@ -32,7 +32,7 @@ class DesktopKtorApiHandler: KtorApiHandler {
             param("shared") {
                 get {
                     val filePath = call.parameters["shared"] ?: ""
-                    val toTo = call.toTo("shared").apply {
+                    val toTo = call.ktorApplicationCall("shared").apply {
 
                         parameter=filePath
                     }
@@ -45,7 +45,7 @@ class DesktopKtorApiHandler: KtorApiHandler {
                             )
                             call.respond(resource)
                         }
-                    },onSuccess = {
+                    }, onSuccess = {
                         launch {
                             call.response.header(
                                 HttpHeaders.AccessControlAllowOrigin,

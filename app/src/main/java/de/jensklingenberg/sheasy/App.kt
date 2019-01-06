@@ -4,7 +4,8 @@ import android.app.Application
 import de.jensklingenberg.sheasy.di.AppComponent
 import de.jensklingenberg.sheasy.di.AppModule
 import de.jensklingenberg.sheasy.di.DaggerAppComponent
-import de.jensklingenberg.sheasy.di.ServiceModule
+import de.jensklingenberg.sheasy.di.NetworkModule
+import de.jensklingenberg.sheasy.di.UseCaseModule
 
 
 class App : Application() {
@@ -21,7 +22,8 @@ class App : Application() {
     fun initializeDagger() {
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(this))
-            .serviceModule(ServiceModule())
+            .networkModule(NetworkModule())
+            .useCaseModule(UseCaseModule())
             .build()
     }
 

@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy
 
 import de.jensklingenberg.sheasy.web.model.KtorApplicationCall
-import de.jensklingenberg.sheasy.web.model.Resource
+import de.jensklingenberg.sheasy.model.Resource
 import java.io.InputStream
 
 class MockFileRouteHandler:FileRouteHandler {

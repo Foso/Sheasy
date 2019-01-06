@@ -4,11 +4,11 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.web.model.AppInfo
-import de.jensklingenberg.sheasy.web.model.FileResponse
+import de.jensklingenberg.sheasy.model.AppInfo
+import de.jensklingenberg.sheasy.model.FileResponse
 import io.reactivex.Maybe
 import io.reactivex.Single
-import repository.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -24,7 +24,6 @@ class FileRepository : FileDataSource {
 
     @Inject
     lateinit var pm: PackageManager
-
 
     @Inject
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
@@ -61,7 +60,9 @@ class FileRepository : FileDataSource {
     }
 
 
-    override fun getApps(): Single<List<AppInfo>> {
+     override fun getApps(): Single<List<AppInfo>> {
+
+
         return Single.create<List<AppInfo>> { singleEmitter ->
 
             if (cachedApps.isNotEmpty()) {
@@ -70,8 +71,6 @@ class FileRepository : FileDataSource {
 
             val appsList = getAllInstalledApplications()
                 .map {
-
-
 
                     AppInfo(
                         sourceDir = it.sourceDir,
@@ -89,13 +88,11 @@ class FileRepository : FileDataSource {
                 singleEmitter.onSuccess(cachedApps)
 
             }
-
-
-
-
         }
 
     }
+
+
 
     private fun getAllInstalledApplications(): List<ApplicationInfo> {
         return pm

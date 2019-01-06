@@ -13,11 +13,9 @@ import io.ktor.features.gzip
 import io.ktor.gson.gson
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import repository.SheasyPrefDataSource
 
 
 fun Application.ktorApplicationModule(
-    sheasyPref: SheasyPrefDataSource,
     generalRouteHandler: GeneralRouteHandler,
     fileRouteHandler: FileRouteHandler
 ) {
@@ -41,7 +39,7 @@ fun Application.ktorApplicationModule(
             route("") {
                 general(generalRouteHandler)
 
-                route(sheasyPref.APIV1) {
+                route("/api/v1/") {
                     handleFile(fileRouteHandler)
                 }
             }

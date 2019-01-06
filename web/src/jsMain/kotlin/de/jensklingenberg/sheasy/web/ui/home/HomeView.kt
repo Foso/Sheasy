@@ -1,6 +1,6 @@
 package de.jensklingenberg.sheasy.web.ui.home
 
-import components.materialui.List
+import de.jensklingenberg.sheasy.web.components.materialui.List
 import components.materialui.ListItem
 import components.materialui.ListItemText
 import de.jensklingenberg.sheasy.web.model.DrawerItems

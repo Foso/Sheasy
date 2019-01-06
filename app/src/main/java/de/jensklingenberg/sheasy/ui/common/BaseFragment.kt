@@ -5,10 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.ui.apps.MvvmFragment
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 
 open class BaseFragment : Fragment() {
+
+    val subscriptions = CompositeDisposable()
+
+    fun subscribe(disposable: Disposable): Disposable {
+        subscriptions.add(disposable)
+        return disposable
+    }
+
+    override fun onStop() {
+        super.onStop()
+        subscriptions.clear()
+    }
+
 
     open fun getLayoutId(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

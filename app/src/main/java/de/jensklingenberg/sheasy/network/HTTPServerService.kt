@@ -9,10 +9,9 @@ import android.os.Binder
 import android.os.IBinder
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.ui.common.OnResultActivity
-import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.ScreenRecord
+import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
 import de.jensklingenberg.sheasy.web.model.Device
-import repository.SheasyPrefDataSource
 import javax.inject.Inject
 
 
@@ -40,7 +39,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     }
 
     @Inject
-    lateinit var notificationUtils1: NotificationUtils
+    lateinit var notificationUtils1: NotificationUseCase
 
     @Inject
     lateinit var server: Server

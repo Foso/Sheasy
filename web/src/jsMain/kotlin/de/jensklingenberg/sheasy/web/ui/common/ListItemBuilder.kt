@@ -1,6 +1,11 @@
 package de.jensklingenberg.sheasy.web.ui.common
 
-import components.materialui.*
+import components.materialui.IconButton
+import components.materialui.ListItem
+import components.materialui.ListItemIcon
+import components.materialui.ListItemText
+import components.materialui.TableCell
+import components.materialui.TableRow
 import components.materialui.icons.BlockIcon
 import components.materialui.icons.DownloadIcon
 import components.materialui.icons.FolderIcon

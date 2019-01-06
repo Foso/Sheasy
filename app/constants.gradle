@@ -4,6 +4,7 @@ ext {
     buildTime = new Date().format("yyyy-MM-dd'T'HH:mm:ss'Z'", TimeZone.getTimeZone("UTC"))
 
     mavenRepos = ["https://plugins.gradle.org/m2/",
+                  "https://oss.sonatype.org/content/repositories/snapshots",
                   "https://dl.bintray.com/kotlin/ktor",
                   "https://dl.bintray.com/kotlin/kotlinx",
                   "https://jitpack.io",
@@ -52,7 +53,7 @@ ext {
             moshiVersion         : '1.5.0',
             nanohttpdwebsocket   : '2.3.1',
             nav_version          : "1.0.0-alpha08",
-            rxandroid            : '2.0.2',
+            rxandroid            : '2.1.0',
             rxbinding            : '2.1.1',
             rxJava               : '2.1.7',
             rxjava2Adapter       : '1.0.0',

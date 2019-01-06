@@ -1,5 +1,4 @@
-package de.jensklingenberg.sheasy.web.model
-
+package de.jensklingenberg.sheasy.model
 
 
 enum class Status(val title:String) {
@@ -15,7 +14,7 @@ data class Resource<T>(val status: String, val data: T?, val message: String?) {
 
         fun <T> error(msg: String, data: T?): Resource<T> = Resource(Status.ERROR.title, data, msg)
 
-        fun <T> error(error: Error,msg: String, data: T?): Resource<T> = Resource(error.title, data, msg)
+        fun <T> error(error: Error, msg: String, data: T?): Resource<T> = Resource(error.title, data, msg)
 
 
         fun <T> loading(msg: String): Resource<T> = Resource(Status.LOADING.title, null, msg)
@@ -27,13 +26,13 @@ data class Resource<T>(val status: String, val data: T?, val message: String?) {
 
 }
 fun <T> Resource<T>.checkState(
-    onSuccess: (T) -> Unit = {},
+    onSuccess: (Resource<T>) -> Unit = {},
     onLoading: () -> Unit = {},
     onError: () -> Unit = {}
 ) {
 
     when (status) {
-        Status.SUCCESS.title -> onSuccess(this.data!!)
+        Status.SUCCESS.title -> onSuccess(this)
         Status.ERROR.title -> onError()
         Status.LOADING.title -> onLoading()
     }

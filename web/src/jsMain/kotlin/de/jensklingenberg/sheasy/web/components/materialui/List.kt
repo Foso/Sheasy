@@ -7,9 +7,12 @@
     "NESTED_CLASS_IN_EXTERNAL_INTERFACE"
 )
 
-package components.materialui
+package de.jensklingenberg.sheasy.web.components.materialui
 
-import react.*
+import react.RClass
+import react.RElementBuilder
+import react.RProps
+
 
 @JsModule("@material-ui/core/List/List")
 external val ListImport: dynamic

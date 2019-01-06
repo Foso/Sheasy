@@ -2,7 +2,10 @@ package de.jensklingenberg.sheasy.web.components.listview
 
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 
 interface ListViewProps : RProps {
     var itemsListp: List<SourceItem>

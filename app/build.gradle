@@ -86,11 +86,10 @@ android {
 
 
 detekt {
-    toolVersion = "1.0.0.RC8"
-    debug = true
+    toolVersion = "1.0.0.RC9.2"
     input = files("src/main/java")
     filters = ".*/resources/.*,.*/build/.*"
-    config = files("$projectDir/default-detekt-config.yml")
+    config = files("./default-detekt-config.yml")
     reports {
         xml {
             enabled = true
@@ -120,7 +119,6 @@ kotlin {
 
 dependencies {
     implementation project(':serverJvm')
-    implementation project(':libshared')
     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
@@ -160,8 +158,19 @@ dependencies {
     //RxJava
     implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
-    implementation "com.jakewharton.rxbinding2:rxbinding:${libs.rxbinding}"
     implementation "io.reactivex.rxjava2:rxkotlin:${libs.rxkotlin}"
+
+
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-drawerlayout:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-leanback:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-recyclerview:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-slidingpanelayout:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-swiperefreshlayout:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-viewpager:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.0.0-alpha2'
 
     //Dagger
     implementation "com.google.dagger:dagger-android:${libs.dagger}"
@@ -177,8 +186,6 @@ dependencies {
     }
     implementation 'co.zsmb:materialdrawer-kt:2.0.1'
 
-    // optional - Test helpers
-    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
 
     //Testing
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "$libs.mockitoVersion"

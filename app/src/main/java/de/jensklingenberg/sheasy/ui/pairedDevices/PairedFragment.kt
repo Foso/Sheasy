@@ -11,7 +11,7 @@ import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
-import de.jensklingenberg.sheasy.utils.extension.toSourceItem
+import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import kotlinx.android.synthetic.main.fragment_apps.*
 
 

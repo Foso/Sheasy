@@ -4,12 +4,11 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.file.FileDataSource
 import de.jensklingenberg.sheasy.network.HttpMethod
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
-import de.jensklingenberg.sheasy.web.model.AppInfo
+import de.jensklingenberg.sheasy.model.AppInfo
 import kotlinx.coroutines.rx2.await
-import de.jensklingenberg.sheasy.web.model.AppResponse
-import de.jensklingenberg.sheasy.web.model.Resource
+import de.jensklingenberg.sheasy.model.Resource
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import io.reactivex.Single
-import io.reactivex.rxkotlin.subscribeBy
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -21,13 +20,18 @@ class AndroidFileRouteHandler : FileRouteHandler {
     @Inject
     lateinit var fileDataSource: FileDataSource
 
+    @Inject
+    lateinit var sheasyPrefDataSource: SheasyPrefDataSource
+
     init {
         initializeDagger()
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    override fun getApps(): Single<List<AppInfo>> = fileDataSource.getApps()
+    override fun apps(httpMethod: HttpMethod): Single<List<AppInfo>> {
+        return fileDataSource.getApps()
+    }
 
 
     override fun postUpload(
@@ -48,53 +52,18 @@ class AndroidFileRouteHandler : FileRouteHandler {
     }
 
     override suspend fun getShared(call: KtorApplicationCall): Resource<Any> {
-        val shared = "/storage/emulated/0/Music"
 
-        val filePath = call.parameter
-
-        if (!filePath.startsWith(shared)) {
-            return Resource.error("path not allowed","")
-        }
-
-
-        if (filePath.contains(".")) {
-
-            val fileInputStream = FileInputStream(File(filePath))
-
-            return Resource.success(fileInputStream.readBytes())
-
-        } else {
-
-            val fileList = fileDataSource
-                .getFiles(filePath)
-                .await()
-
-            if (fileList.isEmpty()) {
-                return Resource.error("path not found","")
-
-
-            } else {
-
-
-                call.apply {
-
-                    return Resource.success(fileList)
-                }
-
-            }
-
-
-        }
+       return Resource.success(sheasyPrefDataSource.sharedFolders)
 
     }
 
     override suspend fun getDownload(call: KtorApplicationCall): Resource<Any> {
         val filePath = call.parameter
 
-        if (filePath.startsWith("/storage/emulated/0/") == false) {
-
-            return Resource.error("path not allowed","")
+        val allowedPath= sheasyPrefDataSource.sharedFolders.any { folderPath->
+            folderPath.startsWith(filePath)
         }
+
 
 
         if (filePath.contains(".")) {
@@ -135,9 +104,7 @@ class AndroidFileRouteHandler : FileRouteHandler {
             .getApplicationInfo(packageName)
             .map { FileInputStream(it.sourceDir) }
             .await()?.let {
-                with(call) {
-                    return Resource.success(it.readBytes())
-                }
+                return Resource.success(it.readBytes())
             }
         return Resource.error("getApkError","")
 

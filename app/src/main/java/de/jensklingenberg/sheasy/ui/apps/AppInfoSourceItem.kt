@@ -2,7 +2,7 @@ package de.jensklingenberg.sheasy.ui.apps
 
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
-import de.jensklingenberg.sheasy.web.model.AppInfo
+import de.jensklingenberg.sheasy.model.AppInfo
 
 
 class AppInfoSourceItem(appInfo: AppInfo, var onEntryClickListener: OnEntryClickListener? = null) :

@@ -6,7 +6,11 @@ import de.jensklingenberg.sheasy.web.components.Notification.Notification
 import de.jensklingenberg.sheasy.web.components.Notification.ReactNotificationOptions
 import de.jensklingenberg.sheasy.web.components.Notification.defaultReactNotificationOptions
 import de.jensklingenberg.sheasy.web.components.reactstrap.Tooltip
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.setState
 
 
 interface NotificationVState : RState {

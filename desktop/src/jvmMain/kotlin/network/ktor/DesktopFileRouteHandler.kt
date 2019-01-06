@@ -1,17 +1,32 @@
 package network.ktor
 
+import de.jensklingenberg.sheasy.model.AppInfo
+import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.Resource
+import de.jensklingenberg.sheasy.network.HttpMethod
 import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
-import de.jensklingenberg.sheasy.web.model.FileResponse
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
-import de.jensklingenberg.sheasy.web.model.Resource
+import io.reactivex.Single
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
 
 class DesktopFileRouteHandler: FileRouteHandler {
-    override suspend fun getAPK(call: KtorApplicationCall): Resource<Any> {
+    override suspend fun apk(httpMethod: HttpMethod, call: KtorApplicationCall): Resource<Any> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun get(call: KtorApplicationCall): Resource<Any> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun apps(httpMethod: HttpMethod): Single<List<AppInfo>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+
+    }
+
+
 
     override suspend fun getDownload(call: KtorApplicationCall): Resource<Any> {
         val filePath = call.parameter
@@ -74,7 +89,5 @@ class DesktopFileRouteHandler: FileRouteHandler {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun get(call: KtorApplicationCall): Resource<Any> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 }

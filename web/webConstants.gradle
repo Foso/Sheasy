@@ -21,8 +21,8 @@ ext {
             react_web_notification: '0.3.2',
             simple_websocket      : '7.2.0',
             axios                 : '0.18.0',
-            kodein : "6.0.1",
-            react_draggable:"3.0.5"
+            kodein                : "6.0.1",
+            react_draggable       : "3.0.5"
     ]
 
 

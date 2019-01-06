@@ -1,14 +1,13 @@
 package de.jensklingenberg.sheasy.utils
 
 import android.os.Build
-import de.jensklingenberg.sheasy.web.model.DeviceResponse
 
 /**
  * Created by jens on 25/2/18.
  */
 class DeviceUtils {
     companion object {
-        fun getDeviceInfo(): DeviceResponse {
+      /*  fun getDeviceInfo(): DeviceResponse {
 
             val device = DeviceResponse(
                 Build.MANUFACTURER,
@@ -20,6 +19,7 @@ class DeviceUtils {
 
             return device
         }
+        */
     }
 
 

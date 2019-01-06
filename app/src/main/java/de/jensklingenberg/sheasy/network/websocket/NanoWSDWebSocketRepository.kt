@@ -2,7 +2,7 @@ package de.jensklingenberg.sheasy.network.websocket
 
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
-import repository.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import javax.inject.Inject
 
 class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataSource) :

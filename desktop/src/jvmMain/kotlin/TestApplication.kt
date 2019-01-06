@@ -22,14 +22,16 @@ import io.ktor.websocket.webSocket
 import network.ktor.DesktopFileRouteHandler
 import network.ktor.routes.DesktopKtorApiHandler
 import network.ktor.repository.DesktopSheasyPrefDataSource
-import repository.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import java.time.Duration
 
 
 fun main() {
-val sheasyPref : SheasyPrefDataSource = DesktopSheasyPrefDataSource()
-val fileRouteHandler : FileRouteHandler = DesktopFileRouteHandler()
-val ktorApiHandler: KtorApiHandler = DesktopKtorApiHandler()
+    val sheasyPref : SheasyPrefDataSource = DesktopSheasyPrefDataSource()
+    val fileRouteHandler : FileRouteHandler = DesktopFileRouteHandler()
+    val ktorApiHandler: KtorApiHandler = DesktopKtorApiHandler()
+
+
 
     val server = embeddedServer(Netty, port = sheasyPref.httpPort) {
 
@@ -44,7 +46,7 @@ val ktorApiHandler: KtorApiHandler = DesktopKtorApiHandler()
             pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
             timeout = Duration.ofSeconds(15)
             maxFrameSize =
-                Long.MAX_VALUE // Disabled (max value). The connection will be closed if surpassed this length.
+                    Long.MAX_VALUE // Disabled (max value). The connection will be closed if surpassed this length.
             masking = false
         }
 
@@ -70,7 +72,7 @@ val ktorApiHandler: KtorApiHandler = DesktopKtorApiHandler()
             get("/demo") {
                 call.respondText("HELLO WORLD!")
             }
-            route(sheasyPref.APIV1) {
+            route("/api/v1/") {
                 ktorApiHandler.run {
                     file(fileRouteHandler)
                 }

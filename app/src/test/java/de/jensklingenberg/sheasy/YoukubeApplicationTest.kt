@@ -8,7 +8,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.withTestApplication
 import de.jensklingenberg.sheasy.data.preferences.SheasyPreferencesRepository
-import repository.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -21,7 +21,10 @@ class ApplicationTest {
 
 
     @Test
-    fun testRequests() = withTestApplication(moduleFunction = {ktorApplicationModule(sheasyPreferences,generalRouteHandler,fileRouteHandler)}) {
+    fun testRequests() = withTestApplication(moduleFunction = {ktorApplicationModule(
+        generalRouteHandler,
+        fileRouteHandler
+    )}) {
         with(handleRequest(HttpMethod.Get, "/")) {
 
             assertEquals(HttpStatusCode.OK, response.status())

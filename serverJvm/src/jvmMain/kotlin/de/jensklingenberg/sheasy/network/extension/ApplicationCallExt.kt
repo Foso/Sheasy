@@ -1,9 +1,10 @@
-package de.jensklingenberg.sheasy.network.ktor
+package de.jensklingenberg.sheasy.network.extension
 
+import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
 import io.ktor.application.ApplicationCall
 import io.ktor.features.origin
 
-public fun ApplicationCall.toTo(apiPath:String=""): KtorApplicationCall {
+public fun ApplicationCall.ktorApplicationCall(apiPath:String=""): KtorApplicationCall {
 
 
     return KtorApplicationCall(

@@ -8,20 +8,23 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.shopify.livedataktx.nonNull
-import com.shopify.livedataktx.observe
+import com.jakewharton.rxbinding3.appcompat.itemClicks
+import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
+import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import de.jensklingenberg.sheasy.utils.extension.requireView
-import de.jensklingenberg.sheasy.utils.extension.toSourceItem
-import de.jensklingenberg.sheasy.web.model.AppInfo
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_apps.*
-import de.jensklingenberg.sheasy.web.model.checkState
 import javax.inject.Inject
 
 
@@ -32,7 +35,6 @@ class AppsFragment : BaseFragment(), OnEntryClickListener {
     lateinit var appsViewModel: AppsViewModel
     @Inject
     lateinit var messageUseCase: MessageUseCase
-
 
     /****************************************** Lifecycle methods  */
 
@@ -46,7 +48,7 @@ class AppsFragment : BaseFragment(), OnEntryClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true)
         appsViewModel = obtainViewModel(AppsViewModel::class.java)
 
         recyclerView?.apply {
@@ -61,7 +63,38 @@ class AppsFragment : BaseFragment(), OnEntryClickListener {
             )
         }
 
-        observeAppsViewModel()
+        initSubscriber()
+
+
+    }
+
+    private fun initSubscriber() {
+        subscribe(
+            appsViewModel.getApps()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(onNext = { appList ->
+                    appList.data!!
+                        .sortedBy { it.name }
+                        .map { it.toSourceItem(this) }
+                        .run {
+                            baseAdapter.dataSource.setItems(this)
+                            baseAdapter.notifyDataSetChanged()
+                        }
+                })
+        )
+
+        subscribe(
+            appsViewModel.getSnackbar()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError {
+                    messageUseCase.show(requireView(), it.message ?: "")
+                }
+                .subscribe()
+        )
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -77,72 +110,53 @@ class AppsFragment : BaseFragment(), OnEntryClickListener {
 
     private fun initSearchView(menu: Menu?) {
         val search = menu?.findItem(R.id.search)?.actionView as SearchView
-        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = true
+        search.queryTextChanges()
+            .rxBindingSubscriber()
+            .doOnNext { appsViewModel.searchApp(it.toString()) }
+            .subscribe()
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let {
-                    appsViewModel.searchApp(newText)
-                }
-                return true
-            }
-
-        })
     }
 
-
-    private fun observeAppsViewModel() {
-        appsViewModel
-            .getApps()
-            .nonNull()
-            .observe {
-                it.checkState(
-                    onSuccess = { appInfoList ->
-                        appInfoList
-                            .sortedBy { it.name }
-                            .map { it.toSourceItem(this) }
-                            .run {
-                                baseAdapter.dataSource.setItems(this)
-                                baseAdapter.notifyDataSetChanged()
-                            }
-                    }, onLoading = {
-                        messageUseCase.show(requireView(), "Loading")
-                    }
-                )
-
-
-            }
-    }
 
     /****************************************** Listener methods  */
 
 
-    override fun onItemClicked(payload: Any) {
-
-
-    }
+    override fun onItemClicked(payload: Any) {}
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
-        val item = payload as? AppInfo
-        val popup = PopupMenu(requireActivity(), view)
-        popup.menuInflater
-            .inflate(R.menu.apps_actions, popup.menu);
-        popup.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_share -> {
-                    appsViewModel.shareApp(item!!)
-                    //shareUseCase.share()
+        val appInfo = payload as? AppInfo
+        appInfo?.let {appInfo->
+            val popup = PopupMenu(requireActivity(), view)
+                .apply {
+                    menuInflater
+                        .inflate(R.menu.apps_actions, menu)
                 }
-                R.id.menu_extract->{
-                    if (appsViewModel.extractApp(item!!)) {
-                        messageUseCase.show(requireView(),"Succes")
-                    }
+                .also {
+                    it.itemClicks()
+                        .rxBindingSubscriber()
+                        .doOnNext { menuItem ->
+                            when (menuItem.itemId) {
+                                R.id.menu_share -> {
+                                    appsViewModel.shareApp(appInfo)
+                                }
+                                R.id.menu_extract -> {
+                                    if (appsViewModel.extractApp(appInfo)) {
+                                        messageUseCase.show(requireView(), "Succes")
+                                    }
+                                }
+                            }
+                        }.subscribe()
                 }
-            }
-            true
+            popup.show()
         }
-        popup.show()
+
     }
 
 
+}
+
+
+fun <T> Observable<T>.rxBindingSubscriber(): Observable<T> {
+    return this.subscribeOn(AndroidSchedulers.mainThread())
+        .observeOn(AndroidSchedulers.mainThread())
 }

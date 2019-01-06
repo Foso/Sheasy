@@ -6,14 +6,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.data.sideMenuEntries
 import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
-import de.jensklingenberg.sheasy.model.sideMenuEntries
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
-import de.jensklingenberg.sheasy.utils.extension.toSourceItem
+import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
