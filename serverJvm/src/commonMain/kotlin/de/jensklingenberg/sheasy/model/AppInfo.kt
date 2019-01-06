@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.web.model
+package de.jensklingenberg.sheasy.model
 
 
 data class AppInfo(
