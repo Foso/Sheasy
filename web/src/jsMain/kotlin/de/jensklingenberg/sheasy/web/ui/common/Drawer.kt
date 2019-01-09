@@ -11,10 +11,10 @@ class Drawer{
 
 companion object {
      fun setupDrawer(
-        rBuilder: RBuilder,
-        drawerItems: Array<DrawerItems>,
-        showDrawer: Boolean,
-        test :()->Unit
+         rBuilder: RBuilder,
+         drawerItems: Array<DrawerItems>,
+         showDrawer: Boolean,
+         test :()->Unit
 
     ) {
         rBuilder.run {

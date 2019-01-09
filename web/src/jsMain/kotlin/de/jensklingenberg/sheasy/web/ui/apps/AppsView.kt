@@ -9,6 +9,7 @@ import components.materialui.TableCell
 import components.materialui.TableHead
 import components.materialui.TableProps
 import components.materialui.TableRow
+import de.jensklingenberg.sheasy.web.KodeinInject
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
@@ -44,6 +45,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     private var presenter: AppsPresenter? = null
     val appsDataSource: FileDataSource = FileRepository(ReactHttpClient(NetworkPreferences()))
+
     val messageUseCase= MessageUseCase()
 
     /****************************************** React Lifecycle methods  */

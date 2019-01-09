@@ -6,7 +6,8 @@ import de.jensklingenberg.sheasy.web.model.Error
 import de.jensklingenberg.sheasy.web.model.response.FileResponse
 import de.jensklingenberg.sheasy.web.network.ResponseCallback
 
-class AppsPresenter(private val view: AppsContract.View,val appsDataSource : FileDataSource) : AppsContract.Presenter {
+class AppsPresenter(private val view: AppsContract.View, val appsDataSource : FileDataSource) :
+    AppsContract.Presenter {
 
 
 

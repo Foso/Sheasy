@@ -11,6 +11,6 @@ interface AboutContract{
         fun showError(error: Error)
     }
 
-    interface Presenter:ReactPresenter
+    interface Presenter: ReactPresenter
 }
 

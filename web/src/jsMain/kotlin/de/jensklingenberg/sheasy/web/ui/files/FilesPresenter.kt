@@ -3,10 +3,10 @@ package de.jensklingenberg.sheasy.web.ui.files
 import de.jensklingenberg.sheasy.web.model.Error
 import de.jensklingenberg.sheasy.web.model.response.FileResponse
 import de.jensklingenberg.sheasy.web.data.FileDataSource
-import de.jensklingenberg.sheasy.web.model.File
 import de.jensklingenberg.sheasy.web.network.ResponseCallback
 
-class FilesPresenter(val view: FilesContract.View, val appsDataSource: FileDataSource) : FilesContract.Presenter {
+class FilesPresenter(val view: FilesContract.View, val appsDataSource: FileDataSource) :
+    FilesContract.Presenter {
     override fun uploadFile(file: File) {
 
 
