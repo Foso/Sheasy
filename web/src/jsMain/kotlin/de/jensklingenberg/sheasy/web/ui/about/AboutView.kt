@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.web.ui.about
 
 
+import de.jensklingenberg.sheasy.web.KodeinInject
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.model.Error
@@ -9,6 +10,11 @@ import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.usecase.NotificationOptions
 import de.jensklingenberg.sheasy.web.usecase.NotificationUseCase
+import kotlinx.html.injector.injectTo
+import org.kodein.di.Kodein
+import org.kodein.di.erased.bind
+import org.kodein.di.erased.instance
+import org.kodein.di.erased.singleton
 import react.RBuilder
 import react.RProps
 import react.RState
@@ -21,8 +27,16 @@ interface AboutState : RState {
 
 
 class AboutView : BaseComponent<RProps, AboutState>(), AboutContract.View {
+
+    init {
+        Application.appComponent.inject(this)
+
+    }
+
     private val presenter: AboutPresenter = AboutPresenter(this)
-    val notificationUseCase=NotificationUseCase()
+
+@KodeinInject
+    lateinit var notificationUseCase:NotificationUseCase
     val notificationOptions= NotificationOptions(title = "Hall",subText = "uUUU",icon = "https://avatars3.githubusercontent.com/u/5015532?s=40&v=4",tag="dd")
 
     /****************************************** React Lifecycle methods  */
@@ -32,13 +46,14 @@ class AboutView : BaseComponent<RProps, AboutState>(), AboutContract.View {
     }
 
     override fun componentDidMount() {
+
         presenter.componentDidMount()
     }
 
     override fun RBuilder.render() {
         toolbar()
         state.itemsList.render(this)
-       // notificationUseCase.showNotification(this,notificationOptions)
+        notificationUseCase.showNotification(this,notificationOptions)
     }
 
     /****************************************** Presenter methods  */
@@ -55,5 +70,4 @@ class AboutView : BaseComponent<RProps, AboutState>(), AboutContract.View {
 
 
 fun RBuilder.about() = child(AboutView::class) {}
-
 

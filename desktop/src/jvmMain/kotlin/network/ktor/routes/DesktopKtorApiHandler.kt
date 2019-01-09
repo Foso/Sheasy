@@ -1,9 +1,9 @@
 package network.ktor.routes
 
+import de.jensklingenberg.sheasy.model.Resource
+import de.jensklingenberg.sheasy.model.checkState
 import de.jensklingenberg.sheasy.network.routehandler.KtorApiHandler
 import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
-import de.jensklingenberg.sheasy.web.model.Resource
-import de.jensklingenberg.sheasy.web.model.checkState
 import io.ktor.application.call
 import io.ktor.http.HttpHeaders
 import io.ktor.response.header
@@ -28,6 +28,12 @@ class DesktopKtorApiHandler: KtorApiHandler {
             }
 
 
+            route("shared") {
+                get {
+                    call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
+                    call.respond(Resource.success(MockTestDataSource.sharedFolders))
+                }
+            }
 
             param("shared") {
                 get {

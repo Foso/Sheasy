@@ -10,8 +10,7 @@ class NetworkPreferences{
      */
     val apiVersion = "v1"
 
-    val testingAddress = "192.168.178.20:8766"
-
+    val testingAddress = "192.168.178.35:8766"
 
 
 

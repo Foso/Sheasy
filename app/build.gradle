@@ -13,8 +13,10 @@ plugins {
     id("base")
     id("changelog")
     id("io.gitlab.arturbosch.detekt")
+    //id('org.jetbrains.dokka')
 
 }
+apply plugin: 'org.jetbrains.dokka'
 
 android {
     packagingOptions {
@@ -37,7 +39,8 @@ android {
         targetSdkVersion configuration.targetSdk
         versionCode 1
         versionName configuration.appVersion
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "de.jensklingenberg.sheasy.UiTestsRunner"
+
         multiDexEnabled true
         signingConfig signingConfigs.debug
         javaCompileOptions {
@@ -82,6 +85,9 @@ android {
     }
     productFlavors {
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 
@@ -116,6 +122,23 @@ kotlin {
     }
 }
 
+dokka {
+    moduleName = 'app'
+    outputFormat = 'html'
+    outputDirectory = "./javadoc"
+
+    linkMapping {
+        dir = "src/main/java"
+        url = "https://github.com/JetBrains/kotlin-examples/tree/master/gradle/dokka-gradle-example/src/main/kotlin"
+        suffix = "#L"
+    }
+}
+
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = "javadoc"
+    outputDirectory = "$projectDir/dokkaJavadoc"
+}
 
 dependencies {
     implementation project(':serverJvm')
@@ -180,22 +203,62 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:${libs.dagger}"
     kapt "com.google.dagger:dagger-android-processor:${libs.dagger}"
 
+
+    kaptAndroidTest "com.google.dagger:dagger-compiler:${libs.dagger}"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:${libs.dagger}"
+
     //Other
     implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
     implementation 'co.zsmb:materialdrawer-kt:2.0.1'
 
+    implementation "com.squareup.retrofit2:converter-moshi:${libs.moshiConverterVersion}"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${libs.rxjava2Adapter}"
+
 
     //Testing
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "$libs.mockitoVersion"
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     testImplementation 'com.nhaarman:mockito-kotlin:1.6.0'
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${configuration.kotlin_version}"
-    androidTestImplementation 'androidx.test:runner:1.1.1'
+
+   // testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${configuration.kotlin_version}"
     testImplementation "junit:junit:${libs.junit}"
     androidTestImplementation "android.arch.navigation:navigation-testing:$libs.nav_version"
     testImplementation "io.ktor:ktor-server-test-host:$libs.ktor_version"
+
+
+    androidTestImplementation "io.mockk:mockk:${libs.mockkVersion}"
+    androidTestImplementation "io.mockk:mockk-android:${libs.mockkVersion}"
+
+
+
+    // Core library
+    androidTestImplementation 'androidx.test:core:1.1.0'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+
+    // Assertions
+    androidTestImplementation "androidx.test.ext:junit:1.1.0"
+    androidTestImplementation 'androidx.test.ext:truth:1.0.0'
+    androidTestImplementation 'com.google.truth:truth:0.42'
+
+    // Espresso dependencies
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.1.0'
+    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.1.0'
+
+    // The following Espresso dependency can be either "implementation"
+    // or "androidTestImplementation", depending on whether you want the
+    // dependency to appear on your APK's compile classpath or the test APK
+    // classpath.
+    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.1.0'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
 }
 
 

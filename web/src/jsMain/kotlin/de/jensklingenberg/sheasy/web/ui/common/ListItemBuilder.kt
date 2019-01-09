@@ -1,11 +1,12 @@
 package de.jensklingenberg.sheasy.web.ui.common
 
 import components.materialui.IconButton
-import components.materialui.ListItem
+import de.jensklingenberg.sheasy.web.components.materialui.ListItem
 import components.materialui.ListItemIcon
 import components.materialui.ListItemText
 import components.materialui.TableCell
 import components.materialui.TableRow
+import components.materialui.icons.AndroidIcon
 import components.materialui.icons.BlockIcon
 import components.materialui.icons.DownloadIcon
 import components.materialui.icons.FolderIcon
@@ -19,13 +20,14 @@ import react.RBuilder
 import react.dom.div
 import react.dom.p
 import kotlin.browser.window
+import  de.jensklingenberg.sheasy.web.components.materialui.List
 
 class ListItemBuilder{
     companion object {
 
         fun listItem(rBuilder: RBuilder, file: FileResponse, itemClickFunction:(Event)->Unit, onMoreBtnClick:(Event)->Unit) {
             with(rBuilder) {
-                components.materialui.List {
+            List {
                     attrs {
                         component = "nav"
                     }
@@ -45,6 +47,49 @@ class ListItemBuilder{
                         ListItemText {
                             p {
                                 +file.name
+                                attrs {
+                                    onClickFunction = itemClickFunction//{ presenter.setPath(file.path) }
+                                }
+                            }
+
+                        }
+
+                        IconButton {
+                            MoreVertIcon {}
+                            attrs {
+                                asDynamic()["aria-owns"] = "simple-menu"
+                                asDynamic()["aria-haspopup"] = true
+                                onClick = onMoreBtnClick
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        fun listItem(rBuilder: RBuilder, app: App, itemClickFunction:(Event)->Unit, onMoreBtnClick:(Event)->Unit) {
+            with(rBuilder) {
+                List {
+                    attrs {
+                        component = "nav"
+                    }
+
+                    ListItem {
+                        attrs {
+                            // href = presenter.getFiles(it.path)
+                            component = "a"
+                            divider = true
+                            styleProps(textAlign = "left")
+                        }
+
+                        ListItemIcon {
+                            AndroidIcon {}
+                        }
+
+                        ListItemText {
+                            p {
+                                +app.name
                                 attrs {
                                     onClickFunction = itemClickFunction//{ presenter.setPath(file.path) }
                                 }

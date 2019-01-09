@@ -8,7 +8,7 @@ import de.jensklingenberg.sheasy.di.NetworkModule
 import de.jensklingenberg.sheasy.di.UseCaseModule
 
 
-class App : Application() {
+open class App : Application() {
 
     companion object {
         lateinit var appComponent: AppComponent
@@ -19,7 +19,7 @@ class App : Application() {
         initializeDagger()
     }
 
-    fun initializeDagger() {
+    open fun initializeDagger() {
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(this))
             .networkModule(NetworkModule())

@@ -6,9 +6,9 @@ import components.materialui.InputLabel
 import components.materialui.Menu
 import components.materialui.MenuItem
 import de.jensklingenberg.sheasy.web.components.materialui.Input
-import de.jensklingenberg.sheasy.web.data.AppsDataSource
+import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
-import de.jensklingenberg.sheasy.web.data.repository.AppsRepository
+import de.jensklingenberg.sheasy.web.data.repository.FileRepository
 import de.jensklingenberg.sheasy.web.model.Error
 import de.jensklingenberg.sheasy.web.model.StringRes
 import de.jensklingenberg.sheasy.web.model.response.FileResponse
@@ -45,7 +45,7 @@ interface FileViewState : RState {
 
 
 class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
-    val appsDataSource: AppsDataSource = AppsRepository(ReactHttpClient(NetworkPreferences()))
+    val appsDataSource: FileDataSource = FileRepository(ReactHttpClient(NetworkPreferences()))
     var presenter = FilesPresenter(this, appsDataSource)
     val messageUseCase = MessageUseCase()
 
@@ -61,7 +61,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
     override fun componentDidMount() {
 
-        presenter.getFiles()
+        presenter.getShared()
     }
 
     override fun RBuilder.render() {

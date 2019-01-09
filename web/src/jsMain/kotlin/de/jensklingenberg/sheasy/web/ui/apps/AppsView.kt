@@ -3,22 +3,17 @@ package de.jensklingenberg.sheasy.web.ui.apps
 
 import components.materialui.CircularProgress
 import components.materialui.Divider
+import components.materialui.FormControl
 import components.materialui.Paper
-import components.materialui.Table
-import components.materialui.TableBody
 import components.materialui.TableCell
 import components.materialui.TableHead
 import components.materialui.TableProps
 import components.materialui.TableRow
-import components.reactstrap.FormGroup
-import components.reactstrap.Input
-import de.jensklingenberg.sheasy.web.data.AppsDataSource
+import de.jensklingenberg.sheasy.web.components.materialui.Input
+import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
-import de.jensklingenberg.sheasy.web.data.repository.AppsRepository
+import de.jensklingenberg.sheasy.web.data.repository.FileRepository
 import de.jensklingenberg.sheasy.web.model.Error
-import de.jensklingenberg.sheasy.web.model.StringRes.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_DOWNLOAD
-import de.jensklingenberg.sheasy.web.model.StringRes.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_ICON
-import de.jensklingenberg.sheasy.web.model.StringRes.Companion.APPS_OVERVIEW_TABLE_ROW_HEADER_NAME
 import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.Status
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
@@ -44,21 +39,31 @@ interface AppsViewState : RState {
 }
 
 
+
 class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     private var presenter: AppsPresenter? = null
-    val appsDataSource: AppsDataSource = AppsRepository(ReactHttpClient(NetworkPreferences()))
+    val appsDataSource: FileDataSource = FileRepository(ReactHttpClient(NetworkPreferences()))
     val messageUseCase= MessageUseCase()
 
     /****************************************** React Lifecycle methods  */
+    init {
+        Application.appComponent.inject(this)
+
+    }
+
     override fun AppsViewState.init() {
         appsResult = emptyList()
         status = Status.LOADING
+
+
     }
 
     override fun componentDidMount() {
         presenter = AppsPresenter(this, appsDataSource)
         presenter?.getApps()
+
+
     }
 
     override fun RBuilder.render() {
@@ -71,13 +76,16 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
             attrs {
                 elevation = 1
             }
-            Table {
-                renderTableHeader(this,listOf(
-                    APPS_OVERVIEW_TABLE_ROW_HEADER_ICON,
-                    APPS_OVERVIEW_TABLE_ROW_HEADER_NAME,
-                    APPS_OVERVIEW_TABLE_ROW_HEADER_DOWNLOAD
-                ))
-                renderTableBody(this)
+
+            state.appsResult.forEach { app ->
+                ListItemBuilder.listItem(
+                    rBuilder = this,
+                    app = app,
+                    itemClickFunction = {  },
+                    onMoreBtnClick = {  })
+
+                Divider {}
+
             }
 
         }
@@ -95,7 +103,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     private fun setupSearchBar(rBuilder: RBuilder) {
         rBuilder.run {
-            FormGroup {
+            FormControl {
                 Input {
                     attrs {
                         type = InputType.search.realValue
@@ -143,15 +151,21 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     private fun renderTableBody(rElementBuilder: RElementBuilder<TableProps>) {
         rElementBuilder.run {
-            TableBody {
+
 
                 state.appsResult.forEach { app ->
-                    ListItemBuilder.listItem(this, app)
+                    ListItemBuilder.listItem(
+                        rBuilder = this,
+                        app = app,
+                        itemClickFunction = {  },
+                        onMoreBtnClick = {  })
 
                         Divider {}
 
                 }
-            }
+
+
+
         }
     }
 

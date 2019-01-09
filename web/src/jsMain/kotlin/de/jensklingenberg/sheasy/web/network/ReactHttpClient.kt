@@ -19,8 +19,15 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
     }
 
     override fun getFiles(folderPath: String, callback: ResponseCallback<List<FileResponse>>) {
+        val path = ApiEndPoint.getFiles(folderPath)
 
-        val path =networkPreferences.baseurl + ApiEndPoint.shared + folderPath
+        download(path, callback)
+
+    }
+
+    override fun getShared(callback: ResponseCallback<List<FileResponse>>) {
+
+        val path = networkPreferences.baseurl + ApiEndPoint.shared
         download(path, callback)
 
     }
@@ -30,7 +37,7 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
 
         val path = ApiEndPoint.apps
 
-          download(networkPreferences.baseurl + path, callback)
+        download(networkPreferences.baseurl + path, callback)
 
     }
 

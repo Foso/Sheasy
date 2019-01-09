@@ -14,6 +14,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation project(":libshared")
+                implementation project(":serverJvm")
 
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
                 implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"

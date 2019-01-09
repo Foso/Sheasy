@@ -43,23 +43,16 @@ class AppsViewModel : ViewModel() {
     fun searchApp(query: String) {
         fileDataSource
             .getApps()
-            .flattenAsObservable {
-                appInfo->appInfo
-            }
-            .filter {
-                it.name.contains(query,ignoreCase = true)
-            }
-            .toList()
             .subscribeOn(Schedulers.newThread())
             .observeOn(Schedulers.newThread())
-            .subscribeBy(onSuccess = {
-                appsSubject.onNext(Resource.success(it))
-            },onError = {
+            .subscribeBy(onSuccess = { appsList ->
+                appsSubject.onNext(
+                    Resource.success(appsList.filter {
+                    it.name.contains(query, ignoreCase = true)
+                }))
+            }, onError = {
                 snackbar.onError(Throwable("EROR"))
             })
-
-
-
     }
 
 
@@ -71,12 +64,12 @@ class AppsViewModel : ViewModel() {
         return appsSubject.hide()
     }
 
-    fun shareApp(appInfo: AppInfo){
+    fun shareApp(appInfo: AppInfo) {
         shareUseCase.share(fileDataSource.getTempFile(appInfo))
     }
 
     fun extractApp(appInfo: AppInfo): Boolean {
-            return fileDataSource.extractApk(appInfo)
+        return fileDataSource.extractApk(appInfo)
     }
 
     fun getSnackbar(): Observable<String> {
@@ -91,7 +84,7 @@ class AppsViewModel : ViewModel() {
             .observeOn(Schedulers.newThread())
             .subscribeBy(onSuccess = {
                 appsSubject.onNext(Resource.success(it))
-            },onError = {
+            }, onError = {
                 snackbar.onError(Throwable("EROR"))
             })
     }
@@ -100,8 +93,6 @@ class AppsViewModel : ViewModel() {
         return fileDataSource
             .getApps()
     }
-
-
 
 
 }

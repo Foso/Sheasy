@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy.web.ui.home
 
 import de.jensklingenberg.sheasy.web.components.materialui.List
-import components.materialui.ListItem
+import de.jensklingenberg.sheasy.web.components.materialui.ListItem
 import components.materialui.ListItemText
 import de.jensklingenberg.sheasy.web.model.DrawerItems
 import react.RBuilder

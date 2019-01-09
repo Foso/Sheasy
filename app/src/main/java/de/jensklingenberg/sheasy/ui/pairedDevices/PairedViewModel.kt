@@ -20,7 +20,7 @@ class PairedViewModel : ViewModel() {
 
 
     fun loadApps(): List<Device> {
-        return sheasyPrefDataSource.authorizedDevices.apply {
+        return sheasyPrefDataSource.devicesRepository.authorizedDevices.apply {
             if (isEmpty()) {
                 add(Device("No connected device"))
             }

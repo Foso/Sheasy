@@ -1,14 +1,15 @@
 buildscript {
     apply from: './webConstants.gradle'
 }
-
 plugins {
 
     id 'org.jetbrains.kotlin.multiplatform'
     id 'org.jetbrains.kotlin.frontend'
     id("io.gitlab.arturbosch.detekt")
     id('com.moowork.node')
+
 }
+apply plugin: 'de.jensklingenberg.gradle.HelloWorldPlugin'
 
 
 repositories {
@@ -18,19 +19,16 @@ repositories {
     mavenRepos.each { buildMaven(it) }
 
 }
-
 detekt {
     toolVersion = "1.0.0.RC9.2"
     input = files("src/jsMain/kotlin")
     filters = ".*/resources/.*,.*/build/.*"
     config = files("./default-detekt-config.yml")
 }
-
-
 kotlin {
     targets {
 
-        fromPreset(presets.jvm, 'jvm'){
+        fromPreset(presets.jvm, 'jvm') {
             configure([compilations.main]) {
                 tasks.getByName(compileKotlinTaskName).kotlinOptions {
                     jvmTarget = "1.8"
@@ -48,7 +46,7 @@ kotlin {
                 }
             }
 
-            
+
 
             configure(compilations.main) {
                 tasks.getByName(compileKotlinTaskName).kotlinOptions {
@@ -62,6 +60,7 @@ kotlin {
 
         commonMain {
             dependencies {
+                implementation files('./libs/generator.jar')
 
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
                 implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
@@ -78,6 +77,8 @@ kotlin {
             resources.srcDirs += "web"
 
             dependencies {
+                implementation files('./libs/generator.jar')
+                implementation project(":jkap")
 
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
@@ -95,10 +96,11 @@ kotlin {
 
             resources.srcDirs += "resources"
             dependencies {
+                implementation group: 'com.squareup', name: 'kotlinpoet', version: '0.7.0'
 
-                implementation 'de.jodamob.kotlin:kotlin-runner-junit4:0.3.1'
+                //  implementation 'de.jodamob.kotlin:kotlin-runner-junit4:0.3.1'
 
-               // implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+                // implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 
                 implementation "org.mockito:mockito-core:2.22.0"
                 implementation "io.mockk:mockk:1.8.13"
@@ -110,20 +112,19 @@ kotlin {
 
     }
 }
-
 kotlinFrontend {
     downloadNodeJsVersion = 'latest'
 
     npm {
         dependency("bootstrap", "${libs.bootstrap}")
-        dependency("@material-ui/core","v3.7.0")
+        dependency("@material-ui/core", "v3.7.0")
         dependency("@material-ui/icons")
         dependency("axios", "${libs.axios}")
         dependency("react-autosuggest")
         dependency("history", "${libs.history}")
         dependency("react-router-dom", "${libs.react_router_dom}")
         dependency("react-dev-utils", "^5.0.2")
-        dependency("react-draggable","${libs.react_draggable}")
+        dependency("react-draggable", "${libs.react_draggable}")
         dependency("react-dropzone", "${libs.react_dropzone}")
         dependency("react-web-notification", "${libs.react_web_notification}")
         dependency("reactstrap", "${libs.reactstrap}")
@@ -133,13 +134,14 @@ kotlinFrontend {
         dependency("css-loader")
         dependency("style-loader")
         dependency("jest")
+        dependency("rxjs", "6.3.3")
 
     }
 
 
     webpackBundle {
         port = 8080
-       // mode= "production"
+        // mode= "production"
         bundleName = "jsMain"
         sourceMapEnabled = true
         contentPath = file('src/jsMain/web')
@@ -147,27 +149,19 @@ kotlinFrontend {
         //  proxyUrl = 'http://localhost:8080'
     }
 }
-
-
-
 task serverPrepare(type: Copy, dependsOn: ["build"]) {
     from "./build/bundle", "./src/jsMain/web"
     into "./deploy"
 }
-
-
-task stopTomcat(type:Exec) {
+task stopTomcat(type: Exec) {
 //    workingDir '../tomcat/bin'
 
-
     //on linux
-  //  commandLine 'cd ${project.buildDir.path}'
+    //  commandLine 'cd ${project.buildDir.path}'
     commandLine 'cd ..'
     commandLine 'pwd'
 
-
-   // commandLine './gradlew -t webpack-run'
+    // commandLine './gradlew -t webpack-run'
 
 
 }
-

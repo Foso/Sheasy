@@ -14,4 +14,7 @@ interface API {
         callback: de.jensklingenberg.sheasy.web.network.ResponseCallback<List<FileResponse>>
     )
     fun  uploadFile(file:File,callback: ResponseCallback<Resource<State>>)
+    fun getShared(
+        callback: de.jensklingenberg.sheasy.web.network.ResponseCallback<List<FileResponse>>
+    )
 }

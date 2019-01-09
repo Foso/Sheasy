@@ -6,6 +6,8 @@
       <module name="app_jvmTest" target="1.6" />
       <module name="desktop_jvmMain" target="1.6" />
       <module name="desktop_jvmTest" target="1.6" />
+      <module name="jkap_jvmMain" target="1.8" />
+      <module name="jkap_jvmTest" target="1.6" />
       <module name="libshared_jvmMain" target="1.6" />
       <module name="libshared_jvmTest" target="1.6" />
       <module name="server_jvm_jvmMain" target="1.8" />

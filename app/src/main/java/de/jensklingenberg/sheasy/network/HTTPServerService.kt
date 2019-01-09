@@ -71,7 +71,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
             } else {
                 if(intent.hasExtra(AUTHORIZE_DEVICE)){
                         val ipAddress = intent.getStringExtra(AUTHORIZE_DEVICE)
-                        sheasyPref.addAuthorizedDevice(Device(ipAddress))
+                        sheasyPref.devicesRepository.addAuthorizedDevice(Device(ipAddress))
                 }
                 return super.onStartCommand(intent, flags, startId)
 

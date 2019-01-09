@@ -7,9 +7,9 @@ class ApiEndPoint {
 
     companion object {
         val apps = "file/apps"
-        val shared="file?shared="
+        val shared="file/shared"
         val repoSite = "https://github.com/Foso/Sheasy"
-
+        
 
 
         val baseUrl = "http://${NetworkPreferences().hostname}/api/$apiVersion/"

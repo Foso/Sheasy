@@ -1,10 +1,11 @@
 package de.jensklingenberg.sheasy.web.ui.common
 
 import components.materialui.Drawer
-import components.materialui.ListItem
+import de.jensklingenberg.sheasy.web.components.materialui.ListItem
 import components.materialui.ListItemText
 import de.jensklingenberg.sheasy.web.model.DrawerItems
 import react.RBuilder
+import  de.jensklingenberg.sheasy.web.components.materialui.List
 
 class Drawer{
 
@@ -25,7 +26,7 @@ companion object {
 
                 drawerItems
                     .forEach {
-                        components.materialui.List {
+                        List {
                             attrs {
                                 component = "nav"
                             }

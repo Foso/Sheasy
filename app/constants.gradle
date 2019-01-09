@@ -40,7 +40,7 @@ ext {
             ],
             dagger               : '2.16',
             espressocore         : '3.0.1',
-            junit                : '4.12',
+            junit                : '4.11',
             ktor_version         : '1.0.1',
             ktx                  : '1.0.1',
             leakcanaryVersion    : '1.5.4',
@@ -48,6 +48,8 @@ ext {
             materialdrawer       : '6.0.6@aar',
             mockitoVersion       : '1.10.19',
             moshiConverterVersion: '2.3.0',
+            mockkVersion : '1.9',
+
             moshikotlin          : '1.5.0',
             moshilazyadapters    : '2.1',
             moshiVersion         : '1.5.0',

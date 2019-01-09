@@ -14,13 +14,10 @@ import java.io.IOException
 import java.io.InputStream
 import javax.inject.Inject
 
-/**
- * Created by jens on 25/2/18.
- */
 
-class FileRepository : FileDataSource {
+open class FileRepository : FileDataSource {
 
-    val cachedApps = mutableListOf<AppInfo>()
+    private val cachedApps = mutableListOf<AppInfo>()
 
     @Inject
     lateinit var pm: PackageManager
@@ -29,7 +26,7 @@ class FileRepository : FileDataSource {
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
 
     @Inject
-    lateinit var asset:AssetManager
+    lateinit var asset: AssetManager
 
     init {
         initializeDagger()
@@ -39,76 +36,82 @@ class FileRepository : FileDataSource {
 
     override fun getAssetFile(filePath: String): Single<InputStream> {
         return Single.create<InputStream> { singleEmitter ->
-            singleEmitter.onSuccess(asset.open(filePath))
+
+            val inputStream = asset.open(filePath)
+            singleEmitter.onSuccess(inputStream)
         }
     }
 
     override fun getFiles(folderPath: String): Single<List<FileResponse>> {
         return Single.create<List<FileResponse>> { singleEmitter ->
-
-            val files = File(folderPath)
-                .listFiles()
-                ?.map {
-                    FileResponse(
-                        it.name,
-                        it.path
-                    )
-                } ?: emptyList()
-            singleEmitter.onSuccess(files)
+            try {
+                File(folderPath)
+                    .listFiles()
+                    .map {
+                        FileResponse(
+                            it.name,
+                            it.path
+                        )
+                    }.run {
+                        singleEmitter.onSuccess(this)
+                    }
+            } catch (ioException: IOException) {
+                singleEmitter.onError(ioException)
+            }
         }
-
     }
 
 
-     override fun getApps(): Single<List<AppInfo>> {
-
-
+    override fun getApps(packageName: String): Single<List<AppInfo>> {
         return Single.create<List<AppInfo>> { singleEmitter ->
 
             if (cachedApps.isNotEmpty()) {
-                singleEmitter.onSuccess(cachedApps)
+                cachedApps
+                    .filter {
+                        when {
+                            packageName.isNotBlank() -> return@filter it.packageName == packageName
+                            else -> true
+                        }
+                    }.run {
+                        singleEmitter.onSuccess(this)
+                    }
             }
 
             val appsList = getAllInstalledApplications()
                 .map {
-
-                    AppInfo(
-                        sourceDir = it.sourceDir,
-                        name = pm.getApplicationLabel(it).toString(),
-                        packageName = it.packageName,
-                        installTime = pm.getPackageInfo(
-                            it.packageName,
-                            0
-                        ).firstInstallTime.toString()
-                    )
+                    mapToAppInfo(it)
                 }
+
             if (appsList != cachedApps) {
                 cachedApps.clear()
                 cachedApps.addAll(appsList)
-                singleEmitter.onSuccess(cachedApps)
 
+                cachedApps
+                    .filter {
+                        when {
+                            packageName.isNotBlank() -> return@filter it.packageName == packageName
+                            else -> true
+                        }
+                    }.run {
+                        singleEmitter.onSuccess(this)
+                    }
             }
         }
 
     }
 
-
-
-    private fun getAllInstalledApplications(): List<ApplicationInfo> {
-        return pm
-            .getInstalledApplications(PackageManager.PERMISSION_GRANTED)
-            .filter { pm.getLaunchIntentForPackage(it.packageName) != null }
+    private fun mapToAppInfo(it: ApplicationInfo): AppInfo {
+        return AppInfo(
+            sourceDir = it.sourceDir,
+            name = pm.getApplicationLabel(it).toString(),
+            packageName = it.packageName,
+            installTime = pm.getPackageInfo(
+                it.packageName,
+                0
+            ).firstInstallTime.toString()
+        )
     }
 
-    override fun getApplicationInfo(apkPackageName: String): Maybe<AppInfo> {
-        return getApps()
-            .toObservable()
-            .flatMapIterable { x -> x }
-            .filter { it.packageName == apkPackageName }
-            .firstElement()
-
-
-    }
 
     override fun extractApk(appInfo: AppInfo): Boolean {
         val file = File(appInfo.sourceDir)
@@ -121,15 +124,18 @@ class FileRepository : FileDataSource {
         }
     }
 
-
     override fun getTempFile(appInfo: AppInfo): File {
         val file = File(appInfo.sourceDir)
-        val file2 = File(sheasyPrefDataSource.appFolder +"/temp/"+ appInfo.packageName + ".apk")
+        val file2 = File(sheasyPrefDataSource.appFolder + "/temp/" + appInfo.packageName + ".apk")
 
-            file.copyTo(file2, true)
-            return file2
+        file.copyTo(file2, true)
+        return file2
+    }
 
-
+    private fun getAllInstalledApplications(): List<ApplicationInfo> {
+        return pm
+            .getInstalledApplications(PackageManager.PERMISSION_GRANTED)
+            .filter { pm.getLaunchIntentForPackage(it.packageName) != null }
     }
 
 

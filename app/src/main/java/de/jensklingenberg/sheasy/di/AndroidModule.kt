@@ -5,13 +5,21 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import android.media.projection.MediaProjectionManager
+import android.net.wifi.WifiManager
+import android.net.wifi.aware.WifiAwareManager
 import android.view.WindowManager
 import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.utils.extension.mediaProjectionManager
 import de.jensklingenberg.sheasy.utils.extension.notificationManager
+import de.jensklingenberg.sheasy.utils.extension.wifiManager
 import de.jensklingenberg.sheasy.utils.extension.windowManager
 import javax.inject.Singleton
+
+
+/**
+ * This module contains Android specific "managers" from SystemService
+ */
 
 @Module
 class AndroidModule {
@@ -29,6 +37,10 @@ class AndroidModule {
     @Provides
     @Singleton
     fun provideWindowManager(context: Context): WindowManager = context.windowManager()
+
+    @Provides
+    @Singleton
+    fun provideWifiManager(context: Context): WifiManager = context.wifiManager()
 
     @Provides
     @Singleton

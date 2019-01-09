@@ -10,6 +10,7 @@
 package components.materialui
 
 import de.jensklingenberg.sheasy.web.components.StandardProps
+import de.jensklingenberg.sheasy.web.components.materialui.ListItemProps
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
 import react.RClass

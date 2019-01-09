@@ -29,9 +29,15 @@ class AndroidFileRouteHandler : FileRouteHandler {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    override fun apps(httpMethod: HttpMethod): Single<List<AppInfo>> {
-        return fileDataSource.getApps()
-    }
+    /**
+     *
+     * List all glossaries the current user has access to.
+     * @param accountId AccountId
+     * @param perPage Per Page (optional, default to 25)
+     * @param page Page (optional, default to 1)
+     * @return kotlin.Array<Glossary>
+     */
+    override fun apps(httpMethod: HttpMethod): Single<List<AppInfo>> = fileDataSource.getApps()
 
 
     override fun postUpload(
@@ -51,17 +57,13 @@ class AndroidFileRouteHandler : FileRouteHandler {
 
     }
 
-    override suspend fun getShared(call: KtorApplicationCall): Resource<Any> {
-
-       return Resource.success(sheasyPrefDataSource.sharedFolders)
-
-    }
+    override suspend fun getShared(call: KtorApplicationCall): Resource<Any> = Resource.success(sheasyPrefDataSource.sharedFolders)
 
     override suspend fun getDownload(call: KtorApplicationCall): Resource<Any> {
         val filePath = call.parameter
 
         val allowedPath= sheasyPrefDataSource.sharedFolders.any { folderPath->
-            folderPath.startsWith(filePath)
+            folderPath.path.startsWith(filePath)
         }
 
 
@@ -101,13 +103,12 @@ class AndroidFileRouteHandler : FileRouteHandler {
         val packageName = call.parameter
 
         fileDataSource
-            .getApplicationInfo(packageName)
-            .map { FileInputStream(it.sourceDir) }
-            .await()?.let {
-                return Resource.success(it.readBytes())
+            .getApps(packageName)
+            .await()
+            .firstOrNull()
+            ?.let {
+                return Resource.success(FileInputStream(it.sourceDir).readBytes())
             }
-        return Resource.error("getApkError","")
-
     }
 
 
