@@ -9,7 +9,6 @@ plugins {
     id('com.moowork.node')
 
 }
-apply plugin: 'de.jensklingenberg.gradle.HelloWorldPlugin'
 
 
 repositories {
@@ -60,7 +59,6 @@ kotlin {
 
         commonMain {
             dependencies {
-                implementation files('./libs/generator.jar')
 
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
                 implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
@@ -77,8 +75,6 @@ kotlin {
             resources.srcDirs += "web"
 
             dependencies {
-                implementation files('./libs/generator.jar')
-                implementation project(":jkap")
 
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
@@ -96,11 +92,7 @@ kotlin {
 
             resources.srcDirs += "resources"
             dependencies {
-                implementation group: 'com.squareup', name: 'kotlinpoet', version: '0.7.0'
 
-                //  implementation 'de.jodamob.kotlin:kotlin-runner-junit4:0.3.1'
-
-                // implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 
                 implementation "org.mockito:mockito-core:2.22.0"
                 implementation "io.mockk:mockk:1.8.13"

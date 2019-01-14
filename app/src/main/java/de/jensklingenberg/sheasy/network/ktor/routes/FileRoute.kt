@@ -28,9 +28,9 @@ import java.io.InputStream
 fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
     route("file") {
 
-        get("apps") {
+        get("getApps") {
             fileRouteHandler
-                .apps(HttpMethod.GET)
+                .getApps()
                 .await()
                 .run {
                 call.response.debugCorsHeader()
@@ -81,6 +81,8 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                        }
                    })
            }
+
+
         }
 
         param("upload") {

@@ -4,6 +4,7 @@ import de.jensklingenberg.sheasy.web.model.State
 import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.FileResponse
 import de.jensklingenberg.sheasy.web.model.response.Resource
+import org.w3c.files.File
 
 
 interface API {
@@ -12,7 +13,7 @@ interface API {
         folderPath: String,
         callback: ResponseCallback<List<FileResponse>>
     )
-    fun  uploadFile(file:File,callback: ResponseCallback<Resource<State>>)
+    fun  uploadFile(file: File, callback: ResponseCallback<Resource<State>>)
     fun getShared(
         callback: ResponseCallback<List<FileResponse>>
     )

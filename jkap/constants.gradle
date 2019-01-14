@@ -1,5 +1,0 @@
-ext {
-    libs = [
-            ktor_version         : '1.0.1'
-    ]
-}

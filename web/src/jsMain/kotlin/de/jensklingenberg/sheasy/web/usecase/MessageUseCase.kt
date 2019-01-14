@@ -7,7 +7,7 @@ import react.RBuilder
 class MessageUseCase {
 
 
-    fun showSnackbar(rBuilder: RBuilder,snackbarMessage:String, showSnackbar:Boolean){
+    fun showErrorSnackbar(rBuilder: RBuilder, snackbarMessage:String, showSnackbar:Boolean){
         rBuilder.run {
 
             Snackbar {

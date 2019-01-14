@@ -23,7 +23,7 @@ paths:
   /file/apps:
     get:
       tags:
-      - "apps"
+      - "getApps"
       summary: "Finds Pets by status"
       description: "Multiple status values can be provided with comma separated strings"
       operationId: "findPetsByStatus"

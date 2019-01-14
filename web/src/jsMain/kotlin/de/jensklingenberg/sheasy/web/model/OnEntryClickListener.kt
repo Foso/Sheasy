@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.web.components.listview
+package de.jensklingenberg.sheasy.web.model
 
 interface OnEntryClickListener {
     fun onItemClicked(payload: Any)

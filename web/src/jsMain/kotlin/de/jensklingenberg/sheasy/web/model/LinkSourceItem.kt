@@ -1,6 +1,5 @@
-package de.jensklingenberg.sheasy.web.components.listview
+package de.jensklingenberg.sheasy.web.model
 
-import de.jensklingenberg.sheasy.web.model.SourceItem
 import react.RBuilder
 import react.dom.a
 import react.dom.div

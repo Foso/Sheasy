@@ -10,7 +10,6 @@ import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.data.repository.FileRepository
 import de.jensklingenberg.sheasy.web.model.Error
-import de.jensklingenberg.sheasy.web.model.StringRes
 import de.jensklingenberg.sheasy.web.model.response.FileResponse
 import de.jensklingenberg.sheasy.web.model.response.Status
 import de.jensklingenberg.sheasy.web.network.ApiEndPoint
@@ -24,12 +23,14 @@ import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
 import kotlinx.html.DIV
 import kotlinx.html.InputType
 import kotlinx.html.js.onClickFunction
+import kotlinx.html.onClick
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
 import react.RBuilder
 import react.RProps
 import react.RState
 import react.dom.RDOMBuilder
+import react.dom.a
 import react.dom.div
 import react.setState
 import kotlin.browser.window
@@ -37,7 +38,7 @@ import kotlin.browser.window
 
 interface FileViewState : RState {
     var filesList: List<FileResponse>
-    var errorMessage: String
+    var snackbarMessage: String
     var status: Status
     var openMenu: Boolean
     var anchor: EventTarget?
@@ -60,7 +61,6 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
     }
 
     override fun componentDidMount() {
-
         presenter.getShared()
     }
 
@@ -100,7 +100,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
             }
         }
 
-        messageUseCase.showSnackbar(this, state.errorMessage, errorsnackbarVisibility())
+        messageUseCase.showErrorSnackbar(this, state.snackbarMessage, errorsnackbarVisibility())
 
         setupContextMenu(this)
 
@@ -125,16 +125,13 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
                     }
                     MenuItem {
-                        div {
-                            +"Download"
-                            attrs {
-                                onClickFunction = {
-                                    window.location.href =
-                                            ApiEndPoint.appDownloadUrl("de.jensklingenberg.sheasy")
-                                }
-                                styleProps(textAlign = "center")
-                            }
+
+                                +"Download"
+                        attrs {
+                            styleProps(textAlign = "right")
+                            onClick = { event: Event -> handleMenuItemClick(event) }
                         }
+
                     }
                     MenuItem {
                         +"Profile"
@@ -182,7 +179,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
     fun handleFile(event: Event) {
         event.target.selectedFile?.let {
             console.log(it)
-
+            presenter.uploadFile(it)
         }
 
     }
@@ -219,14 +216,24 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
     override fun showError(error: Error) {
         setState {
             when (error) {
-                Error.NETWORK_ERROR -> {
+                Error.NetworkError() -> {
                     status = Status.ERROR
-                    state.errorMessage = StringRes.MESSAGE_NO_CONNECTION
+                    state.snackbarMessage = error.message
                 }
                 else -> {
                 }
             }
         }
+    }
+
+    override fun showSnackBar(message: String) {
+        setState {
+            status = Status.ERROR
+            state.snackbarMessage = message
+
+
+        }
+
     }
 
     /****************************************** Class methods  */

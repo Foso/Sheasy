@@ -23,6 +23,12 @@ import network.ktor.DesktopFileRouteHandler
 import network.ktor.routes.DesktopKtorApiHandler
 import network.ktor.repository.DesktopSheasyPrefDataSource
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import io.ktor.features.CORS
+import io.ktor.features.PartialContent
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
+import io.ktor.routing.Routing
+import io.ktor.routing.post
 import java.time.Duration
 
 
@@ -41,6 +47,23 @@ fun main() {
                 setPrettyPrinting()
             }
         }
+
+        install(PartialContent) {
+            maxRangeCount = 10
+        }
+
+        install(CORS) {
+            anyHost()
+            header(HttpHeaders.AccessControlAllowOrigin)
+            allowCredentials = true
+            listOf(
+                HttpMethod.Get,
+                HttpMethod.Put,
+                HttpMethod.Delete,
+                HttpMethod.Options
+            ).forEach { method(it) }
+        }
+
 
         install(WebSockets) {
             pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
@@ -66,8 +89,14 @@ fun main() {
                 }
             }
 
-            get("/") {
+             get("/") {
+
                 call.respondText("Hello World!", ContentType.Text.Plain)
+            }
+
+            post("/hallo"){
+                call.respondText("Hello World!", ContentType.Text.Plain)
+
             }
             get("/demo") {
                 call.respondText("HELLO WORLD!")

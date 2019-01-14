@@ -9,7 +9,7 @@ class ApiEndPoint {
         val apps = "file/apps"
         val shared="file/shared"
         val repoSite = "https://github.com/Foso/Sheasy"
-        
+        val upload = "file/upload"
 
 
         val baseUrl = "http://${NetworkPreferences().hostname}/api/$apiVersion/"

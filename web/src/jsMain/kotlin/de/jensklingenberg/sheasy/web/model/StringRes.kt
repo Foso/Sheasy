@@ -29,6 +29,7 @@ class StringRes {
          * Message
          */
         const val MESSAGE_NO_CONNECTION = "No Connection"
+        const val MESSAGE_SUCCESS = "SUCCESS"
 
 
     }

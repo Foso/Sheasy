@@ -15,7 +15,7 @@
     <string name="Failed">Failed</string>
     <string name="loading">Loading</string>
     <string name="path_general_main">/</string>
-    <string name="device_not_authorized">Device is not authorized</string>
+    <string name="device_NOTAUTHORIZED">Device is not authorized</string>
 
 
     <!-- About -->

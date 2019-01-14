@@ -1,20 +1,42 @@
 package de.jensklingenberg.sheasy.web.network
 
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
-import de.jensklingenberg.sheasy.web.data.apiVersion
 import de.jensklingenberg.sheasy.web.model.Error
-import de.jensklingenberg.sheasy.web.model.File
 import de.jensklingenberg.sheasy.web.model.State
 import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.FileResponse
 import de.jensklingenberg.sheasy.web.model.response.Resource
 import de.jensklingenberg.sheasy.web.model.response.Response
 import kotlinext.js.jsObject
+import org.w3c.fetch.RequestInit
+import org.w3c.files.File
+import org.w3c.xhr.FormData
+import kotlin.browser.window
+import kotlin.js.json
 
 
 class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API {
     override fun uploadFile(file: File, callback: ResponseCallback<Resource<State>>) {
 
+        val formData =  FormData()
+        formData.append(file.name, file,file.name)
+
+        window.fetch(networkPreferences.baseurl + ApiEndPoint.shared+"?upload=/", object : RequestInit {
+            override var method: String? = "POST"
+            override var body: dynamic = formData
+            override var headers: dynamic = json("Accept" to "application/json")
+
+        }).then {
+           when (it.ok) {
+               true -> {
+                       callback.onSuccess(Resource.success(State.SUCCESS))
+                   println(it)
+               }
+
+               else -> callback.onError(Error.NetworkError())
+           }
+
+       }
 
     }
 
@@ -55,12 +77,12 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
 
                 }
 
-                "NOT_AUTHORIZED" -> calli.onError(Error.NOT_AUTHORIZED)
-                else -> calli.onError(Error.UNKNOWN_ERROR)
+                "NotAuthorizedError" -> calli.onError(Error.NotAuthorizedError())
+                else -> calli.onError(Error.UNKNOWNERROR())
             }
 
         }.catch { error: Throwable ->
-            calli.onError(Error.NETWORK_ERROR)
+            calli.onError(Error.NetworkError())
         }
     }
 }

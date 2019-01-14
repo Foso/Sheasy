@@ -37,7 +37,7 @@ class AndroidFileRouteHandler : FileRouteHandler {
      * @param page Page (optional, default to 1)
      * @return kotlin.Array<Glossary>
      */
-    override fun apps(httpMethod: HttpMethod): Single<List<AppInfo>> = fileDataSource.getApps()
+    override fun getApps(): Single<List<AppInfo>> = fileDataSource.getApps()
 
 
     override fun postUpload(

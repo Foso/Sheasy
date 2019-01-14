@@ -13,7 +13,7 @@ interface SheasyApi {
     @GET("api/v1/file/shared")
     fun getShared(): Single<Response<Resource<List<FileResponse>>>>
 
-    @GET("api/v1/file/apps")
+    @GET("api/v1/file/getApps")
     fun getApps(): Single<Response<Resource<List<AppInfo>>>>
 
 }

@@ -27,7 +27,7 @@ data class Resource<T>(val status: String, val data: T?, val message: String?) {
             )
 
         fun <T> error(error: Error, msg: String, data: T?): Resource<T> =
-            Resource(error.title, data, msg)
+            Resource(error.message, data, msg)
 
 
         fun <T> loading(msg: String): Resource<T> =

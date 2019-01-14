@@ -9,7 +9,6 @@ import components.materialui.TableCell
 import components.materialui.TableHead
 import components.materialui.TableProps
 import components.materialui.TableRow
-import de.jensklingenberg.sheasy.web.KodeinInject
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
@@ -49,10 +48,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
     val messageUseCase= MessageUseCase()
 
     /****************************************** React Lifecycle methods  */
-    init {
-        Application.appComponent.inject(this)
 
-    }
 
     override fun AppsViewState.init() {
         appsResult = emptyList()
@@ -99,7 +95,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
             }
         }
 
-        messageUseCase.showSnackbar(this,state.errorMessage,snackbarVisibility())
+        messageUseCase.showErrorSnackbar(this,state.errorMessage,snackbarVisibility())
 
     }
 
@@ -126,11 +122,11 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
     override fun showError(error: Error) {
         setState {
             when (error) {
-                Error.NETWORK_ERROR -> {
+                Error.NetworkError() -> {
                     status = Status.ERROR
                     state.errorMessage = "No Connection"
                 }
-                Error.NOT_AUTHORIZED -> {
+                Error.NotAuthorizedError() -> {
                     status = Status.ERROR
                     state.errorMessage = "Device is not authorized"
                 }

@@ -12,18 +12,16 @@ import java.io.FileInputStream
 import java.io.InputStream
 
 class DesktopFileRouteHandler: FileRouteHandler {
+    override fun getApps(): Single<List<AppInfo>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override suspend fun apk(httpMethod: HttpMethod, call: KtorApplicationCall): Resource<Any> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun get(call: KtorApplicationCall): Resource<Any> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun apps(httpMethod: HttpMethod): Single<List<AppInfo>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-
-
     }
 
 
