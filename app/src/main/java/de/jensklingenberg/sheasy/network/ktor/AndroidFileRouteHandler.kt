@@ -57,7 +57,20 @@ class AndroidFileRouteHandler : FileRouteHandler {
 
     }
 
-    override suspend fun getShared(call: KtorApplicationCall): Resource<Any> = Resource.success(sheasyPrefDataSource.sharedFolders)
+    override suspend fun getShared(call: KtorApplicationCall): Resource<Any> {
+        if(call.parameter.isEmpty()){
+            return Resource.success(sheasyPrefDataSource.sharedFolders)
+
+        }else{
+
+            val fileList = fileDataSource
+                .getFiles(call.parameter)
+                .await()
+
+            return  Resource.success(fileList)
+
+        }
+    }
 
     override suspend fun getDownload(call: KtorApplicationCall): Resource<Any> {
         val filePath = call.parameter

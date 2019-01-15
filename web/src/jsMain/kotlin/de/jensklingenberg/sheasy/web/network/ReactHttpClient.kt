@@ -41,31 +41,19 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
     }
 
     override fun getFiles(folderPath: String, callback: ResponseCallback<List<FileResponse>>) {
-        val path = ApiEndPoint.getFiles(folderPath)
-
-        download(path, callback)
-
+        download(ApiEndPoint.getFiles(folderPath), callback)
     }
 
     override fun getShared(callback: ResponseCallback<List<FileResponse>>) {
-
-        val path = networkPreferences.baseurl + ApiEndPoint.shared
-        download(path, callback)
-
+        download(networkPreferences.baseurl + ApiEndPoint.shared, callback)
     }
 
 
     override fun getApps(callback: ResponseCallback<List<App>>) {
-
-        val path = ApiEndPoint.apps
-
-        download(networkPreferences.baseurl + path, callback)
-
+        download(networkPreferences.baseurl + ApiEndPoint.apps, callback)
     }
 
     private inline fun <reified T> download(path: String, calli: ResponseCallback<List<T>>) {
-
-
         Axios.get<Response<Array<T>>>(path, jsObject {
             timeout = 10000
         }).then { result ->

@@ -22,65 +22,112 @@ import io.ktor.routing.post
 import io.ktor.routing.route
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.rx2.await
+import java.io.File
 import java.io.InputStream
 
 
 fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
     route("file") {
 
-        get("getApps") {
+
+            route("app"){
+                param("package") {
+                    get {
+                        val packageName = call.parameters["package"] ?: ""
+                        fileRouteHandler
+                            .apk(HttpMethod.GET, call.ktorApplicationCall())
+                            .checkState(onSuccess = { resource ->
+                                launch {
+                                    call.response.header(
+                                        HttpHeaders.ContentDisposition,
+                                        ContentDisposition.Attachment.withParameter(
+                                            ContentDisposition.Parameters.FileName,
+                                            "$packageName.apk"
+                                        ).toString()
+                                    )
+                                    call.respond(resource.data!!)
+                                }
+                            })
+                    }
+                }
+            }
+
+
+        get("apps") {
             fileRouteHandler
                 .getApps()
                 .await()
                 .run {
-                call.response.debugCorsHeader()
-                call.respond(Resource.success(this))
-            }
+                    call.response.debugCorsHeader()
+                    call.respond(Resource.success(this))
+                }
 
-        }
-
-        param("apk") {
-            get {
-                val packageName = call.parameters
-                fileRouteHandler
-                    .apk(HttpMethod.GET,call.ktorApplicationCall())
-                    .checkState(onSuccess = {resource->
-                    launch {
-                        call.response.header(
-                            HttpHeaders.ContentDisposition,
-                            ContentDisposition.Attachment.withParameter(
-                                ContentDisposition.Parameters.FileName,
-                                "$packageName.apk"
-                            ).toString()
-                        )
-                        call.respond(resource.data!!)
-                    }
-                })
-            }
         }
 
         param("download") {
             get {
                 fileRouteHandler.getDownload(call.ktorApplicationCall())
                     .checkState(onSuccess = {
-                    launch {
-                        call.respond(it)
-                    }
-                })
+                        launch {
+                            call.respond(it)
+                        }
+                    })
             }
         }
 
-        route("shared"){
-           get {
-               fileRouteHandler
-                   .getShared(call.ktorApplicationCall("shared"))
-                   .checkState(onSuccess = {
-                       launch {
-                           call.response.debugCorsHeader()
-                           call.respond(it)
-                       }
-                   })
-           }
+
+        route("shared") {
+            get {
+                //    call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
+                val filePath = call.parameters["folder"] ?: ""
+
+
+                val ktor = call.ktorApplicationCall(filePath).apply {
+                    parameter=filePath
+                }
+
+                fileRouteHandler
+                    .getShared(ktor)
+                    .checkState(onSuccess = {
+                        launch {
+                            call.response.debugCorsHeader()
+                            call.respond(it)
+                        }
+                    })
+            }
+            param("upload") {
+                post {
+                    val filePath = call.parameters["upload"] ?: ""
+
+                    val multipart = call.receiveMultipart()
+                    multipart.forEachPart { part ->
+                        when (part) {
+                            is PartData.FormItem -> {
+                                val tt = ("FormItem: ${part.name} = ${part.value}")
+
+                            }
+                            is PartData.FileItem -> {
+                                val tt = ("FileItem: ${part.name} -> ${part.originalFileName} of ${part.contentType}")
+                                val ext = File(part.originalFileName).extension
+
+                                val sourceFile = File(filePath + part.originalFileName)
+
+                                part.streamProvider().use { its ->
+                                    its.copyTo(sourceFile.outputStream())
+                                    its.close()
+                                    var fileExists = File(filePath + part.originalFileName + ext).exists()
+                                    if (fileExists) {
+                                        call.respond(Resource.success("Filewrite okay"))
+                                    }
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
 
 
         }

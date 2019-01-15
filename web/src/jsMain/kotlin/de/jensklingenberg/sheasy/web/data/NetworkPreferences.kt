@@ -10,7 +10,9 @@ class NetworkPreferences{
      */
     val apiVersion = "v1"
 
-    val testingAddress = "192.168.178.35:8766"
+    val httpPort = ":8766"
+
+    val testingAddress = "192.168.178.20"+httpPort
 
 
 
@@ -19,7 +21,7 @@ class NetworkPreferences{
     val hostname = if (hostUri.contains("localhost")) {
         testingAddress
     } else {
-        window.location.hostname + ":8766"
+        window.location.hostname +httpPort
     }
 
     val baseurl = "http://${hostname}/api/${apiVersion}/"

@@ -35,10 +35,10 @@ fun Application.ktorApplicationModule(
         install(PartialContent) {
             maxRangeCount = 10
         }
-        install(CORS) {
+     /*   install(CORS) {
             anyHost()
             header(HttpHeaders.AccessControlAllowOrigin)
-            allowCredentials = true
+           // allowCredentials = true
             listOf(
                 HttpMethod.Get,
                 HttpMethod.Put,
@@ -46,7 +46,7 @@ fun Application.ktorApplicationModule(
                 HttpMethod.Options
             ).forEach { method(it) }
         }
-
+*/
 
         routing {
 

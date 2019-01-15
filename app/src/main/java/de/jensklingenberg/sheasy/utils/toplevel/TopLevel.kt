@@ -2,6 +2,7 @@ package de.jensklingenberg.sheasy.utils.toplevel
 
 import android.annotation.SuppressLint
 import io.reactivex.Single
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -16,7 +17,5 @@ fun runInBackground(function: () -> Unit) {
     }
         .subscribeOn(Schedulers.newThread())
         .observeOn(Schedulers.newThread())
-        .subscribe { _ ->
-            //Use result for something
-        }
+        .subscribeBy(onError = {},onSuccess = {})
 }
