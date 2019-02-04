@@ -14,6 +14,7 @@ interface AppsContract {
     interface Presenter : ReactPresenter {
         fun getApps()
         fun onSearch(query: String)
+        fun downloadApk(app: App?)
     }
 
 }

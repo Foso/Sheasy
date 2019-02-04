@@ -16,6 +16,19 @@ import kotlin.js.json
 
 
 class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API {
+    override fun downloadFile(path: String) {
+        window.location.href =
+            ApiEndPoint.fileDownloadUrl(path)
+
+    }
+
+    override fun downloadApk(packageName:String) {
+        window.location.href =
+                ApiEndPoint.appDownloadUrl(packageName)
+
+
+    }
+
     override fun uploadFile(file: File, callback: ResponseCallback<Resource<State>>) {
 
         val formData =  FormData()
@@ -37,6 +50,8 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
            }
 
        }
+
+        callback.onError(Error.NetworkError())
 
     }
 

@@ -35,7 +35,7 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                     get {
                         val packageName = call.parameters["package"] ?: ""
                         fileRouteHandler
-                            .apk(HttpMethod.GET, call.ktorApplicationCall())
+                            .apk(HttpMethod.GET, packageName)
                             .checkState(onSuccess = { resource ->
                                 launch {
                                     call.response.header(
@@ -52,6 +52,29 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                 }
             }
 
+        route("file"){
+            param("path") {
+                get {
+                    val filepath = call.parameters["path"] ?: ""
+                    fileRouteHandler.getDownload(filepath)
+                        .checkState(onSuccess = {
+                            launch {
+                                call.response.header(
+                                    HttpHeaders.ContentDisposition,
+                                    ContentDisposition.Attachment.withParameter(
+                                        ContentDisposition.Parameters.FileName,
+                                        value = filepath.substringAfterLast(delimiter = "/")
+                                    ).toString()
+                                )
+                                call.respond(it.data!!)
+                            }
+                        })
+                }
+
+            }
+        }
+
+
 
         get("apps") {
             fileRouteHandler
@@ -64,16 +87,6 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
 
         }
 
-        param("download") {
-            get {
-                fileRouteHandler.getDownload(call.ktorApplicationCall())
-                    .checkState(onSuccess = {
-                        launch {
-                            call.respond(it)
-                        }
-                    })
-            }
-        }
 
 
         route("shared") {

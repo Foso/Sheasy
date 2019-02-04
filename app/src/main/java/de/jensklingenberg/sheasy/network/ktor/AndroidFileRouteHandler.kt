@@ -29,14 +29,7 @@ class AndroidFileRouteHandler : FileRouteHandler {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    /**
-     *
-     * List all glossaries the current user has access to.
-     * @param accountId AccountId
-     * @param perPage Per Page (optional, default to 25)
-     * @param page Page (optional, default to 1)
-     * @return kotlin.Array<Glossary>
-     */
+
     override fun getApps(): Single<List<AppInfo>> = fileDataSource.getApps()
 
 
@@ -72,10 +65,9 @@ class AndroidFileRouteHandler : FileRouteHandler {
         }
     }
 
-    override suspend fun getDownload(call: KtorApplicationCall): Resource<Any> {
-        val filePath = call.parameter
+    override suspend fun getDownload(filePath : String): Resource<Any> {
 
-        val allowedPath= sheasyPrefDataSource.sharedFolders.any { folderPath->
+        val allowedPath = sheasyPrefDataSource.sharedFolders.any { folderPath ->
             folderPath.path.startsWith(filePath)
         }
 
@@ -94,26 +86,16 @@ class AndroidFileRouteHandler : FileRouteHandler {
                 .await()
 
             if (fileList.isEmpty()) {
-                return Resource.error("path not found","")
+                return Resource.error("path not found", "")
 
-
-            } else {
-
-
-                call.apply {
-                    Resource.success(fileList)
-                }
 
             }
 
+            return Resource.error("getDownloadError", "")
 
         }
-        return Resource.error("getDownloadError","")
-
     }
-
-    override suspend fun apk(httpMethod: HttpMethod, call: KtorApplicationCall): Resource<Any> {
-        val packageName = call.parameter
+    override suspend fun apk(httpMethod: HttpMethod, packageName:String): Resource<Any> {
 
         fileDataSource
             .getApps(packageName)
@@ -122,6 +104,7 @@ class AndroidFileRouteHandler : FileRouteHandler {
             ?.let {
                 return Resource.success(FileInputStream(it.sourceDir).readBytes())
             }
+        return Resource.error("Could not find command FileRoute", "")
     }
 
 

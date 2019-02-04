@@ -17,6 +17,8 @@ class ApiEndPoint {
 
         fun getFiles(path: String) = baseUrl + "file/shared?folder=" + path
         fun appDownloadUrl(packageName: String) = baseUrl + "file/app?package=" + packageName
+        fun fileDownloadUrl(path: String) = baseUrl + "file/file?path=" + path
+
         fun appIconUrl(packageName: String) = baseUrl + "file?icon=" + packageName
         val notificationWebSocketURL = "ws://192.168.178.20:8765/echo"
         val screenshareWebSocketURL = "ws://192.168.178.20:8765/screenshare"

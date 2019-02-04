@@ -17,4 +17,7 @@ interface API {
     fun getShared(
         callback: ResponseCallback<List<FileResponse>>
     )
+    fun downloadApk(packageName:String)
+    fun downloadFile(path:String)
+
 }

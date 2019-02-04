@@ -12,6 +12,7 @@ import org.w3c.files.File
 class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataSource) :
     FilesContract.Presenter {
 
+
     val defaultPath = "/"
     var folderPath = defaultPath
     var filesResult = listOf<FileResponse>()
@@ -90,6 +91,13 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
 
         )
+
+    }
+
+    override fun getFile(fileResponse: FileResponse?) {
+                fileResponse?.let {
+                    fileDataSource.downloadFile(fileResponse)
+                }
 
     }
 }

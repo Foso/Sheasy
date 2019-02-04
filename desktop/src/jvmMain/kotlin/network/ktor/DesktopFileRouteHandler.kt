@@ -16,7 +16,7 @@ class DesktopFileRouteHandler: FileRouteHandler {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun apk(httpMethod: HttpMethod, call: KtorApplicationCall): Resource<Any> {
+    override suspend fun apk(httpMethod: HttpMethod, packageName:String): Resource<Any> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

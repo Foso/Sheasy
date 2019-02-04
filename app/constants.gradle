@@ -38,7 +38,7 @@ ext {
                     nav_version     : "1.0.0-alpha08"
 
             ],
-            dagger               : '2.16',
+            dagger               : '2.19',
             espressocore         : '3.0.1',
             junit                : '4.11',
             ktor_version         : '1.0.1',

@@ -14,5 +14,6 @@ interface FileDataSource{
     fun getApps(callback: ResponseCallback<List<App>>)
     fun getFiles(folderPath: String, callback: ResponseCallback<List<FileResponse>>)
     fun uploadFile(file: File, callback: ResponseCallback<Resource<State>>)
-
+    fun downloadApk(app:App?)
+    fun downloadFile(fileResponse: FileResponse)
 }

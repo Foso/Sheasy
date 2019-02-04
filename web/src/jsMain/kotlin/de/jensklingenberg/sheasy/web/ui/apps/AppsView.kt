@@ -7,10 +7,6 @@ import components.materialui.FormControl
 import components.materialui.Menu
 import components.materialui.MenuItem
 import components.materialui.Paper
-import components.materialui.TableCell
-import components.materialui.TableHead
-import components.materialui.TableProps
-import components.materialui.TableRow
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
@@ -29,7 +25,6 @@ import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
 import react.RBuilder
-import react.RElementBuilder
 import react.RProps
 import react.RState
 import react.dom.div
@@ -42,16 +37,18 @@ interface AppsViewState : RState {
     var status: Status
     var openMenu: Boolean
     var anchor: EventTarget?
+    var selectedApp:App?
 }
-
 
 
 class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
-    private var presenter: AppsPresenter? = null
     val appsDataSource: FileDataSource = FileRepository(ReactHttpClient(NetworkPreferences()))
 
-    val messageUseCase= MessageUseCase()
+    val messageUseCase = MessageUseCase()
+
+    private var presenter: AppsPresenter = AppsPresenter(this, appsDataSource)
+
 
     /****************************************** React Lifecycle methods  */
 
@@ -59,15 +56,13 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
     override fun AppsViewState.init() {
         appsResult = emptyList()
         status = Status.LOADING
-
+        openMenu = false
+        anchor = null
 
     }
 
     override fun componentDidMount() {
-        presenter = AppsPresenter(this, appsDataSource)
-        presenter?.getApps()
-
-
+        presenter.getApps()
     }
 
     override fun RBuilder.render() {
@@ -85,8 +80,8 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
                 ListItemBuilder.listItem(
                     rBuilder = this,
                     app = app,
-                    itemClickFunction = {  },
-                    onMoreBtnClick = { event: Event -> handleClickListItem(event) })
+                    itemClickFunction = { },
+                    onMoreBtnClick = { event: Event -> handleClickListItem(event,app) })
 
                 Divider {}
 
@@ -101,7 +96,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
             }
         }
 
-        messageUseCase.showErrorSnackbar(this,state.errorMessage,snackbarVisibility())
+        messageUseCase.showErrorSnackbar(this, state.errorMessage, snackbarVisibility())
         setupContextMenu(this)
 
     }
@@ -129,22 +124,19 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
                         +"Download"
                         attrs {
                             styleProps(textAlign = "right")
-                            onClick = { event: Event -> handleMenuItemClick(event) }
+                            onClick = {
+                                presenter.downloadApk(state.selectedApp)
+                            }
                         }
 
-                    }
-                    MenuItem {
-                        +"Profile"
-                        attrs {
-                            styleProps(textAlign = "right")
-                            onClick = { event: Event -> handleMenuItemClick(event) }
-                        }
                     }
                 }
             }
 
         }
     }
+
+
 
     private fun setupSearchBar(rBuilder: RBuilder) {
         rBuilder.run {
@@ -155,7 +147,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
                         name = "search"
                         placeholder = "SEARCH HERE"
                         onChange = {
-                            presenter?.onSearch((it.target as HTMLInputElement).value)
+                            presenter.onSearch((it.target as HTMLInputElement).value)
                         }
                     }
                 }
@@ -192,56 +184,12 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
     }
 
     /****************************************** Class methods  */
-    fun handleClickListItem(event: Event) {
+    fun handleClickListItem(event: Event, app: App) {
         val currentTarget = event.currentTarget
         setState {
             openMenu = !openMenu
             anchor = currentTarget
-        }
-
-    }
-
-    private fun renderTableBody(rElementBuilder: RElementBuilder<TableProps>) {
-        rElementBuilder.run {
-
-
-                state.appsResult.forEach { app ->
-                    ListItemBuilder.listItem(
-                        rBuilder = this,
-                        app = app,
-                        itemClickFunction = {  },
-                        onMoreBtnClick = {  })
-
-                        Divider {}
-
-                }
-
-
-
-        }
-    }
-
-
-
-    private fun renderTableHeader(
-        rElementBuilder: RElementBuilder<TableProps>,
-        listOf: List<String>
-    ) {
-        with(rElementBuilder) {
-            TableHead {
-                TableRow {
-                    listOf.forEach {
-                        TableCell {
-                            div {
-                                +it
-                                attrs {
-                                    styleProps(textAlign = "center")
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            selectedApp=app
         }
 
     }

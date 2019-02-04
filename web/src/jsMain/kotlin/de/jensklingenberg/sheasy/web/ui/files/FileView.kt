@@ -42,6 +42,7 @@ interface FileViewState : RState {
     var status: Status
     var openMenu: Boolean
     var anchor: EventTarget?
+    var selectedFile: FileResponse?
 }
 
 
@@ -89,7 +90,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
                     rBuilder = this,
                     file = file,
                     itemClickFunction = { presenter.setPath(file.path) },
-                    onMoreBtnClick = { event: Event -> handleClickListItem(event) })
+                    onMoreBtnClick = { event: Event -> handleClickListItem(event, file) })
             }
 
         div {
@@ -99,7 +100,6 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
                 }
             }
         }
-
         messageUseCase.showErrorSnackbar(this, state.snackbarMessage, errorsnackbarVisibility())
 
         setupContextMenu(this)
@@ -125,11 +125,12 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
                     }
                     MenuItem {
-
-                                +"Download"
+                        +"Download"
                         attrs {
                             styleProps(textAlign = "right")
-                            onClick = { event: Event -> handleMenuItemClick(event) }
+                            onClick = {
+                                presenter.getFile(state.selectedFile)
+                            }
                         }
 
                     }
@@ -215,23 +216,15 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
     override fun showError(error: Error) {
         setState {
-            when (error) {
-                Error.NetworkError() -> {
-                    status = Status.ERROR
-                    state.snackbarMessage = error.message
-                }
-                else -> {
-                }
-            }
+            status = Status.ERROR
+            snackbarMessage = error.message
         }
     }
 
     override fun showSnackBar(message: String) {
         setState {
             status = Status.ERROR
-            state.snackbarMessage = message
-
-
+            snackbarMessage = message
         }
 
     }
@@ -251,16 +244,19 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
         }
     }
 
-    fun handleClickListItem(event: Event) {
+    fun handleClickListItem(event: Event, fileResponse: FileResponse) {
         val currentTarget = event.currentTarget
         setState {
             openMenu = !openMenu
             anchor = currentTarget
+            selectedFile = fileResponse
         }
 
     }
 
     fun handleMenuItemClick(event: Event) {
+
+
         setState {
             openMenu = false
             anchor = null

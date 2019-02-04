@@ -6,11 +6,25 @@ import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.FileResponse
 import de.jensklingenberg.sheasy.web.model.response.Resource
 import de.jensklingenberg.sheasy.web.network.API
+import de.jensklingenberg.sheasy.web.network.ApiEndPoint
 import de.jensklingenberg.sheasy.web.network.ResponseCallback
 import org.w3c.files.File
+import kotlin.browser.window
 
 
 class FileRepository(val api: API) : FileDataSource {
+    override fun downloadFile(fileResponse: FileResponse) {
+            api.downloadFile(fileResponse.path)
+
+    }
+
+    override fun downloadApk(app: App?) {
+        if(app!=null){
+          api.downloadApk(app.packageName)
+        }
+
+    }
+
     override fun uploadFile(file: File, callback: ResponseCallback<Resource<State>>) {
         api.uploadFile(file,callback)
 

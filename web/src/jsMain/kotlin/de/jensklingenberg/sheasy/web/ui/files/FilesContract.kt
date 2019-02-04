@@ -22,6 +22,7 @@ interface FilesContract {
         fun navigateUp()
         fun uploadFile(file: File)
         fun getShared()
+        fun getFile(fileResponse: FileResponse?)
 
     }
 
