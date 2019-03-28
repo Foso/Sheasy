@@ -49,7 +49,7 @@ A few of the things you can do with Sheasy:
 
 ## 🛠️ Built With
 ### Kotlin
-[![jCenter](https://img.shields.io/badge/Kotlin-1.3.11-green.svg
+[![jCenter](https://img.shields.io/badge/Kotlin-1.3.21-green.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
 
 The App is completely written in Kotlin (except the used JVM/JS libraries)

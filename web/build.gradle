@@ -95,7 +95,7 @@ kotlin {
 
 
                 implementation "org.mockito:mockito-core:2.22.0"
-                implementation "io.mockk:mockk:1.8.13"
+                implementation "io.mockk:mockk:1.9"
 
                 //implementation "org.spekframework.spek2:spek-dsl-jvm:2.0.0-rc.1"
                 //runtimeOnly "org.spekframework.spek2:spek-runner-junit5:2.0.0-rc.1"

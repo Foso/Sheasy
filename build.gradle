@@ -13,12 +13,12 @@ buildscript {
         mavenRepos.each { buildMaven(it) }
     }
     dependencies {
-        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0-alpha08"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0-alpha01"
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$configuration.detektVersion"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.14"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.17"
         classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.44"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.11"
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.21"
+        classpath 'com.android.tools.build:gradle:3.3.2'
         classpath 'com.github.marcpoppleton:git-changelog:0.1.3'
         classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
         classpath files('./libs/JKGradleHelloWorldKotlin-0.2.jar')
