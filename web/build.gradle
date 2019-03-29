@@ -61,7 +61,6 @@ kotlin {
             dependencies {
 
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
-                implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
             }
 
         }

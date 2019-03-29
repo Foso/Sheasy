@@ -4,7 +4,7 @@ ext {
     buildTime = new Date().format("yyyy-MM-dd'T'HH:mm:ss'Z'", TimeZone.getTimeZone("UTC"))
     kotlin_version = '1.3.11'
     kotlinx_html_version = '0.6.11'
-    kotlin_frontend_version = '0.0.37'
+    kotlin_frontend_version = '0.0.45'
 
     react_version = '16.6.0'
     kotlin_react_version = "16.6.0-pre.63-kotlin-1.3.11"
@@ -15,7 +15,6 @@ ext {
             history               : '^4.7.2',
             core_js               : '3.0.0',
             rxjs                  : '6.3.3',
-            ktor_version          : '1.0.1',
             reactstrap            : '^6.5.0',
             react_dropzone        : "7.0.1",
             react_web_notification: '0.3.2',
