@@ -1,19 +1,24 @@
 package de.jensklingenberg.sheasy.ui.files
 
 import android.Manifest
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.annotation.NonNull
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.rxbinding3.appcompat.itemClicks
 import com.shopify.livedataktx.nonNull
 import com.shopify.livedataktx.observe
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
@@ -24,13 +29,14 @@ import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import kotlinx.android.synthetic.main.fragment_files.*
 import de.jensklingenberg.sheasy.model.checkState
+import de.jensklingenberg.sheasy.ui.apps.rxBindingSubscriber
 import de.jensklingenberg.sheasy.ui.common.toSourceitem
+import de.jensklingenberg.sheasy.utils.extension.requireView
 import java.io.File
 import javax.inject.Inject
 
 
-class FilesFragment : BaseFragment(), OnEntryClickListener {
-
+class FilesFragment : BaseFragment(), OnEntryClickListener,FilesContract.View {
 
     @Inject
     lateinit var permissionUtils: PermissionUtils
@@ -43,8 +49,8 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
     @Inject
     lateinit var messageUseCase: MessageUseCase
 
-    lateinit var filesViewModel: FilesViewModel
     private val baseAdapter = BaseAdapter()
+    lateinit var presenter: FilesPresenter
 
     /****************************************** Lifecycle methods  */
     init {
@@ -70,9 +76,10 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
             1 == 1
         }
 
-        filesViewModel = obtainViewModel(FilesViewModel::class.java)
+        presenter=FilesPresenter(this)
+
         arguments?.let {
-            val fromBundle = FilesFragmentArgs.fromBundle(arguments)
+            val fromBundle = FilesFragmentArgs.fromBundle(it)
             var filepath = fromBundle.filePath
             if (filepath.isNotBlank()) {
 
@@ -80,7 +87,7 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
                 if (filepath.contains(".")) {
                     filepath = filepath.replaceAfterLast("/", "")
                 }
-                filesViewModel.filePath = filepath
+                presenter.filePath = filepath
 
             }
 
@@ -95,12 +102,11 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
                 )
             )
         }
-        updateFolderPathInfo(filesViewModel.filePath)
+        updateFolderPathInfo(presenter.filePath)
 
         initObserver()
-        filesViewModel.loadFiles()
-        folderUpIv.setOnClickListener { filesViewModel.folderUp() }
-
+        presenter.loadFiles()
+        folderUpIv.setOnClickListener { presenter.folderUp() }
     }
 
     override fun onResume() {
@@ -122,29 +128,36 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
     /****************************************** Listener methods  */
     override fun onItemClicked(payload: Any) {
         val item = payload as FileResponse
-        filesViewModel.filePath = item.path
-        filesViewModel.loadFiles()
+        presenter.filePath = item.path
+        presenter.loadFiles()
         updateFolderPathInfo(item.path)
     }
 
+
     override fun onMoreButtonClicked(view: View, payload: Any) {
         val item = payload as? FileResponse
-        item?.let {
-            val popup = PopupMenu(requireActivity(), view).apply {
-                menuInflater.inflate(R.menu.files_actions, this.menu);
-                setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.menu_share -> {
-                            shareUseCase.share(File(item.path))
-                        }
-                    }
-                    true
+        item?.let {appInfo->
+            val popup = PopupMenu(requireActivity(), view)
+                .apply {
+                    menuInflater
+                        .inflate(R.menu.files_actions, menu)
                 }
-            }
-
+                .also {
+                    it.itemClicks()
+                        .rxBindingSubscriber()
+                        .doOnNext { menuItem ->
+                            when (menuItem.itemId) {
+                                R.id.menu_share -> {
+                                    shareUseCase.share(File(item.path))
+                                }
+                                R.id.menu_share_to_server -> {
+                                    shareUseCase.hostFolder(item)
+                                }
+                            }
+                        }.subscribe()
+                }
             popup.show()
         }
-
 
     }
 
@@ -172,13 +185,13 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
     }
 
     private fun initObserver() {
-        filesViewModel
+        presenter
             .files
             .nonNull()
             .observe {
                 it.checkState(
                     onSuccess = {resource->
-                        resource.data!!.sortedBy { file -> file.name }
+                        resource.data!!.sortedBy { file : FileResponse -> file.name }
                             .map { file ->
                                 file.toSourceitem(this)
                             }
@@ -189,14 +202,14 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
 
                     },
                     onLoading = {
-                        messageUseCase.show(view!!,"Loading")
+                        messageUseCase.show(requireView(),"Loading")
                     }
                     , onError = {
-                        messageUseCase.show(view!!,"Files could not loaded")
+                        messageUseCase.show(requireView(),"Files could not loaded")
                     })
 
 
-                updateFolderPathInfo(filesViewModel.filePath)
+                updateFolderPathInfo(presenter.filePath)
 
 
             }
@@ -206,6 +219,15 @@ class FilesFragment : BaseFragment(), OnEntryClickListener {
         folderPathLayout?.apply {
             title.text = path
         }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        menu?.clear()
+        inflater?.inflate(R.menu.fragment_apps_options_menu, menu)
+
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
 

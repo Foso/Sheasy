@@ -10,13 +10,12 @@ ext {
 
 
     configuration = [
-                     kotlin_version     : '1.3.21',
-                     detektVersion      : '1.0.0.RC9.2',
-                     buildGradle_version: '3.4.0-alpha01',
-                     serverPort         : "8766",
-                     websocketPort      : "8765",
-                     versionName        : '1.0.0']
-
+            kotlin_version     : '1.3.21',
+            detektVersion      : '1.0.0.RC9.2',
+            buildGradle_version: '3.4.0-alpha01',
+            serverPort         : "8766",
+            websocketPort      : "8765",
+            versionName        : '1.0.0']
 
 
 }

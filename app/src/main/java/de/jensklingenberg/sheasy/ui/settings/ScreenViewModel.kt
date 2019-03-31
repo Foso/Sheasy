@@ -14,7 +14,7 @@ class ScreenViewModel : ViewModel() {
 
     companion object {
 
-        private val TAG = ScreenCaptureImage::class.java.name
+        private val TAG = ScreenCaptureFragment::class.java.name
         private val REQUEST_CODE = 100
         private var STORE_DIRECTORY: String? = null
         private var IMAGES_PRODUCED: Int = 0

@@ -6,14 +6,11 @@ import de.jensklingenberg.sheasy.network.ktor.routes.general
 import de.jensklingenberg.sheasy.network.ktor.routes.handleFile
 import io.ktor.application.Application
 import io.ktor.application.install
-import io.ktor.features.CORS
 import io.ktor.features.Compression
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.PartialContent
 import io.ktor.features.gzip
 import io.ktor.gson.gson
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpMethod
 import io.ktor.routing.route
 import io.ktor.routing.routing
 
@@ -23,6 +20,8 @@ fun Application.ktorApplicationModule(
     fileRouteHandler: FileRouteHandler
 ) {
     with(this) {
+      //  install(DefaultHeaders)
+
         install(ContentNegotiation) {
             gson {
                 setPrettyPrinting()
@@ -35,18 +34,12 @@ fun Application.ktorApplicationModule(
         install(PartialContent) {
             maxRangeCount = 10
         }
-     /*   install(CORS) {
-            anyHost()
-            header(HttpHeaders.AccessControlAllowOrigin)
+
+           // anyHost()
+           // header(HttpHeaders.AccessControlAllowOrigin)
            // allowCredentials = true
-            listOf(
-                HttpMethod.Get,
-                HttpMethod.Put,
-                HttpMethod.Delete,
-                HttpMethod.Options
-            ).forEach { method(it) }
-        }
-*/
+
+
 
         routing {
 

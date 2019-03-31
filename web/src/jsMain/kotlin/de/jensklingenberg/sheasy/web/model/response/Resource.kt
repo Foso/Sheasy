@@ -1,6 +1,6 @@
 package de.jensklingenberg.sheasy.web.model.response
 
-import de.jensklingenberg.sheasy.web.model.Error
+import de.jensklingenberg.sheasy.model.Error
 
 
 enum class Status(val title:String) {

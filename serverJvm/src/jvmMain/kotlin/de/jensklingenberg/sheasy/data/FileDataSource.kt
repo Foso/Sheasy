@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.data.file
+package de.jensklingenberg.sheasy.data
 
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.FileResponse

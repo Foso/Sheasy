@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy.web.ui.files
 
-import de.jensklingenberg.sheasy.web.model.Error
-import de.jensklingenberg.sheasy.web.model.response.FileResponse
+import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.model.State
 import de.jensklingenberg.sheasy.web.model.StringRes
@@ -29,7 +29,8 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
     /****************************************** Presenter methods  */
     override fun navigateUp() {
-        folderPath = folderPath.replaceAfterLast("/", "")
+        folderPath = folderPath.substringBeforeLast("/","")
+
         getFiles()
     }
 

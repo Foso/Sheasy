@@ -1,14 +1,16 @@
-package de.jensklingenberg.sheasy.network.ktor
+package de.jensklingenberg.sheasy.network.ktor.routehandler
 
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.data.file.FileDataSource
-import de.jensklingenberg.sheasy.network.HttpMethod
-import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
+import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
-import kotlinx.coroutines.rx2.await
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.model.Resource
+import de.jensklingenberg.sheasy.network.HttpMethod
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
+import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.await
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -46,26 +48,46 @@ class AndroidFileRouteHandler : FileRouteHandler {
 
         inputStream.copyTo(sourceFile.outputStream())
 
-        return Resource.error("postUploadError","")
+        return Resource.error("postUploadError", "")
 
     }
 
     override suspend fun getShared(call: KtorApplicationCall): Resource<Any> {
-        if(call.parameter.isEmpty()){
-            return Resource.success(sheasyPrefDataSource.sharedFolders)
+        //
 
-        }else{
+        val filePath = call.parameter
 
-            val fileList = fileDataSource
-                .getFiles(call.parameter)
-                .await()
+        if (filePath.isEmpty()) {
 
-            return  Resource.success(fileList)
+            if (sheasyPrefDataSource.sharedFolders.isEmpty()) {
+                return Resource.error(Error.NoSharedFoldersError().message, "")
 
+            } else {
+                return Resource.success(sheasyPrefDataSource.sharedFolders)
+            }
+
+
+            // return Resource.success(sheasyPrefDataSource.sharedFolders)
+
+        } else {
+
+            val allowedPath = sheasyPrefDataSource.sharedFolders.any { folderPath ->
+                filePath.startsWith(folderPath.path)
+            }
+
+            if(allowedPath){
+                val fileList = fileDataSource
+                    .getFiles(call.parameter)
+                    .await()
+
+                return Resource.success(fileList)
+            }else{
+                return Resource.success(sheasyPrefDataSource.sharedFolders)
+            }
         }
     }
 
-    override suspend fun getDownload(filePath : String): Resource<Any> {
+    override suspend fun getDownload(filePath: String): Resource<Any> {
 
         val allowedPath = sheasyPrefDataSource.sharedFolders.any { folderPath ->
             folderPath.path.startsWith(filePath)
@@ -95,7 +117,8 @@ class AndroidFileRouteHandler : FileRouteHandler {
 
         }
     }
-    override suspend fun apk(httpMethod: HttpMethod, packageName:String): Resource<Any> {
+
+    override suspend fun apk(httpMethod: HttpMethod, packageName: String): Resource<Any> {
 
         fileDataSource
             .getApps(packageName)
@@ -108,9 +131,8 @@ class AndroidFileRouteHandler : FileRouteHandler {
     }
 
 
-
     override fun get(call: KtorApplicationCall): Resource<Any> {
-        when(call.requestedApiPath){
+        when (call.requestedApiPath) {
 
         }
         return Resource.error("Could not find command FileRoute", "")

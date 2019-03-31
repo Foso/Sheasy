@@ -53,7 +53,13 @@
             </intent-filter>
             <nav-graph android:value="@navigation/navigation_graph" />
         </activity>
-        <activity android:name=".de.jensklingenberg.react.ui.common.OnResultActivity" />
+        <service
+                android:name="de.jensklingenberg.sheasy.service.NotificationListener"
+                android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
 
 
         <service android:name="de.jensklingenberg.sheasy.network.HTTPServerService" />

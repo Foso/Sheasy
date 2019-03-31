@@ -8,8 +8,8 @@ import dagger.Provides
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.SheasyApi
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
-import de.jensklingenberg.sheasy.network.ktor.AndroidFileRouteHandler
-import de.jensklingenberg.sheasy.network.ktor.AndroidKtorGeneralRouteHandler
+import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
+import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketRepository

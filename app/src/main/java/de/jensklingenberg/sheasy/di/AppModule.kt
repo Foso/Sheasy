@@ -6,7 +6,9 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.data.file.FileDataSource
+import de.jensklingenberg.sheasy.data.FileDataSource
+import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
+import de.jensklingenberg.sheasy.data.notification.NotificationRepository
 import de.jensklingenberg.sheasy.data.file.FileRepository
 import de.jensklingenberg.sheasy.data.preferences.SheasyPreferencesRepository
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
@@ -41,7 +43,13 @@ open class AppModule(private val application: App) {
 
     @Provides
     @Singleton
-    open fun provideFileRepository(): FileDataSource = FileRepository()
+    open fun provideFileDataSource(): FileDataSource = FileRepository()
+
+    @Provides
+    @Singleton
+    open fun provideNotificationDataSource(): NotificationDataSource =
+        NotificationRepository()
+
 
 
 }

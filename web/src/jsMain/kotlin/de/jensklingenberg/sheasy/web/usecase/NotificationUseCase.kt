@@ -29,9 +29,11 @@ class NotificationUseCase{
                     title = notificationOptions.title
                     timeout = 5000
                     options = notiOptions
+                    console.log("Hh")
 
                 }
             }
+
         }
 
     }

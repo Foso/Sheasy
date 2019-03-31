@@ -1,11 +1,11 @@
 package de.jensklingenberg.sheasy.network.ktor.routes
 
+import de.jensklingenberg.sheasy.model.Resource
+import de.jensklingenberg.sheasy.model.checkState
 import de.jensklingenberg.sheasy.network.HttpMethod
 import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.utils.extension.debugCorsHeader
-import de.jensklingenberg.sheasy.model.Resource
-import de.jensklingenberg.sheasy.model.checkState
 import io.ktor.application.call
 import io.ktor.http.ContentDisposition
 import io.ktor.http.HttpHeaders
@@ -106,11 +106,18 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                             call.response.debugCorsHeader()
                             call.respond(it)
                         }
+                    },onError = {
+                        launch {
+                            call.response.debugCorsHeader()
+                            call.respond(it)
+                        }
                     })
             }
             param("upload") {
                 post {
-                    val filePath = call.parameters["upload"] ?: ""
+
+                    val tt = call
+                    val filePath = "/storage/emulated/0/Documents/"//call.parameters["upload"] ?: ""
 
                     val multipart = call.receiveMultipart()
                     multipart.forEachPart { part ->
@@ -128,13 +135,18 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                                 part.streamProvider().use { its ->
                                     its.copyTo(sourceFile.outputStream())
                                     its.close()
-                                    var fileExists = File(filePath + part.originalFileName + ext).exists()
+                                    var fileExists = File(filePath + part.originalFileName ).exists()
                                     if (fileExists) {
+                                        call.response.debugCorsHeader()
+
                                         call.respond(Resource.success("Filewrite okay"))
                                     }
                                 }
                             }
 
+                            else -> {
+
+                            }
                         }
 
                     }

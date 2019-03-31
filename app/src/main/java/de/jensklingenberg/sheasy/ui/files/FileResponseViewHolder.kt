@@ -23,9 +23,9 @@ class FileResponseViewHolder(viewParent: ViewGroup) :
                 item.setOnClickListener {
                     item2.onEntryClickListener?.onItemClicked(fileResponse)
                 }
-                moreBtn.visibility=VISIBLE
+                moreBtn.visibility = VISIBLE
                 moreBtn.setOnClickListener {
-                    item2.onEntryClickListener?.onMoreButtonClicked(it,item2)
+                    item2.onEntryClickListener?.onMoreButtonClicked(it, fileResponse)
                 }
             }
         }

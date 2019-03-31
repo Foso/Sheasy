@@ -6,6 +6,8 @@ import de.jensklingenberg.sheasy.web.components.Notification.Notification
 import de.jensklingenberg.sheasy.web.components.Notification.ReactNotificationOptions
 import de.jensklingenberg.sheasy.web.components.Notification.defaultReactNotificationOptions
 import de.jensklingenberg.sheasy.web.components.reactstrap.Tooltip
+import de.jensklingenberg.sheasy.web.usecase.NotificationOptions
+import de.jensklingenberg.sheasy.web.usecase.NotificationUseCase
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -16,24 +18,25 @@ import react.setState
 interface NotificationVState : RState {
     var openToolTip: Boolean
     var ignoreNotification: Boolean
-    var notiOptions: ReactNotificationOptions
+    var notiOptions: NotificationOptions
     var notiTitle: String
 }
 
 
 class NotificationView : RComponent<RProps, NotificationVState>(), NotificationContract.View {
-    private var presenter: NotificationContract.Presenter? = null
+    private var presenter: NotificationContract.Presenter? = NotificationPresenter(this)
+    val notificationUseCase= NotificationUseCase()
 
 
     override fun NotificationVState.init(props: RProps) {
         openToolTip = true
         ignoreNotification = true
-        notiOptions = defaultReactNotificationOptions
+        notiOptions = NotificationOptions()
         notiTitle = ""
     }
 
     override fun componentDidMount() {
-        presenter = NotificationPresenter(this)
+
         presenter?.componentDidMount()
     }
 
@@ -45,45 +48,32 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
     }
 
 
-    override fun showNotification(reactNotificationOptions: ReactNotificationOptions) {
+
+    override fun showNotification(reactNotificationOptions: NotificationOptions) {
 
         setState {
             notiTitle = reactNotificationOptions.title ?: ""
             notiOptions = reactNotificationOptions
-            console.log("HKjldfjkslajflajslkjdfs" + ignoreNotification)
+            console.log("HKjldfjkslajflajslkjdfs " + ignoreNotification)
             this.ignoreNotification = false
         }
 
     }
 
+    override fun componentWillUnmount() {
+        presenter?.componentWillUnmount()
+       // super.componentWillUnmount()
+
+    }
+
 
     override fun RBuilder.render() {
-        Button {
-            +"Notification"
-            attrs {
-               
-            }
+
+        if(state.ignoreNotification==false){
+            notificationUseCase.showNotification(this,state.notiOptions)
+
         }
 
-        Tooltip {
-            +"HHHH"
-            attrs {
-                placement = "top"
-                target = "HALLOID"
-                toggle = { handleChange() }
-                isOpen = this@NotificationView.state.openToolTip
-            }
-        }
-
-        Notification {
-            attrs {
-                title = state.notiTitle
-                timeout = 5000
-                options = state.notiOptions
-
-                console.log(this@NotificationView.state.ignoreNotification)
-            }
-        }
     }
 
 }

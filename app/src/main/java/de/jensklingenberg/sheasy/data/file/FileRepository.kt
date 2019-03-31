@@ -4,9 +4,10 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.FileResponse
-import io.reactivex.Maybe
+
 import io.reactivex.Single
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import java.io.File

@@ -10,7 +10,7 @@ import de.jensklingenberg.sheasy.utils.extension.wifiManager
 
 class NetworkUtils {
     companion object {
-        fun getIP(context: Context): String? {
+        fun getIP(context: Context): String {
             val wm = context.wifiManager()
             val ip = Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
             return ip

@@ -2,8 +2,11 @@ package de.jensklingenberg.sheasy.utils.UseCase
 
 import android.app.Application
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import java.io.File
 import java.net.URLConnection
 import javax.inject.Inject
@@ -14,6 +17,12 @@ class ShareUseCase {
     @Inject
     lateinit var application: Application
 
+
+    @Inject
+    lateinit var sheasyPrefDataSource: SheasyPrefDataSource
+
+
+
     init {
         initializeDagger()
     }
@@ -21,19 +30,22 @@ class ShareUseCase {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-
-
-fun shareDownloadLink(link:String){
-    val shareIntent: Intent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, "This is my text to send."+link)
-        type = "text/plain"
+    fun shareDownloadLink(link: String) {
+        val shareIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "This is my text to send." + link)
+            type = "text/plain"
+        }
+        application.startActivity(
+            Intent.createChooser(
+                shareIntent,
+                application.resources.getText(de.jensklingenberg.sheasy.R.string.share)
+            )
+        )
     }
-    application.startActivity(Intent.createChooser(shareIntent, application.resources.getText(de.jensklingenberg.sheasy.R.string.share)))
-}
 
 
-    fun share(file:File){
+    fun share(file: File) {
 
         val intentShareFile = Intent(Intent.ACTION_SEND)
 
@@ -48,6 +60,10 @@ fun shareDownloadLink(link:String){
         //intentShareFile.putExtra(Intent.EXTRA_TEXT, "Sharing File Description");
 
         application.startActivity(Intent.createChooser(intentShareFile, "Share File"))
+    }
+
+    fun hostFolder(fileResponse: FileResponse){
+        sheasyPrefDataSource.sharedFolders.add(fileResponse)
     }
 
 }

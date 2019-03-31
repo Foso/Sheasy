@@ -1,5 +1,6 @@
 package network.ktor.routes
 
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.model.checkState
 import de.jensklingenberg.sheasy.network.routehandler.KtorApiHandler
@@ -41,7 +42,8 @@ class DesktopKtorApiHandler: KtorApiHandler {
             route("shared") {
                 get {
                 //    call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
-                    call.respond(Resource.success(MockTestDataSource.sharedFolders))
+                   // call.respond(Resource.success(MockTestDataSource.sharedFolders))
+                    call.respond(Resource.error(Error.NoSharedFoldersError().message,""))
                 }
                 param("upload") {
                     post {

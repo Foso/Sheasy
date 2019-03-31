@@ -11,11 +11,11 @@ import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import kotlinx.android.synthetic.main.activity_screen.*
 
 
-class ScreenCaptureImage : BaseFragment() {
+class ScreenCaptureFragment : BaseFragment() {
 
     companion object {
 
-        val TAG = ScreenCaptureImage::class.java.name
+        val TAG = ScreenCaptureFragment::class.java.name
         private val REQUEST_CODE = 100
     }
 
@@ -37,8 +37,8 @@ class ScreenCaptureImage : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         appsViewModel = obtainViewModel(ScreenViewModel::class.java)
-        startButton.setOnClickListener { v -> startProjection() }
-        stopButton.setOnClickListener { v -> stopProjection() }
+        startButton.setOnClickListener {  startProjection() }
+        stopButton.setOnClickListener { stopProjection() }
 
 
     }

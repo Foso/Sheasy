@@ -61,23 +61,25 @@ open class MyWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocket(h
 
     @SuppressLint("CheckResult")
     private fun startRunner() {
-
+var t = 0
         Observable
             .fromCallable {
+                t++
                 val pingframe =
                     NanoWSD.WebSocketFrame(NanoWSD.WebSocketFrame.OpCode.Ping, false, "")
                 ping(pingframe.binaryPayload)
-                send(
+           /*     send(
                     moshi.toJson(
                         Notification(
                             "test.package",
                             "Testnotification",
                             "testtext",
-                            "testsubtext",
+                            "testsubtext "+ t,
                             0L
                         )
                     )
                 )
+                */
                 true
             }
             .delay(1, TimeUnit.SECONDS)

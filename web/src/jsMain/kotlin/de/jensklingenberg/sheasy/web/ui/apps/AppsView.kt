@@ -11,7 +11,7 @@ import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.data.repository.FileRepository
-import de.jensklingenberg.sheasy.web.model.Error
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.Status
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient

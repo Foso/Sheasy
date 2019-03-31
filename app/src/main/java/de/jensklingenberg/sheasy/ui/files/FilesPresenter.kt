@@ -1,20 +1,29 @@
 package de.jensklingenberg.sheasy.ui.files
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.data.file.FileDataSource
+import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.Resource
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import de.jensklingenberg.sheasy.model.Resource
-import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import java.io.File
 import javax.inject.Inject
 
+interface FilesContract{
+    interface Presenter{
+        fun onCreate()
+        fun loadFiles()
+        fun folderUp()
+    }
+    interface View
+}
 
-class FilesViewModel : ViewModel() {
+
+class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter{
+
 
     @Inject
     lateinit var fileDataSource: FileDataSource
@@ -37,7 +46,7 @@ class FilesViewModel : ViewModel() {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    fun loadFiles() {
+    override fun loadFiles() {
         files.value= Resource.loading("loading")
         fileDataSource
             .getFiles(filePath)
@@ -52,9 +61,14 @@ class FilesViewModel : ViewModel() {
 
 
 
-    fun folderUp() {
+   override fun folderUp() {
         filePath = filePath.replaceAfterLast("/", "")
         loadFiles()
+    }
+
+    override fun onCreate() {
+
+
     }
 
 

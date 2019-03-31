@@ -11,9 +11,9 @@ import components.materialui.icons.BlockIcon
 import components.materialui.icons.DownloadIcon
 import components.materialui.icons.FolderIcon
 import components.materialui.icons.MoreVertIcon
+import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.web.network.ApiEndPoint
 import de.jensklingenberg.sheasy.web.model.response.App
-import de.jensklingenberg.sheasy.web.model.response.FileResponse
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.events.Event
 import react.RBuilder

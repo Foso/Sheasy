@@ -5,4 +5,10 @@
 
 
         android:title="@string/share" />
+
+    <item
+            android:id="@+id/menu_share_to_server"
+
+
+            android:title="Share to Server" />
 </menu>

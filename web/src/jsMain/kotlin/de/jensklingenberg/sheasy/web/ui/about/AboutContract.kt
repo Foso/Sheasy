@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy.web.ui.about
 
 import de.jensklingenberg.sheasy.web.model.SourceItem
-import de.jensklingenberg.sheasy.web.model.Error
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.web.ui.common.ReactPresenter
 
 interface AboutContract{

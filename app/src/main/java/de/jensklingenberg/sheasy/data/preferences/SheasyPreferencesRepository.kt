@@ -5,18 +5,17 @@ import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.data.devices.DevicesRepository
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.network.devices.DevicesDataSource
-import de.jensklingenberg.sheasy.web.model.Device
 
 class SheasyPreferencesRepository : SheasyPrefDataSource {
+    override val nonInterceptedFolders: List<String> = listOf("/web/connection/")
     override val devicesRepository = DevicesRepository()
 
 
     override var appFolder= Environment.getExternalStorageDirectory().toString() + "/Sheasy/"
 
-    override var acceptAllConnections= BuildConfig.DEBUG
+    override var acceptAllConnections= false
 
-    override val sharedFolders = mutableListOf(FileResponse("/storage/emulated/0/Music","/storage/emulated/0/Music"))
+    override val sharedFolders = arrayListOf<FileResponse>()
 
 
     override val httpPort = 8766

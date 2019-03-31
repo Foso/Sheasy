@@ -22,7 +22,9 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/DEPENDENCIES'
-
+        exclude  'META-INF/kotlinx-io.kotlin_module'
+        exclude 'META-INF/atomicfu.kotlin_module'
+        exclude 'META-INF/kotlinx-coroutines-io.kotlin_module'
         exclude 'META-INF/INDEX.LIST'
         exclude 'META-INF/io.netty.versions.properties'
 
@@ -143,6 +145,8 @@ task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
 
 dependencies {
     implementation project(':serverJvm')
+    implementation project(":libshared")
+
     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
@@ -261,4 +265,12 @@ task copyFiles(type: Copy) {
     into '../documentation/API/2'
 }
 
+// workaround for https://youtrack.jetbrains.com/issue/KT-27170
+configurations {
+    compileClasspath
+}
 
+
+kapt {
+    includeCompileClasspath = true
+}

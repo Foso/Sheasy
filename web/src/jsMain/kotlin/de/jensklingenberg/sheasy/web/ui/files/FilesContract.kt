@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy.web.ui.files
 
-import de.jensklingenberg.sheasy.web.model.Error
-import de.jensklingenberg.sheasy.web.model.response.FileResponse
+import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.web.ui.common.ReactPresenter
 import org.w3c.files.File
 

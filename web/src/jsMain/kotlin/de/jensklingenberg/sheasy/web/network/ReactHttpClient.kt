@@ -1,12 +1,12 @@
 package de.jensklingenberg.sheasy.web.network
 
+import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.Response
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
-import de.jensklingenberg.sheasy.web.model.Error
 import de.jensklingenberg.sheasy.web.model.State
 import de.jensklingenberg.sheasy.web.model.response.App
-import de.jensklingenberg.sheasy.web.model.response.FileResponse
 import de.jensklingenberg.sheasy.web.model.response.Resource
-import de.jensklingenberg.sheasy.web.model.response.Response
 import kotlinext.js.jsObject
 import org.w3c.fetch.RequestInit
 import org.w3c.files.File
@@ -22,34 +22,38 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
 
     }
 
-    override fun downloadApk(packageName:String) {
+    override fun downloadApk(packageName: String) {
         window.location.href =
-                ApiEndPoint.appDownloadUrl(packageName)
+            ApiEndPoint.appDownloadUrl(packageName)
 
 
     }
 
     override fun uploadFile(file: File, callback: ResponseCallback<Resource<State>>) {
+        console.log(file.name)
+        val formData = FormData()
+        formData.append(file.name, file, file.name)
 
-        val formData =  FormData()
-        formData.append(file.name, file,file.name)
-
-        window.fetch(networkPreferences.baseurl + ApiEndPoint.shared+"?upload=/", object : RequestInit {
+        window.fetch(networkPreferences.baseurl + ApiEndPoint.shared + "?upload=/", object : RequestInit {
             override var method: String? = "POST"
             override var body: dynamic = formData
-            override var headers: dynamic = json("Accept" to "application/json")
+            override var headers: dynamic = json("Accept" to "application/json","Content-Type" to "multipart/form-data")
 
         }).then {
-           when (it.ok) {
-               true -> {
-                       callback.onSuccess(Resource.success(State.SUCCESS))
-                   println(it)
-               }
+            when (it.ok) {
+                true -> {
+                    callback.onSuccess(Resource.success(State.SUCCESS))
+                    println(it)
+                }
 
-               else -> callback.onError(Error.NetworkError())
-           }
+                else -> {
+                    println(it)
 
-       }
+                    callback.onError(Error.NetworkError())
+                }
+            }
+
+        }
 
         callback.onError(Error.NetworkError())
 
@@ -81,6 +85,16 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
                 }
 
                 "NotAuthorizedError" -> calli.onError(Error.NotAuthorizedError())
+                "ERROR" -> {
+                    when (result.data.message) {
+                        Error.NoSharedFoldersError().message -> {
+                            calli.onError(Error.NoSharedFoldersError())
+
+                        }
+                        else -> calli.onError(Error.UNKNOWNERROR())
+
+                    }
+                }
                 else -> calli.onError(Error.UNKNOWNERROR())
             }
 

@@ -8,25 +8,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
-import de.jensklingenberg.sheasy.ui.common.GenericListItem
-import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
-import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
-import de.jensklingenberg.sheasy.ui.common.toSourceItem
+import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import kotlinx.android.synthetic.main.fragment_apps.*
 
 
-class AboutFragment : BaseFragment(), OnEntryClickListener {
+class AboutFragment : BaseFragment(), AboutContract.View {
+
 
     private val aboutAdapter = BaseAdapter()
-    lateinit var aboutViewModel: AboutViewModel
 
+    lateinit var presenter: AboutPresenter
 
     /****************************************** Fragment Lifecycle methods  */
 
@@ -43,62 +38,18 @@ class AboutFragment : BaseFragment(), OnEntryClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        aboutViewModel = obtainViewModel(AboutViewModel::class.java)
 
         recyclerView?.apply {
             adapter = aboutAdapter
             recyclerView.layoutManager = LinearLayoutManager(context)
         }
-
-        val list = listOf<BaseDataSourceItem<*>>(
-            GenericListHeaderSourceItem(
-                "About"
-            ),
-
-
-            GenericListItem(
-                getString(R.string.app_name),
-                "v" + BuildConfig.VERSION_NAME,
-                R.drawable.ic_info_outline_grey_700_24dp
-            ).toSourceItem()
-
-            ,
-            GenericListItem(
-                getString(R.string.About_Changelog),
-                "",
-                R.drawable.ic_history_grey_700_24dp
-            ).toSourceItem(this)
-
-            ,
-            GenericListItem(
-                getString(R.string.about_libraries),
-                "",
-                R.drawable.ic_code_grey_700_24dp
-            ).toSourceItem(this)
-            ,
-            GenericListHeaderSourceItem(
-                "License"
-            ),
-            GenericListItem(
-                getString(R.string.about_License),
-                getString(R.string.about_license_caption),
-                R.drawable.ic_code_grey_700_24dp
-            ).toSourceItem(this)
-
-
-        )
-
-        aboutAdapter.dataSource.setItems(list)
-
+        presenter = AboutPresenter(this)
+        presenter.onCreate()
 
     }
 
     /****************************************** Listener methods  */
 
-    override fun onMoreButtonClicked(view: View, payload: Any) {
-
-
-    }
 
     override fun onItemClicked(payload: Any) {
         when (val item = payload) {
@@ -135,6 +86,12 @@ class AboutFragment : BaseFragment(), OnEntryClickListener {
 
     }
 
+
+    override fun setData(items: List<BaseDataSourceItem<*>>) {
+        aboutAdapter.dataSource.setItems(items)
+
+
+    }
 
 
 }

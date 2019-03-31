@@ -1,17 +1,22 @@
 package de.jensklingenberg.sheasy.ui.pairedDevices
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.ui.apps.rxBindingSubscriber
 import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
-import de.jensklingenberg.sheasy.ui.common.toSourceItem
+import de.jensklingenberg.sheasy.web.model.Device
 import kotlinx.android.synthetic.main.fragment_apps.*
 
 
@@ -45,11 +50,7 @@ class PairedFragment : BaseFragment(), OnEntryClickListener {
         }
 
         pairedViewModel.loadApps().map {
-            GenericListItem(
-                "Devicename",
-                it.ip,
-                R.drawable.ic_smartphone_black_24dp
-            ).toSourceItem()
+            DeviceListItemSourceItem(it,this)
         }.run {
             aboutAdapter.dataSource.setItems(this)
 
@@ -58,11 +59,32 @@ class PairedFragment : BaseFragment(), OnEntryClickListener {
 
     }
 
+
+
     override fun onMoreButtonClicked(view: View, payload: Any) {
+        val device = payload as? Device
+        device?.let { appInfo ->
+            val popup = PopupMenu(requireActivity(), view)
+                .apply {
+                    menuInflater
+                        .inflate(R.menu.paired_devices_actions, menu)
+                }
+                .also {
+                    it.itemClicks()
+                        .rxBindingSubscriber()
+                        .doOnNext { menuItem ->
+                            when (menuItem.itemId) {
+                                R.id.menu_revoke -> {
+                                    pairedViewModel.revokeDevice(appInfo)
+                                }
 
+                            }
+                        }.subscribe()
+                }
+            popup.show()
 
+        }
     }
-
 
     override fun onItemClicked(payload: Any) {
         when (val item = payload) {

@@ -18,11 +18,11 @@ interface AboutState : RState {
 
 
 class ScreenShareView : RComponent<RProps, AboutState>(), ScreenshareContract.View {
-    private var presenter: ScreensharePresenter? = null
+    private var presenter: ScreenshareContract.Presenter? = null
 
 
     override fun componentDidMount() {
-        presenter = ScreensharePresenter(this)
+        presenter   = ScreensharePresenter(this)
         presenter?.componentDidMount()
 
     }

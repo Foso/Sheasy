@@ -35,6 +35,8 @@ kotlin {
         jvmMain {
             resources.srcDirs += "resources"
             dependencies {
+                api project(":libshared")
+
                 implementation project(":libshared")
                 implementation "io.ktor:ktor:$libs.ktor_version"
 

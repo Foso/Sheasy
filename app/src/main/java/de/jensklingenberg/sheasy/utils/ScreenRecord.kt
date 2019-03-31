@@ -19,7 +19,7 @@ import android.view.Display
 import android.view.OrientationEventListener
 import android.view.WindowManager
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureImage
+import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureFragment
 import io.ktor.util.InternalAPI
 import io.ktor.util.moveToByteArray
 import java.io.ByteArrayOutputStream
@@ -38,7 +38,7 @@ class ScreenRecord : ImageReader.OnImageAvailableListener {
 
     companion object {
 
-        val TAG = ScreenCaptureImage::class.java.name
+        val TAG = ScreenCaptureFragment::class.java.name
         private val REQUEST_CODE = 100
         var STORE_DIRECTORY: String? = null
         var IMAGES_PRODUCED: Int = 0

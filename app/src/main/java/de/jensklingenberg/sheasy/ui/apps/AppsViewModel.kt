@@ -2,7 +2,7 @@ package de.jensklingenberg.sheasy.ui.apps
 
 import androidx.lifecycle.ViewModel
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.data.file.FileDataSource
+import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase

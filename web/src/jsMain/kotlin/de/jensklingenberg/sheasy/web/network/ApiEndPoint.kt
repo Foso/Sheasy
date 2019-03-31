@@ -11,8 +11,7 @@ class ApiEndPoint {
         val repoSite = "https://github.com/Foso/Sheasy"
         val upload = "file/upload"
 
-
-        val baseUrl = "http://${NetworkPreferences().hostname}/api/$apiVersion/"
+        val baseUrl = NetworkPreferences().baseurl
         val webSocketbaseUrl = "ws://${NetworkPreferences().hostname}/api/$apiVersion/"
 
         fun getFiles(path: String) = baseUrl + "file/shared?folder=" + path
@@ -20,8 +19,8 @@ class ApiEndPoint {
         fun fileDownloadUrl(path: String) = baseUrl + "file/file?path=" + path
 
         fun appIconUrl(packageName: String) = baseUrl + "file?icon=" + packageName
-        val notificationWebSocketURL = "ws://192.168.178.20:8765/echo"
-        val screenshareWebSocketURL = "ws://192.168.178.20:8765/screenshare"
+        val notificationWebSocketURL = "ws://192.168.178.31:8765/notification"
+        val screenshareWebSocketURL = "ws://192.168.178.31:8765/screenshare"
 
     }
 }

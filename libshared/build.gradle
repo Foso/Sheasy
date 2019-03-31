@@ -3,18 +3,19 @@ buildscript {
 }
 
 apply plugin: 'kotlin-multiplatform'
+apply plugin: "kotlin-kapt"
 
 
 kotlin {
-    targets {
-        fromPreset(presets.js, 'js') {
+
+       js() {
             configure([compilations.main]) {
                 tasks.getByName(compileKotlinTaskName).kotlinOptions {
                     languageVersion = "1.3"
                     sourceMap = true
                     moduleKind = "commonjs"
                     metaInfo = true
-                    outputFile = "${project.buildDir.path}/js/${project.name}.js"
+                  //  outputFile = "${project.buildDir.path}/js/${project.name}.js"
 
                 }
             }
@@ -25,8 +26,8 @@ kotlin {
                 }
             }
         }
-        fromPreset(presets.jvm, 'jvm')
-    }
+       jvm()
+
 
     sourceSets {
         commonMain {
@@ -70,4 +71,9 @@ kotlin {
 // workaround for https://youtrack.jetbrains.com/issue/KT-27170
 configurations {
     compileClasspath
+}
+
+
+kapt {
+    includeCompileClasspath = true
 }

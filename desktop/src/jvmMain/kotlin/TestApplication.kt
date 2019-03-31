@@ -27,14 +27,15 @@ import io.ktor.features.CORS
 import io.ktor.features.PartialContent
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
-import io.ktor.routing.Routing
 import io.ktor.routing.post
+import network.network.ktor.repository.FileRepository
 import java.time.Duration
 
 
 fun main() {
+    val fileDataSource = FileRepository()
     val sheasyPref : SheasyPrefDataSource = DesktopSheasyPrefDataSource()
-    val fileRouteHandler : FileRouteHandler = DesktopFileRouteHandler()
+    val fileRouteHandler : FileRouteHandler = DesktopFileRouteHandler(fileDataSource)
     val ktorApiHandler: KtorApiHandler = DesktopKtorApiHandler()
 
 

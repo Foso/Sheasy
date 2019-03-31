@@ -7,6 +7,7 @@ import components.materialui.Toolbar
 import components.materialui.Typography
 import components.materialui.icons.MenuIcon
 import de.jensklingenberg.sheasy.web.model.DrawerItems
+import de.jensklingenberg.sheasy.web.ui.notification.NotificationView
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -95,6 +96,8 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
 
 
                 }
+               // NotificationView()
+
             }
 
         }

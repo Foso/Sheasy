@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.ui.common
 
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import kotlinx.android.synthetic.main.list_item_generic.view.*
@@ -21,6 +22,8 @@ class GenericListItemViewHolder(viewParent: ViewGroup) :
                 setOnClickListener {
                     item.onEntryClickListener?.onItemClicked(item)
                 }
+
+
             }
         }
     }

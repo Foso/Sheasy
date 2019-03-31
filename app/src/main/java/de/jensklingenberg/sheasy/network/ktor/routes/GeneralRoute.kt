@@ -1,5 +1,6 @@
 package de.jensklingenberg.sheasy.network.ktor.routes
 
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.model.checkState
 import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
@@ -16,17 +17,34 @@ fun Route.general(
     generalRouteHandler: GeneralRouteHandler
 ) {
 
-      intercept(ApplicationCallPipeline.Call) {
-                      val resource = generalRouteHandler.intercept(call.ktorApplicationCall())
-                      resource.checkState(onError = {
-                          launch {
-                             // call.respond(resource)
-                          }
-                      })
-                  }
+    intercept(ApplicationCallPipeline.Call) {
+
+        val filepath = "web/" + call.parameters.entries().firstOrNull { it.key == "filepath" }?.value?.joinToString("/")
+
+        val resource = generalRouteHandler.intercept(call.ktorApplicationCall(filepath))
+        resource.checkState(onError = {
+            launch {
+
+
+                if (it.message.equals(Error.NotAuthorizedError().message)) {
+
+                    if (!filepath.contains("web/connection/")) {
+                        generalRouteHandler.getConnectionPage()
+                            .map { it.readBytes() }
+                            .await()
+                            .run {
+                                call.respond(this)
+                            }
+                    }
+
+
+                }
+            }
+        })
+    }
 
     get("/") {
-       generalRouteHandler.getStartPage()
+        generalRouteHandler.getStartPage()
             .map { it.readBytes() }
             .await()
             .run {
@@ -35,7 +53,8 @@ fun Route.general(
     }
 
     get("web/{filepath...}") {
-        val filepath = "web/" + call.parameters["filepath"]
+        // val filepath = "web/" + call.parameters["filepath"]
+        val filepath = "web/" + call.parameters.entries().first { it.key == "filepath" }.value.joinToString("/")
 
         generalRouteHandler.getFile(filepath)
             .map { it.readBytes() }

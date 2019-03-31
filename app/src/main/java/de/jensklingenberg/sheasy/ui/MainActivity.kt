@@ -1,11 +1,14 @@
 package de.jensklingenberg.sheasy.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -34,12 +37,21 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         handleIntent(intent)
         mainActivityDrawer = MainActivityDrawer(this)
         mainViewModel = obtainViewModel(MainViewModel::class.java)
+     //   requestNotificationPermission(this)
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_options_menu, menu)
         return true
+    }
+
+    fun requestNotificationPermission(context: Context) {
+        ContextCompat.startActivity(
+            context,
+            Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS),
+            null
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

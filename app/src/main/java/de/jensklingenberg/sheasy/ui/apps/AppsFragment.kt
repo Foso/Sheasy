@@ -125,7 +125,7 @@ class AppsFragment : BaseFragment(), OnEntryClickListener {
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
         val appInfo = payload as? AppInfo
-        appInfo?.let {appInfo->
+        appInfo?.let { appInfo ->
             val popup = PopupMenu(requireActivity(), view)
                 .apply {
                     menuInflater

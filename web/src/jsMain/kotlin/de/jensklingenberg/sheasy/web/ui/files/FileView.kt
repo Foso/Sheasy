@@ -5,14 +5,13 @@ import components.materialui.CircularProgress
 import components.materialui.InputLabel
 import components.materialui.Menu
 import components.materialui.MenuItem
+import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.data.repository.FileRepository
-import de.jensklingenberg.sheasy.web.model.Error
-import de.jensklingenberg.sheasy.web.model.response.FileResponse
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.web.model.response.Status
-import de.jensklingenberg.sheasy.web.network.ApiEndPoint
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.ListItemBuilder
@@ -20,20 +19,17 @@ import de.jensklingenberg.sheasy.web.ui.common.extension.selectedFile
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
+import kodando.rxjs.Observable
 import kotlinx.html.DIV
 import kotlinx.html.InputType
-import kotlinx.html.js.onClickFunction
-import kotlinx.html.onClick
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
 import react.RBuilder
 import react.RProps
 import react.RState
 import react.dom.RDOMBuilder
-import react.dom.a
 import react.dom.div
 import react.setState
-import kotlin.browser.window
 
 
 interface FileViewState : RState {
@@ -63,6 +59,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
     override fun componentDidMount() {
         presenter.getShared()
+
     }
 
     override fun RBuilder.render() {

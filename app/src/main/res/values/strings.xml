@@ -16,6 +16,9 @@
     <string name="loading">Loading</string>
     <string name="path_general_main">/</string>
     <string name="device_NOTAUTHORIZED">Device is not authorized</string>
+    <string name="revoke">Revoke</string>
+    <string name="http_port">Http Port</string>
+    <string name="websocket_port">Websocket Port</string>
 
 
     <!-- About -->

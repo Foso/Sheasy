@@ -1,19 +1,27 @@
 package network.ktor
 
+
+
 import de.jensklingenberg.sheasy.model.AppInfo
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.network.HttpMethod
 import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.await
+import main.MockTestDataSource.Companion.mockAppList
+import network.network.ktor.repository.FileRepository
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
 
-class DesktopFileRouteHandler: FileRouteHandler {
+class DesktopFileRouteHandler(val fileDataSource: FileRepository) : FileRouteHandler {
+
     override fun getApps(): Single<List<AppInfo>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        return Single.just(mockAppList)
     }
 
     override suspend fun apk(httpMethod: HttpMethod, packageName:String): Resource<Any> {
@@ -26,10 +34,9 @@ class DesktopFileRouteHandler: FileRouteHandler {
 
 
 
-    override suspend fun getDownload(call: KtorApplicationCall): Resource<Any> {
-        val filePath = call.parameter
 
 
+    override suspend fun getDownload(filePath : String): Resource<Any> {
 
 
         if (filePath.contains(".")) {
@@ -40,26 +47,19 @@ class DesktopFileRouteHandler: FileRouteHandler {
         } else {
             //appsRepository.sendBroadcast(EventCategory.REQUEST, filePath)
 
-            val fileList = File(call.parameter).listFiles()
-
+            val fileList = fileDataSource
+                .getFiles(filePath)
+                .await()
 
             if (fileList.isEmpty()) {
-                return Resource.error("path not found","")
+                return Resource.error("path not found", "")
 
-
-            } else {
-
-
-                call.apply {
-                    Resource.success(fileList)
-                }
 
             }
 
+            return Resource.error("getDownloadError", "")
 
         }
-        return Resource.error("getDownloadError","")
-
     }
 
     override suspend fun getShared(call: KtorApplicationCall): Resource<Any> {
@@ -74,7 +74,7 @@ class DesktopFileRouteHandler: FileRouteHandler {
                     it.path
                 )
             } ?: emptyList()
-        return Resource.success(files)
+        return Resource.error("NoSharedFoldersError",Error.NoSharedFoldersError().message)
 
 
     }

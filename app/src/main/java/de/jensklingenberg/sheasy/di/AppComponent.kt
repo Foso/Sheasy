@@ -4,24 +4,27 @@ import dagger.Component
 import de.jensklingenberg.sheasy.data.file.FileRepository
 import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.network.Server
-import de.jensklingenberg.sheasy.network.ktor.AndroidFileRouteHandler
-import de.jensklingenberg.sheasy.network.ktor.AndroidKtorGeneralRouteHandler
+import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
+import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRouteHandler
 import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
+import de.jensklingenberg.sheasy.network.websocket.NotificationWebSocket
 import de.jensklingenberg.sheasy.network.websocket.ScreenShareWebSocket
+import de.jensklingenberg.sheasy.service.NotificationListener
 import de.jensklingenberg.sheasy.ui.MainViewModel
 import de.jensklingenberg.sheasy.ui.about.AboutFragment
-import de.jensklingenberg.sheasy.ui.about.AboutViewModel
+import de.jensklingenberg.sheasy.ui.about.AboutPresenter
 import de.jensklingenberg.sheasy.ui.apps.AppInfoViewHolder
 import de.jensklingenberg.sheasy.ui.apps.AppsFragment
 import de.jensklingenberg.sheasy.ui.apps.AppsViewModel
 import de.jensklingenberg.sheasy.ui.common.OnResultActivity
 import de.jensklingenberg.sheasy.ui.files.FilesFragment
-import de.jensklingenberg.sheasy.ui.files.FilesViewModel
+import de.jensklingenberg.sheasy.ui.files.FilesPresenter
 import de.jensklingenberg.sheasy.ui.home.HomeFragment
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedFragment
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedViewModel
-import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureImage
+import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
+import de.jensklingenberg.sheasy.ui.settings.SettingsPresenter
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
@@ -39,15 +42,14 @@ interface AppComponent {
     fun inject(fileRepository: FileRepository)
     fun inject(aboutFragment: AboutFragment)
     fun inject(pairedFragment: PairedFragment)
-    fun inject(screenCaptureImage: ScreenCaptureImage)
+    fun inject(screenCaptureFragment: ScreenCaptureFragment)
 
 
     fun inject(settingsFragment: SettingsFragment)
     fun inject(notificationUtils: NotificationUtils)
     fun inject(appsFragment: AppsFragment)
     fun inject(homeFragment: HomeFragment)
-    fun inject(aboutViewModel: AboutViewModel)
-    fun inject(filesViewModel: FilesViewModel)
+
     fun inject(myWebSocket: MyWebSocket)
     fun inject(server: Server)
     fun inject(screenShareWebSocket: ScreenShareWebSocket)
@@ -58,6 +60,11 @@ interface AppComponent {
     fun inject(androidKtorGeneralRouteHandler: AndroidKtorGeneralRouteHandler)
     fun inject(androidFileRouteHandler: AndroidFileRouteHandler)
     fun inject(appInfoViewHolder: AppInfoViewHolder)
+    fun inject(filesPresenter: FilesPresenter)
+    fun inject(aboutPresenter: AboutPresenter)
+    fun inject(settingsPresenter: SettingsPresenter)
+    fun inject(notificationListener: NotificationListener)
+    fun inject(notificationWebSocket: NotificationWebSocket)
 
 
 }

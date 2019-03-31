@@ -1,8 +1,8 @@
 package de.jensklingenberg.sheasy.web.network
 
+import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.web.model.State
 import de.jensklingenberg.sheasy.web.model.response.App
-import de.jensklingenberg.sheasy.web.model.response.FileResponse
 import de.jensklingenberg.sheasy.web.model.response.Resource
 import org.w3c.files.File
 

@@ -11,6 +11,7 @@ interface GeneralRouteHandler : RouteHandler {
     suspend fun intercept(call: KtorApplicationCall): Resource<Any>
     fun getStartPage(): Single<InputStream>
     fun getFile(filePath:String): Single<InputStream>
+    fun getConnectionPage() : Single<InputStream>
 
 }
 

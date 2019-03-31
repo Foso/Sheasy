@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/recordFragment"
-        android:name="de.jensklingenberg.sheasy.ui.settings.ScreenCaptureImage"
+        android:name="de.jensklingenberg.sheasy.ui.settings.ScreenCaptureFragment"
         android:label="Record" />
 
     <fragment

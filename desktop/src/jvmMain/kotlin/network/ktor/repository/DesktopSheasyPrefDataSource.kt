@@ -1,7 +1,6 @@
 package network.ktor.repository
 
 import de.jensklingenberg.sheasy.model.FileResponse
-import de.jensklingenberg.sheasy.web.model.Device
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.network.devices.DevicesDataSource
 

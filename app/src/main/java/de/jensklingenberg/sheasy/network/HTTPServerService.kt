@@ -50,6 +50,8 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     @Inject
     lateinit var sheasyPref: SheasyPrefDataSource
 
+    var isRunning : Boolean = false
+
     /****************************************** Lifecycle methods  */
 
 
@@ -77,7 +79,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
             }
         }
-
+        isRunning= true
         return START_STICKY
 
 
@@ -103,6 +105,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     override fun stopService(name: Intent?): Boolean {
         server.stop()
         unregisterReceiver(receiver)
+        isRunning=false
 
         return super.stopService(name)
 
