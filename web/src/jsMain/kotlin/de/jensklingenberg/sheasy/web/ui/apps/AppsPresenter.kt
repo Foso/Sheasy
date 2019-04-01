@@ -39,18 +39,19 @@ class AppsPresenter(private val view: AppsContract.View, val fileDataSource : Fi
 
     override fun getApps() {
 
-        fileDataSource.getApps( callback = object : ResponseCallback<List<App>> {
-         override fun onSuccess(data: List<App>) {
-             appsResult = data
-             view.setData(appsResult)
-         }
+        fileDataSource.getApps().subscribeBy(
+            next = {
+                appsResult = it
+                view.setData(appsResult)
+            },error = {
+                if(it is Error){
+                    view.showError(it)
+                }
+            }
+        )
 
-         override fun onError(error: Error) {
-             view.showError(error)
-         }
 
 
-     })
     }
 
     override fun downloadApk(app:App?) {

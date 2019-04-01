@@ -7,6 +7,7 @@ import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.Resource
 import de.jensklingenberg.sheasy.web.network.API
 import de.jensklingenberg.sheasy.web.network.ResponseCallback
+import kodando.rxjs.Observable
 import org.w3c.files.File
 
 
@@ -28,8 +29,8 @@ class FileRepository(val api: API) : FileDataSource {
 
     }
 
-    override fun getShared(callback: ResponseCallback<List<FileResponse>>) {
-        api.getShared(callback)
+    override fun getShared(): Observable<List<FileResponse>> {
+       return api.getShared()
     }
 
     override fun getFiles(folderPath: String, callback: ResponseCallback<List<FileResponse>>) {
@@ -37,8 +38,8 @@ class FileRepository(val api: API) : FileDataSource {
 
     }
 
-    override fun getApps(callback: ResponseCallback<List<App>>) {
-        api.getApps(callback)
+    override fun getApps(): Observable<List<App>> {
+      return api.getApps()
     }
 
 

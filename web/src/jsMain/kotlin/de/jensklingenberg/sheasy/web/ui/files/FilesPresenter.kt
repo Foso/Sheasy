@@ -7,6 +7,7 @@ import de.jensklingenberg.sheasy.web.model.State
 import de.jensklingenberg.sheasy.web.model.StringRes
 import de.jensklingenberg.sheasy.web.model.response.Resource
 import de.jensklingenberg.sheasy.web.network.ResponseCallback
+import kodando.rxjs.subscribeBy
 import org.w3c.files.File
 
 class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataSource) :
@@ -58,21 +59,19 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
     }
 
     override fun getShared() {
-        fileDataSource.getShared(
-            callback = object : ResponseCallback<List<FileResponse>> {
-                override fun onSuccess(data: List<FileResponse>) {
-                    filesResult = data
-                    view.setData(data)
-                }
 
-                override fun onError(error: Error) {
-                    view.showError(error)
-                }
+        fileDataSource.getShared().subscribeBy(
+            next = {data->
+                filesResult = data
+                view.setData(data)
+            },error = {
+                if(it is Error){
+                    view.showError(it)
 
+                }
             }
-
-
         )
+
     }
 
     override fun uploadFile(file: File) {

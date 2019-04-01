@@ -7,6 +7,10 @@ import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.model.State
 import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.Resource
+import kodando.rxjs.Observable
+import kodando.rxjs.Observer
+import kodando.rxjs.observable.of
+import kodando.rxjs.subscribeBy
 import kotlinext.js.jsObject
 import org.w3c.fetch.RequestInit
 import org.w3c.files.File
@@ -33,6 +37,7 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
         console.log(file.name)
         val formData = FormData()
         formData.append(file.name, file, file.name)
+
 
         window.fetch(networkPreferences.baseurl + ApiEndPoint.shared + "?upload=/", object : RequestInit {
             override var method: String? = "POST"
@@ -63,13 +68,16 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
         download(ApiEndPoint.getFiles(folderPath), callback)
     }
 
-    override fun getShared(callback: ResponseCallback<List<FileResponse>>) {
-        download(networkPreferences.baseurl + ApiEndPoint.shared, callback)
+    override fun getShared() : Observable<List<FileResponse>>{
+        return  obsdownload(networkPreferences.baseurl + ApiEndPoint.shared)
+
+
     }
 
 
-    override fun getApps(callback: ResponseCallback<List<App>>) {
-        download(networkPreferences.baseurl + ApiEndPoint.apps, callback)
+    override fun getApps(): Observable<List<App>> {
+
+       return  obsdownload(networkPreferences.baseurl + ApiEndPoint.apps)
     }
 
     private inline fun <reified T> download(path: String, calli: ResponseCallback<List<T>>) {
@@ -101,5 +109,51 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
         }.catch { error: Throwable ->
             calli.onError(Error.NetworkError())
         }
+    }
+
+    private inline fun <reified T> obsdownload(path: String): Observable<List<T>> {
+
+        return Observable { observer ->
+
+            Axios.get<Response<Array<T>>>(path, jsObject {
+                timeout = 10000
+            }).then { result ->
+                when (result.data.status) {
+                    "SUCCESS" -> {
+                        result.data.data?.let {
+                            observer.next(it.toMutableList())
+                        }
+
+                    }
+
+                    "NotAuthorizedError" -> observer.error(Error.NotAuthorizedError())
+                    "ERROR" -> {
+                        when (result.data.message) {
+                            Error.NoSharedFoldersError().message -> {
+                                observer.error(Error.NoSharedFoldersError())
+
+                            }
+                            else -> observer.error(Error.UNKNOWNERROR())
+
+                        }
+                    }
+                    else -> observer.error(Error.UNKNOWNERROR())
+                }
+                observer.complete()
+
+            }.catch { error: Throwable ->
+                observer.error(Error.NetworkError())
+                observer.complete()
+
+            }
+
+
+
+            null
+        }
+
+
+
+
     }
 }

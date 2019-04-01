@@ -1,6 +1,6 @@
 package de.jensklingenberg.sheasy.web.ui.about
 
-import de.jensklingenberg.sheasy.web.components.listview.ButtonItem
+import de.jensklingenberg.sheasy.web.model.ButtonItem
 import de.jensklingenberg.sheasy.web.model.ButtonSourceItem
 import de.jensklingenberg.sheasy.web.model.LinkItem
 import de.jensklingenberg.sheasy.web.model.LinkSourceItem

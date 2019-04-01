@@ -1,6 +1,5 @@
 package de.jensklingenberg.sheasy.web.model
 
-import de.jensklingenberg.sheasy.web.components.listview.ButtonItem
 import de.jensklingenberg.sheasy.web.network.ApiEndPoint
 import kotlinx.html.js.onClickFunction
 import react.RBuilder

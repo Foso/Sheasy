@@ -4,19 +4,18 @@ import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.web.model.State
 import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.Resource
+import kodando.rxjs.Observable
 import org.w3c.files.File
 
 
 interface API {
-    fun getApps(callback: ResponseCallback<List<App>>)
+    fun getApps(): Observable<List<App>>
     fun getFiles(
         folderPath: String,
         callback: ResponseCallback<List<FileResponse>>
     )
     fun  uploadFile(file: File, callback: ResponseCallback<Resource<State>>)
-    fun getShared(
-        callback: ResponseCallback<List<FileResponse>>
-    )
+    fun getShared() : Observable<List<FileResponse>>
     fun downloadApk(packageName:String)
     fun downloadFile(path:String)
 
