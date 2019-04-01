@@ -78,7 +78,12 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
     }
 
     override fun uploadFile(file: File) {
-        fileDataSource.uploadFile(file,"/storage/emulated/0/DCIM/").subscribeBy(
+        var fold = folderPath
+        if(fold.last().toString()!="/"){
+            fold= "$folderPath/"
+        }
+
+        fileDataSource.uploadFile(file,fold).subscribeBy(
             next = { data ->
                 view.showSnackBar(StringRes.MESSAGE_SUCCESS)
 
