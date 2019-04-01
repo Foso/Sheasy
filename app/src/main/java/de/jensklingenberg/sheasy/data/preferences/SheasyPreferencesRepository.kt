@@ -13,7 +13,7 @@ class SheasyPreferencesRepository : SheasyPrefDataSource {
 
     override var appFolder= Environment.getExternalStorageDirectory().toString() + "/Sheasy/"
 
-    override var acceptAllConnections= false
+    override var acceptAllConnections= true
 
     override val sharedFolders = arrayListOf<FileResponse>()
 

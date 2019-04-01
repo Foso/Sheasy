@@ -37,7 +37,7 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
         window.fetch(networkPreferences.baseurl + ApiEndPoint.shared + "?upload=/", object : RequestInit {
             override var method: String? = "POST"
             override var body: dynamic = formData
-            override var headers: dynamic = json("Accept" to "application/json","Content-Type" to "multipart/form-data")
+            override var headers: dynamic = json("Accept" to "application/json")
 
         }).then {
             when (it.ok) {
