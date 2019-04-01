@@ -18,6 +18,7 @@ class HomeView : RComponent<RProps, RState>() {
 
         DrawerItems
             .values()
+            .filterNot { it == DrawerItems.SCREENSHARE || it==DrawerItems.HOME }
             .forEach {
                 List {
                     attrs {

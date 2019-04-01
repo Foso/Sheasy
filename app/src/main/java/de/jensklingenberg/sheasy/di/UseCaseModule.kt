@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import de.jensklingenberg.sheasy.data.CheckPermissionUseCase
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.PermissionUtils
 import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
@@ -35,4 +36,8 @@ class UseCaseModule {
     @Provides
     @Singleton
     fun provideNotifUtils(): NotificationUseCase = NotificationUtils()
+
+    @Provides
+    @Singleton
+    fun provideCheckPermissionUseCase(context: Context): CheckPermissionUseCase = CheckPermissionUseCase(context )
 }

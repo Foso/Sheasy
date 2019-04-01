@@ -10,6 +10,8 @@ val sideMenuEntries = listOf(
     SideMenuEntry("Files", R.id.filesFragment, R.drawable.ic_smartphone_black_24dp),
     SideMenuEntry("Paired", R.id.pairedFragment, R.drawable.ic_folder_grey_700_24dp),
     SideMenuEntry("Settings", R.id.settingsFragment, R.drawable.ic_settings_black_24dp),
+    SideMenuEntry("EventLog", R.id.eventLogFragment, R.drawable.ic_settings_black_24dp),
+
     SideMenuEntry("About", R.id.aboutFragment, R.drawable.ic_info_outline_black_24dp),
             SideMenuEntry("Screenshare", R.id.recordFragment, R.drawable.ic_info_outline_black_24dp)
 

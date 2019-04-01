@@ -20,6 +20,14 @@
     <string name="http_port">Http Port</string>
     <string name="websocket_port">Websocket Port</string>
 
+    <!-- Server -->
+    <string name="acceptAllConnections">Accept all connections</string>
+
+
+    <!-- Permissions -->
+    <string name="readNotifications">Read notifications</string>
+
+
 
     <!-- About -->
 

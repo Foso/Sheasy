@@ -10,11 +10,8 @@ import org.w3c.files.File
 
 interface API {
     fun getApps(): Observable<List<App>>
-    fun getFiles(
-        folderPath: String,
-        callback: ResponseCallback<List<FileResponse>>
-    )
-    fun  uploadFile(file: File, callback: ResponseCallback<Resource<State>>)
+    fun getFiles(folderPath: String) :Observable<List<FileResponse>>
+    fun uploadFile(file: File,folderPath: String):Observable<Resource<State>>
     fun getShared() : Observable<List<FileResponse>>
     fun downloadApk(packageName:String)
     fun downloadFile(path:String)

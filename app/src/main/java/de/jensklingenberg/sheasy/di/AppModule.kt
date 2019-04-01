@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
+import de.jensklingenberg.sheasy.data.event.EventDataSource
+import de.jensklingenberg.sheasy.data.event.EventRepository
 import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
 import de.jensklingenberg.sheasy.data.notification.NotificationRepository
 import de.jensklingenberg.sheasy.data.file.FileRepository
@@ -50,6 +52,8 @@ open class AppModule(private val application: App) {
     open fun provideNotificationDataSource(): NotificationDataSource =
         NotificationRepository()
 
-
+    @Provides
+    @Singleton
+    open fun provideEventDataSource(): EventDataSource = EventRepository()
 
 }

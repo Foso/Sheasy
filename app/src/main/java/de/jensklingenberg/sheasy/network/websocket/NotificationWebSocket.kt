@@ -5,7 +5,6 @@ import android.util.Log
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
-import de.jensklingenberg.sheasy.model.Notification
 import de.jensklingenberg.sheasy.utils.extension.toJson
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
@@ -78,7 +77,7 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
     override fun onOpen() {
         startRunner()
         compositeDisposable.add(
-            notificationDataSource.snackbar.subscribeBy (onNext = {
+            notificationDataSource.notification.subscribeBy (onNext = {
                 Log.d(TAG, "onComp: ")
 
                 if(isOpen){

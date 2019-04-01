@@ -7,12 +7,12 @@ class NotificationRepository : NotificationDataSource {
 
 
     var notifications = arrayListOf<NotificationResponse>()
-   override val snackbar: PublishSubject<NotificationResponse> = PublishSubject.create()
+   override val notification: PublishSubject<NotificationResponse> = PublishSubject.create()
 
 
     override fun addNotification(notResponse: NotificationResponse) {
        notifications.add(notResponse)
-        snackbar.onNext(notResponse)
+        notification.onNext(notResponse)
     }
 
 }

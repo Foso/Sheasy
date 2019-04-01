@@ -2,6 +2,7 @@ package de.jensklingenberg.sheasy.web.ui.files
 
 import components.materialui.Button
 import components.materialui.CircularProgress
+import components.materialui.FormControl
 import components.materialui.InputLabel
 import components.materialui.Menu
 import components.materialui.MenuItem
@@ -22,6 +23,7 @@ import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
 import kodando.rxjs.Observable
 import kotlinx.html.DIV
 import kotlinx.html.InputType
+import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
 import react.RBuilder
@@ -70,6 +72,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
             setupBackButton(this)
             setupUploadButton(this)
         }
+        setupSearchBar(this)
         div {
             Input {
                 attrs {
@@ -196,6 +199,23 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
                 }
 
+            }
+        }
+    }
+
+    private fun setupSearchBar(rBuilder: RBuilder) {
+        rBuilder.run {
+            FormControl {
+                Input {
+                    attrs {
+                        type = InputType.search.realValue
+                        name = "search"
+                        placeholder = "SEARCH HERE"
+                        onChange = {
+                            presenter.onSearch((it.target as HTMLInputElement).value)
+                        }
+                    }
+                }
             }
         }
     }

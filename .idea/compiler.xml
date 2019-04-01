@@ -14,7 +14,7 @@
       <module name="server_jvm_jvmTest" target="1.6" />
       <module name="serverJvm_jvmMain" target="1.8" />
       <module name="serverJvm_jvmTest" target="1.6" />
-      <module name="web_jvmMain" target="1.8" />
+      <module name="web_jvmMain" target="1.6" />
       <module name="web_jvmTest" target="1.6" />
     </bytecodeTargetLevel>
   </component>

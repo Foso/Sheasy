@@ -10,5 +10,5 @@
             android:id="@+id/menu_share_to_server"
 
 
-            android:title="Share to Server" />
+            android:title="Host Folder" />
 </menu>

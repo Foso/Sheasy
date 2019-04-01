@@ -2,7 +2,10 @@ package de.jensklingenberg.sheasy.network.ktor.routehandler
 
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
+import de.jensklingenberg.sheasy.data.event.EventDataSource
 import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.Event
+import de.jensklingenberg.sheasy.model.EventCategory
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
@@ -24,6 +27,9 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
     @Inject
     lateinit var fileDataSource: FileDataSource
+
+    @Inject
+    lateinit var eventDataSource: EventDataSource
 
     init {
         initializeDagger()
@@ -50,6 +56,7 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
         if (!sheasyPref.devicesRepository.authorizedDevices.contains(Device(call.remoteHostIp))) {
             notificationUseCase.showConnectionRequest(call.remoteHostIp)
+            eventDataSource.addEvent(Event(EventCategory.CONNECTION,call.remoteHostIp))
             return Resource.error(Error.NotAuthorizedError())
 
         } else {

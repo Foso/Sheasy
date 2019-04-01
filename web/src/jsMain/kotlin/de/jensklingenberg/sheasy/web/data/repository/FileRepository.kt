@@ -24,8 +24,8 @@ class FileRepository(val api: API) : FileDataSource {
 
     }
 
-    override fun uploadFile(file: File, callback: ResponseCallback<Resource<State>>) {
-        api.uploadFile(file,callback)
+    override fun uploadFile(file: File,folderPath: String): Observable<Resource<State>> {
+        return api.uploadFile(file,folderPath)
 
     }
 
@@ -33,8 +33,8 @@ class FileRepository(val api: API) : FileDataSource {
        return api.getShared()
     }
 
-    override fun getFiles(folderPath: String, callback: ResponseCallback<List<FileResponse>>) {
-        api.getFiles(folderPath,callback)
+    override fun getFiles(folderPath: String): Observable<List<FileResponse>> {
+       return  api.getFiles(folderPath)
 
     }
 

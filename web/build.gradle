@@ -7,9 +7,9 @@ plugins {
     id 'org.jetbrains.kotlin.frontend'
     id("io.gitlab.arturbosch.detekt")
     id('com.moowork.node')
+    id("kotlin-dce-js")
 
 }
-apply plugin: 'kotlin-dce-js'
 
 repositories {
     ext.buildMaven = { p -> repositories { maven { url p } } }
@@ -26,14 +26,6 @@ detekt {
 }
 kotlin {
 
-
-        jvm() {
-            configure([compilations.main]) {
-                tasks.getByName(compileKotlinTaskName).kotlinOptions {
-                    jvmTarget = "1.8"
-                }
-            }
-        }
         js() {
             configure([compilations.main]) {
                 tasks.getByName(compileKotlinTaskName).kotlinOptions {
@@ -81,23 +73,6 @@ kotlin {
                 implementation "org.kodein.di:kodein-di-erased-js:$libs.kodein"
                 implementation "org.jetbrains.kotlin:kotlin-test-js"
                 implementation "br.danfma.kodando:kodando-rxjs:0.8.0"
-            }
-        }
-
-
-
-        jvmMain {
-            kotlin.srcDirs += "kotlin"
-
-            resources.srcDirs += "resources"
-            dependencies {
-
-
-                implementation "org.mockito:mockito-core:2.22.0"
-                implementation "io.mockk:mockk:1.9"
-
-                //implementation "org.spekframework.spek2:spek-dsl-jvm:2.0.0-rc.1"
-                //runtimeOnly "org.spekframework.spek2:spek-runner-junit5:2.0.0-rc.1"
             }
         }
 

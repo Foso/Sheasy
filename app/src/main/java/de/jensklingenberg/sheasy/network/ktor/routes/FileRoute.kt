@@ -1,5 +1,6 @@
 package de.jensklingenberg.sheasy.network.ktor.routes
 
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.model.checkState
 import de.jensklingenberg.sheasy.network.HttpMethod
@@ -115,9 +116,10 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
             }
             param("upload") {
                 post {
+                    val filePath2 = call.parameters["upload"] ?: ""
 
                     val tt = call
-                    val filePath = "/storage/emulated/0/Documents/"//call.parameters["upload"] ?: ""
+                    val filePath = filePath2
 
                     val multipart = call.receiveMultipart()
                     multipart.forEachPart { part ->
@@ -140,6 +142,10 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                                         call.response.debugCorsHeader()
 
                                         call.respond(Resource.success("Filewrite okay"))
+                                    }else{
+                                        call.response.debugCorsHeader()
+
+                                        call.respond(Resource.error(Error.UploadFailedError().message, ""))
                                     }
                                 }
                             }

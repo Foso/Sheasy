@@ -17,6 +17,8 @@ import de.jensklingenberg.sheasy.ui.apps.AppInfoViewHolder
 import de.jensklingenberg.sheasy.ui.apps.AppsFragment
 import de.jensklingenberg.sheasy.ui.apps.AppsViewModel
 import de.jensklingenberg.sheasy.ui.common.OnResultActivity
+import de.jensklingenberg.sheasy.ui.eventlog.EventLogFragment
+import de.jensklingenberg.sheasy.ui.eventlog.EventLogPresenter
 import de.jensklingenberg.sheasy.ui.files.FilesFragment
 import de.jensklingenberg.sheasy.ui.files.FilesPresenter
 import de.jensklingenberg.sheasy.ui.home.HomeFragment
@@ -65,6 +67,8 @@ interface AppComponent {
     fun inject(settingsPresenter: SettingsPresenter)
     fun inject(notificationListener: NotificationListener)
     fun inject(notificationWebSocket: NotificationWebSocket)
+    fun inject(eventLogFragment: EventLogFragment)
+    fun inject(eventLogPresenter: EventLogPresenter)
 
 
 }

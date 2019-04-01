@@ -57,8 +57,8 @@ class AppsViewModel : ViewModel() {
 
 
     /**
-     * @return a stream that emits when a snackbar should be displayed. The stream contains the
-     * snackbar text
+     * @return a stream that emits when a notification should be displayed. The stream contains the
+     * notification text
      */
     fun getApps(): Observable<Resource<List<AppInfo>>> {
         return appsSubject.hide()

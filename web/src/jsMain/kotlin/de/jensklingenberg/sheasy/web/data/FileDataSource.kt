@@ -11,10 +11,9 @@ import org.w3c.files.File
 
 interface FileDataSource{
     fun getShared(): Observable<List<FileResponse>>
-
     fun getApps(): Observable<List<App>>
-    fun getFiles(folderPath: String, callback: ResponseCallback<List<FileResponse>>)
-    fun uploadFile(file: File, callback: ResponseCallback<Resource<State>>)
+    fun getFiles(folderPath: String): Observable<List<FileResponse>>
+    fun uploadFile(file: File,folderPath: String): Observable<Resource<State>>
     fun downloadApk(app:App?)
     fun downloadFile(fileResponse: FileResponse)
 }

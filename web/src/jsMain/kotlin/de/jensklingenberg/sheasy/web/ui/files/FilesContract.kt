@@ -24,6 +24,7 @@ interface FilesContract {
         fun getShared()
         fun getFile(fileResponse: FileResponse?)
 
+        fun onSearch(query: String)
     }
 
 }
