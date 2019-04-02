@@ -6,12 +6,14 @@ import components.materialui.FormControl
 import components.materialui.InputLabel
 import components.materialui.Menu
 import components.materialui.MenuItem
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.data.repository.FileRepository
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.web.model.SourceItem
+import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.model.response.Status
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
@@ -20,7 +22,6 @@ import de.jensklingenberg.sheasy.web.ui.common.extension.selectedFile
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
-import kodando.rxjs.Observable
 import kotlinx.html.DIV
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
@@ -35,16 +36,20 @@ import react.setState
 
 
 interface FileViewState : RState {
-    var filesList: List<FileResponse>
     var snackbarMessage: String
     var status: Status
     var openMenu: Boolean
     var anchor: EventTarget?
     var selectedFile: FileResponse?
+    var item: List<SourceItem>
+
+
 }
 
 
 class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
+
+
     val appsDataSource: FileDataSource = FileRepository(ReactHttpClient(NetworkPreferences()))
     var presenter = FilesPresenter(this, appsDataSource)
     val messageUseCase = MessageUseCase()
@@ -52,10 +57,11 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
     /****************************************** React Lifecycle methods  */
 
     override fun FileViewState.init() {
-        filesList = emptyList()
+
         status = Status.LOADING
         openMenu = false
         anchor = null
+        item = emptyList()
 
     }
 
@@ -84,14 +90,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
             }
         }
 
-        state.filesList
-            .forEach { file ->
-                ListItemBuilder.listItem(
-                    rBuilder = this,
-                    file = file,
-                    itemClickFunction = { presenter.setPath(file.path) },
-                    onMoreBtnClick = { event: Event -> handleClickListItem(event, file) })
-            }
+        state.item.render(this)
 
         div {
             CircularProgress {
@@ -223,13 +222,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
     /****************************************** Presenter methods  */
 
-    override fun setData(filesResult: List<FileResponse>) {
-        setState {
-            status = Status.SUCCESS
-            filesList = filesResult
 
-        }
-    }
 
     override fun showError(error: Error) {
         setState {
@@ -244,6 +237,14 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
             snackbarMessage = message
         }
 
+    }
+
+    override fun setData(items: List<SourceItem>) {
+        setState {
+            status = Status.SUCCESS
+
+            this.item = items
+        }
     }
 
     /****************************************** Class methods  */
@@ -261,7 +262,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
         }
     }
 
-    fun handleClickListItem(event: Event, fileResponse: FileResponse) {
+   override fun handleClickListItem(event: Event, fileResponse: FileResponse) {
         val currentTarget = event.currentTarget
         setState {
             openMenu = !openMenu

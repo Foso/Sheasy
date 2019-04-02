@@ -1,47 +1,46 @@
 package de.jensklingenberg.sheasy.web.ui.home
 
-import de.jensklingenberg.sheasy.web.components.materialui.List
-import de.jensklingenberg.sheasy.web.components.materialui.ListItem
-import components.materialui.ListItemText
-import de.jensklingenberg.sheasy.web.model.DrawerItems
+import de.jensklingenberg.sheasy.web.model.SourceItem
+import de.jensklingenberg.sheasy.web.model.render
+import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
+import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import react.RBuilder
-import react.RComponent
 import react.RProps
 import react.RState
-import de.jensklingenberg.sheasy.web.ui.common.styleProps
-import de.jensklingenberg.sheasy.web.ui.common.toolbar
+import react.setState
 
-class HomeView : RComponent<RProps, RState>() {
+
+interface HomeViewState : RState {
+    var item: List<SourceItem>
+
+}
+
+class HomeView : BaseComponent<RProps, HomeViewState>(), HomeContract.View {
+
+
+    var presenter = HomePresenter(this)
+
+
+    override fun HomeViewState.init() {
+        item = emptyList()
+
+    }
+
+    override fun componentDidMount() {
+        presenter.componentDidMount()
+    }
+
+    override fun setData(items: List<SourceItem>) {
+        setState {
+            this.item = items
+        }
+    }
+
 
     override fun RBuilder.render() {
         toolbar()
 
-        DrawerItems
-            .values()
-            .filterNot { it == DrawerItems.SCREENSHARE || it==DrawerItems.HOME }
-            .forEach {
-                List {
-                    attrs {
-                        component = "nav"
-                    }
-                    ListItem {
-                        attrs {
-                            href = it.destination
-                            component = "a"
-                            divider = true
-                            styleProps(textAlign = "center")
-                        }
-
-                        ListItemText {
-                            attrs {
-                                this.primary = it.title
-                            }
-                        }
-                    }
-                }
-            }
-
-
+        state.item.render(this)
     }
 }
 

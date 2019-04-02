@@ -2,17 +2,20 @@ package de.jensklingenberg.sheasy.web.ui.files
 
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.ui.common.ReactPresenter
+import org.w3c.dom.events.Event
 import org.w3c.files.File
 
 interface FilesContract {
 
     interface View {
 
-        fun setData(filesResult: List<FileResponse>)
         fun showError(error: Error)
         fun showSnackBar(message:String)
+        fun setData(items: List<SourceItem>)
 
+        fun handleClickListItem(event: Event, fileResponse: FileResponse)
     }
 
     interface Presenter : ReactPresenter {

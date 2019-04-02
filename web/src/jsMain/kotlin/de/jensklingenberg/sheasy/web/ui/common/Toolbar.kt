@@ -3,9 +3,12 @@ package de.jensklingenberg.sheasy.web.ui.common
 import components.materialui.AppBar
 import components.materialui.Grid
 import components.materialui.IconButton
+import components.materialui.ListItemIcon
 import components.materialui.Toolbar
 import components.materialui.Typography
+import components.materialui.icons.FolderIcon
 import components.materialui.icons.MenuIcon
+import de.jensklingenberg.sheasy.web.components.materialui.icons.NotificationsOffIcon
 import de.jensklingenberg.sheasy.web.model.DrawerItems
 import de.jensklingenberg.sheasy.web.ui.notification.NotificationView
 import react.RBuilder
@@ -75,6 +78,7 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                                     styleProps(textAlign = "right")
                                 }
                             }
+
                             attrs {
                                 item = true
                                 xs = 6
@@ -82,9 +86,11 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                         }
                         Grid {
                             div {
-
+                                ListItemIcon {
+                                    NotificationsOffIcon {}
+                                }
                                 //  MediaView()
-                               // de.jensklingenberg.sheasy.web.ui.notification.NotificationView()
+                                de.jensklingenberg.sheasy.web.ui.notification.NotificationView()
 
                             }
                             attrs {
@@ -96,7 +102,7 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
 
 
                 }
-               // NotificationView()
+                NotificationView()
 
             }
 

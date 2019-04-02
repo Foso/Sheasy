@@ -2,9 +2,12 @@ package de.jensklingenberg.sheasy.web.ui.notification
 
 
 import components.materialui.Button
+import components.materialui.ListItemIcon
+import components.materialui.icons.FolderIcon
 import de.jensklingenberg.sheasy.web.components.Notification.Notification
 import de.jensklingenberg.sheasy.web.components.Notification.ReactNotificationOptions
 import de.jensklingenberg.sheasy.web.components.Notification.defaultReactNotificationOptions
+import de.jensklingenberg.sheasy.web.components.materialui.icons.NotificationsOffIcon
 import de.jensklingenberg.sheasy.web.components.reactstrap.Tooltip
 import de.jensklingenberg.sheasy.web.usecase.NotificationOptions
 import de.jensklingenberg.sheasy.web.usecase.NotificationUseCase
@@ -68,6 +71,9 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
 
 
     override fun RBuilder.render() {
+
+
+
 
         if(state.ignoreNotification==false){
             notificationUseCase.showNotification(this,state.notiOptions)

@@ -4,8 +4,8 @@ import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.model.StringRes
-import de.jensklingenberg.sheasy.web.network.ResponseCallback
 import kodando.rxjs.subscribeBy
+import org.w3c.dom.events.Event
 import org.w3c.files.File
 
 class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataSource) :
@@ -43,7 +43,15 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
         fileDataSource.getFiles(folderPath).subscribeBy(
             next = { data ->
                 filesResult = data
-                view.setData(data)
+               // view.setData(data)
+
+                filesResult.map { respo ->
+                    FileSourceItem(respo,
+                        { setPath(respo.path) },
+                        { event: Event -> handleClickListItem(event, respo) })
+                }.run {
+                    view.setData(this)
+                }
             }, error = {
                 if (it is Error) {
                     view.showError(it)
@@ -55,9 +63,15 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
     override fun onSearch(query: String) {
         filesResult
-            .filter {
-                it.name.contains(query, true)
+            .filter {item->
+                item.name.contains(query, true)
             }
+
+            .map { respo ->
+            FileSourceItem(respo,
+                { setPath(respo.path) },
+                { event: Event -> handleClickListItem(event, respo) })
+        }
             .run(view::setData)
     }
 
@@ -66,7 +80,13 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
         fileDataSource.getShared().subscribeBy(
             next = { data ->
                 filesResult = data
-                view.setData(data)
+                filesResult.map { respo ->
+                    FileSourceItem(respo,
+                        { setPath(respo.path) },
+                        { event: Event -> handleClickListItem(event, respo) })
+                }.run {
+                    view.setData(this)
+                }
             }, error = {
                 if (it is Error) {
                     view.showError(it)
@@ -79,14 +99,14 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
     override fun uploadFile(file: File) {
         var fold = folderPath
-        if(fold.last().toString()!="/"){
-            fold= "$folderPath/"
+        if (fold.last().toString() != "/") {
+            fold = "$folderPath/"
         }
 
-        fileDataSource.uploadFile(file,fold).subscribeBy(
+        fileDataSource.uploadFile(file, fold).subscribeBy(
             next = { data ->
                 view.showSnackBar(StringRes.MESSAGE_SUCCESS)
-
+                getFiles()
             }, error = {
                 if (it is Error) {
                     view.showError(it)
@@ -102,6 +122,12 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
         fileResponse?.let {
             fileDataSource.downloadFile(fileResponse)
         }
+
+    }
+
+    fun handleClickListItem(event: Event, fileResponse: FileResponse) {
+       view.handleClickListItem(event,fileResponse)
+
 
     }
 }

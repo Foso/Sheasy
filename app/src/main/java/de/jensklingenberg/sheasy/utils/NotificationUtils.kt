@@ -86,38 +86,7 @@ class NotificationUtils : NotificationUseCase {
 
     }
 
-    private fun setSummaryNotification() {
-        val replyPendingIntent = PendingIntent.getBroadcast(
-            context,
-            1,
-            Intent(),
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
 
-        val summaryNotification = NotificationCompat.Builder(context)
-            .setContentText("Server running")
-            .setAutoCancel(false)
-            .setLargeIcon(
-                BitmapFactory.decodeResource(
-                    context.resources,
-                    R.mipmap.ic_launcher
-                )
-            )
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setStyle(
-                NotificationCompat.InboxStyle()
-                    .setBigContentTitle("Bundled notification tips")
-                    .addLine("Tip 1")
-                    .addLine("Tip 2")
-                    .addLine("Tip 3")
-                    .addLine("Tip 4")
-                    .setSummaryText("Total 4 tips")
-            )
-            .setGroup(NOTIFICATION_GROUP_KEY)
-            .setGroupSummary(true)
-
-        notificationManager.notify(100, summaryNotification.build())
-    }
 
     override fun showServerNotification() {
         BIG_TEXT_NOTIFICATION_KEY++
@@ -134,7 +103,10 @@ class NotificationUtils : NotificationUseCase {
                 .build()
 
         val noti1 = NotificationCompat.Builder(context)
-            .setContentText("Sheasy Server running")
+            .setContentTitle("Sheasy Server running")
+            .setContentText("Server running at " + NetworkUtils.getIP(context) + ":" + BuildConfig.SERVER_PORT)
+
+            .setSubText("Server running at " + NetworkUtils.getIP(context) + ":" + BuildConfig.SERVER_PORT)
             .setAutoCancel(false)
             .setLargeIcon(
                 BitmapFactory.decodeResource(
@@ -143,12 +115,6 @@ class NotificationUtils : NotificationUseCase {
                 )
             )
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-                    .bigText("Server running at " + NetworkUtils.getIP(context) + ":" + BuildConfig.SERVER_PORT)
-                    .setBigContentTitle("Sheasy: ${BIG_TEXT_NOTIFICATION_KEY}")
-                    .setSummaryText("Tip to build notification")
-            )
             .addAction(R.mipmap.ic_launcher, "Stop Server", pIntent)
 
             .setContentIntent(pIntent)

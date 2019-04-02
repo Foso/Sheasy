@@ -104,7 +104,6 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
     override fun stopService(name: Intent?): Boolean {
         server.stop()
-        unregisterReceiver(receiver)
         isRunning=false
 
         return super.stopService(name)
