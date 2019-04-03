@@ -1,28 +1,22 @@
 package de.jensklingenberg.sheasy.ui.files
 
+import android.content.Context
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import java.io.File
 import javax.inject.Inject
 
-interface FilesContract{
-    interface Presenter{
-        fun onCreate()
-        fun loadFiles()
-        fun folderUp()
-    }
-    interface View
-}
 
-
-class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter{
+class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter, OnEntryClickListener {
 
 
     @Inject
@@ -33,6 +27,9 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter{
 
     @Inject
     lateinit var shareUseCase: ShareUseCase
+
+    @Inject
+    lateinit var context: Context
 
     var filePath = ""
 
@@ -70,6 +67,25 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter{
 
 
     }
+
+    /****************************************** Listener methods  */
+    override fun onItemClicked(payload: Any) {
+        val item = payload as FileResponse
+        filePath = item.path
+        loadFiles()
+        view.updateFolderPathInfo(item.path)
+    }
+
+
+    override fun onMoreButtonClicked(view: View, payload: Any) {
+        val item = payload as? FileResponse
+
+        this.view.showPopup(item,view)
+
+
+        }
+
+
 
 
 }

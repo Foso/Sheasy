@@ -1,20 +1,32 @@
 package de.jensklingenberg.sheasy.ui.apps
 
-import androidx.lifecycle.ViewModel
+import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.Resource
+import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
+import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
+import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
+class AppsPresenter(val view : AppsContract.View) : AppsContract.Presenter, OnEntryClickListener {
+    override fun onItemClicked(payload: Any) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
-class AppsViewModel : ViewModel() {
+    override fun onMoreButtonClicked(view: View, payload: Any) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    val appsSubject: PublishSubject<Resource<List<AppInfo>>> = PublishSubject.create<Resource<List<AppInfo>>>()
 
     @Inject
     lateinit var fileDataSource: FileDataSource
@@ -24,11 +36,41 @@ class AppsViewModel : ViewModel() {
     @Inject
     lateinit var shareUseCase: ShareUseCase
 
-    val appsSubject: PublishSubject<Resource<List<AppInfo>>> = PublishSubject.create<Resource<List<AppInfo>>>()
     val snackbar: PublishSubject<String> = PublishSubject.create()
 
+    override fun onCreate() {
 
-    /****************************************** Lifecycle methods  */
+           getApps()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(onNext = { appList ->
+                    appList.data!!
+                        .sortedBy { it.name }
+                        .map { it.toSourceItem(this) }
+                        .run {
+                            view.setData(this)
+                        }
+                })
+
+
+
+            getSnackbar()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError {
+                    view.showError(it)
+
+                }
+                .subscribe()
+
+
+    }
+
+
+
+    override fun onDestroy() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     init {
         initializeDagger()
@@ -40,7 +82,7 @@ class AppsViewModel : ViewModel() {
     /****************************************** Class methods  */
 
 
-    fun searchApp(query: String) {
+    override fun searchApp(query: String) {
         fileDataSource
             .getApps()
             .subscribeOn(Schedulers.newThread())
@@ -48,8 +90,8 @@ class AppsViewModel : ViewModel() {
             .subscribeBy(onSuccess = { appsList ->
                 appsSubject.onNext(
                     Resource.success(appsList.filter {
-                    it.name.contains(query, ignoreCase = true)
-                }))
+                        it.name.contains(query, ignoreCase = true)
+                    }))
             }, onError = {
                 snackbar.onError(Throwable("EROR"))
             })
@@ -68,7 +110,7 @@ class AppsViewModel : ViewModel() {
         shareUseCase.share(fileDataSource.getTempFile(appInfo))
     }
 
-    fun extractApp(appInfo: AppInfo): Boolean {
+    override fun extractApp(appInfo: AppInfo): Boolean {
         return fileDataSource.extractApk(appInfo)
     }
 
@@ -93,6 +135,4 @@ class AppsViewModel : ViewModel() {
         return fileDataSource
             .getApps()
     }
-
-
 }

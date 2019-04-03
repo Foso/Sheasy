@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import de.jensklingenberg.sheasy.ui.MainActivity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -20,7 +21,12 @@ open class BaseFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
+    }
+
+    override fun onDestroy() {
         subscriptions.clear()
+
+        super.onDestroy()
     }
 
 
@@ -34,4 +40,6 @@ open class BaseFragment : Fragment() {
     ): View? {
         return inflater.inflate(getLayoutId(), container, false)
     }
+
+    fun getBaseActivity()=activity as MainActivity
 }

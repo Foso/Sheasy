@@ -1,53 +1,37 @@
 package de.jensklingenberg.sheasy.ui.home
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.sideMenuEntries
-import de.jensklingenberg.sheasy.ui.common.GenericListItem
-import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
+import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
+import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
-import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
-import de.jensklingenberg.sheasy.ui.common.toSourceItem
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
-class HomeFragment : BaseFragment(), OnEntryClickListener {
-    override fun onMoreButtonClicked(view: View, payload: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class HomeFragment : BaseFragment(), HomeContract.View {
+
 
     private val baseAdapter = BaseAdapter()
-    lateinit var homeViewModel: HomeViewModel
+    lateinit var presenter: HomeContract.Presenter
+
+    var toolbarMenu: Menu? = null
+
 
     override fun getLayoutId(): Int = R.layout.fragment_apps
-
-    override fun onItemClicked(payload: Any) {
-        when (val item = payload) {
-
-            is GenericListItemSourceItem -> {
-                val genericListItem = item.getPayload()
-                sideMenuEntries
-                    .first { it.title == genericListItem?.title }
-                    .run {
-                        findNavController().navigate(this.navId)
-
-                    }
-            }
-        }
-
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true);
-        homeViewModel = obtainViewModel(HomeViewModel::class.java)
 
         recyclerView?.apply {
             adapter = baseAdapter
@@ -61,21 +45,70 @@ class HomeFragment : BaseFragment(), OnEntryClickListener {
             )
         }
 
-        observeHomeViewModel()
+
+
+        presenter = HomePresenter(this)
+        presenter.onCreate()
     }
 
 
-    private fun observeHomeViewModel() {
-        homeViewModel
-            .getEntries()
-            .map {
-                GenericListItem(it.title, "", it.iconRes).toSourceItem(this)
-            }
-            .run {
-                baseAdapter.dataSource.setItems(this)
-                baseAdapter.notifyDataSetChanged()
-            }
+    override fun navigateTo(navId: Int) {
+        findNavController().navigate(navId)
+
+    }
+
+    override fun setData(list: List<BaseDataSourceItem<*>>) {
+        baseAdapter.dataSource.setItems(list)
+        baseAdapter.notifyDataSetChanged()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        menu?.clear()
+        inflater?.inflate(R.menu.fragment_apps_options_menu, menu)
+        toolbarMenu = menu
+        val server = menu?.findItem(R.id.menu_server)
+
+
+        subscribe(
+            HTTPServerService.appsSubject
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.newThread())
+                .subscribeBy(onNext = { running ->
+                    if (running) {
+                        server?.setIcon(R.drawable.ic_router_green_700_24dp)
+
+                    } else {
+                        server?.setIcon(R.drawable.ic_router_black_24dp)
+                    }
+
+                })
+        )
 
 
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                getBaseActivity().mainActivityDrawer.toggleDrawer()
+            }
+            R.id.menu_server -> {
+                when (item.isChecked) {
+                    true -> {
+                        presenter.stopService(HTTPServerService.getIntent(requireContext()))
+                        item.isChecked = false
+                    }
+                    false -> {
+                        presenter.startService(HTTPServerService.getIntent(requireContext()))
+
+                        item.isChecked = true
+                        //  item.setIcon(R.drawable.ic_router_green_700_24dp)
+
+                    }
+                }
+            }
+        }
+        return true
+    }
+
 }

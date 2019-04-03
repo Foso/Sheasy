@@ -41,11 +41,14 @@ class NotificationUtils : NotificationUseCase {
         val notificationChannel = NotificationChannel(
             channelId, channelName, android.app.NotificationManager.IMPORTANCE_HIGH
         )
-        notificationChannel.enableLights(true)
-        notificationChannel.enableVibration(true)
-        notificationChannel.setBypassDnd(true)
-        notificationChannel.setShowBadge(true)
-        notificationChannel.importance = android.app.NotificationManager.IMPORTANCE_HIGH
+        notificationChannel.apply {
+            enableLights(true)
+            enableVibration(true)
+            setBypassDnd(true)
+            setShowBadge(true)
+            importance = android.app.NotificationManager.IMPORTANCE_HIGH
+        }
+
         return notificationChannel
     }
 

@@ -15,13 +15,14 @@ import de.jensklingenberg.sheasy.ui.about.AboutFragment
 import de.jensklingenberg.sheasy.ui.about.AboutPresenter
 import de.jensklingenberg.sheasy.ui.apps.AppInfoViewHolder
 import de.jensklingenberg.sheasy.ui.apps.AppsFragment
-import de.jensklingenberg.sheasy.ui.apps.AppsViewModel
+import de.jensklingenberg.sheasy.ui.apps.AppsPresenter
 import de.jensklingenberg.sheasy.ui.common.OnResultActivity
 import de.jensklingenberg.sheasy.ui.eventlog.EventLogFragment
 import de.jensklingenberg.sheasy.ui.eventlog.EventLogPresenter
 import de.jensklingenberg.sheasy.ui.files.FilesFragment
 import de.jensklingenberg.sheasy.ui.files.FilesPresenter
 import de.jensklingenberg.sheasy.ui.home.HomeFragment
+import de.jensklingenberg.sheasy.ui.home.HomePresenter
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedFragment
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedViewModel
 import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureFragment
@@ -37,7 +38,6 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(commonViewModel: MainViewModel)
-    fun inject(appsViewModel: AppsViewModel)
     fun inject(pairedViewModel: PairedViewModel)
 
     fun inject(httpServerService: HTTPServerService)
@@ -69,6 +69,7 @@ interface AppComponent {
     fun inject(notificationWebSocket: NotificationWebSocket)
     fun inject(eventLogFragment: EventLogFragment)
     fun inject(eventLogPresenter: EventLogPresenter)
-
+    fun inject(homePresenter: HomePresenter)
+    fun inject(appsPresenter: AppsPresenter)
 
 }

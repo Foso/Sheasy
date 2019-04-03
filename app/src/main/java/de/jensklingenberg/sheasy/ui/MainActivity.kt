@@ -19,6 +19,9 @@ import de.jensklingenberg.sheasy.model.SideMenuEntry
 import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.ui.files.FilesFragmentDirections
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -27,6 +30,10 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     lateinit var mainActivityDrawer: MainActivityDrawer
     lateinit var mainViewModel: MainViewModel
     lateinit var navController: NavController
+
+    val compositeDisposable = CompositeDisposable()
+    var toolbarMenu : Menu?=null
+
 
     /******************************************  Lifecycle methods  */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,11 +46,8 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         mainViewModel = obtainViewModel(MainViewModel::class.java)
      //   requestNotificationPermission(this)
 
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_options_menu, menu)
-        return true
+
     }
 
     fun requestNotificationPermission(context: Context) {
@@ -54,31 +58,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         )
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            android.R.id.home -> {
-                mainActivityDrawer.toggleDrawer()
-            }
-            R.id.menu_server -> {
-                when (item.isChecked) {
-                    true -> {
-                        mainViewModel.stopService(HTTPServerService.getIntent(this))
-                        item.isChecked = false
-                        item.setIcon(R.drawable.ic_router_black_24dp)
-                    }
-                    false -> {
-                        mainViewModel.startService(HTTPServerService.getIntent(this))
 
-                        item.isChecked = true
-                        item.setIcon(R.drawable.ic_router_green_700_24dp)
-
-                    }
-                }
-            }
-        }
-
-        return true
-    }
 
     /******************************************  Listener methods  */
 

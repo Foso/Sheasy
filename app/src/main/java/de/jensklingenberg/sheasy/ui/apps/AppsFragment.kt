@@ -16,23 +16,35 @@ import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
-import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
-import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_apps.*
 import javax.inject.Inject
 
 
-class AppsFragment : BaseFragment(), OnEntryClickListener {
+class AppsFragment : BaseFragment(), OnEntryClickListener, AppsContract.View {
+    override fun shareApp(appInfo: AppInfo) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun extractApp(appInfo: AppInfo) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showError(it: Throwable?) {
+        messageUseCase.show(requireView(), it?.message ?: "")
+
+    }
 
 
     private val baseAdapter = BaseAdapter()
-    lateinit var appsViewModel: AppsViewModel
+
+    lateinit var presenter: AppsContract.Presenter
+
+
     @Inject
     lateinit var messageUseCase: MessageUseCase
 
@@ -49,7 +61,6 @@ class AppsFragment : BaseFragment(), OnEntryClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        appsViewModel = obtainViewModel(AppsViewModel::class.java)
 
         recyclerView?.apply {
             adapter = baseAdapter
@@ -63,39 +74,26 @@ class AppsFragment : BaseFragment(), OnEntryClickListener {
             )
         }
 
+        presenter=AppsPresenter(this)
+        presenter.onCreate()
         initSubscriber()
 
 
     }
 
     private fun initSubscriber() {
-        subscribe(
-            appsViewModel.getApps()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(onNext = { appList ->
-                    appList.data!!
-                        .sortedBy { it.name }
-                        .map { it.toSourceItem(this) }
-                        .run {
-                            baseAdapter.dataSource.setItems(this)
-                            baseAdapter.notifyDataSetChanged()
-                        }
-                })
-        )
 
-        subscribe(
-            appsViewModel.getSnackbar()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError {
-                    messageUseCase.show(requireView(), it.message ?: "")
-                }
-                .subscribe()
-        )
+
+
 
 
     }
+    override fun setData(list: List<AppInfoSourceItem>) {
+        baseAdapter.dataSource.setItems(list)
+        baseAdapter.notifyDataSetChanged()
+
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         menu?.clear()
@@ -112,7 +110,7 @@ class AppsFragment : BaseFragment(), OnEntryClickListener {
         val search = menu?.findItem(R.id.search)?.actionView as SearchView
         search.queryTextChanges()
             .rxBindingSubscriber()
-            .doOnNext { appsViewModel.searchApp(it.toString()) }
+            .doOnNext { presenter.searchApp(it.toString()) }
             .subscribe()
 
     }
@@ -137,10 +135,10 @@ class AppsFragment : BaseFragment(), OnEntryClickListener {
                         .doOnNext { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.menu_share -> {
-                                    appsViewModel.shareApp(appInfo)
+                                    shareApp(appInfo)
                                 }
                                 R.id.menu_extract -> {
-                                    if (appsViewModel.extractApp(appInfo)) {
+                                    if (presenter.extractApp(appInfo)) {
                                         messageUseCase.show(requireView(), "Succes")
                                     }
                                 }

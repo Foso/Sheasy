@@ -8,10 +8,14 @@ import android.content.IntentFilter
 import android.os.Binder
 import android.os.IBinder
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.model.AppInfo
+import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.ui.common.OnResultActivity
 import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
 import de.jensklingenberg.sheasy.web.model.Device
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 
@@ -36,6 +40,8 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
         val ACTION_ON_ACTIVITY_RESULT = "ACTION_ON_ACTIVITY_RESULT"
         val AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
+        val appsSubject: BehaviorSubject<Boolean> = BehaviorSubject.create<Boolean>()
+
     }
 
     @Inject
@@ -88,12 +94,15 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
     override fun onCreate() {
         super.onCreate()
+
         val filter = IntentFilter()
         filter.addAction(ACTION_ON_ACTIVITY_RESULT) //further more
         registerReceiver(receiver, filter)
 
         notificationUtils1.showServerNotification()
         server.start()
+        appsSubject.onNext(true)
+
 
 
         /* val dialogIntent = screenRecord.createScreenCaptureIntent()
@@ -112,6 +121,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
     override fun onDestroy() {
         unregisterReceiver(receiver)
+        appsSubject.onNext(false)
 
         server.stop()
         screenRecord.stopProjection()
