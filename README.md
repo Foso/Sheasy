@@ -9,15 +9,9 @@
 
 > This an Android App that helps you share/manage your files on your Android Device through a WebInterface in the Browser
 
-## 🚩 Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#-features)
-- [Roadmap](#-roadmap)
-- [Architecture](#-architecture)
-- [Docs](#-docs)
-- [Feedback](#-feedback)
-- [Contributors](#-contributors)
+<hr>
+<p align="center"><a href="#introduction">Introduction</a> &bull; <a href="#-features">Features</a> &bull; <a href="##-roadmap">Roadmap</a> &bull; <a href="#-architecture">Architecture</a> &bull; <a href="#-docs">Docs</a> &bull; <a href="#-feedback">Feedback</a>&bull; <a href="#-docs">Docs</a> &bull; <a href="##-contributors">Contributors</a></p>
+<hr>
 
 ## Introduction
 The goal is to write an open source app that makes it super easy to share files from one device to another
