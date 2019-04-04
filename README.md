@@ -47,6 +47,17 @@ A few of the things you can do with Sheasy:
 
 # 🏠 Architecture
 
+## Project Structure
+* <kbd>app</kbd> - Base android project directory that contains the app
+* <kbd>desktop</kbd> - A Kotlin Jvm project with the desktop server
+* <kbd>web</kbd> - The web client. This module is using the Kotlin Multiplatform Plugin, but is only configured to compile to Javascript/React.
+The main entry of the module is inside the <kbd>index.kt</kbd>.
+
+* <kbd>serverJvm</kbd> - Shared module for <kbd>app</kbd> and <kbd>desktop</kbd>, which contains server specific classes/interfaces
+
+* <kbd>libshared</kbd> - Shared module for <kbd>app, desktop and web</kbd>, which contains specific classes/interfaces like Error types or responses
+
+
 ## 🛠️ Built With
 ### Kotlin
 [![jCenter](https://img.shields.io/badge/Kotlin-1.3.21-green.svg
