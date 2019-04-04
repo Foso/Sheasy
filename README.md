@@ -23,7 +23,7 @@
 The goal is to write an open source app that makes it super easy to share files from one device to another
 
 It's a hobby project i started to learn about Kotlin, React(Kotlin-JS) and Ktor. 
-At this time, this app is in an early stage (work-in-progress👷). I never worked with Ktor or Kotlin-React before and i'm still learning.
+
 
 
 
