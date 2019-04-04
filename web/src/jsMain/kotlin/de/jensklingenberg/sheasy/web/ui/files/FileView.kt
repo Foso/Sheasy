@@ -17,7 +17,6 @@ import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.model.response.Status
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
-import de.jensklingenberg.sheasy.web.ui.common.ListItemBuilder
 import de.jensklingenberg.sheasy.web.ui.common.extension.selectedFile
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.ui.common.toolbar

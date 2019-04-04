@@ -13,8 +13,8 @@ import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -70,9 +70,10 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
 
         subscribe(
-            HTTPServerService.appsSubject
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.newThread())
+            HTTPServerService.appsSubject.subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(
+                    AndroidSchedulers.mainThread()
+                )
                 .subscribeBy(onNext = { running ->
                     if (running) {
                         server?.setIcon(R.drawable.ic_router_green_700_24dp)

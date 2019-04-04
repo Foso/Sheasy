@@ -21,7 +21,7 @@ companion object {
             Drawer {
                 attrs {
                     open = showDrawer
-                    onClose =  {_->test()}
+                    onClose =  {test()}
                 }
 
                 drawerItems

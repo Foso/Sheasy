@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Binder
 import android.os.IBinder
+import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.Resource
@@ -68,13 +69,16 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    override fun onBind(p0: Intent?): IBinder = bind
+    override fun onBind(p0: Intent?): IBinder {
+        return ServiceBinder()
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         intent?.let {
             if (it.action?.equals("STOP")==true) {
                 stopService(intent)
+
                 return START_STICKY
             } else {
                 if(intent.hasExtra(AUTHORIZE_DEVICE)){
@@ -112,6 +116,8 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     }
 
     override fun stopService(name: Intent?): Boolean {
+        Log.d("this","Server stopped")
+
         server.stop()
         isRunning=false
 
@@ -121,6 +127,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
     override fun onDestroy() {
         unregisterReceiver(receiver)
+
         appsSubject.onNext(false)
 
         server.stop()

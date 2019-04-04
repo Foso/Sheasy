@@ -2,17 +2,17 @@ package de.jensklingenberg.sheasy.network
 
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.network.ktor.initNetty
-import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
+import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.network.websocket.NotificationWebSocket
 import de.jensklingenberg.sheasy.network.websocket.ScreenShareWebSocket
 import de.jensklingenberg.sheasy.network.websocket.WebSocketListener
+import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
-import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import io.ktor.server.netty.NettyApplicationEngine
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -63,9 +63,13 @@ class Server : WebSocketListener {
 
     fun start() {
         runInBackground {
+
             nettyApplicationEngine.start(wait = true)
+
         }
+
         nanoWSDWebSocketDataSource.start()
+
         vibrationUseCase.vibrate()
 
     }

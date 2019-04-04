@@ -2,21 +2,21 @@ package de.jensklingenberg.sheasy.web.ui.apps
 
 
 import components.materialui.CircularProgress
-import components.materialui.Divider
 import components.materialui.FormControl
 import components.materialui.Menu
 import components.materialui.MenuItem
 import components.materialui.Paper
+import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.data.repository.FileRepository
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.web.model.SourceItem
+import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.model.response.Status
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
-import de.jensklingenberg.sheasy.web.ui.common.ListItemBuilder
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
@@ -32,16 +32,18 @@ import react.setState
 
 
 interface AppsViewState : RState {
-    var appsResult: List<App>
     var errorMessage: String
     var status: Status
     var openMenu: Boolean
     var anchor: EventTarget?
-    var selectedApp:App?
+    var selectedApp: App?
+    var item: List<SourceItem>
+
 }
 
 
 class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
+
 
     val appsDataSource: FileDataSource = FileRepository(ReactHttpClient(NetworkPreferences()))
 
@@ -54,10 +56,11 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
 
     override fun AppsViewState.init() {
-        appsResult = emptyList()
         status = Status.LOADING
         openMenu = false
         anchor = null
+        item = emptyList()
+
 
     }
 
@@ -71,21 +74,16 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
         setupSearchBar(this)
 
+
+
+
         Paper {
             attrs {
                 elevation = 1
             }
 
-            state.appsResult.forEach { app ->
-                ListItemBuilder.listItem(
-                    rBuilder = this,
-                    app = app,
-                    itemClickFunction = { },
-                    onMoreBtnClick = { event: Event -> handleClickListItem(event,app) })
+            state.item.render(this)
 
-                Divider {}
-
-            }
 
         }
         div {
@@ -137,7 +135,6 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
     }
 
 
-
     private fun setupSearchBar(rBuilder: RBuilder) {
         rBuilder.run {
             FormControl {
@@ -176,20 +173,21 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     }
 
-    override fun setData(apps: List<App>) {
+    override fun setData(apps: List<AppSourceItem>) {
         setState {
             status = Status.SUCCESS
-            appsResult = apps
+            item = apps
         }
     }
 
+
     /****************************************** Class methods  */
-    fun handleClickListItem(event: Event, app: App) {
+    override fun handleClickListItem(event: Event, app: App) {
         val currentTarget = event.currentTarget
         setState {
             openMenu = !openMenu
             anchor = currentTarget
-            selectedApp=app
+            selectedApp = app
         }
 
     }
