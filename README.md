@@ -36,7 +36,7 @@ A few of the things you can do with Sheasy:
 
 </p>
 
-- download files
+- download/upload files
 <p align="left">
   <img src ="https://raw.githubusercontent.com/Foso/Sheasy/develop/documentation/screenshots/files/files_app_v0.1.png" height=500 />
   <img src ="https://raw.githubusercontent.com/Foso/Sheasy/develop/documentation/screenshots/files/files_web_v0.1.png" height=500 />
