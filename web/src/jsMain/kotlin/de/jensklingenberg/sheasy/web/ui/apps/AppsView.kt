@@ -14,7 +14,7 @@ import de.jensklingenberg.sheasy.web.data.repository.FileRepository
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.model.response.App
-import de.jensklingenberg.sheasy.web.model.response.Status
+import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
@@ -70,7 +70,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     override fun RBuilder.render() {
 
-        toolbar()
+       // toolbar()
 
         setupSearchBar(this)
 

@@ -24,8 +24,8 @@ open class BaseFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        subscriptions.clear()
-
+       // subscriptions.clear()
+        subscriptions.dispose()
         super.onDestroy()
     }
 

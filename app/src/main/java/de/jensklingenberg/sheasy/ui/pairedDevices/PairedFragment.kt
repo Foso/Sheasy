@@ -1,22 +1,20 @@
 package de.jensklingenberg.sheasy.ui.pairedDevices
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.apps.rxBindingSubscriber
-import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
+import de.jensklingenberg.sheasy.ui.share.ShareItemSourceItem
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import de.jensklingenberg.sheasy.web.model.Device
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_apps.*
 
 
@@ -50,7 +48,7 @@ class PairedFragment : BaseFragment(), OnEntryClickListener {
         }
 
         pairedViewModel.loadApps().map {
-            DeviceListItemSourceItem(it,this)
+            ShareItemSourceItem(it,this)
         }.run {
             aboutAdapter.dataSource.setItems(this)
 
@@ -71,7 +69,8 @@ class PairedFragment : BaseFragment(), OnEntryClickListener {
                 }
                 .also {
                     it.itemClicks()
-                        .rxBindingSubscriber()
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .doOnNext { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.menu_revoke -> {

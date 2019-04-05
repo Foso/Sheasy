@@ -26,9 +26,9 @@ class NetworkPreferences{
         testingAddress
     } else {
         window.location.hostname
-    } +":"+httpPort
+    }
 
-    val baseurl = "http://${hostname}/api/${apiVersion}/"
+    val baseurl = "http://${hostname}:$httpPort/api/${apiVersion}/"
 
 
 

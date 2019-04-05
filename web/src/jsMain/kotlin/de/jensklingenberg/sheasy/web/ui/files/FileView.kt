@@ -8,13 +8,13 @@ import components.materialui.Menu
 import components.materialui.MenuItem
 import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.data.repository.FileRepository
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
-import de.jensklingenberg.sheasy.web.model.response.Status
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.extension.selectedFile
@@ -71,7 +71,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
     override fun RBuilder.render() {
 
-        toolbar()
+      //  toolbar()
 
         div {
             setupBackButton(this)

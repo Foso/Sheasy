@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.di
 
 import dagger.Component
+import de.jensklingenberg.sheasy.data.event.EventRepository
 import de.jensklingenberg.sheasy.data.file.FileRepository
 import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.network.Server
@@ -9,6 +10,7 @@ import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRou
 import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
 import de.jensklingenberg.sheasy.network.websocket.NotificationWebSocket
 import de.jensklingenberg.sheasy.network.websocket.ScreenShareWebSocket
+import de.jensklingenberg.sheasy.network.websocket.ShareWebSocket
 import de.jensklingenberg.sheasy.service.NotificationListener
 import de.jensklingenberg.sheasy.ui.MainViewModel
 import de.jensklingenberg.sheasy.ui.about.AboutFragment
@@ -25,6 +27,8 @@ import de.jensklingenberg.sheasy.ui.home.HomeFragment
 import de.jensklingenberg.sheasy.ui.home.HomePresenter
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedFragment
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedViewModel
+import de.jensklingenberg.sheasy.ui.share.ShareFragment
+import de.jensklingenberg.sheasy.ui.share.SharePresenter
 import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsPresenter
@@ -71,5 +75,9 @@ interface AppComponent {
     fun inject(eventLogPresenter: EventLogPresenter)
     fun inject(homePresenter: HomePresenter)
     fun inject(appsPresenter: AppsPresenter)
+    fun inject(shareWebSocket: ShareWebSocket)
+    fun inject(sharePresenter: SharePresenter)
+    fun inject(shareFragment: ShareFragment)
+    fun inject(eventRepository: EventRepository)
 
 }

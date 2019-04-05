@@ -12,21 +12,22 @@ import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 class AppsPresenter(val view : AppsContract.View) : AppsContract.Presenter, OnEntryClickListener {
-    override fun onItemClicked(payload: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.view.onMoreButtonClicked(view,payload)
     }
 
     val appsSubject: PublishSubject<Resource<List<AppInfo>>> = PublishSubject.create<Resource<List<AppInfo>>>()
+
+    override val compositeDisposable = CompositeDisposable()
 
     @Inject
     lateinit var fileDataSource: FileDataSource
@@ -38,11 +39,22 @@ class AppsPresenter(val view : AppsContract.View) : AppsContract.Presenter, OnEn
 
     val snackbar: PublishSubject<String> = PublishSubject.create()
 
+
+    init {
+        initializeDagger()
+        loadApps()
+    }
+
+
+    private fun initializeDagger() = App.appComponent.inject(this)
+
     override fun onCreate() {
 
-           getApps()
+          val test= getApps()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+
+
                 .subscribeBy(onNext = { appList ->
                     appList.data!!
                         .sortedBy { it.name }
@@ -51,6 +63,8 @@ class AppsPresenter(val view : AppsContract.View) : AppsContract.Presenter, OnEn
                             view.setData(this)
                         }
                 })
+
+        compositeDisposable.add(test)
 
 
 
@@ -69,15 +83,10 @@ class AppsPresenter(val view : AppsContract.View) : AppsContract.Presenter, OnEn
 
 
     override fun onDestroy() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            compositeDisposable.dispose()
+
     }
 
-    init {
-        initializeDagger()
-        loadApps()
-    }
-
-    private fun initializeDagger() = App.appComponent.inject(this)
 
     /****************************************** Class methods  */
 
@@ -106,7 +115,7 @@ class AppsPresenter(val view : AppsContract.View) : AppsContract.Presenter, OnEn
         return appsSubject.hide()
     }
 
-    fun shareApp(appInfo: AppInfo) {
+    override fun shareApp(appInfo: AppInfo) {
         shareUseCase.share(fileDataSource.getTempFile(appInfo))
     }
 
@@ -134,5 +143,9 @@ class AppsPresenter(val view : AppsContract.View) : AppsContract.Presenter, OnEn
     fun test(): Single<List<AppInfo>> {
         return fileDataSource
             .getApps()
+    }
+
+    override fun onItemClicked(payload: Any) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

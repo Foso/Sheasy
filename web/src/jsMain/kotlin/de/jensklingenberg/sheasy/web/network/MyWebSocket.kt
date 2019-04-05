@@ -8,10 +8,13 @@ import org.w3c.dom.events.EventListener
 
 class MyWebSocket(url: String) : Websocket {
 
+
     var listener: WebSocketListener? = null
     val webSocket = WebSocket(url)
 
-    init {
+    override  fun addListener(listener:WebSocketListener){
+        this.listener=listener
+
         webSocket.onmessage = { event: Event ->
             listener?.onMessage((event as MessageEvent))
         }
@@ -19,6 +22,8 @@ class MyWebSocket(url: String) : Websocket {
         webSocket.onerror = { event: Event ->
             listener?.onError((event))
         }
+
+
 
         webSocket.addEventListener("dd", EventListener { })
     }
@@ -29,6 +34,20 @@ class MyWebSocket(url: String) : Websocket {
             console.log(tt)
             webSocket.send("Hugner")
         }
+    }
+
+
+
+    override fun close() {
+        listener=null
+        webSocket.close()
+
+    }
+
+
+    override fun send(message: String) {
+        webSocket.send(message)
+
     }
 
     interface WebSocketListener {

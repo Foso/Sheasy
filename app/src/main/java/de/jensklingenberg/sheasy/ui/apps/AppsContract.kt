@@ -1,18 +1,21 @@
 package de.jensklingenberg.sheasy.ui.apps
 
+import android.view.View
 import de.jensklingenberg.sheasy.model.AppInfo
+import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.MvpPresenter
 
 interface AppsContract{
     interface View{
-        fun setData(list: List<AppInfoSourceItem>)
+        fun setData(list: List<BaseDataSourceItem<*>>)
         fun showError(it: Throwable?)
-        fun shareApp(appInfo: AppInfo)
-        fun extractApp(appInfo: AppInfo)
 
+
+        fun onMoreButtonClicked(view: android.view.View, payload: Any)
     }
     interface Presenter:MvpPresenter {
         fun searchApp(toString: String)
         fun extractApp(appInfo: AppInfo):Boolean
+        fun shareApp(appInfo: AppInfo)
     }
 }

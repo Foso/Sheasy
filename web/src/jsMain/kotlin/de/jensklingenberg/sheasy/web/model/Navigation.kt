@@ -7,6 +7,7 @@ class Navigation {
         val navigateToHome = "/#"
         val navigateToScreenShare = "/#/screenshare"
         val navigateToFiles = "/#/files"
+        val navigateToShare = "/#/share"
 
 
     }

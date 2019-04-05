@@ -3,7 +3,6 @@ package de.jensklingenberg.sheasy.web.ui.home
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
-import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import react.RBuilder
 import react.RProps
 import react.RState
@@ -38,7 +37,7 @@ class HomeView : BaseComponent<RProps, HomeViewState>(), HomeContract.View {
 
 
     override fun RBuilder.render() {
-        toolbar()
+        //toolbar()
 
         state.item.render(this)
     }

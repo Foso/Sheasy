@@ -8,9 +8,11 @@ import de.jensklingenberg.sheasy.web.model.Route
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.about.AboutView
 import de.jensklingenberg.sheasy.web.ui.apps.AppsView
+import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.ui.files.FileView
 import de.jensklingenberg.sheasy.web.ui.home.HomeView
 import de.jensklingenberg.sheasy.web.ui.screenshare.ScreenShareView
+import de.jensklingenberg.sheasy.web.ui.share.ShareView
 import de.jensklingenberg.sheasy.web.usecase.NotificationUseCase
 import kotlinext.js.requireAll
 import org.kodein.di.Kodein
@@ -26,7 +28,7 @@ class Application : KodeinAware {
 
 
     companion object {
-        lateinit var kode : Kodein
+        lateinit var kode: Kodein
     }
 
     val routeList = listOf(
@@ -34,28 +36,30 @@ class Application : KodeinAware {
         Route("/apps", AppsView::class, exact = true),
         Route("/files", FileView::class, exact = true),
         Route("/about", AboutView::class, exact = true),
-        Route("/screenshare", ScreenShareView::class, exact = true)
+        Route("/screenshare", ScreenShareView::class, exact = true),
+        Route("/share", ShareView::class, exact = true)
+
 
     )
 
     override val kodein = Kodein {
-            bind<FileDataSource>() with singleton { FileRepository(ReactHttpClient(NetworkPreferences())) }
-            bind<NotificationUseCase>() with singleton { NotificationUseCase() }
+        bind<FileDataSource>() with singleton { FileRepository(ReactHttpClient(NetworkPreferences())) }
+        bind<NotificationUseCase>() with singleton { NotificationUseCase() }
     }
 
     init {
-        kode=kodein
+        kode = kodein
         window.onload = {
             kotlinext.js.require("bootstrap/dist/css/bootstrap.min.css")
             requireAll(kotlinext.js.require.context("kotlin", true, js("/\\.css$/")))
 
             render(document.getElementById("root")) {
 
-
+                toolbar()
                 hashRouter {
                     switch {
                         routeList.forEach {
-                            route(it.path,it.kClass,it.exact)
+                            route(it.path, it.kClass, it.exact)
                         }
 
                     }

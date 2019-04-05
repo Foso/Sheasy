@@ -8,6 +8,7 @@ import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.network.websocket.NotificationWebSocket
 import de.jensklingenberg.sheasy.network.websocket.ScreenShareWebSocket
+import de.jensklingenberg.sheasy.network.websocket.ShareWebSocket
 import de.jensklingenberg.sheasy.network.websocket.WebSocketListener
 import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
@@ -22,7 +23,7 @@ class Server : WebSocketListener {
 
 
     enum class DataDestination {
-        SCREENSHARE
+        SCREENSHARE,SHARE
     }
 
     @Inject
@@ -41,6 +42,8 @@ class Server : WebSocketListener {
     lateinit var vibrationUseCase: VibrationUseCase
 
     var nettyApplicationEngine: NettyApplicationEngine
+
+    var shareWebSocket : NanoWSD.WebSocket?=null
 
 
     val screenShareWebSocketMap = hashMapOf<String, ScreenShareWebSocket>()
@@ -97,6 +100,9 @@ class Server : WebSocketListener {
                     it.send(data)
                 }
             }
+            DataDestination.SHARE->{
+                shareWebSocket?.send(data)
+            }
         }
     }
 
@@ -108,6 +114,9 @@ class Server : WebSocketListener {
                     it.send(data)
 
                 }
+            }
+            DataDestination.SHARE->{
+                shareWebSocket?.send(data)
             }
         }
     }
@@ -129,6 +138,16 @@ class Server : WebSocketListener {
 
             "/notification" -> {
                 return NotificationWebSocket(session)
+            }
+
+
+            "/share" -> {
+                shareWebSocket= if(shareWebSocket==null){
+                    ShareWebSocket(session)
+                }else{
+                    shareWebSocket
+                }
+                return shareWebSocket!!
             }
             else -> {
                 return MyWebSocket(session)

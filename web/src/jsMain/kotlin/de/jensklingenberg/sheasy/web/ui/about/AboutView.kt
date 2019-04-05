@@ -4,7 +4,7 @@ package de.jensklingenberg.sheasy.web.ui.about
 import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
-import de.jensklingenberg.sheasy.web.model.response.Status
+import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.ui.notification.NotificationView

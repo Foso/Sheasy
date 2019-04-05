@@ -57,6 +57,11 @@
         android:label="About" />
 
     <fragment
+            android:id="@+id/shareFragment"
+            android:name="de.jensklingenberg.sheasy.ui.share.ShareFragment"
+            android:label="Share" />
+
+    <fragment
         android:id="@+id/libsSupportFragment"
         android:name="com.mikepenz.aboutlibraries.ui.LibsSupportFragment"
         android:label="About Libraries"

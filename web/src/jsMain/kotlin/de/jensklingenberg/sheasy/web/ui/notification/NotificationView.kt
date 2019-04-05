@@ -1,14 +1,6 @@
 package de.jensklingenberg.sheasy.web.ui.notification
 
 
-import components.materialui.Button
-import components.materialui.ListItemIcon
-import components.materialui.icons.FolderIcon
-import de.jensklingenberg.sheasy.web.components.Notification.Notification
-import de.jensklingenberg.sheasy.web.components.Notification.ReactNotificationOptions
-import de.jensklingenberg.sheasy.web.components.Notification.defaultReactNotificationOptions
-import de.jensklingenberg.sheasy.web.components.materialui.icons.NotificationsOffIcon
-import de.jensklingenberg.sheasy.web.components.reactstrap.Tooltip
 import de.jensklingenberg.sheasy.web.usecase.NotificationOptions
 import de.jensklingenberg.sheasy.web.usecase.NotificationUseCase
 import react.RBuilder
@@ -28,7 +20,7 @@ interface NotificationVState : RState {
 
 class NotificationView : RComponent<RProps, NotificationVState>(), NotificationContract.View {
     private var presenter: NotificationContract.Presenter? = NotificationPresenter(this)
-    val notificationUseCase= NotificationUseCase()
+    val notificationUseCase = NotificationUseCase()
 
 
     override fun NotificationVState.init(props: RProps) {
@@ -51,7 +43,6 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
     }
 
 
-
     override fun showNotification(reactNotificationOptions: NotificationOptions) {
 
         setState {
@@ -64,22 +55,15 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
     }
 
     override fun componentWillUnmount() {
+        console.log("unomout")
         presenter?.componentWillUnmount()
-       // super.componentWillUnmount()
+        // super.componentWillUnmount()
 
     }
 
 
     override fun RBuilder.render() {
-
-
-
-
-        if(state.ignoreNotification==false){
-            notificationUseCase.showNotification(this,state.notiOptions)
-
-        }
-
+        notificationUseCase.showNotification(this, state.notiOptions)
     }
 
 }

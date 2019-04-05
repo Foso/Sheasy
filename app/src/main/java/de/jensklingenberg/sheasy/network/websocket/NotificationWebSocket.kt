@@ -5,6 +5,7 @@ import android.util.Log
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
+import de.jensklingenberg.sheasy.model.Notification
 import de.jensklingenberg.sheasy.utils.extension.toJson
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
@@ -34,11 +35,6 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
 
     init {
         initializeDagger()
-
-
-
-
-
     }
 
     override fun send(payload: ByteArray?) {
@@ -99,7 +95,7 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
                 val pingframe =
                     NanoWSD.WebSocketFrame(NanoWSD.WebSocketFrame.OpCode.Ping, false, "")
                 ping(pingframe.binaryPayload)
-                /*     send(
+                     send(
                          moshi.toJson(
                              Notification(
                                  "test.package",
@@ -110,7 +106,7 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
                              )
                          )
                      )
-                     */
+
                 true
             }
             .delay(1, TimeUnit.SECONDS)

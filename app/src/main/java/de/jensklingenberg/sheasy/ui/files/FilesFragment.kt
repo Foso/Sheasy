@@ -27,9 +27,9 @@ import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import kotlinx.android.synthetic.main.fragment_files.*
 import de.jensklingenberg.sheasy.model.checkState
 import de.jensklingenberg.sheasy.network.HTTPServerService
-import de.jensklingenberg.sheasy.ui.apps.rxBindingSubscriber
 import de.jensklingenberg.sheasy.ui.common.toSourceitem
 import de.jensklingenberg.sheasy.utils.extension.requireView
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import java.io.File
@@ -143,7 +143,8 @@ class FilesFragment : BaseFragment(),FilesContract.View {
                 }
                 .also {
                     it.itemClicks()
-                        .rxBindingSubscriber()
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .doOnNext { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.menu_share -> {

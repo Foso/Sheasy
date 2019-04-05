@@ -12,15 +12,16 @@ class ApiEndPoint {
         val upload = "file/upload"
 
         val baseUrl = NetworkPreferences().baseurl
-        val webSocketbaseUrl = "ws://${NetworkPreferences().hostname}/api/$apiVersion/"
 
         fun getFiles(path: String) = baseUrl + "file/shared?folder=" + path
         fun appDownloadUrl(packageName: String) = baseUrl + "file/app?package=" + packageName
         fun fileDownloadUrl(path: String) = baseUrl + "file/file?path=" + path
 
         fun appIconUrl(packageName: String) = baseUrl + "file?icon=" + packageName
-        val notificationWebSocketURL = "ws://192.168.178.31:8765/notification"
-        val screenshareWebSocketURL = "ws://192.168.178.31:8765/screenshare"
+        val notificationWebSocketURL = "ws://${NetworkPreferences().hostname}:8765/notification"
+        val shareWebSocketURL = "ws://${NetworkPreferences().hostname}:8765/share"
+
+        val screenshareWebSocketURL = "ws://${NetworkPreferences().hostname}:8765/screenshare"
 
     }
 }

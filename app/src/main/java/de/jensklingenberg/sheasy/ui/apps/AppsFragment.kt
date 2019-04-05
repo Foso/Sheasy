@@ -14,30 +14,16 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
+import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.extension.requireView
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_apps.*
 import javax.inject.Inject
 
 
-class AppsFragment : BaseFragment(), OnEntryClickListener, AppsContract.View {
-    override fun shareApp(appInfo: AppInfo) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun extractApp(appInfo: AppInfo) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showError(it: Throwable?) {
-        messageUseCase.show(requireView(), it?.message ?: "")
-
-    }
+class AppsFragment : BaseFragment(), AppsContract.View {
 
 
     private val baseAdapter = BaseAdapter()
@@ -74,21 +60,13 @@ class AppsFragment : BaseFragment(), OnEntryClickListener, AppsContract.View {
             )
         }
 
-        presenter=AppsPresenter(this)
+        presenter = AppsPresenter(this)
         presenter.onCreate()
-        initSubscriber()
 
 
     }
 
-    private fun initSubscriber() {
-
-
-
-
-
-    }
-    override fun setData(list: List<AppInfoSourceItem>) {
+    override fun setData(list: List<BaseDataSourceItem<*>>) {
         baseAdapter.dataSource.setItems(list)
         baseAdapter.notifyDataSetChanged()
 
@@ -109,7 +87,8 @@ class AppsFragment : BaseFragment(), OnEntryClickListener, AppsContract.View {
     private fun initSearchView(menu: Menu?) {
         val search = menu?.findItem(R.id.search)?.actionView as SearchView
         search.queryTextChanges()
-            .rxBindingSubscriber()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { presenter.searchApp(it.toString()) }
             .subscribe()
 
@@ -119,11 +98,15 @@ class AppsFragment : BaseFragment(), OnEntryClickListener, AppsContract.View {
     /****************************************** Listener methods  */
 
 
-    override fun onItemClicked(payload: Any) {}
+    override fun showError(it: Throwable?) {
+        messageUseCase.show(requireView(), it?.message ?: "")
+
+    }
+
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
         val appInfo = payload as? AppInfo
-        appInfo?.let { appInfo ->
+        appInfo?.let { it ->
             val popup = PopupMenu(requireActivity(), view)
                 .apply {
                     menuInflater
@@ -131,11 +114,12 @@ class AppsFragment : BaseFragment(), OnEntryClickListener, AppsContract.View {
                 }
                 .also {
                     it.itemClicks()
-                        .rxBindingSubscriber()
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .doOnNext { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.menu_share -> {
-                                    shareApp(appInfo)
+                                    presenter.shareApp(appInfo)
                                 }
                                 R.id.menu_extract -> {
                                     if (presenter.extractApp(appInfo)) {
@@ -153,8 +137,3 @@ class AppsFragment : BaseFragment(), OnEntryClickListener, AppsContract.View {
 
 }
 
-
-fun <T> Observable<T>.rxBindingSubscriber(): Observable<T> {
-    return this.subscribeOn(AndroidSchedulers.mainThread())
-        .observeOn(AndroidSchedulers.mainThread())
-}

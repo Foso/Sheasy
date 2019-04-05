@@ -6,8 +6,9 @@ import components.materialui.IconButton
 import components.materialui.ListItemIcon
 import components.materialui.Toolbar
 import components.materialui.Typography
-import components.materialui.icons.FolderIcon
+import components.materialui.icons.DownloadIcon
 import components.materialui.icons.MenuIcon
+import de.jensklingenberg.sheasy.web.components.materialui.icons.NotificationsActiveIcon
 import de.jensklingenberg.sheasy.web.components.materialui.icons.NotificationsOffIcon
 import de.jensklingenberg.sheasy.web.model.DrawerItems
 import de.jensklingenberg.sheasy.web.ui.notification.NotificationView
@@ -21,6 +22,7 @@ import react.setState
 
 interface ToolbarState : RState {
     var open: Boolean
+    var showNotificationView: Boolean
 }
 
 class BaseToolbar : RComponent<RProps, ToolbarState>() {
@@ -29,6 +31,7 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
 
     override fun ToolbarState.init(props: RProps) {
         open = false
+        showNotificationView = false
 
     }
 
@@ -40,9 +43,13 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
 
         Drawer.setupDrawer(
             this, DrawerItems
-                .values(),this@BaseToolbar.state.open,{toggleDrawer()}
+                .values(), this@BaseToolbar.state.open, { toggleDrawer() }
         )
         setupAppBar(this)
+        if(state.showNotificationView){
+            NotificationView()
+
+        }
 
     }
 
@@ -87,11 +94,40 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                         Grid {
                             div {
                                 ListItemIcon {
-                                    NotificationsOffIcon {}
+
+                                    if(state.showNotificationView){
+                                        NotificationsActiveIcon {
+                                            attrs {
+
+
+                                            }
+
+                                        }
+                                    }else{
+                                        NotificationsOffIcon {
+                                            attrs {
+
+
+                                            }
+
+                                        }
+                                    }
+
+
+                                    attrs {
+                                        onClick = {
+                                            toggleNotification()
+
+                                        }
+                                    }
+
+
                                 }
                                 //  MediaView()
-                                de.jensklingenberg.sheasy.web.ui.notification.NotificationView()
 
+                                attrs {
+
+                                }
                             }
                             attrs {
                                 item = true
@@ -102,7 +138,6 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
 
 
                 }
-                NotificationView()
 
             }
 
@@ -110,6 +145,12 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
 
     }
 
+    private fun toggleNotification() {
+        setState {
+            showNotificationView = !showNotificationView
+        }
+
+    }
 
 
     /****************************************** Class methods  */

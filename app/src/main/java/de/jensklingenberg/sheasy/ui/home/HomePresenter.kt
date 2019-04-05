@@ -9,9 +9,12 @@ import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class HomePresenter(val view:HomeContract.View) : HomeContract.Presenter, OnEntryClickListener {
+    override val compositeDisposable: CompositeDisposable = CompositeDisposable()
+
     override fun startService(intent: Intent) {
         application.startService(intent)
 

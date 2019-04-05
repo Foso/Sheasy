@@ -9,6 +9,7 @@
 
 package components.materialui
 
+import de.jensklingenberg.sheasy.web.components.StandardProps
 import react.RClass
 import react.RProps
 import react.ReactElement
@@ -16,7 +17,7 @@ import react.ReactElement
 @JsModule("@material-ui/core/ListItemIcon/ListItemIcon")
 external val ListItemIconImport: dynamic
 
-external interface ListItemIconProps : RProps {
+external interface ListItemIconProps : RProps,StandardProps {
     var children: ReactElement
 }
 

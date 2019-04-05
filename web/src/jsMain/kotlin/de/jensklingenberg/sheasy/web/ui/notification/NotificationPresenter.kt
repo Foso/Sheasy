@@ -26,6 +26,7 @@ class NotificationPresenter(private val view: NotificationContract.View) : Notif
     }
 
     override fun componentWillUnmount() {
+        myWebSocket.close()
         viewIsUnmounted = true
     }
 
