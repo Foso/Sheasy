@@ -35,7 +35,7 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
     @Inject
     lateinit var notificationDataSource: NotificationDataSource
 
-    val compositeDisposable=CompositeDisposable()
+    val compositeDisposable = CompositeDisposable()
 
     var isClosed = false
     val TAG = javaClass.simpleName
@@ -60,9 +60,9 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
 
     override fun onMessage(message: NanoWSD.WebSocketFrame) {
         Log.d(TAG, message.textPayload.toString())
-        Log.d(TAG, "onMessage: "+message)
+        Log.d(TAG, "onMessage: " + message)
         message.setUnmasked()
-        eventDataSource.addEvent(Event(EventCategory.CONNECTION,message.textPayload))
+        eventDataSource.addEvent(Event(EventCategory.CONNECTION, message.textPayload))
 
     }
 
@@ -78,10 +78,10 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
     override fun onOpen() {
         startRunner()
         compositeDisposable.add(
-            notificationDataSource.notification.subscribeBy (onNext = {
+            notificationDataSource.notification.subscribeBy(onNext = {
                 Log.d(TAG, "onComp: ")
 
-                if(isOpen){
+                if (isOpen) {
                     runInBackground {
                         send(moshi.toJson(it))
                     }
@@ -101,13 +101,15 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
 
                 super.send(
                     adapter?.toJson(
-                        Resource.success( ShareItem(
-                            "test.package",
-                            "Testnotification",
-                            "testtext",
-                            payload,
-                            0L
-                        ))
+                        Resource.success(
+                            ShareItem(
+                                "test.package",
+                                "Testnotification",
+                                "testtext",
+                                payload,
+                                0L
+                            )
+                        )
                     ) ?: ""
                 )
 
@@ -119,7 +121,7 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
             .subscribe {
             }
 
-        eventDataSource.addEvent(Event(EventCategory.CONNECTION,payload?:""))
+        eventDataSource.addEvent(Event(EventCategory.CONNECTION, payload ?: ""))
 
     }
 
@@ -129,7 +131,6 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
         Observable
             .fromCallable {
                 t++
-
 
 
                 val pingframe =

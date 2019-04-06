@@ -6,16 +6,18 @@ import de.jensklingenberg.sheasy.ui.common.MvpPresenter
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import java.io.File
 
-interface FilesContract{
-    interface Presenter:MvpPresenter, OnEntryClickListener{
-        var filePath :String
+interface FilesContract {
+    interface Presenter : MvpPresenter, OnEntryClickListener {
+        var filePath: String
 
         fun loadFiles()
         fun folderUp()
         fun share(file: File)
         fun hostFolder(item: FileResponse)
+        fun searchFile(toString: String)
     }
-    interface View{
+
+    interface View {
         fun updateFolderPathInfo(path: String)
         fun showPopup(popup: FileResponse?, view: android.view.View)
         fun setData(list: List<BaseDataSourceItem<*>>)

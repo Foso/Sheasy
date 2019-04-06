@@ -1,9 +1,9 @@
 package de.jensklingenberg.sheasy.network.websocket
 
 import android.util.Log
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
-import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import java.io.IOException
 import javax.inject.Inject
 
@@ -39,8 +39,8 @@ class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataS
         try {
             super.start(10000)
 
-        }catch (ioexception:IOException){
-            Log.d("THIS",ioexception.message)
+        } catch (ioexception: IOException) {
+            Log.d("THIS", ioexception.message)
         }
 
     }

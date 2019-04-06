@@ -18,6 +18,7 @@ open class ScreenShareWebSocket(handshake: NanoHTTPD.IHTTPSession) : NanoWSD.Web
     init {
         initializeDagger()
     }
+
     private fun initializeDagger() = App.appComponent.inject(this)
 
 

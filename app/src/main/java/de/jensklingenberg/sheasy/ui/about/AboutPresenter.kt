@@ -15,7 +15,6 @@ import javax.inject.Inject
 class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter, OnEntryClickListener {
 
 
-
     @Inject
     lateinit var context: Context
 
@@ -42,7 +41,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter, On
 
             ,
             GenericListItem(
-                context. getString(R.string.About_Changelog),
+                context.getString(R.string.About_Changelog),
                 "",
                 R.drawable.ic_history_grey_700_24dp
             ).toSourceItem(this)
@@ -58,7 +57,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter, On
                 "License"
             ),
             GenericListItem(
-                context. getString(R.string.about_License),
+                context.getString(R.string.about_License),
                 context.getString(R.string.about_license_caption),
                 R.drawable.ic_code_grey_700_24dp
             ).toSourceItem(this)
@@ -66,7 +65,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter, On
 
         )
 
-    view.setData(list)
+        view.setData(list)
     }
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
@@ -74,7 +73,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter, On
     }
 
     override fun onItemClicked(payload: Any) {
-            view.onItemClicked(payload)
+        view.onItemClicked(payload)
     }
 
 }

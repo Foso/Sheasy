@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.share.ShareItemSourceItem
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
@@ -48,7 +48,7 @@ class PairedFragment : BaseFragment(), OnEntryClickListener {
         }
 
         pairedViewModel.loadApps().map {
-            ShareItemSourceItem(it,this)
+            ShareItemSourceItem(it, this)
         }.run {
             aboutAdapter.dataSource.setItems(this)
 
@@ -56,7 +56,6 @@ class PairedFragment : BaseFragment(), OnEntryClickListener {
 
 
     }
-
 
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
@@ -98,7 +97,6 @@ class PairedFragment : BaseFragment(), OnEntryClickListener {
         }
 
     }
-
 
 
 }

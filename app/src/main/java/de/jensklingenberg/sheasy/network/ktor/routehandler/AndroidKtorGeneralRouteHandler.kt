@@ -39,7 +39,7 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
     override suspend fun intercept(call: KtorApplicationCall): Resource<Any> {
 
-        if(sheasyPref.acceptAllConnections){
+        if (sheasyPref.acceptAllConnections) {
             return Resource.success("1")
 
         }
@@ -48,7 +48,7 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
             call.requestedApiPath.startsWith(folderPath)
         }
 
-        if(allowedPath){
+        if (allowedPath) {
             return Resource.success("1")
 
         }
@@ -56,7 +56,7 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
         if (!sheasyPref.devicesRepository.authorizedDevices.contains(Device(call.remoteHostIp))) {
             notificationUseCase.showConnectionRequest(call.remoteHostIp)
-            eventDataSource.addEvent(Event(EventCategory.CONNECTION,call.remoteHostIp))
+            eventDataSource.addEvent(Event(EventCategory.CONNECTION, call.remoteHostIp))
             return Resource.error(Error.NotAuthorizedError())
 
         } else {

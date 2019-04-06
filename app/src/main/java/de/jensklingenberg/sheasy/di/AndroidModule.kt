@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import android.media.projection.MediaProjectionManager
 import android.net.wifi.WifiManager
-import android.net.wifi.aware.WifiAwareManager
 import android.view.WindowManager
 import dagger.Module
 import dagger.Provides
@@ -44,7 +43,7 @@ class AndroidModule {
 
     @Provides
     @Singleton
-    fun provideAssetManger(context: Context): AssetManager =context.assets
+    fun provideAssetManger(context: Context): AssetManager = context.assets
 
     @Provides
     @Singleton

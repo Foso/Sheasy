@@ -9,9 +9,9 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.data.event.EventDataSource
 import de.jensklingenberg.sheasy.data.event.EventRepository
+import de.jensklingenberg.sheasy.data.file.FileRepository
 import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
 import de.jensklingenberg.sheasy.data.notification.NotificationRepository
-import de.jensklingenberg.sheasy.data.file.FileRepository
 import de.jensklingenberg.sheasy.data.preferences.SheasyPreferencesRepository
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.utils.ScreenRecord

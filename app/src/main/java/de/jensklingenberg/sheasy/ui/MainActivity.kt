@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -16,12 +15,9 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.SideMenuEntry
-import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.ui.files.FilesFragmentDirections
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -32,7 +28,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     lateinit var navController: NavController
 
     val compositeDisposable = CompositeDisposable()
-    var toolbarMenu : Menu?=null
+    var toolbarMenu: Menu? = null
 
 
     /******************************************  Lifecycle methods  */
@@ -44,8 +40,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         handleIntent(intent)
         mainActivityDrawer = MainActivityDrawer(this)
         mainViewModel = obtainViewModel(MainViewModel::class.java)
-     //   requestNotificationPermission(this)
-
+        //   requestNotificationPermission(this)
 
 
     }
@@ -57,7 +52,6 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
             null
         )
     }
-
 
 
     /******************************************  Listener methods  */
@@ -96,7 +90,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
 
                     val filePath = FilesFragmentDirections.ActionFilesFragmentSelf().setFilePath(uri.toString())
 
-                   // var bundle = bundleOf("filePath" to uri)
+                    // var bundle = bundleOf("filePath" to uri)
                     navController.navigate(R.id.filesFragment, filePath.arguments)
                     break
                 }

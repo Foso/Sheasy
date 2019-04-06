@@ -14,6 +14,6 @@ val sideMenuEntries = listOf(
     SideMenuEntry("Share", R.id.shareFragment, R.drawable.ic_settings_black_24dp),
 
     SideMenuEntry("About", R.id.aboutFragment, R.drawable.ic_info_outline_black_24dp),
-            SideMenuEntry("Screenshare", R.id.recordFragment, R.drawable.ic_info_outline_black_24dp)
+    SideMenuEntry("Screenshare", R.id.recordFragment, R.drawable.ic_info_outline_black_24dp)
 
 )

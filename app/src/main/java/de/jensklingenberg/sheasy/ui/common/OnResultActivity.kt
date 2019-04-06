@@ -32,7 +32,8 @@ class OnResultActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startActivityForResult(screenRecord.createScreenCaptureIntent(),
+        startActivityForResult(
+            screenRecord.createScreenCaptureIntent(),
             REQUEST_CODE
         )
 

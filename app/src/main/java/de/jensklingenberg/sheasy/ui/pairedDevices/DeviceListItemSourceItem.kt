@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.ui.pairedDevices
 
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
-import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.web.model.Device
 

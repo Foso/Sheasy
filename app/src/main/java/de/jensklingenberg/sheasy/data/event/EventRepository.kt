@@ -1,16 +1,12 @@
 package de.jensklingenberg.sheasy.data.event
 
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.model.Resource
-import de.jensklingenberg.sheasy.network.Server
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
 
 
-class EventRepository:EventDataSource{
+class EventRepository : EventDataSource {
 
 
     init {
@@ -34,7 +30,6 @@ class EventRepository:EventDataSource{
         list.add(event)
         appsSubject.onNext(list)
     }
-
 
 
 }

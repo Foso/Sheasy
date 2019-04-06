@@ -3,11 +3,10 @@ package de.jensklingenberg.sheasy.utils.UseCase
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 
-class MessageUseCase{
+class MessageUseCase {
 
 
-
-    fun show(view: View,message:String){
+    fun show(view: View, message: String) {
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
             .setAction("CLOSE") { }
             // .setActionTextColor(resources.getColor(android.R.color.holo_red_light))

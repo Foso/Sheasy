@@ -178,7 +178,7 @@ class ScreenRecord : ImageReader.OnImageAvailableListener {
 
             // register orientation change callback
             mOrientationChangeCallback =
-                    OrientationChangeCallback(context)
+                OrientationChangeCallback(context)
             mOrientationChangeCallback?.let { orientationChangeCallback ->
                 if (orientationChangeCallback.canDetectOrientation()) {
                     orientationChangeCallback.enable()

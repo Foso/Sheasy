@@ -4,9 +4,9 @@ package de.jensklingenberg.sheasy.ui.common
 class BaseDataSource internal constructor() : ArrayList<BaseDataSourceItem<*>>() {
 
 
-    var emptyView : BaseDataSourceItem<*>?= null
+    var emptyView: BaseDataSourceItem<*>? = null
         set(value) {
-            field=value
+            field = value
             setItems(emptyList())
         }
 
@@ -33,15 +33,15 @@ class BaseDataSource internal constructor() : ArrayList<BaseDataSourceItem<*>>()
     }
 
     fun setItems(items: List<BaseDataSourceItem<*>>) {
-        if(items.isEmpty()){
+        if (items.isEmpty()) {
             var newItems = items
             emptyView?.let {
-                newItems= listOf(it)
+                newItems = listOf(it)
             }
             this.clear()
             newItems.forEach { add(it) }
 
-        }else{
+        } else {
             this.clear()
             items.forEach { add(it) }
         }

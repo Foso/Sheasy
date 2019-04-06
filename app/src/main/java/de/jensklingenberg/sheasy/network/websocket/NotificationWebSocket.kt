@@ -28,7 +28,7 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
     @Inject
     lateinit var notificationDataSource: NotificationDataSource
 
-    val compositeDisposable=CompositeDisposable()
+    val compositeDisposable = CompositeDisposable()
 
     var isClosed = false
     val TAG = javaClass.simpleName
@@ -73,10 +73,10 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
     override fun onOpen() {
         startRunner()
         compositeDisposable.add(
-            notificationDataSource.notification.subscribeBy (onNext = {
+            notificationDataSource.notification.subscribeBy(onNext = {
                 Log.d(TAG, "onComp: ")
 
-                if(isOpen){
+                if (isOpen) {
                     runInBackground {
                         send(moshi.toJson(it))
                     }
@@ -95,17 +95,17 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
                 val pingframe =
                     NanoWSD.WebSocketFrame(NanoWSD.WebSocketFrame.OpCode.Ping, false, "")
                 ping(pingframe.binaryPayload)
-                     send(
-                         moshi.toJson(
-                             Notification(
-                                 "test.package",
-                                 "Testnotification",
-                                 "testtext",
-                                 "testsubtext "+ t,
-                                 0L
-                             )
-                         )
-                     )
+                send(
+                    moshi.toJson(
+                        Notification(
+                            "test.package",
+                            "Testnotification",
+                            "testtext",
+                            "testsubtext " + t,
+                            0L
+                        )
+                    )
+                )
 
                 true
             }

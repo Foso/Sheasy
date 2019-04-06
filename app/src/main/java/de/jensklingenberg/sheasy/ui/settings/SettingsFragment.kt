@@ -5,7 +5,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.about.AboutPresenter
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
@@ -19,8 +18,6 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
     }
 
     private val settingsAdapter = BaseAdapter()
-
-
 
 
     override fun setData(items: List<BaseDataSourceItem<*>>) {
@@ -48,7 +45,7 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
             recyclerView.layoutManager = LinearLayoutManager(context)
         }
 
-        presenter= SettingsPresenter(this)
+        presenter = SettingsPresenter(this)
         presenter.onCreate()
     }
 

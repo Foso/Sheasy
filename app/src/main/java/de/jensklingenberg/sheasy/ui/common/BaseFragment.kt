@@ -24,7 +24,7 @@ open class BaseFragment : Fragment() {
     }
 
     override fun onDestroy() {
-       // subscriptions.clear()
+        // subscriptions.clear()
         subscriptions.dispose()
         super.onDestroy()
     }
@@ -41,5 +41,5 @@ open class BaseFragment : Fragment() {
         return inflater.inflate(getLayoutId(), container, false)
     }
 
-    fun getBaseActivity()=activity as MainActivity
+    fun getBaseActivity() = activity as MainActivity
 }

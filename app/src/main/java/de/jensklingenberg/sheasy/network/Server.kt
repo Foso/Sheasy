@@ -23,7 +23,7 @@ class Server : WebSocketListener {
 
 
     enum class DataDestination {
-        SCREENSHARE,SHARE
+        SCREENSHARE, SHARE
     }
 
     @Inject
@@ -43,7 +43,7 @@ class Server : WebSocketListener {
 
     var nettyApplicationEngine: NettyApplicationEngine
 
-    var shareWebSocket : NanoWSD.WebSocket?=null
+    var shareWebSocket: NanoWSD.WebSocket? = null
 
 
     val screenShareWebSocketMap = hashMapOf<String, ScreenShareWebSocket>()
@@ -100,7 +100,7 @@ class Server : WebSocketListener {
                     it.send(data)
                 }
             }
-            DataDestination.SHARE->{
+            DataDestination.SHARE -> {
                 shareWebSocket?.send(data)
             }
         }
@@ -115,7 +115,7 @@ class Server : WebSocketListener {
 
                 }
             }
-            DataDestination.SHARE->{
+            DataDestination.SHARE -> {
                 shareWebSocket?.send(data)
             }
         }
@@ -142,9 +142,9 @@ class Server : WebSocketListener {
 
 
             "/share" -> {
-                shareWebSocket= if(shareWebSocket==null){
+                shareWebSocket = if (shareWebSocket == null) {
                     ShareWebSocket(session)
-                }else{
+                } else {
                     shareWebSocket
                 }
                 return shareWebSocket!!

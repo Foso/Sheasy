@@ -2,7 +2,6 @@ package de.jensklingenberg.sheasy.utils.UseCase
 
 import android.app.Application
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.model.FileResponse
@@ -20,7 +19,6 @@ class ShareUseCase {
 
     @Inject
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
-
 
 
     init {
@@ -62,7 +60,7 @@ class ShareUseCase {
         application.startActivity(Intent.createChooser(intentShareFile, "Share File"))
     }
 
-    fun hostFolder(fileResponse: FileResponse){
+    fun hostFolder(fileResponse: FileResponse) {
         sheasyPrefDataSource.sharedFolders.add(fileResponse)
     }
 

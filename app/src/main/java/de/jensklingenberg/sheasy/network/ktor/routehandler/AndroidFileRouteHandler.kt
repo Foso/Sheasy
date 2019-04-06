@@ -75,13 +75,13 @@ class AndroidFileRouteHandler : FileRouteHandler {
                 filePath.startsWith(folderPath.path)
             }
 
-            if(allowedPath){
+            if (allowedPath) {
                 val fileList = fileDataSource
                     .getFiles(call.parameter)
                     .await()
 
                 return Resource.success(fileList)
-            }else{
+            } else {
                 return Resource.success(sheasyPrefDataSource.sharedFolders)
             }
         }

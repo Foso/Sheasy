@@ -9,14 +9,11 @@ import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.model.AppInfo
-import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.ui.common.OnResultActivity
 import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
 import de.jensklingenberg.sheasy.web.model.Device
 import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 
@@ -57,7 +54,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     @Inject
     lateinit var sheasyPref: SheasyPrefDataSource
 
-    var isRunning : Boolean = false
+    var isRunning: Boolean = false
 
     /****************************************** Lifecycle methods  */
 
@@ -76,20 +73,20 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         intent?.let {
-            if (it.action?.equals("STOP")==true) {
+            if (it.action?.equals("STOP") == true) {
                 stopService(intent)
 
                 return START_STICKY
             } else {
-                if(intent.hasExtra(AUTHORIZE_DEVICE)){
-                        val ipAddress = intent.getStringExtra(AUTHORIZE_DEVICE)
-                        sheasyPref.devicesRepository.addAuthorizedDevice(Device(ipAddress))
+                if (intent.hasExtra(AUTHORIZE_DEVICE)) {
+                    val ipAddress = intent.getStringExtra(AUTHORIZE_DEVICE)
+                    sheasyPref.devicesRepository.addAuthorizedDevice(Device(ipAddress))
                 }
                 return super.onStartCommand(intent, flags, startId)
 
             }
         }
-        isRunning= true
+        isRunning = true
         return START_STICKY
 
 
@@ -108,7 +105,6 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
         appsSubject.onNext(true)
 
 
-
         /* val dialogIntent = screenRecord.createScreenCaptureIntent()
          dialogIntent.component = ComponentName(baseContext, OnResultActivity::class.java)
          dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -116,10 +112,10 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     }
 
     override fun stopService(name: Intent?): Boolean {
-        Log.d("this","Server stopped")
+        Log.d("this", "Server stopped")
 
         server.stop()
-        isRunning=false
+        isRunning = false
 
         return super.stopService(name)
 

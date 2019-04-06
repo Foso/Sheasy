@@ -12,7 +12,7 @@ import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class HomePresenter(val view:HomeContract.View) : HomeContract.Presenter, OnEntryClickListener {
+class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter, OnEntryClickListener {
     override val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun startService(intent: Intent) {

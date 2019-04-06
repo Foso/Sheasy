@@ -7,9 +7,8 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.FileResponse
-
-import io.reactivex.Single
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import io.reactivex.Single
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -53,7 +52,9 @@ open class FileRepository : FileDataSource {
                             it.name,
                             it.path
                         )
-                    }.run {
+                    }
+                    .sortedBy { it.name }
+                    .run {
                         singleEmitter.onSuccess(this)
                     }
             } catch (ioException: IOException) {

@@ -27,8 +27,8 @@ class ScreenCaptureFragment : BaseFragment() {
     init {
         initializeDagger()
     }
-    fun initializeDagger() = App.appComponent.inject(this)
 
+    fun initializeDagger() = App.appComponent.inject(this)
 
 
     /****************************************** Activity Lifecycle methods  */
@@ -37,7 +37,7 @@ class ScreenCaptureFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         appsViewModel = obtainViewModel(ScreenViewModel::class.java)
-        startButton.setOnClickListener {  startProjection() }
+        startButton.setOnClickListener { startProjection() }
         stopButton.setOnClickListener { stopProjection() }
 
 

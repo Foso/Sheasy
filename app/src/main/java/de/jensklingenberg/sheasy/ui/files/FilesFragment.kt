@@ -3,17 +3,17 @@ package de.jensklingenberg.sheasy.ui.files
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.annotation.NonNull
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding3.appcompat.itemClicks
+import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.FileResponse
@@ -63,19 +63,37 @@ class FilesFragment : BaseFragment(), FilesContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true)
         if (ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) !== PackageManager.PERMISSION_GRANTED
         ) {
             permissionUtils.requestPermission(this, REQUEST_CAMERA_PERMISSION)
-        } else {
-            1 == 1
         }
 
         presenter = FilesPresenter(this)
 
+        parseArguments()
+        recyclerView?.apply {
+            adapter = baseAdapter.apply {
+                dataSource.emptyView = NoOrEmptyContentItem("No Files").toSourceItem()
+            }
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
+        updateFolderPathInfo(presenter.filePath)
+
+        presenter.loadFiles()
+        folderUpIv.setOnClickListener { presenter.folderUp() }
+    }
+
+    private fun parseArguments() {
         arguments?.let {
             val fromBundle = FilesFragmentArgs.fromBundle(it)
             var filepath = fromBundle.filePath
@@ -90,22 +108,6 @@ class FilesFragment : BaseFragment(), FilesContract.View {
             }
 
         }
-        recyclerView?.apply {
-            adapter = baseAdapter.apply {
-                dataSource.emptyView = NoOrEmptyContentItem("Title").toSourceItem()
-            }
-            recyclerView.layoutManager = LinearLayoutManager(context)
-            addItemDecoration(
-                DividerItemDecoration(
-                    requireContext(),
-                    DividerItemDecoration.VERTICAL
-                )
-            )
-        }
-        updateFolderPathInfo(presenter.filePath)
-
-        presenter.loadFiles()
-        folderUpIv.setOnClickListener { presenter.folderUp() }
     }
 
 
@@ -145,32 +147,10 @@ class FilesFragment : BaseFragment(), FilesContract.View {
     override fun setData(list: List<BaseDataSourceItem<*>>) {
         baseAdapter.dataSource.setItems(list)
         baseAdapter.notifyDataSetChanged()
-
     }
 
 
     /****************************************** Class methods  */
-
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int, @NonNull permissions: Array<String>,
-        @NonNull grantResults: IntArray
-    ) {
-        // This is for runtime permission on Marshmallow and above; It is not directly related to
-        // PermissionRequest API.
-        if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (permissions.size != 1 || grantResults.size != 1 ||
-                grantResults[0] != PackageManager.PERMISSION_GRANTED
-            ) {
-                Log.d("Fragment", "Camera permission not granted.")
-            } else {
-                Log.d("Fragment", "Camera permission is granted.")
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
-    }
-
 
     override fun updateFolderPathInfo(path: String) {
         folderPathLayout?.apply {
@@ -183,6 +163,8 @@ class FilesFragment : BaseFragment(), FilesContract.View {
         menu?.clear()
         inflater?.inflate(R.menu.fragment_apps_options_menu, menu)
         toolbarMenu = menu
+        initSearchView(menu)
+
         val server = menu?.findItem(R.id.menu_server)
         subscribe(
             HTTPServerService.appsSubject
@@ -191,7 +173,6 @@ class FilesFragment : BaseFragment(), FilesContract.View {
                 .subscribeBy(onNext = { running ->
                     if (running) {
                         server?.setIcon(R.drawable.ic_router_green_700_24dp)
-
                     } else {
                         server?.setIcon(R.drawable.ic_router_black_24dp)
                     }
@@ -200,12 +181,20 @@ class FilesFragment : BaseFragment(), FilesContract.View {
         )
 
 
-        // findItem?.setIcon(R.drawable.ic_router_green_700_24dp)
+    }
 
+    private fun initSearchView(menu: Menu?) {
+        val search = menu?.findItem(R.id.search)?.actionView as SearchView
+        search.queryTextChanges()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { presenter.searchFile(it.toString()) }
+            .subscribe()
 
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
         when (item?.itemId) {
             android.R.id.home -> {
                 getBaseActivity().mainActivityDrawer.toggleDrawer()
@@ -218,9 +207,7 @@ class FilesFragment : BaseFragment(), FilesContract.View {
                     }
                     false -> {
                         requireContext().startService(HTTPServerService.getIntent(requireContext()))
-
                         item.isChecked = true
-                        //  item.setIcon(R.drawable.ic_router_green_700_24dp)
 
                     }
                 }

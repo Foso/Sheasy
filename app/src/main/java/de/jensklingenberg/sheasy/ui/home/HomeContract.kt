@@ -4,13 +4,13 @@ import android.content.Intent
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.MvpPresenter
 
-interface HomeContract{
-    interface View{
+interface HomeContract {
+    interface View {
         fun setData(list: List<BaseDataSourceItem<*>>)
         fun navigateTo(navId: Int)
     }
 
-    interface Presenter:MvpPresenter{
+    interface Presenter : MvpPresenter {
         fun stopService(intent: Intent)
         fun startService(intent: Intent)
 

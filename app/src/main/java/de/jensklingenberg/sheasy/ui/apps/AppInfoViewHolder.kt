@@ -36,9 +36,9 @@ class AppInfoViewHolder(viewParent: ViewGroup) :
                 item.setOnClickListener {
                     item2.onEntryClickListener?.onItemClicked(appInfo)
                 }
-                moreBtn.visibility= View.VISIBLE
+                moreBtn.visibility = View.VISIBLE
                 moreBtn.setOnClickListener {
-                    item2.onEntryClickListener?.onMoreButtonClicked(it,appInfo)
+                    item2.onEntryClickListener?.onMoreButtonClicked(it, appInfo)
                 }
             }
         }

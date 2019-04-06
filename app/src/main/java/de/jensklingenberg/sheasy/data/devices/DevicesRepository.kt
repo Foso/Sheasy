@@ -3,7 +3,7 @@ package de.jensklingenberg.sheasy.data.devices
 import de.jensklingenberg.sheasy.network.devices.DevicesDataSource
 import de.jensklingenberg.sheasy.web.model.Device
 
-class DevicesRepository: DevicesDataSource {
+class DevicesRepository : DevicesDataSource {
 
     override val authorizedDevices = mutableListOf<Device>()
 

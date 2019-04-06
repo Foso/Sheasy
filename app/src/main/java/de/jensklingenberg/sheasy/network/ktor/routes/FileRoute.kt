@@ -31,29 +31,29 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
     route("file") {
 
 
-            route("app"){
-                param("package") {
-                    get {
-                        val packageName = call.parameters["package"] ?: ""
-                        fileRouteHandler
-                            .apk(HttpMethod.GET, packageName)
-                            .checkState(onSuccess = { resource ->
-                                launch {
-                                    call.response.header(
-                                        HttpHeaders.ContentDisposition,
-                                        ContentDisposition.Attachment.withParameter(
-                                            ContentDisposition.Parameters.FileName,
-                                            "$packageName.apk"
-                                        ).toString()
-                                    )
-                                    call.respond(resource.data!!)
-                                }
-                            })
-                    }
+        route("app") {
+            param("package") {
+                get {
+                    val packageName = call.parameters["package"] ?: ""
+                    fileRouteHandler
+                        .apk(HttpMethod.GET, packageName)
+                        .checkState(onSuccess = { resource ->
+                            launch {
+                                call.response.header(
+                                    HttpHeaders.ContentDisposition,
+                                    ContentDisposition.Attachment.withParameter(
+                                        ContentDisposition.Parameters.FileName,
+                                        "$packageName.apk"
+                                    ).toString()
+                                )
+                                call.respond(resource.data!!)
+                            }
+                        })
                 }
             }
+        }
 
-        route("file"){
+        route("file") {
             param("path") {
                 get {
                     val filepath = call.parameters["path"] ?: ""
@@ -97,7 +97,7 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
 
 
                 val ktor = call.ktorApplicationCall(filePath).apply {
-                    parameter=filePath
+                    parameter = filePath
                 }
 
                 fileRouteHandler
@@ -107,7 +107,7 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                             call.response.debugCorsHeader()
                             call.respond(it)
                         }
-                    },onError = {
+                    }, onError = {
                         launch {
                             call.response.debugCorsHeader()
                             call.respond(it)
@@ -137,12 +137,12 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                                 part.streamProvider().use { its ->
                                     its.copyTo(sourceFile.outputStream())
                                     its.close()
-                                    var fileExists = File(filePath + part.originalFileName ).exists()
+                                    var fileExists = File(filePath + part.originalFileName).exists()
                                     if (fileExists) {
                                         call.response.debugCorsHeader()
 
                                         call.respond(Resource.success("Filewrite okay"))
-                                    }else{
+                                    } else {
                                         call.response.debugCorsHeader()
 
                                         call.respond(Resource.error(Error.UploadFailedError().message, ""))

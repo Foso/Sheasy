@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.util.Log
 import com.squareup.moshi.Moshi
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.model.Notification
-import de.jensklingenberg.sheasy.utils.extension.toJson
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import io.reactivex.Observable
@@ -61,25 +59,25 @@ open class MyWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocket(h
 
     @SuppressLint("CheckResult")
     private fun startRunner() {
-var t = 0
+        var t = 0
         Observable
             .fromCallable {
                 t++
                 val pingframe =
                     NanoWSD.WebSocketFrame(NanoWSD.WebSocketFrame.OpCode.Ping, false, "")
                 ping(pingframe.binaryPayload)
-           /*     send(
-                    moshi.toJson(
-                        Notification(
-                            "test.package",
-                            "Testnotification",
-                            "testtext",
-                            "testsubtext "+ t,
-                            0L
-                        )
-                    )
-                )
-                */
+                /*     send(
+                         moshi.toJson(
+                             Notification(
+                                 "test.package",
+                                 "Testnotification",
+                                 "testtext",
+                                 "testsubtext "+ t,
+                                 0L
+                             )
+                         )
+                     )
+                     */
                 true
             }
             .delay(1, TimeUnit.SECONDS)

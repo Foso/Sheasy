@@ -17,5 +17,5 @@ fun runInBackground(function: () -> Unit) {
     }
         .subscribeOn(Schedulers.newThread())
         .observeOn(Schedulers.newThread())
-        .subscribeBy(onError = {},onSuccess = {})
+        .subscribeBy(onError = {}, onSuccess = {})
 }

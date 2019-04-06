@@ -19,13 +19,13 @@ class ShareItemViewHolder(viewParent: ViewGroup) :
             itemView.apply {
                 title.text = listItem.name
                 caption.text = listItem.ip
-                icon.setImageResource( R.drawable.ic_smartphone_black_24dp)
+                icon.setImageResource(R.drawable.ic_smartphone_black_24dp)
 
 
-                    moreBtn.visibility = View.VISIBLE
-                    moreBtn.setOnClickListener {
-                        item.onEntryClickListener?.onMoreButtonClicked(it, listItem)
-                    }
+                moreBtn.visibility = View.VISIBLE
+                moreBtn.setOnClickListener {
+                    item.onEntryClickListener?.onMoreButtonClicked(it, listItem)
+                }
 
 
             }

@@ -6,7 +6,7 @@ import android.provider.Settings
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 
-class CheckPermissionUseCase(val context: Context){
+class CheckPermissionUseCase(val context: Context) {
 
 
     fun checkNotifcationPermission(): Boolean {
@@ -27,7 +27,6 @@ class CheckPermissionUseCase(val context: Context){
             null
         )
     }
-
 
 
 }

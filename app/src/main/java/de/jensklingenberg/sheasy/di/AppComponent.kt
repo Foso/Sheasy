@@ -27,17 +27,17 @@ import de.jensklingenberg.sheasy.ui.home.HomeFragment
 import de.jensklingenberg.sheasy.ui.home.HomePresenter
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedFragment
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedViewModel
-import de.jensklingenberg.sheasy.ui.share.ShareFragment
-import de.jensklingenberg.sheasy.ui.share.SharePresenter
 import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsPresenter
+import de.jensklingenberg.sheasy.ui.share.ShareFragment
+import de.jensklingenberg.sheasy.ui.share.SharePresenter
 import de.jensklingenberg.sheasy.utils.NotificationUtils
 import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import javax.inject.Singleton
 
-@Component(modules = [(AppModule::class), (UseCaseModule::class),(NetworkModule::class),(AndroidModule::class)])
+@Component(modules = [(AppModule::class), (UseCaseModule::class), (NetworkModule::class), (AndroidModule::class)])
 @Singleton
 interface AppComponent {
 

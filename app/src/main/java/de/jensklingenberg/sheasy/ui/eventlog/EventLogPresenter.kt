@@ -3,14 +3,7 @@ package de.jensklingenberg.sheasy.ui.eventlog
 import android.content.Context
 import android.view.View
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.BuildConfig
-import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.event.EventDataSource
-import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.model.EventCategory
-import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
-import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
-import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import io.reactivex.disposables.CompositeDisposable
@@ -18,7 +11,6 @@ import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class EventLogPresenter(val view: EventLogContract.View) : EventLogContract.Presenter, OnEntryClickListener {
-
 
 
     @Inject
@@ -37,7 +29,7 @@ class EventLogPresenter(val view: EventLogContract.View) : EventLogContract.Pres
 
 
     override fun onCreate() {
-        
+
         compositeDisposable.add(
             eventDataSource.getEvents().subscribeBy(
                 onNext = {
@@ -47,8 +39,6 @@ class EventLogPresenter(val view: EventLogContract.View) : EventLogContract.Pres
         )
 
 
-
-
     }
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
@@ -56,7 +46,7 @@ class EventLogPresenter(val view: EventLogContract.View) : EventLogContract.Pres
     }
 
     override fun onItemClicked(payload: Any) {
-            view.onItemClicked(payload)
+        view.onItemClicked(payload)
     }
 
 }

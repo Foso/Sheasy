@@ -13,7 +13,7 @@ class PermissionUtils {
         val MY_PERMISSIONS_REQUEST_CODE = 11
     }
 
-    fun requestPermission(fragment:Fragment,requestCode:Int) {
+    fun requestPermission(fragment: Fragment, requestCode: Int) {
         if (fragment.shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
             fragment.requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), requestCode)
 
@@ -22,7 +22,6 @@ class PermissionUtils {
             fragment.requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), requestCode)
         }
     }
-
 
 
     fun checkPermStorage(

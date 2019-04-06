@@ -17,8 +17,8 @@ inline fun <T : ViewModel> FragmentActivity.obtainViewModel(java: Class<T>): T {
 }
 
 fun Fragment.requireView(): View {
-    when(val view = view){
-        null->throw IllegalStateException("View " + this + " not attached to an fragment.")
-        else->return view
+    when (val view = view) {
+        null -> throw IllegalStateException("View " + this + " not attached to an fragment.")
+        else -> return view
     }
 }

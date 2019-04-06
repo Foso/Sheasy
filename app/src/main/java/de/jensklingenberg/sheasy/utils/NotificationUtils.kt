@@ -4,7 +4,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
@@ -56,7 +55,7 @@ class NotificationUtils : NotificationUseCase {
     override fun showConnectionRequest(ipaddress: String) {
 
         val intent = HTTPServerService.getIntent(context).apply {
-            putExtra(AUTHORIZE_DEVICE,ipaddress)
+            putExtra(AUTHORIZE_DEVICE, ipaddress)
         }
 
         val replyPendingIntent = PendingIntent.getService(
@@ -88,7 +87,6 @@ class NotificationUtils : NotificationUseCase {
 
 
     }
-
 
 
     override fun showServerNotification() {

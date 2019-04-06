@@ -19,11 +19,10 @@ class FileResponseViewHolder(viewParent: ViewGroup) :
             itemView.apply {
                 title.text = fileResponse.name
                 caption.text = fileResponse.path
-                if(fileResponse.path.contains(".")){
+                if (fileResponse.path.contains(".")) {
                     icon.setImageResource(R.drawable.ic_insert_drive_file_grey_700_24dp)
 
-                }else
-                {
+                } else {
                     icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
 
                 }

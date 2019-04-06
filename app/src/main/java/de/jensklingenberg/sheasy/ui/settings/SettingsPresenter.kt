@@ -2,17 +2,13 @@ package de.jensklingenberg.sheasy.ui.settings
 
 import android.content.Context
 import android.view.View
-import androidx.core.app.NotificationManagerCompat
-import androidx.navigation.fragment.findNavController
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.CheckPermissionUseCase
-import de.jensklingenberg.sheasy.data.sideMenuEntries
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItem
-import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericToggleItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
@@ -29,7 +25,7 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
 
     @Inject
-    lateinit var checkPermissionUseCase : CheckPermissionUseCase
+    lateinit var checkPermissionUseCase: CheckPermissionUseCase
 
 
     init {
@@ -88,7 +84,6 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
     }
 
 
-
     override fun onMoreButtonClicked(view: View, payload: Any) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -97,8 +92,8 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
         when (val item = payload) {
 
             is GenericToggleItem -> {
-                when(item.title){
-                    context.getString(R.string.readNotifications)->{
+                when (item.title) {
+                    context.getString(R.string.readNotifications) -> {
                         checkPermissionUseCase.requestNotificationPermission()
                     }
 

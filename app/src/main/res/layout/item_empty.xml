@@ -5,9 +5,13 @@
               android:gravity="center"
               android:layout_height="match_parent">
 
+
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+               android:src="@drawable/ic_insert_drive_file_grey_700_24dp"/>
+
     <TextView
             android:id="@+id/itemTv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/toggleBtn"
             android:layout_alignParentStart="true"
@@ -15,6 +19,7 @@
             android:layout_alignTop="@+id/toggleBtn"
             android:layout_toStartOf="@+id/toggleBtn"
             android:text="Notification"
+
             android:gravity="center_vertical"
 
 
