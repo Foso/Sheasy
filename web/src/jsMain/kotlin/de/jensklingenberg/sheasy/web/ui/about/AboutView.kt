@@ -24,17 +24,8 @@ interface AboutState : RState {
 class AboutView : BaseComponent<RProps, AboutState>(), AboutContract.View {
 
 
-    private val presenter: AboutPresenter = AboutPresenter(this)
+    private val presenter: AboutContract.Presenter = AboutPresenter(this)
 
-    val notificationUseCase= NotificationUseCase()
-
-
-    val notificationOptions = NotificationOptions(
-        title = "Hall",
-        subText = "uUUU",
-        icon = "https://avatars3.githubusercontent.com/u/5015532?s=40&v=4",
-        tag = "dd"
-    )
 
     /****************************************** React Lifecycle methods  */
 
@@ -48,10 +39,10 @@ class AboutView : BaseComponent<RProps, AboutState>(), AboutContract.View {
     }
 
     override fun RBuilder.render() {
-        toolbar()
-        state.itemsList.render(this)
-        //notificationUseCase.showNotification(this, notificationOptions)
-    }
+
+            state.itemsList.render(this)
+
+        }
 
     /****************************************** Presenter methods  */
     override fun setData(items: List<SourceItem>) {

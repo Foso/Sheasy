@@ -7,7 +7,7 @@
     "NESTED_CLASS_IN_EXTERNAL_INTERFACE"
 )
 
-package components.materialui.icons
+package de.jensklingenberg.sheasy.web.components.materialui.icons
 
 import components.materialui.ButtonProps
 import react.RClass

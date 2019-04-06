@@ -14,47 +14,42 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding3.appcompat.itemClicks
-import com.shopify.livedataktx.nonNull
-import com.shopify.livedataktx.observe
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
+import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.ui.common.NoOrEmptyContentItem
 import de.jensklingenberg.sheasy.utils.PermissionUtils
 import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
-import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
-import kotlinx.android.synthetic.main.fragment_files.*
-import de.jensklingenberg.sheasy.model.checkState
-import de.jensklingenberg.sheasy.network.HTTPServerService
-import de.jensklingenberg.sheasy.ui.common.toSourceitem
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_files.*
 import java.io.File
 import javax.inject.Inject
 
 
-class FilesFragment : BaseFragment(),FilesContract.View {
-
+class FilesFragment : BaseFragment(), FilesContract.View {
 
 
     @Inject
     lateinit var permissionUtils: PermissionUtils
 
     @Inject
-    lateinit var shareUseCase: ShareUseCase
+    lateinit var messageUseCase: MessageUseCase
+
 
     private val REQUEST_CAMERA_PERMISSION = 1
 
-    @Inject
-    lateinit var messageUseCase: MessageUseCase
 
     private val baseAdapter = BaseAdapter()
-    lateinit var presenter: FilesPresenter
+    lateinit var presenter: FilesContract.Presenter
 
-    var toolbarMenu : Menu?=null
+    var toolbarMenu: Menu? = null
 
     /****************************************** Lifecycle methods  */
     init {
@@ -67,21 +62,19 @@ class FilesFragment : BaseFragment(),FilesContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // permissionUtils.checkPermStorage(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        // This is for runtime permission on Marshmallow and above; It is not directly related to
-        // PermissionRequest API.
+
         setHasOptionsMenu(true);
         if (ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) !== PackageManager.PERMISSION_GRANTED
         ) {
-            permissionUtils.requestPermission(this,REQUEST_CAMERA_PERMISSION)
+            permissionUtils.requestPermission(this, REQUEST_CAMERA_PERMISSION)
         } else {
             1 == 1
         }
 
-        presenter=FilesPresenter(this)
+        presenter = FilesPresenter(this)
 
         arguments?.let {
             val fromBundle = FilesFragmentArgs.fromBundle(it)
@@ -98,7 +91,9 @@ class FilesFragment : BaseFragment(),FilesContract.View {
 
         }
         recyclerView?.apply {
-            adapter = baseAdapter
+            adapter = baseAdapter.apply {
+                dataSource.emptyView = NoOrEmptyContentItem("Title").toSourceItem()
+            }
             recyclerView.layoutManager = LinearLayoutManager(context)
             addItemDecoration(
                 DividerItemDecoration(
@@ -109,33 +104,16 @@ class FilesFragment : BaseFragment(),FilesContract.View {
         }
         updateFolderPathInfo(presenter.filePath)
 
-        initObserver()
         presenter.loadFiles()
         folderUpIv.setOnClickListener { presenter.folderUp() }
     }
 
-    override fun onResume() {
-        super.onResume()
-        //   permissionUtils.checkPermStorage(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        // This is for runtime permission on Marshmallow and above; It is not directly related to
-        // PermissionRequest API.
-        if (ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) !== PackageManager.PERMISSION_GRANTED
-        ) {
-            permissionUtils.requestPermission(this,REQUEST_CAMERA_PERMISSION)
-        } else {
-            1 == 1
-        }
-    }
 
     /****************************************** Listener methods  */
 
 
-
     override fun showPopup(item: FileResponse?, view: View) {
-        item?.let { appInfo->
+        item?.let { appInfo ->
             val popup = PopupMenu(requireContext(), view)
                 .apply {
                     menuInflater
@@ -148,10 +126,10 @@ class FilesFragment : BaseFragment(),FilesContract.View {
                         .doOnNext { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.menu_share -> {
-                                    shareUseCase.share(File(item.path))
+                                    presenter.share(File(item.path))
                                 }
                                 R.id.menu_share_to_server -> {
-                                    shareUseCase.hostFolder(item)
+                                    presenter.hostFolder(item)
                                 }
                             }
                         }.subscribe()
@@ -164,9 +142,14 @@ class FilesFragment : BaseFragment(),FilesContract.View {
 
     }
 
+    override fun setData(list: List<BaseDataSourceItem<*>>) {
+        baseAdapter.dataSource.setItems(list)
+        baseAdapter.notifyDataSetChanged()
+
+    }
+
 
     /****************************************** Class methods  */
-
 
 
     override fun onRequestPermissionsResult(
@@ -188,36 +171,6 @@ class FilesFragment : BaseFragment(),FilesContract.View {
         }
     }
 
-    private fun initObserver() {
-        presenter
-            .files
-            .nonNull()
-            .observe {
-                it.checkState(
-                    onSuccess = {resource->
-                        resource.data!!.sortedBy { file : FileResponse -> file.name }
-                            .map { file ->
-                                file.toSourceitem(presenter)
-                            }
-                            .run {
-                                baseAdapter.dataSource.setItems(this)
-                                baseAdapter.notifyDataSetChanged()
-                            }
-
-                    },
-                    onLoading = {
-                        messageUseCase.show(requireView(),"Loading")
-                    }
-                    , onError = {
-                        messageUseCase.show(requireView(),"Files could not loaded")
-                    })
-
-
-                updateFolderPathInfo(presenter.filePath)
-
-
-            }
-    }
 
     override fun updateFolderPathInfo(path: String) {
         folderPathLayout?.apply {
@@ -231,24 +184,23 @@ class FilesFragment : BaseFragment(),FilesContract.View {
         inflater?.inflate(R.menu.fragment_apps_options_menu, menu)
         toolbarMenu = menu
         val server = menu?.findItem(R.id.menu_server)
-       subscribe(
-           HTTPServerService.appsSubject
-               .subscribeOn(Schedulers.newThread())
-               .observeOn(Schedulers.newThread())
-               .subscribeBy(onNext = {running->
-                   if(running){
-                       server?.setIcon(R.drawable.ic_router_green_700_24dp)
+        subscribe(
+            HTTPServerService.appsSubject
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.newThread())
+                .subscribeBy(onNext = { running ->
+                    if (running) {
+                        server?.setIcon(R.drawable.ic_router_green_700_24dp)
 
-                   }else{
-                       server?.setIcon(R.drawable.ic_router_black_24dp)
-                   }
+                    } else {
+                        server?.setIcon(R.drawable.ic_router_black_24dp)
+                    }
 
-               })
-       )
+                })
+        )
 
 
-       // findItem?.setIcon(R.drawable.ic_router_green_700_24dp)
-
+        // findItem?.setIcon(R.drawable.ic_router_green_700_24dp)
 
 
     }
@@ -279,8 +231,11 @@ class FilesFragment : BaseFragment(),FilesContract.View {
     }
 
 
-
+    override fun showError(it: Throwable) {
+        messageUseCase.show(requireView(), it.message.toString())
+    }
 
 
 }
+
 

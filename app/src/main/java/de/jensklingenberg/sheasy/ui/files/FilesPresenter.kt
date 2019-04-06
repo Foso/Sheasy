@@ -8,15 +8,18 @@ import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
+import de.jensklingenberg.sheasy.ui.common.toSourceitem
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import java.io.File
 import javax.inject.Inject
 
 
-class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter, OnEntryClickListener {
+class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
 
     @Inject
@@ -31,10 +34,14 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter, On
     @Inject
     lateinit var context: Context
 
-    var filePath = ""
 
 
-    var files: MutableLiveData<Resource<List<FileResponse>>> = MutableLiveData()
+    override val compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+    override var filePath = ""
+
+
+
 
     init {
         initializeDagger()
@@ -44,21 +51,24 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter, On
     private fun initializeDagger() = App.appComponent.inject(this)
 
     override fun loadFiles() {
-        files.value= Resource.loading("loading")
+
         fileDataSource
             .getFiles(filePath)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(Schedulers.newThread())
-            .subscribeBy(onSuccess = { files.postValue(Resource.success(it)) },onError = {})
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(onSuccess = {files->
+                files.map { it.toSourceitem(this) }
+                    .run {
+                    view.setData(this)
+                }
+            }, onError = {})
+            .addTo(compositeDisposable)
     }
 
-    fun shareFile(file: File){
-        shareUseCase.share(file)
-    }
 
 
 
-   override fun folderUp() {
+    override fun folderUp() {
         filePath = filePath.replaceAfterLast("/", "")
         loadFiles()
     }
@@ -80,12 +90,25 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter, On
     override fun onMoreButtonClicked(view: View, payload: Any) {
         val item = payload as? FileResponse
 
-        this.view.showPopup(item,view)
+        this.view.showPopup(item, view)
 
 
-        }
+    }
 
 
+    override fun onDestroy() {
+        compositeDisposable.dispose()
+    }
+
+    override fun share(file: File) {
+        shareUseCase.share(file)
+
+    }
+
+    override fun hostFolder(item: FileResponse) {
+        shareUseCase.hostFolder(item)
+
+    }
 
 
 }

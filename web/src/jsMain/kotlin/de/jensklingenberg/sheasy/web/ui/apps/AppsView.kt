@@ -49,7 +49,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     val messageUseCase = MessageUseCase()
 
-    private var presenter: AppsPresenter = AppsPresenter(this, appsDataSource)
+    private var presenter: AppsContract.Presenter = AppsPresenter(this, appsDataSource)
 
 
     /****************************************** React Lifecycle methods  */
@@ -70,19 +70,14 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     override fun RBuilder.render() {
 
-       // toolbar()
-
         setupSearchBar(this)
-
-
-
-
+        state.item.render(this)
         Paper {
             attrs {
                 elevation = 1
             }
 
-            state.item.render(this)
+
 
 
         }

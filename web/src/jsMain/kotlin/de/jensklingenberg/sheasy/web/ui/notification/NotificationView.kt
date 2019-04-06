@@ -11,7 +11,7 @@ import react.setState
 
 
 interface NotificationVState : RState {
-    var openToolTip: Boolean
+
     var ignoreNotification: Boolean
     var notiOptions: NotificationOptions
     var notiTitle: String
@@ -24,7 +24,7 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
 
 
     override fun NotificationVState.init(props: RProps) {
-        openToolTip = true
+
         ignoreNotification = true
         notiOptions = NotificationOptions()
         notiTitle = ""
@@ -33,13 +33,6 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
     override fun componentDidMount() {
 
         presenter?.componentDidMount()
-    }
-
-
-    private fun handleChange() {
-        setState {
-            openToolTip = !openToolTip
-        }
     }
 
 
@@ -55,9 +48,7 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
     }
 
     override fun componentWillUnmount() {
-        console.log("unomout")
         presenter?.componentWillUnmount()
-        // super.componentWillUnmount()
 
     }
 

@@ -14,8 +14,6 @@ import kotlinx.android.synthetic.main.fragment_share.*
 class ShareFragment : BaseFragment(), ShareContract.View {
 
 
-
-
     private val baseAdapter = BaseAdapter()
     lateinit var presenter: SharePresenter
 
@@ -44,17 +42,16 @@ class ShareFragment : BaseFragment(), ShareContract.View {
         presenter.onCreate()
 
         sendBtn.setOnClickListener {
-            presenter.sendMessage("Hallo")
+            presenter.sendMessage(input.text.toString())
         }
 
     }
 
     override fun setData(items: List<BaseDataSourceItem<*>>) {
-            baseAdapter.dataSource.setItems(items)
+        baseAdapter.dataSource.setItems(items)
         baseAdapter.notifyDataSetChanged()
 
     }
-
 
 
 }

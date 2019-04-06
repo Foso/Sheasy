@@ -4,6 +4,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class BaseAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
+
+    
     val dataSource = BaseDataSource()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         val viewHolderClass = dataSource.getViewHolderClassForViewType(viewType)

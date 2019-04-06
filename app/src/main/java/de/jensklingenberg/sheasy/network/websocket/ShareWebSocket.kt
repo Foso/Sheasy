@@ -116,8 +116,7 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
             }
             .subscribeOn(Schedulers.newThread())
             .observeOn(Schedulers.newThread())
-            .subscribe { _ ->
-                //Use result for something
+            .subscribe {
             }
 
         eventDataSource.addEvent(Event(EventCategory.CONNECTION,payload?:""))

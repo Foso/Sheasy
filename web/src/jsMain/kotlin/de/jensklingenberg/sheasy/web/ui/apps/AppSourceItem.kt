@@ -26,10 +26,7 @@ class AppSourceItem(val app: App, val itemClickFunction: (Event) -> Unit, val on
     override fun render(rBuilder: RBuilder) {
 
         with(rBuilder) {
-            List {
-                attrs {
-                    component = "nav"
-                }
+
 
                 ListItem {
                     attrs {
@@ -64,7 +61,7 @@ class AppSourceItem(val app: App, val itemClickFunction: (Event) -> Unit, val on
                 }
             }
 
-        }
+
 
     }
 

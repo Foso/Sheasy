@@ -10,12 +10,13 @@
 package components.materialui.icons
 
 import components.materialui.ButtonProps
+import components.materialui.IconProps
 import react.RClass
 
 @JsModule("@material-ui/icons/Android")
 external val AndroidIconImport: dynamic
 
-external interface AndroidIconProps : ButtonProps {
+external interface AndroidIconProps : IconProps {
 }
 
 var AndroidIcon: RClass<AndroidIconProps> = AndroidIconImport.default

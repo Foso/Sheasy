@@ -19,7 +19,14 @@ class FileResponseViewHolder(viewParent: ViewGroup) :
             itemView.apply {
                 title.text = fileResponse.name
                 caption.text = fileResponse.path
-                icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
+                if(fileResponse.path.contains(".")){
+                    icon.setImageResource(R.drawable.ic_insert_drive_file_grey_700_24dp)
+
+                }else
+                {
+                    icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
+
+                }
                 item.setOnClickListener {
                     item2.onEntryClickListener?.onItemClicked(fileResponse)
                 }

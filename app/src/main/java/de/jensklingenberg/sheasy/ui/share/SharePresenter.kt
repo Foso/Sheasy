@@ -2,7 +2,6 @@ package de.jensklingenberg.sheasy.ui.share
 
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.event.EventDataSource
-import de.jensklingenberg.sheasy.data.event.EventRepository
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.EventCategory
 import de.jensklingenberg.sheasy.network.Server
@@ -37,7 +36,6 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-
     override fun onCreate() {
         sheasyPrefDataSource.devicesRepository.authorizedDevices.apply {
             if (isEmpty()) {
@@ -48,23 +46,21 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
         }.map {
             ShareItemSourceItem(it)
         }.run {
-           // view.setData(this)
+            // view.setData(this)
 
         }
 
-
-        compositeDisposable.add(
-            eventDataSource.getEvents()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
+        eventDataSource.getEvents()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
                 onNext = {
                     view.setData(it.map { it.toSourceItem() })
                 }
-            )
-        )
+            ).also { compositeDisposable.add(it) }
 
-        eventDataSource.addEvent(Event(EventCategory.CONNECTION,"555"))
+
+        eventDataSource.addEvent(Event(EventCategory.CONNECTION, "555"))
 
 
     }
@@ -74,7 +70,7 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
     }
 
     fun sendMessage(s: String) {
-        server.sendData(Server.DataDestination.SHARE,s)
+        server.sendData(Server.DataDestination.SHARE, s)
 
     }
 

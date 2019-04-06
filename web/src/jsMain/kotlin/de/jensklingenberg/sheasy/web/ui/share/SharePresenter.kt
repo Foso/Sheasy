@@ -2,7 +2,7 @@ package de.jensklingenberg.sheasy.web.ui.share
 
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.model.ShareItem
-import de.jensklingenberg.sheasy.web.model.StringSourceItem
+import de.jensklingenberg.sheasy.web.ui.common.StringSourceItem
 import de.jensklingenberg.sheasy.web.network.ApiEndPoint
 import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.Websocket

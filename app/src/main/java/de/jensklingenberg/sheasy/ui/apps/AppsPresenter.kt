@@ -6,6 +6,7 @@ import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
+import de.jensklingenberg.sheasy.ui.common.addTo
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import de.jensklingenberg.sheasy.utils.extension.requireView
@@ -50,7 +51,7 @@ class AppsPresenter(val view : AppsContract.View) : AppsContract.Presenter, OnEn
 
     override fun onCreate() {
 
-          val test= getApps()
+          getApps()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 
@@ -62,9 +63,8 @@ class AppsPresenter(val view : AppsContract.View) : AppsContract.Presenter, OnEn
                         .run {
                             view.setData(this)
                         }
-                })
+                }).addTo(compositeDisposable)
 
-        compositeDisposable.add(test)
 
 
 

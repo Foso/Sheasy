@@ -8,6 +8,7 @@ import components.materialui.icons.MoreVertIcon
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.web.components.materialui.List
 import de.jensklingenberg.sheasy.web.components.materialui.ListItem
+import de.jensklingenberg.sheasy.web.components.materialui.icons.InsertDriveFileIcon
 import de.jensklingenberg.sheasy.web.model.OnEntryClickListener
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
@@ -43,6 +44,8 @@ class FileSourceItem(val fileResponse: FileResponse, val itemClickFunction:(Even
                         if(!fileResponse.name.contains(".")){
                             FolderIcon {}
 
+                        }else{
+                            InsertDriveFileIcon{}
                         }
                     }
 
@@ -57,6 +60,7 @@ class FileSourceItem(val fileResponse: FileResponse, val itemClickFunction:(Even
                     }
 
                     IconButton {
+
                         MoreVertIcon {}
                         attrs {
                             asDynamic()["aria-owns"] = "simple-menu"

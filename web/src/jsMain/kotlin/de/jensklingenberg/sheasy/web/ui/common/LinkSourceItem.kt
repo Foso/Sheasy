@@ -1,5 +1,7 @@
-package de.jensklingenberg.sheasy.web.model
+package de.jensklingenberg.sheasy.web.ui.common
 
+import de.jensklingenberg.sheasy.web.model.LinkItem
+import de.jensklingenberg.sheasy.web.model.SourceItem
 import react.RBuilder
 import react.dom.a
 import react.dom.div

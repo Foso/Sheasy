@@ -2,14 +2,12 @@ package de.jensklingenberg.sheasy.web.ui.share
 
 import components.materialui.Button
 import components.materialui.FormControl
-import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.model.SourceItem
-import de.jensklingenberg.sheasy.web.model.StringSourceItem
+import de.jensklingenberg.sheasy.web.ui.common.StringSourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
-import de.jensklingenberg.sheasy.web.usecase.NotificationOptions
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.EventTarget
@@ -76,7 +74,7 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
     override fun RBuilder.render() {
 
         div {
-            +"Hallo"
+            +"Connected with: "
         }
 
         FormControl {

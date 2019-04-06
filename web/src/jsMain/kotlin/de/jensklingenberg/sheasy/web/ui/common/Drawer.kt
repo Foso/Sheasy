@@ -22,6 +22,7 @@ companion object {
                 attrs {
                     open = showDrawer
                     onClose =  {test()}
+
                 }
 
                 drawerItems
@@ -36,6 +37,7 @@ companion object {
                                     component = "a"
                                     divider = true
                                     styleProps(textAlign = "center")
+                                    onClick={test()}
                                 }
 
                                 ListItemText {

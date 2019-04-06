@@ -119,6 +119,14 @@ task serverPrepare(type: Copy, dependsOn: ["build"]) {
     from "./build/bundle", "./src/jsMain/web"
     into "./deploy"
 }
+
+def appProject = project(':app')
+
+task deployToAppAssets(type: Copy, dependsOn: ["build"]) {
+    from "./build/bundle", "./src/jsMain/web"
+    into "${appProject.projectDir}/src/main/assets/web"
+}
+
 task stopTomcat(type: Exec) {
 //    workingDir '../tomcat/bin'
 
