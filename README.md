@@ -23,25 +23,15 @@ It's a hobby project i started to learn about Kotlin, React(Kotlin-JS) and Ktor.
 
 ## 🎨 Features
 A few of the things you can do with Sheasy:
-- download apks
-<p align="left">
-  <img src ="https://raw.githubusercontent.com/Foso/Sheasy/develop/documentation/screenshots/app/apps_app_v0.1.png" height=500 />
-  <img src ="https://raw.githubusercontent.com/Foso/Sheasy/develop/documentation/screenshots/app/apps_web_v0.1.png" height=500 />
-
-</p>
+- <a href="https://github.com/Foso/Sheasy/wiki/Download-Apks">download apks</a>
 
 - download/upload files
-<p align="left">
-  <img src ="https://raw.githubusercontent.com/Foso/Sheasy/develop/documentation/screenshots/files/files_app_v0.1.png" height=500 />
-  <img src ="https://raw.githubusercontent.com/Foso/Sheasy/develop/documentation/screenshots/files/files_web_v0.1.png" height=500 />
 
-</p>
 
 ## 🗺️ Roadmap
 - [ ] show screen recording in browser
 - [ ] host only single folder like "python -m SimpleHTTPServer"
 - [ ] security
-- [ ] download files
 - [ ] receive notifications in browser
 - [ ] see device informations
 - [ ] see log of last transactions
