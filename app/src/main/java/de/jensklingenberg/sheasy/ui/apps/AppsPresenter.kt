@@ -5,7 +5,6 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.Resource
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.common.addTo
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
@@ -18,12 +17,8 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
-class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter, OnEntryClickListener {
+class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
 
-
-    override fun onMoreButtonClicked(view: View, payload: Any) {
-        this.view.onMoreButtonClicked(view, payload)
-    }
 
     val appsSubject: PublishSubject<Resource<List<AppInfo>>> = PublishSubject.create<Resource<List<AppInfo>>>()
 
@@ -32,7 +27,6 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter, OnEnt
     @Inject
     lateinit var fileDataSource: FileDataSource
 
-    private var query: String = ""
 
     @Inject
     lateinit var shareUseCase: ShareUseCase
@@ -53,8 +47,6 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter, OnEnt
         getApps()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
-
             .subscribeBy(onNext = { appList ->
                 appList.data!!
                     .sortedBy { it.name }
@@ -62,23 +54,19 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter, OnEnt
                     .run {
                         view.setData(this)
                     }
-            }).addTo(compositeDisposable)
-
-
-
-
-        getSnackbar()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
+            }, onError = {
                 view.showError(it)
 
-            }
-            .subscribe().addTo(compositeDisposable)
+            }).addTo(compositeDisposable)
 
 
     }
 
+
+
+    override fun onMoreButtonClicked(view: View, payload: Any) {
+        this.view.onMoreButtonClicked(view, payload)
+    }
 
     override fun onDestroy() {
         compositeDisposable.dispose()
@@ -121,11 +109,6 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter, OnEnt
         return fileDataSource.extractApk(appInfo)
     }
 
-    fun getSnackbar(): Observable<String> {
-        return snackbar.hide()
-    }
-
-
     private fun loadApps() {
         fileDataSource
             .getApps()
@@ -138,10 +121,7 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter, OnEnt
             }).addTo(compositeDisposable)
     }
 
-    fun test(): Single<List<AppInfo>> {
-        return fileDataSource
-            .getApps()
-    }
+
 
     override fun onItemClicked(payload: Any) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

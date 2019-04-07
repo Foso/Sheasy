@@ -1,17 +1,12 @@
 package de.jensklingenberg.sheasy.ui.eventlog
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.LibsBuilder
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
-import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import kotlinx.android.synthetic.main.fragment_apps.*
 
 
@@ -47,34 +42,9 @@ class EventLogFragment : BaseFragment(), EventLogContract.View {
     override fun onItemClicked(payload: Any) {
         when (val item = payload) {
 
-            is GenericListItemSourceItem -> {
-                val genericListItem = item.getPayload()
-                when (genericListItem?.title) {
-                    getString(R.string.about_libraries) -> {
-                        LibsBuilder()
-                            .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                            .start(requireActivity())
-                    }
 
-                    getString(R.string.About_Changelog) -> {
-                        val browserIntent =
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(getString(R.string.about_changelog_link))
-                            )
-                        startActivity(browserIntent)
-                    }
-                    getString(R.string.about_License) -> {
-                        val browserIntent =
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(getString(R.string.about_license_link))
-                            )
-                        startActivity(browserIntent)
-                    }
-                }
 
-            }
+
         }
 
     }

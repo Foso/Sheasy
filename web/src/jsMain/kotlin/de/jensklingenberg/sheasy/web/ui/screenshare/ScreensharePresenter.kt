@@ -2,21 +2,28 @@ package de.jensklingenberg.sheasy.web.ui.screenshare
 
 import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.ApiEndPoint
+import de.jensklingenberg.sheasy.web.network.Websocket
 import org.w3c.dom.MessageEvent
 import org.w3c.dom.events.Event
 
-class ScreensharePresenter(val view: ScreenshareContract.View) : ScreenshareContract.Presenter,
-    MyWebSocket.WebSocketListener {
+class ScreensharePresenter(val view: ScreenshareContract.View) : ScreenshareContract.Presenter {
+    override fun onOpen(event: Event) {
 
-    var myWebSocket = MyWebSocket(ApiEndPoint.screenshareWebSocketURL)
 
-    /****************************************** React Lifecycle methods  */
-    init {
-        myWebSocket.listener = this
     }
 
+    override fun onClose(messageEvent: Event) {
+
+
+    }
+
+    var myWebSocket : Websocket?=null
+
+    /****************************************** React Lifecycle methods  */
+
+
     override fun componentDidMount() {
-        myWebSocket.open()
+        myWebSocket=  MyWebSocket(ApiEndPoint.screenshareWebSocketURL,this)
     }
 
     override fun componentWillUnmount() {}

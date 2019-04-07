@@ -14,7 +14,7 @@ interface FilesContract {
         fun folderUp()
         fun share(file: File)
         fun hostFolder(item: FileResponse)
-        fun searchFile(toString: String)
+        fun searchFile(fileName: String)
     }
 
     interface View {

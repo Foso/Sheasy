@@ -10,6 +10,11 @@ import javax.inject.Inject
 class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataSource) :
     NanoWSD(sheasyPref.webSocketPort),
     NanoWSDWebSocketDataSource {
+
+
+    override var shareWebSocket: NanoWSD.WebSocket? = null
+
+
     override val
             screenShareWebSocketMap
             : HashMap<String, ScreenShareWebSocket>
@@ -23,13 +28,63 @@ class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataS
 
     }
 
-    override fun openWebSocket(handshake: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket {
+    override fun serveHttp(session: IHTTPSession?): Response {
 
-        return when (val listener = webSocketListener) {
-            null -> MyWebSocket(handshake)
-            else -> {
-                listener.openWebSocket(handshake)
+        return super.serveHttp(session)
+    }
+
+    override fun openWebSocket(session: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket {
+
+        when (session.uri) {
+            "/screenshare" -> {
+
+                if (screenShareWebSocketMap.containsKey(session.remoteIpAddress)) {
+                    return screenShareWebSocketMap[session.remoteIpAddress]!!
+                } else {
+                    val screenShareWebSocket = ScreenShareWebSocket(session)
+                    screenShareWebSocketMap[session.remoteIpAddress] = screenShareWebSocket
+                    return screenShareWebSocket
+                }
+
             }
+
+            "/notification" -> {
+                return NotificationWebSocket(session)
+            }
+
+
+            "/share" -> {
+                if (shareWebSocket == null) {
+                    shareWebSocket = ShareWebSocket(session)
+                    shareWebSocket?.let {
+                        return it
+                    }
+                } else {
+                    shareWebSocket?.let {
+                        if(it.isOpen){
+                            return it
+                        }else{
+                            shareWebSocket = ShareWebSocket(session)
+                            shareWebSocket?.let {
+                                return it
+                            }
+                        }
+                    }
+
+                }
+
+                shareWebSocket = if (shareWebSocket == null) {
+                    ShareWebSocket(session)
+                } else {
+                    shareWebSocket
+                }
+                return shareWebSocket ?: ShareWebSocket(session)
+            }
+            else -> {
+                return MyWebSocket(session)
+            }
+
+
         }
 
 
@@ -43,6 +98,14 @@ class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataS
             Log.d("THIS", ioexception.message)
         }
 
+    }
+
+    override fun stop() {
+        screenShareWebSocketMap.values.forEach {
+            it.isClosed = true
+        }
+        screenShareWebSocketMap.clear()
+        super.stop()
     }
 
 

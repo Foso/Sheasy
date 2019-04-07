@@ -6,6 +6,7 @@ import components.materialui.ListItemText
 import components.materialui.icons.MoreVertIcon
 import de.jensklingenberg.sheasy.web.components.materialui.List
 import de.jensklingenberg.sheasy.web.components.materialui.ListItem
+import de.jensklingenberg.sheasy.web.model.AboutItem
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import kotlinx.html.js.onClickFunction
@@ -16,16 +17,6 @@ import react.dom.div
 import react.dom.p
 
 
-interface OnFileClickListener {
-
-}
-
-data class AboutItem(
-    val name: String,
-    val subtitle: String,
-    val icon: RClass<*>
-
-)
 
 class AboutSourceItem(
     val aboutItem: AboutItem,
@@ -56,16 +47,15 @@ class AboutSourceItem(
                             div {
                                 +aboutItem.name
                                 attrs {
-                                    if (itemClickFunction != null) {
+                                    itemClickFunction?.let{
                                         onClickFunction = {itemClickFunction}//{ presenter.setPath(file.path) }
-
                                     }
                                 }
                             }
                             p {
                                 +aboutItem.subtitle
                                 attrs {
-                                    if (itemClickFunction != null) {
+                                    itemClickFunction?.let{
                                         onClickFunction = {itemClickFunction}//{ presenter.setPath(file.path) }
 
                                     }

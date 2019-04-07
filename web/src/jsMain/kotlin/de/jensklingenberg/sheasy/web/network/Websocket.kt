@@ -4,17 +4,15 @@ import org.w3c.dom.MessageEvent
 import org.w3c.dom.events.Event
 
 interface Websocket{
-
+   val listener: MyWebSocket.WebSocketListener
 
     fun send(message:String)
 
     fun close()
 
-    fun open()
     interface WebSocketListener {
         fun onMessage(messageEvent: MessageEvent)
         fun onError(messageEvent: Event)
     }
 
-    fun addListener(listener: MyWebSocket.WebSocketListener)
 }

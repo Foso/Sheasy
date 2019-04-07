@@ -13,9 +13,11 @@ import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.ui.common.addTo
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_home.*
+import me.toptas.fancyshowcase.FancyShowCaseView
 
 
 class HomeFragment : BaseFragment(), HomeContract.View {
@@ -45,10 +47,9 @@ class HomeFragment : BaseFragment(), HomeContract.View {
             )
         }
 
-
-
         presenter = HomePresenter(this)
         presenter.onCreate()
+
     }
 
 
@@ -69,22 +70,21 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         val server = menu?.findItem(R.id.menu_server)
 
 
-        subscribe(
-            HTTPServerService.appsSubject.subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(
-                    AndroidSchedulers.mainThread()
-                )
-                .subscribeBy(onNext = { running ->
-                    if (running) {
-                        server?.setIcon(R.drawable.ic_router_green_700_24dp)
 
-                    } else {
-                        server?.setIcon(R.drawable.ic_router_black_24dp)
-                    }
 
-                })
-        )
+        HTTPServerService.serverRunning.subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(
+                AndroidSchedulers.mainThread()
+            )
+            .subscribeBy(onNext = { running ->
+                if (running) {
+                    server?.setIcon(R.drawable.ic_router_green_700_24dp)
 
+                } else {
+                    server?.setIcon(R.drawable.ic_router_black_24dp)
+                }
+
+            }).addTo(compositeDisposable)
 
     }
 
@@ -103,7 +103,6 @@ class HomeFragment : BaseFragment(), HomeContract.View {
                         presenter.startService(HTTPServerService.getIntent(requireContext()))
 
                         item.isChecked = true
-                        //  item.setIcon(R.drawable.ic_router_green_700_24dp)
 
                     }
                 }

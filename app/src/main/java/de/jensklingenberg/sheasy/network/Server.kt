@@ -1,20 +1,18 @@
 package de.jensklingenberg.sheasy.network
 
+import android.util.Log
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.network.ktor.initNetty
-import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
-import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
-import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
-import de.jensklingenberg.sheasy.network.websocket.NotificationWebSocket
-import de.jensklingenberg.sheasy.network.websocket.ScreenShareWebSocket
-import de.jensklingenberg.sheasy.network.websocket.ShareWebSocket
 import de.jensklingenberg.sheasy.network.websocket.WebSocketListener
 import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import io.ktor.server.netty.NettyApplicationEngine
+import io.reactivex.Single
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -29,11 +27,6 @@ class Server : WebSocketListener {
     @Inject
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
 
-    @Inject
-    lateinit var generalRouteHandler: GeneralRouteHandler
-
-    @Inject
-    lateinit var fileRouteHandler: FileRouteHandler
 
     @Inject
     lateinit var nanoWSDWebSocketDataSource: NanoWSDWebSocketDataSource
@@ -41,20 +34,15 @@ class Server : WebSocketListener {
     @Inject
     lateinit var vibrationUseCase: VibrationUseCase
 
-    var nettyApplicationEngine: NettyApplicationEngine
+    val compositeDisposable = CompositeDisposable()
 
-    var shareWebSocket: NanoWSD.WebSocket? = null
+    @Inject
+    lateinit var nettyApplicationEngine: NettyApplicationEngine
 
-
-    val screenShareWebSocketMap = hashMapOf<String, ScreenShareWebSocket>()
 
     init {
         initializeDagger()
-        nettyApplicationEngine = initNetty(
-            sheasyPrefDataSource,
-            generalRouteHandler,
-            fileRouteHandler
-        )
+
         nanoWSDWebSocketDataSource.addListener(this)
     }
 
@@ -65,25 +53,35 @@ class Server : WebSocketListener {
     private fun initializeDagger() = App.appComponent.inject(this)
 
     fun start() {
-        runInBackground {
+        Log.d("Server", "Server running")
 
-            nettyApplicationEngine.start(wait = true)
 
-        }
 
         nanoWSDWebSocketDataSource.start()
+
+
+        Single.fromCallable {
+            nettyApplicationEngine.start(wait = true)
+            true
+        }
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(Schedulers.newThread())
+            .subscribeBy(onError = {
+                Log.d("runIn",it.message)
+                nettyApplicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+            }, onSuccess = {})
+
 
         vibrationUseCase.vibrate()
 
     }
 
     fun stop() {
+        Log.d("Server", "Server stopped")
+
         nettyApplicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
         nanoWSDWebSocketDataSource.stop()
-        screenShareWebSocketMap.values.forEach {
-            it.isClosed = true
-        }
-        screenShareWebSocketMap.clear()
+
         vibrationUseCase.vibrate()
 
     }
@@ -96,12 +94,12 @@ class Server : WebSocketListener {
         when (dataDestination) {
 
             DataDestination.SCREENSHARE -> {
-                screenShareWebSocketMap.values.forEach {
+                nanoWSDWebSocketDataSource.screenShareWebSocketMap.values.forEach {
                     it.send(data)
                 }
             }
             DataDestination.SHARE -> {
-                shareWebSocket?.send(data)
+                nanoWSDWebSocketDataSource.shareWebSocket?.send(data)
             }
         }
     }
@@ -110,50 +108,20 @@ class Server : WebSocketListener {
         when (dataDestination) {
 
             DataDestination.SCREENSHARE -> {
-                screenShareWebSocketMap.values.forEach {
+                nanoWSDWebSocketDataSource.screenShareWebSocketMap.values.forEach {
                     it.send(data)
 
                 }
             }
             DataDestination.SHARE -> {
-                shareWebSocket?.send(data)
+                nanoWSDWebSocketDataSource.shareWebSocket?.send(data)
             }
         }
     }
 
 
     override fun openWebSocket(session: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket {
-        when (session.uri) {
-            "/screenshare" -> {
-
-                if (screenShareWebSocketMap.containsKey(session.remoteIpAddress)) {
-                    return screenShareWebSocketMap[session.remoteIpAddress]!!
-                } else {
-                    val screenShareWebSocket = ScreenShareWebSocket(session)
-                    screenShareWebSocketMap[session.remoteIpAddress] = screenShareWebSocket
-                    return screenShareWebSocket
-                }
-
-            }
-
-            "/notification" -> {
-                return NotificationWebSocket(session)
-            }
-
-
-            "/share" -> {
-                shareWebSocket = if (shareWebSocket == null) {
-                    ShareWebSocket(session)
-                } else {
-                    shareWebSocket
-                }
-                return shareWebSocket!!
-            }
-            else -> {
-                return MyWebSocket(session)
-            }
-
-        }
+        return nanoWSDWebSocketDataSource.openWebSocket(session)
 
     }
 

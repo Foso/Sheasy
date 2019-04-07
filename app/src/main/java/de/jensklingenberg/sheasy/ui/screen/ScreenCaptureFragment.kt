@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.ui.settings
+package de.jensklingenberg.sheasy.ui.screen
 
 import android.content.Intent
 import android.os.Bundle
@@ -57,7 +57,9 @@ class ScreenCaptureFragment : BaseFragment() {
 
     /****************************************** UI Widget Callbacks  */
     private fun startProjection() {
-        startActivityForResult(screenRecord.createScreenCaptureIntent(), REQUEST_CODE)
+        startActivityForResult(screenRecord.createScreenCaptureIntent(),
+            REQUEST_CODE
+        )
     }
 
     private fun stopProjection() {

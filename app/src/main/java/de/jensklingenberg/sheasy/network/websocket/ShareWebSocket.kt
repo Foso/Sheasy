@@ -1,6 +1,5 @@
 package de.jensklingenberg.sheasy.network.websocket
 
-import android.annotation.SuppressLint
 import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -12,11 +11,11 @@ import de.jensklingenberg.sheasy.model.EventCategory
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.model.ShareItem
 import de.jensklingenberg.sheasy.utils.extension.toJson
-import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import java.io.IOException
@@ -37,7 +36,6 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
 
     val compositeDisposable = CompositeDisposable()
 
-    var isClosed = false
     val TAG = javaClass.simpleName
 
     init {
@@ -53,7 +51,6 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
         reason: String,
         initiatedByRemote: Boolean
     ) {
-        isClosed = true
         compositeDisposable.dispose()
 
     }
@@ -62,7 +59,7 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
         Log.d(TAG, message.textPayload.toString())
         Log.d(TAG, "onMessage: " + message)
         message.setUnmasked()
-        eventDataSource.addEvent(Event(EventCategory.CONNECTION, message.textPayload))
+        eventDataSource.addEvent(Event(EventCategory.SHARE, message.textPayload))
 
     }
 
@@ -77,77 +74,71 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
 
     override fun onOpen() {
         startRunner()
-        compositeDisposable.add(
-            notificationDataSource.notification.subscribeBy(onNext = {
-                Log.d(TAG, "onComp: ")
 
-                if (isOpen) {
-                    runInBackground {
-                        send(moshi.toJson(it))
-                    }
-                }
+        notificationDataSource.notification.subscribeBy(onNext = {
+            Log.d(TAG, "onComp: ")
 
-            })
-        )
+
+                    send(moshi.toJson(it))
+
+
+        }).addTo(compositeDisposable)
+
     }
 
     override fun send(payload: String?) {
+        if (isOpen) {
+            Observable
+                .fromCallable {
 
-        Observable
-            .fromCallable {
+                    val typeA = Types.newParameterizedType(Resource::class.java, ShareItem::class.java)
+                    val adapter = moshi.adapter<Resource<ShareItem>>(typeA)
 
-                val typeA = Types.newParameterizedType(Resource::class.java, ShareItem::class.java)
-                val adapter = moshi.adapter<Resource<ShareItem>>(typeA)
-
-                super.send(
-                    adapter?.toJson(
-                        Resource.success(
-                            ShareItem(
-                                "test.package",
-                                "Testnotification",
-                                "testtext",
-                                payload,
-                                0L
+                    super.send(
+                        adapter?.toJson(
+                            Resource.success(
+                                ShareItem(
+                                    payload
+                                )
                             )
-                        )
-                    ) ?: ""
-                )
+                        ) ?: ""
+                    )
 
 
-                true
-            }
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(Schedulers.newThread())
-            .subscribe {
-            }
+                    true
+                }
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.newThread())
+                .subscribe {
+                }.addTo(compositeDisposable)
+        }
 
-        eventDataSource.addEvent(Event(EventCategory.CONNECTION, payload ?: ""))
+
+        eventDataSource.addEvent(Event(EventCategory.SHARE, payload ?: ""))
 
     }
 
-    @SuppressLint("CheckResult")
     private fun startRunner() {
         var t = 0
         Observable
             .fromCallable {
                 t++
 
-
-                val pingframe =
-                    NanoWSD.WebSocketFrame(NanoWSD.WebSocketFrame.OpCode.Ping, false, "")
-                ping(pingframe.binaryPayload)
-
-
+                if (isOpen) {
+                    val pingframe =
+                        NanoWSD.WebSocketFrame(NanoWSD.WebSocketFrame.OpCode.Ping, false, "")
+                    ping(pingframe.binaryPayload)
+                }
 
                 true
             }
             .delay(1, TimeUnit.SECONDS)
-            .repeatUntil { isClosed }
+            .repeatUntil { !isOpen }
             .subscribeOn(Schedulers.newThread())
             .observeOn(Schedulers.newThread())
             .subscribe { _ ->
                 //Use result for something
-            }
+            }.addTo(compositeDisposable)
 
 
     }

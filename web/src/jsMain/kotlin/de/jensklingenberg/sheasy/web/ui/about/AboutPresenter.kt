@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.web.ui.about
 import components.materialui.icons.HistoryIcon
 import de.jensklingenberg.sheasy.web.components.materialui.icons.CodeIcon
 import de.jensklingenberg.sheasy.web.components.materialui.icons.InfoOutlinedIcon
+import de.jensklingenberg.sheasy.web.model.AboutItem
 import de.jensklingenberg.sheasy.web.model.ButtonItem
 import de.jensklingenberg.sheasy.web.ui.common.ButtonSourceItem
 import de.jensklingenberg.sheasy.web.model.LinkItem

@@ -6,10 +6,14 @@ import components.materialui.FormControl
 import components.materialui.InputLabel
 import components.materialui.Menu
 import components.materialui.MenuItem
+import components.materialui.icons.AndroidIcon
 import de.jensklingenberg.sheasy.model.Error
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.components.materialui.Input
+import de.jensklingenberg.sheasy.web.components.materialui.icons.ArrowBackIcon
+import de.jensklingenberg.sheasy.web.components.materialui.icons.ArrowBackIconImport
+import de.jensklingenberg.sheasy.web.components.materialui.icons.CloudUploadIcon
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.data.repository.FileRepository
@@ -31,6 +35,7 @@ import react.RProps
 import react.RState
 import react.dom.RDOMBuilder
 import react.dom.div
+import react.dom.img
 import react.setState
 
 
@@ -163,6 +168,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
                 }
                 Button {
+                    CloudUploadIcon{}
                     +"Upload"
                     attrs {
                         component = "span"
@@ -186,6 +192,8 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
     private fun setupBackButton(rdomBuilder: RDOMBuilder<DIV>) {
         rdomBuilder.run {
             Button {
+                ArrowBackIcon{}
+
                 +"Back"
                 attrs {
                     variant = "outlined"
@@ -194,7 +202,6 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
                     onClick = {
                         presenter.navigateUp()
                     }
-
                 }
 
             }
@@ -212,7 +219,12 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
                         onChange = {
                             presenter.onSearch((it.target as HTMLInputElement).value)
                         }
+
+                        fullWidth=true
                     }
+                }
+                attrs {
+                    this.fullWidth=true
                 }
             }
         }

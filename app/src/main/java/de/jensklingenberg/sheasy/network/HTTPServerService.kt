@@ -27,18 +27,21 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
 
     companion object {
+
+      private  val ACTION_STOP="ACTION_STOP"
+
         lateinit var bind: ServiceBinder
         fun getIntent(context: Context) =
             Intent(context, HTTPServerService::class.java)
 
         fun stopIntent(context: Context) =
             Intent(context, HTTPServerService::class.java).apply {
-                action = "STOP"
+                action = ACTION_STOP
             }
 
         val ACTION_ON_ACTIVITY_RESULT = "ACTION_ON_ACTIVITY_RESULT"
         val AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
-        val appsSubject: BehaviorSubject<Boolean> = BehaviorSubject.create<Boolean>()
+        val serverRunning: BehaviorSubject<Boolean> = BehaviorSubject.create<Boolean>()
 
     }
 
@@ -48,8 +51,6 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     @Inject
     lateinit var server: Server
 
-    @Inject
-    lateinit var screenRecord: ScreenRecord
 
     @Inject
     lateinit var sheasyPref: SheasyPrefDataSource
@@ -73,7 +74,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         intent?.let {
-            if (it.action?.equals("STOP") == true) {
+            if (it.action?.equals(ACTION_STOP) == true) {
                 stopService(intent)
 
                 return START_STICKY
@@ -102,13 +103,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
         notificationUtils1.showServerNotification()
         server.start()
-        appsSubject.onNext(true)
-
-
-        /* val dialogIntent = screenRecord.createScreenCaptureIntent()
-         dialogIntent.component = ComponentName(baseContext, OnResultActivity::class.java)
-         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-         applicationContext.startActivity(dialogIntent)*/
+        serverRunning.onNext(true)
     }
 
     override fun stopService(name: Intent?): Boolean {
@@ -124,10 +119,10 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     override fun onDestroy() {
         unregisterReceiver(receiver)
 
-        appsSubject.onNext(false)
+        serverRunning.onNext(false)
 
         server.stop()
-        screenRecord.stopProjection()
+
         super.onDestroy()
     }
 
@@ -147,8 +142,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
             val action = intent.action
             if (action == ACTION_ON_ACTIVITY_RESULT) {
                 val resultCode = intent.extras.getInt(OnResultActivity.RESULT_CODE)
-                screenRecord.imageReadyListener = this@HTTPServerService
-                screenRecord.startRecord(resultCode, intent)
+
 
                 //action for sms received
             }

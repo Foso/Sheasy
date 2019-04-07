@@ -22,6 +22,7 @@ import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.NoOrEmptyContentItem
+import de.jensklingenberg.sheasy.ui.common.addTo
 import de.jensklingenberg.sheasy.utils.PermissionUtils
 import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.extension.requireView
@@ -77,7 +78,7 @@ class FilesFragment : BaseFragment(), FilesContract.View {
         parseArguments()
         recyclerView?.apply {
             adapter = baseAdapter.apply {
-                dataSource.emptyView = NoOrEmptyContentItem("No Files").toSourceItem()
+                dataSource.emptyView = NoOrEmptyContentItem("No Files",R.drawable.ic_insert_drive_file_grey_700_24dp).toSourceItem()
             }
             recyclerView.layoutManager = LinearLayoutManager(context)
             addItemDecoration(
@@ -166,8 +167,8 @@ class FilesFragment : BaseFragment(), FilesContract.View {
         initSearchView(menu)
 
         val server = menu?.findItem(R.id.menu_server)
-        subscribe(
-            HTTPServerService.appsSubject
+
+            HTTPServerService.serverRunning
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.newThread())
                 .subscribeBy(onNext = { running ->
@@ -177,8 +178,8 @@ class FilesFragment : BaseFragment(), FilesContract.View {
                         server?.setIcon(R.drawable.ic_router_black_24dp)
                     }
 
-                })
-        )
+                }).addTo(compositeDisposable)
+
 
 
     }

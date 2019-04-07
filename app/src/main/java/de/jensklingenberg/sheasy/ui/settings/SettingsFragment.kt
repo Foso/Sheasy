@@ -12,21 +12,12 @@ import kotlinx.android.synthetic.main.fragment_apps.*
 
 
 class SettingsFragment : BaseFragment(), SettingsContract.View {
-    override fun onItemClicked(payload: Any) {
-
-
-    }
 
     private val settingsAdapter = BaseAdapter()
 
 
-    override fun setData(items: List<BaseDataSourceItem<*>>) {
-        settingsAdapter.dataSource.setItems(items)
 
-    }
-
-
-    lateinit var presenter: SettingsPresenter
+    lateinit var presenter: SettingsContract.Presenter
 
 
     init {
@@ -48,5 +39,17 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
         presenter = SettingsPresenter(this)
         presenter.onCreate()
     }
+
+    override fun onItemClicked(payload: Any) {
+
+
+    }
+
+
+    override fun setData(items: List<BaseDataSourceItem<*>>) {
+        settingsAdapter.dataSource.setItems(items)
+
+    }
+
 
 }

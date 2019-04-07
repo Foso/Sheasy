@@ -1,24 +1,24 @@
 package de.jensklingenberg.sheasy.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.SideMenuEntry
 import de.jensklingenberg.sheasy.ui.files.FilesFragmentDirections
+import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
@@ -27,6 +27,17 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     lateinit var mainViewModel: MainViewModel
     lateinit var navController: NavController
 
+    init {
+        initializeDagger()
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
+
+
+    @Inject
+    lateinit var shareUseCase: ShareUseCase
+
+
     val compositeDisposable = CompositeDisposable()
     var toolbarMenu: Menu? = null
 
@@ -34,7 +45,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     /******************************************  Lifecycle methods  */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(de.jensklingenberg.sheasy.R.layout.activity_main)
         setSupportActionBar(toolbar)
         setupNavigation()
         handleIntent(intent)
@@ -43,15 +54,10 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         //   requestNotificationPermission(this)
 
 
+
+
     }
 
-    fun requestNotificationPermission(context: Context) {
-        ContextCompat.startActivity(
-            context,
-            Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS),
-            null
-        )
-    }
 
 
     /******************************************  Listener methods  */
@@ -60,9 +66,23 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         when (val item = drawerItem?.tag) {
 
             is SideMenuEntry -> {
-                mainActivityDrawer.closeDrawer()
 
-                navController.navigate(item.navId)
+                if(item.navId==-1){
+                    when(item.title){
+                        getString(R.string.side_menu_share_app)->{
+                            return true
+                        }
+
+
+
+
+                    }
+                }else{
+                    mainActivityDrawer.closeDrawer()
+
+                    navController.navigate(item.navId)
+                }
+
             }
         }
 

@@ -12,10 +12,10 @@ import io.reactivex.disposables.Disposable
 
 open class BaseFragment : Fragment() {
 
-    val subscriptions = CompositeDisposable()
+    val compositeDisposable = CompositeDisposable()
 
     fun subscribe(disposable: Disposable): Disposable {
-        subscriptions.add(disposable)
+        compositeDisposable.add(disposable)
         return disposable
     }
 
@@ -24,8 +24,8 @@ open class BaseFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        // subscriptions.clear()
-        subscriptions.dispose()
+        // compositeDisposable.clear()
+        compositeDisposable.dispose()
         super.onDestroy()
     }
 

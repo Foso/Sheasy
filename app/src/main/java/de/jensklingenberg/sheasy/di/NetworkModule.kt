@@ -8,12 +8,14 @@ import dagger.Provides
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.SheasyApi
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.network.ktor.initNetty
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketRepository
+import io.ktor.server.netty.NettyApplicationEngine
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -55,5 +57,12 @@ open class NetworkModule {
     @Singleton
     fun provideApi(retrofit: Retrofit) = retrofit.create(SheasyApi::class.java)
 
+    @Provides
+    @Singleton
+    fun provideNettyApplicationEngine(sheasyPrefDataSource: SheasyPrefDataSource,generalRouteHandler:GeneralRouteHandler,fileRouteHandler:FileRouteHandler):NettyApplicationEngine =  initNetty(
+        sheasyPrefDataSource,
+        generalRouteHandler,
+        fileRouteHandler
+    )
 
 }

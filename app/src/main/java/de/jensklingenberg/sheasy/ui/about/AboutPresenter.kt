@@ -10,10 +10,13 @@ import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
+import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import javax.inject.Inject
 
 class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter, OnEntryClickListener {
 
+    @Inject
+    lateinit var shareUseCase: ShareUseCase
 
     @Inject
     lateinit var context: Context
@@ -59,6 +62,11 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter, On
             GenericListItem(
                 context.getString(R.string.about_License),
                 context.getString(R.string.about_license_caption),
+                R.drawable.ic_code_grey_700_24dp
+            ).toSourceItem(this),
+            GenericListItem(
+                "Feedback",
+                context.getString(R.string.about_send_feedback),
                 R.drawable.ic_code_grey_700_24dp
             ).toSourceItem(this)
 

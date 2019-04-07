@@ -7,6 +7,7 @@ buildscript {
     ext.buildMaven = { p -> repositories { maven { url p } } }
 
     repositories {
+        mavenLocal()
         google()
         jcenter()
         mavenCentral()

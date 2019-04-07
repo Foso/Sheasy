@@ -41,6 +41,16 @@ class ShareUseCase {
             )
         )
     }
+    fun feedbackMailIntent(): Intent {
+
+        val email = Intent(Intent.ACTION_SEND)
+        email.putExtra(Intent.EXTRA_EMAIL, arrayOf("mail@jensklingenberg.de"))
+        email.putExtra(Intent.EXTRA_SUBJECT, "Feedback: Sheasy")
+        //email.putExtra(Intent.EXTRA_TEXT, "message")
+        email.type = "message/rfc822"
+     return  Intent.createChooser(email, "Choose an Email client :")
+    }
+
 
 
     fun share(file: File) {

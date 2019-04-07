@@ -12,6 +12,8 @@ import de.jensklingenberg.sheasy.network.websocket.NotificationWebSocket
 import de.jensklingenberg.sheasy.network.websocket.ScreenShareWebSocket
 import de.jensklingenberg.sheasy.network.websocket.ShareWebSocket
 import de.jensklingenberg.sheasy.service.NotificationListener
+import de.jensklingenberg.sheasy.ui.MainActivity
+import de.jensklingenberg.sheasy.ui.MainActivityDrawer
 import de.jensklingenberg.sheasy.ui.MainViewModel
 import de.jensklingenberg.sheasy.ui.about.AboutFragment
 import de.jensklingenberg.sheasy.ui.about.AboutPresenter
@@ -26,8 +28,8 @@ import de.jensklingenberg.sheasy.ui.files.FilesPresenter
 import de.jensklingenberg.sheasy.ui.home.HomeFragment
 import de.jensklingenberg.sheasy.ui.home.HomePresenter
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedFragment
-import de.jensklingenberg.sheasy.ui.pairedDevices.PairedViewModel
-import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureFragment
+import de.jensklingenberg.sheasy.ui.pairedDevices.PairedPresenter
+import de.jensklingenberg.sheasy.ui.screen.ScreenCaptureFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsPresenter
 import de.jensklingenberg.sheasy.ui.share.ShareFragment
@@ -42,7 +44,7 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(commonViewModel: MainViewModel)
-    fun inject(pairedViewModel: PairedViewModel)
+    fun inject(pairedPresenter: PairedPresenter)
 
     fun inject(httpServerService: HTTPServerService)
     fun inject(fileRepository: FileRepository)
@@ -79,5 +81,7 @@ interface AppComponent {
     fun inject(sharePresenter: SharePresenter)
     fun inject(shareFragment: ShareFragment)
     fun inject(eventRepository: EventRepository)
+    fun inject(mainActivityDrawer: MainActivityDrawer)
+    fun inject(mainActivity: MainActivity)
 
 }

@@ -22,10 +22,7 @@
         android:name="de.jensklingenberg.sheasy.ui.apps.AppsFragment"
         android:label="Apps" />
 
-    <fragment
-        android:id="@+id/recordFragment"
-        android:name="de.jensklingenberg.sheasy.ui.settings.ScreenCaptureFragment"
-        android:label="Record" />
+
 
     <fragment
             android:id="@+id/eventLogFragment"

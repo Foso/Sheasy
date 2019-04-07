@@ -1,15 +1,16 @@
 package de.jensklingenberg.sheasy.web.ui.share
 
 import components.materialui.ListItemText
+import de.jensklingenberg.sheasy.model.ShareItem
+import de.jensklingenberg.sheasy.model.ShareType
 import de.jensklingenberg.sheasy.web.components.materialui.List
 import de.jensklingenberg.sheasy.web.components.materialui.ListItem
-import de.jensklingenberg.sheasy.web.model.OnEntryClickListener
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
-import de.jensklingenberg.sheasy.web.ui.home.HomeItem
 import react.RBuilder
+import react.dom.p
 
-class ShareSourceItem(val homeItem: HomeItem, var onEntryClickListener: OnEntryClickListener? = null) : SourceItem() {
+class ShareSourceItem(val homeItem: ShareItem, val type: ShareType) : SourceItem() {
 
     override fun render(rBuilder: RBuilder) {
 
@@ -18,17 +19,27 @@ class ShareSourceItem(val homeItem: HomeItem, var onEntryClickListener: OnEntryC
                 attrs {
                     component = "nav"
                 }
+                p {
+                    +"22:00"
+
+                }
+
                 ListItem {
                     attrs {
-                        href = homeItem.destination
+                        href = homeItem.message
                         component = "a"
                         divider = true
-                        styleProps(textAlign = "center")
+                        if (this@ShareSourceItem.type == ShareType.INCOMING) {
+                            styleProps(textAlign = "left")
+                        } else {
+                            styleProps(textAlign = "right")
+
+                        }
                     }
 
                     ListItemText {
                         attrs {
-                            this.primary = homeItem.title
+                            this.primary = homeItem.message
                         }
                     }
                 }

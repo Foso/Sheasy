@@ -66,8 +66,11 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
             GenericToggleItem(
                 context.getString(R.string.acceptAllConnections),
                 sheasyPrefDataSource.webSocketPort.toString(),
-                R.drawable.ic_info_outline_grey_700_24dp
+                R.drawable.ic_info_outline_grey_700_24dp,
+                sheasyPrefDataSource.acceptAllConnections,
+                {value->sheasyPrefDataSource.acceptAllConnections = value}
             ).toSourceItem(this),
+
             GenericListHeaderSourceItem(
                 "Permissions"
             ),
@@ -75,7 +78,8 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
                 context.getString(R.string.readNotifications),
                 sheasyPrefDataSource.webSocketPort.toString(),
                 R.drawable.ic_info_outline_grey_700_24dp,
-                checkPermissionUseCase.checkNotifcationPermission()
+                checkPermissionUseCase.checkNotifcationPermission(),
+                {value->}
             ).toSourceItem(this)
 
         )

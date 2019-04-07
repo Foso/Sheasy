@@ -5,15 +5,21 @@ import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
+import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.sideMenuEntries
+import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
+import javax.inject.Inject
 
 
 class MainActivityDrawer(val activity: MainActivity) {
 
     init {
+        initializeDagger()
         initDrawer()
     }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
 
 
     lateinit var result: Drawer

@@ -40,6 +40,11 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
     override suspend fun intercept(call: KtorApplicationCall): Resource<Any> {
 
         if (sheasyPref.acceptAllConnections) {
+            if (!sheasyPref.devicesRepository.authorizedDevices.contains(Device(call.remoteHostIp))) {
+                sheasyPref.devicesRepository.addAuthorizedDevice(Device(call.remoteHostIp))
+                eventDataSource.addEvent(Event(EventCategory.CONNECTION, call.remoteHostIp))
+
+            }
             return Resource.success("1")
 
         }

@@ -19,7 +19,7 @@ import android.view.Display
 import android.view.OrientationEventListener
 import android.view.WindowManager
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.ui.settings.ScreenCaptureFragment
+import de.jensklingenberg.sheasy.ui.screen.ScreenCaptureFragment
 import io.ktor.util.InternalAPI
 import io.ktor.util.moveToByteArray
 import java.io.ByteArrayOutputStream

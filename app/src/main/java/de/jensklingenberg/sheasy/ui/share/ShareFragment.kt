@@ -2,12 +2,14 @@ package de.jensklingenberg.sheasy.ui.share
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.web.model.Device
 import kotlinx.android.synthetic.main.fragment_share.*
 
 
@@ -36,6 +38,12 @@ class ShareFragment : BaseFragment(), ShareContract.View {
         recyclerView?.apply {
             recyclerView.adapter = baseAdapter
             recyclerView.layoutManager = LinearLayoutManager(context)
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
         }
 
         presenter = SharePresenter(this)

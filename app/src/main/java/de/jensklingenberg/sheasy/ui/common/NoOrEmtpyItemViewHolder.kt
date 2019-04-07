@@ -3,7 +3,7 @@ package de.jensklingenberg.sheasy.ui.common
 import android.os.Bundle
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
-import kotlinx.android.synthetic.main.settings_toggle_entry.view.*
+import kotlinx.android.synthetic.main.item_empty.view.*
 
 class NoOrEmtpyItemViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<NoOrEmptyContentSourceItem>(viewParent, R.layout.item_empty) {
@@ -16,6 +16,8 @@ class NoOrEmtpyItemViewHolder(viewParent: ViewGroup) :
         listItem?.let {
             itemView.apply {
                 itemTv.text = listItem.message
+                iconIV.setImageResource(listItem.iconID)
+
 
             }
         }

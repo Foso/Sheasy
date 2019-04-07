@@ -10,6 +10,5 @@ enum class DrawerItems(val title: String, val destination: String) {
     APPS(TOOLBAR_APPS, Navigation.navigateToApps),
     FILES("Files", Navigation.navigateToFiles),
     SHARE("Share",Navigation.navigateToShare),
-    SCREENSHARE(DRAWER_SCREENSHARE, Navigation.navigateToScreenShare),
     ABOUT(TOOLBAR_ABOUT, Navigation.navigateToAbout)
 }

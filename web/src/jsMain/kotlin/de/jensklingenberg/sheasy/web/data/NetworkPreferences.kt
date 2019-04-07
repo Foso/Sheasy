@@ -17,7 +17,7 @@ class NetworkPreferences{
 
     val websocketPort = "8765"
 
-
+    val port = window.location.port
 
 
     var hostUri: String = "${window}+${window.location}+${window.location.hostname}"

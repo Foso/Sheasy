@@ -13,7 +13,9 @@ import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
+import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import kotlinx.android.synthetic.main.fragment_apps.*
+import javax.inject.Inject
 
 
 class AboutFragment : BaseFragment(), AboutContract.View {
@@ -22,6 +24,9 @@ class AboutFragment : BaseFragment(), AboutContract.View {
     private val aboutAdapter = BaseAdapter()
 
     lateinit var presenter: AboutPresenter
+
+    @Inject
+    lateinit var shareUseCase: ShareUseCase
 
     /****************************************** Fragment Lifecycle methods  */
 
@@ -78,6 +83,10 @@ class AboutFragment : BaseFragment(), AboutContract.View {
                                 Uri.parse(getString(R.string.about_license_link))
                             )
                         startActivity(browserIntent)
+                    }
+
+                    "Feedback" -> {
+                        startActivity(shareUseCase.feedbackMailIntent())
                     }
                 }
 

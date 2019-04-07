@@ -16,6 +16,7 @@ import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.ui.common.addTo
 import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -90,7 +91,7 @@ class AppsFragment : BaseFragment(), AppsContract.View {
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { presenter.searchApp(it.toString()) }
-            .subscribe()
+            .subscribe().addTo(compositeDisposable)
 
     }
 
@@ -106,7 +107,7 @@ class AppsFragment : BaseFragment(), AppsContract.View {
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
         val appInfo = payload as? AppInfo
-        appInfo?.let { it ->
+        appInfo?.let {
             val popup = PopupMenu(requireActivity(), view)
                 .apply {
                     menuInflater

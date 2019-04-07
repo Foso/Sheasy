@@ -10,7 +10,7 @@ class HomePresenter(val view :HomeContract.View) : HomeContract.Presenter{
 
         DrawerItems
             .values()
-            .filterNot { it == DrawerItems.SCREENSHARE || it== DrawerItems.HOME }
+            .filterNot {  it== DrawerItems.HOME }
             .map {
                 HomeEntrySourceItem(HomeItem(it.title,it.destination))
             }.run { view.setData(this) }

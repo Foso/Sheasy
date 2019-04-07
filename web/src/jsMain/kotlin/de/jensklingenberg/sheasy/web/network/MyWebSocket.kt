@@ -6,40 +6,39 @@ import org.w3c.dom.WebSocket
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 
-class MyWebSocket(url: String) : Websocket {
+class MyWebSocket(url: String, override val listener:WebSocketListener) : Websocket {
 
 
-    var listener: WebSocketListener? = null
     val webSocket = WebSocket(url)
 
-    override  fun addListener(listener:WebSocketListener){
-        this.listener=listener
 
+    init {
         webSocket.onmessage = { event: Event ->
-            listener?.onMessage((event as MessageEvent))
+            listener.onMessage((event as MessageEvent))
         }
 
         webSocket.onerror = { event: Event ->
-            listener?.onError((event))
+            listener.onError((event))
         }
 
+        webSocket.onclose = { event: Event ->
+            console.log("hhhh"+event)
 
+            listener.onClose((event))
+        }
+        webSocket.onopen = { event: Event ->
+            listener.onOpen((event))
+        }
 
         webSocket.addEventListener("dd", EventListener { })
+
     }
 
-
-    override fun open() {
-        webSocket.onopen = { tt: Event ->
-            console.log(tt)
-            webSocket.send("Hugner")
-        }
-    }
 
 
 
     override fun close() {
-        listener=null
+
         webSocket.close()
 
     }
@@ -53,6 +52,9 @@ class MyWebSocket(url: String) : Websocket {
     interface WebSocketListener {
         fun onMessage(messageEvent: MessageEvent)
         fun onError(messageEvent: Event)
+        fun onClose(messageEvent: Event)
+        fun onOpen(event: Event)
+
     }
 
 

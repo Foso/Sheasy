@@ -163,9 +163,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
 
     //NavigationLib
-    implementation "android.arch.navigation:navigation-fragment-ktx:$libs.androidX.nav_version"
-    implementation "android.arch.navigation:navigation-ui-ktx:$libs.nav_version"
-    implementation 'com.shopify:livedata-ktx:2.0.1'
+    implementation "androidx.navigation:navigation-fragment-ktx:$libs.androidX.nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$libs.androidX.nav_version"
 
     //Moshi
     implementation "com.serjltt.moshi:moshi-lazy-adapters:${libs.moshilazyadapters}"
@@ -181,7 +180,7 @@ dependencies {
 
     //NanoHTTPD
     implementation "org.nanohttpd:nanohttpd-websocket:$libs.nanohttpdwebsocket"
-    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+   // implementation "org.nanohttpd:nanohttpd:$libs.nanohttpd"
 
     //RxJava
     implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
@@ -208,7 +207,7 @@ dependencies {
     kaptAndroidTest "com.google.dagger:dagger-compiler:${libs.dagger}"
     kaptAndroidTest "com.google.dagger:dagger-android-processor:${libs.dagger}"
 
-    //Other
+    //Othermaterialdrawer
     implementation("com.mikepenz:aboutlibraries:${libs.aboutlibraries}") {
         transitive = true
     }
@@ -222,10 +221,11 @@ dependencies {
 
     // testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${configuration.kotlin_version}"
     testImplementation "junit:junit:${libs.junit}"
-    androidTestImplementation "android.arch.navigation:navigation-testing:$libs.nav_version"
+
     testImplementation "io.ktor:ktor-server-test-host:$libs.ktor_version"
     androidTestImplementation "io.mockk:mockk:${libs.mockkVersion}"
     androidTestImplementation "io.mockk:mockk-android:${libs.mockkVersion}"
+    implementation "com.jakewharton.threetenabp:threetenabp:$libs.threetenabp"
 
     // Core library
     androidTestImplementation 'androidx.test:core:1.1.0'
@@ -240,12 +240,12 @@ dependencies {
     androidTestImplementation 'com.google.truth:truth:0.42'
 
     // Espresso dependencies
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-web:3.1.0'
-    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.1.0'
+    androidTestImplementation "androidx.test.espresso:espresso-core:${libs.espressocore}"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:${libs.espressocore}"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:${libs.espressocore}"
+    androidTestImplementation "androidx.test.espresso:espresso-accessibility:${libs.espressocore}"
+    androidTestImplementation "androidx.test.espresso:espresso-web:${libs.espressocore}"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:${libs.espressocore}"
 
     // The following Espresso dependency can be either "implementation"
 
@@ -256,6 +256,8 @@ dependencies {
     // classpath.
     androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+
+    implementation 'me.toptas.fancyshowcase:fancyshowcaseview:1.1.5'
 }
 
 

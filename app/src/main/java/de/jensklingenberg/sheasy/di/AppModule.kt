@@ -41,7 +41,7 @@ open class AppModule(private val application: App) {
 
     @Provides
     @Singleton
-    fun provideSheasyPrefDataSource(): SheasyPrefDataSource = SheasyPreferencesRepository()
+    fun provideSheasyPrefDataSource(application: Application): SheasyPrefDataSource = SheasyPreferencesRepository(application)
 
     @Provides
     @Singleton

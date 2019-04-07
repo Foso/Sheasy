@@ -2,6 +2,7 @@ package de.jensklingenberg.sheasy.web.ui.share
 
 import components.materialui.Button
 import components.materialui.FormControl
+import components.materialui.icons.SendIcon
 import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.model.SourceItem
@@ -24,17 +25,22 @@ interface FileViewState : RState {
     var anchor: EventTarget?
     var item: ArrayList<SourceItem>
     var inpu: String
-
+    var activeConnection: String
 
 }
 
 
 class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
+    override fun setConnectedMessage(message: String) {
+        setState {
+           activeConnection=message
+        }
+
+    }
+
     override fun showMessage(notificationOptions: SourceItem) {
         setState {
             item.add(notificationOptions)
-
-
         }
 
     }
@@ -45,7 +51,8 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
 
     override fun setData(items: List<SourceItem>) {
         setState {
-            //this.item = items
+            this.item.clear()
+            this.item.addAll(items)
         }
     }
 
@@ -63,6 +70,7 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
         anchor = null
         item = arrayListOf()
         inpu = ""
+        activeConnection="Not connected"
 
     }
 
@@ -74,7 +82,7 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
     override fun RBuilder.render() {
 
         div {
-            +"Connected with: "
+            +state.activeConnection
         }
 
         FormControl {
@@ -82,7 +90,7 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
                 attrs {
                     type = InputType.search.realValue
                     name = "search"
-                    placeholder = "SEARCH HERE"
+                    placeholder = "Input Message"
                     onChange = {
                         test((it.target as HTMLInputElement).value)
                         //presenter.onSearch((it.target as HTMLInputElement).value)
@@ -92,7 +100,8 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
         }
 
         Button {
-            +"Back"
+            SendIcon{}
+            +"Send"
             attrs {
                 variant = "outlined"
                 component = "span"

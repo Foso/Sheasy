@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Intent
 import android.view.View
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.sideMenuEntries
+import de.jensklingenberg.sheasy.model.SideMenuEntry
 import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
@@ -12,14 +14,10 @@ import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter, OnEntryClickListener {
+class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
     override val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    override fun startService(intent: Intent) {
-        application.startService(intent)
 
-
-    }
 
     @Inject
     lateinit var application: Application
@@ -27,6 +25,16 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter, OnEnt
     init {
         initializeDagger()
     }
+
+
+    val homeEntries = listOf(
+        SideMenuEntry("Apps", R.id.appsFragment, R.drawable.ic_android_black_24dp),
+        SideMenuEntry("Files", R.id.filesFragment, R.drawable.ic_smartphone_black_24dp),
+        SideMenuEntry("Paired", R.id.pairedFragment, R.drawable.ic_folder_grey_700_24dp),
+        SideMenuEntry("Settings", R.id.settingsFragment, R.drawable.ic_settings_black_24dp),
+        SideMenuEntry("Share", R.id.shareFragment, R.drawable.ic_settings_black_24dp),
+        SideMenuEntry("About", R.id.aboutFragment, R.drawable.ic_info_outline_black_24dp)
+    )
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
@@ -58,8 +66,9 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter, OnEnt
 
     override fun onCreate() {
 
-        sideMenuEntries
-            .filter { it.title != "Home" }.toList()
+        homeEntries
+            .filter { it.title != "Home" }
+            .toList()
             .map {
                 GenericListItem(it.title, "", it.iconRes).toSourceItem(this)
             }.run {
@@ -69,7 +78,12 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter, OnEnt
     }
 
     override fun onDestroy() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        compositeDisposable.dispose()
     }
 
+    override fun startService(intent: Intent) {
+        application.startService(intent)
+
+
+    }
 }

@@ -1,5 +1,6 @@
 package de.jensklingenberg.sheasy.ui.pairedDevices
 
+import android.view.View
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.web.model.Device
@@ -23,6 +24,12 @@ class DeviceListItemSourceItem(
 
     init {
         setPayload(genericListItem)
+    }
+
+    interface OnEntryClickListener {
+        fun onItemClicked(payload: Any)
+        fun onMoreButtonClicked(view: View, payload: Any)
+
     }
 
 

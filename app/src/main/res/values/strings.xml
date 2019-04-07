@@ -38,5 +38,10 @@
     <string name="about_License">License</string>
     <string name="about_license_link">https://github.com/Foso/Sheasy/blob/develop/LICENSE</string>
     <string name="about_license_caption">Sheasy is licensed under Apache License 2.0</string>
+    <string name="about_send_feedback">Send Feedback</string>
+
+
+    <string name="key_accept_all_connections">PORT</string>
+    <string name="side_menu_share_app">Share this app</string>
 
 </resources>

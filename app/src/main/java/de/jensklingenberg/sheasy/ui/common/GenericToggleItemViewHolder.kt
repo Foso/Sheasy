@@ -18,9 +18,8 @@ class GenericToggleItemViewHolder(viewParent: ViewGroup) :
                 itemTv.text = listItem.title
                 toggleBtn.isChecked = listItem.checkedValue
                 toggleBtn.setOnCheckedChangeListener { buttonView, isChecked ->
-                    item.onEntryClickListener?.onItemClicked(
-                        listItem
-                    )
+                    listItem.onToggle(isChecked)
+
                 }
             }
         }

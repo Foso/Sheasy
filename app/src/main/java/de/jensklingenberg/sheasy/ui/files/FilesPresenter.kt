@@ -46,11 +46,6 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     override fun onCreate() {
 
-
-    }
-
-    override fun loadFiles() {
-
         fileDataSource
             .getFiles(filePath)
             .subscribeOn(Schedulers.io())
@@ -65,6 +60,12 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                     }
             }, onError = {})
             .addTo(compositeDisposable)
+
+    }
+
+    override fun loadFiles() {
+
+
     }
 
 

@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.ui.settings
+package de.jensklingenberg.sheasy.ui.screen
 
 import android.hardware.display.DisplayManager
 import android.media.projection.MediaProjection

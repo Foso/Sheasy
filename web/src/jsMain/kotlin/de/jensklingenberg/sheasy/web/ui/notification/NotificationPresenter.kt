@@ -4,29 +4,35 @@ import de.jensklingenberg.sheasy.web.components.Notification.ReactNotificationOp
 import de.jensklingenberg.sheasy.web.model.response.NotificationResponse
 import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.ApiEndPoint.Companion.notificationWebSocketURL
+import de.jensklingenberg.sheasy.web.network.Websocket
 import de.jensklingenberg.sheasy.web.usecase.NotificationOptions
 import org.w3c.dom.MessageEvent
 import org.w3c.dom.events.Event
 
-class NotificationPresenter(private val view: NotificationContract.View) : NotificationContract.Presenter,
-    MyWebSocket.WebSocketListener {
+class NotificationPresenter(private val view: NotificationContract.View) : NotificationContract.Presenter{
+    override fun onOpen(event: Event) {
 
-    var myWebSocket = MyWebSocket(notificationWebSocketURL)
+
+    }
+
+    override fun onClose(messageEvent: Event) {
+
+
+    }
+
+        var myWebSocket : Websocket?=null
 
     /****************************************** React Lifecycle methods  */
 
     var viewIsUnmounted = false
 
-    init {
-        myWebSocket.listener = this
-    }
 
     override fun componentDidMount() {
-        myWebSocket.open()
+       myWebSocket= MyWebSocket(notificationWebSocketURL,this)
     }
 
     override fun componentWillUnmount() {
-        myWebSocket.close()
+        myWebSocket?.close()
         viewIsUnmounted = true
     }
 
