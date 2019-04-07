@@ -27,7 +27,8 @@ A few of the things you can do with Sheasy:
 
 - <a href="https://github.com/Foso/Sheasy/wiki/Download-Files">download files</a>
 
-- upload files
+- <a href="https://github.com/Foso/Sheasy/wiki/Upload-Files">upload files</a>
+
 
 ## 🗺️ Roadmap
 - [ ] show screen recording in browser
