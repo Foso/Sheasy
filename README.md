@@ -25,8 +25,9 @@ It's a hobby project i started to learn about Kotlin, React(Kotlin-JS) and Ktor.
 A few of the things you can do with Sheasy:
 - <a href="https://github.com/Foso/Sheasy/wiki/Download-Apks">download apks</a>
 
-- download/upload files
+- <a href="https://github.com/Foso/Sheasy/wiki/Download-Files">download files</a>
 
+-upload files
 
 ## 🗺️ Roadmap
 - [ ] show screen recording in browser
