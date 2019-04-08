@@ -1,0 +1,2 @@
+# Example of a `.gitattributes` file which reclassifies `.js` files as Kotlin, because KotlinJS is misidentified:
+*.js linguist-language=Kotlin
