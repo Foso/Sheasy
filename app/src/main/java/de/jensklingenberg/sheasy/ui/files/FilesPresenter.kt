@@ -46,6 +46,11 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     override fun onCreate() {
 
+       loadFiles()
+
+    }
+
+    override fun loadFiles() {
         fileDataSource
             .getFiles(filePath)
             .subscribeOn(Schedulers.io())
@@ -63,16 +68,13 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     }
 
-    override fun loadFiles() {
-
-
-    }
-
 
     override fun folderUp() {
 
         filePath = filePath.replaceAfterLast("/", "")
         loadFiles()
+        view.updateFolderPathInfo(filePath)
+
     }
 
 
