@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.ui.about
 
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
+import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 
 interface AboutContract {
 
@@ -10,7 +11,7 @@ interface AboutContract {
         fun onItemClicked(payload: Any)
     }
 
-    interface Presenter {
+    interface Presenter : OnEntryClickListener {
         fun onCreate()
     }
 

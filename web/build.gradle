@@ -56,7 +56,7 @@ kotlin {
 
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
                 compileOnly project(":libshared")
-
+                implementation("io.ktor:ktor-client-core:$libs.ktorClient")
             }
 
         }
@@ -73,6 +73,7 @@ kotlin {
                 implementation "org.kodein.di:kodein-di-erased-js:$libs.kodein"
                 implementation "org.jetbrains.kotlin:kotlin-test-js"
                 implementation "br.danfma.kodando:kodando-rxjs:0.8.0"
+                implementation "io.ktor:ktor-client-js:$libs.ktorClient"
             }
         }
 

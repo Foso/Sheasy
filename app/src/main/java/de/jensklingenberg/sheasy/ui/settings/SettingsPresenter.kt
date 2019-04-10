@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.ui.settings
 
 import android.content.Context
-import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.CheckPermissionUseCase
@@ -10,12 +9,11 @@ import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.GenericToggleItem
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import de.jensklingenberg.sheasy.utils.NetworkUtils
 import javax.inject.Inject
 
-class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Presenter, OnEntryClickListener {
+class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Presenter {
 
 
     @Inject
@@ -58,7 +56,7 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
                 context.getString(R.string.websocket_port),
                 sheasyPrefDataSource.webSocketPort.toString(),
                 R.drawable.ic_info_outline_grey_700_24dp
-            ).toSourceItem(this),
+            ).toSourceItem(),
 
             GenericListHeaderSourceItem(
                 "Settings"
@@ -67,9 +65,8 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
                 context.getString(R.string.acceptAllConnections),
                 sheasyPrefDataSource.webSocketPort.toString(),
                 R.drawable.ic_info_outline_grey_700_24dp,
-                sheasyPrefDataSource.acceptAllConnections,
-                {value->sheasyPrefDataSource.acceptAllConnections = value}
-            ).toSourceItem(this),
+                sheasyPrefDataSource.acceptAllConnections
+            ) { value -> sheasyPrefDataSource.acceptAllConnections = value }.toSourceItem(),
 
             GenericListHeaderSourceItem(
                 "Permissions"
@@ -78,9 +75,12 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
                 context.getString(R.string.readNotifications),
                 sheasyPrefDataSource.webSocketPort.toString(),
                 R.drawable.ic_info_outline_grey_700_24dp,
-                checkPermissionUseCase.checkNotifcationPermission(),
-                {value->}
-            ).toSourceItem(this)
+                checkPermissionUseCase.checkNotificationPermission()
+            ) { value ->
+                if (value) {
+                    checkPermissionUseCase.requestNotificationPermission()
+                }
+            }.toSourceItem()
 
         )
 
@@ -88,25 +88,8 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
     }
 
 
-    override fun onMoreButtonClicked(view: View, payload: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun onItemClicked(payload: Any) {
-        when (val item = payload) {
 
-            is GenericToggleItem -> {
-                when (item.title) {
-                    context.getString(R.string.readNotifications) -> {
-                        checkPermissionUseCase.requestNotificationPermission()
-                    }
-
-                }
-
-            }
-        }
-
-        view.onItemClicked(payload)
     }
 
 }

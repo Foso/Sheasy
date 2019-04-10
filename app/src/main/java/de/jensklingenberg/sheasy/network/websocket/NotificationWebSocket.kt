@@ -3,9 +3,12 @@ package de.jensklingenberg.sheasy.network.websocket
 import android.annotation.SuppressLint
 import android.util.Log
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
 import de.jensklingenberg.sheasy.model.Notification
+import de.jensklingenberg.sheasy.model.WebSocketType
+import de.jensklingenberg.sheasy.model.WebsocketResource
 import de.jensklingenberg.sheasy.utils.extension.toJson
 import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
@@ -95,15 +98,21 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
                 val pingframe =
                     NanoWSD.WebSocketFrame(NanoWSD.WebSocketFrame.OpCode.Ping, false, "")
                 ping(pingframe.binaryPayload)
+
+                val typeA = Types.newParameterizedType(WebsocketResource::class.java, Notification::class.java)
+                val adapter = moshi.adapter<WebsocketResource<Notification>>(typeA)
+
                 send(
-                    moshi.toJson(
-                        Notification(
+                    adapter.toJson(
+
+                        WebsocketResource(WebSocketType.Notification,Notification(
                             "test.package",
                             "Testnotification",
                             "testtext",
                             "testsubtext " + t,
                             0L
-                        )
+                        ),"")
+
                     )
                 )
 

@@ -2,18 +2,14 @@ package de.jensklingenberg.sheasy.web.usecase
 
 import de.jensklingenberg.sheasy.web.components.Notification.Notification
 import de.jensklingenberg.sheasy.web.components.Notification.ReactNotificationOptions
+import de.jensklingenberg.sheasy.web.model.NotificationOptions
 import react.RBuilder
 
-data class NotificationOptions(
-    val title:String?="",
-    val subText:String?="",
-    val icon:String?="",
-    val tag:String?=""
-)
+
 
 class NotificationUseCase{
 
-    fun showNotification(rBuilder: RBuilder,notificationOptions:NotificationOptions){
+    fun showNotification(rBuilder: RBuilder,notificationOptions: NotificationOptions){
         notificationOptions?.let {
             val notiOptions = object : ReactNotificationOptions {
                 override var tag: String? = notificationOptions.tag
@@ -28,8 +24,6 @@ class NotificationUseCase{
                         title = notificationOptions.title
                         timeout = 5000
                         options = notiOptions
-                        console.log("Hh")
-
                     }
                 }
 

@@ -69,9 +69,6 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         toolbarMenu = menu
         val server = menu?.findItem(R.id.menu_server)
 
-
-
-
         HTTPServerService.serverRunning.subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(
                 AndroidSchedulers.mainThread()

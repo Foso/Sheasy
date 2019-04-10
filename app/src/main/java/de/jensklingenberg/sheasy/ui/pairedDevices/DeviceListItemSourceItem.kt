@@ -27,7 +27,6 @@ class DeviceListItemSourceItem(
     }
 
     interface OnEntryClickListener {
-        fun onItemClicked(payload: Any)
         fun onMoreButtonClicked(view: View, payload: Any)
 
     }

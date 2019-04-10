@@ -20,7 +20,6 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
     override fun downloadFile(path: String) {
         window.location.href =
             ApiEndPoint.fileDownloadUrl(path)
-
     }
 
     override fun downloadApk(packageName: String) {

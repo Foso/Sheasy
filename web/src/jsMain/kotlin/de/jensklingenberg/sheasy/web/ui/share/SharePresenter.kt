@@ -6,7 +6,6 @@ import de.jensklingenberg.sheasy.model.ShareType
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.Websocket
-import de.jensklingenberg.sheasy.web.ui.common.StringSourceItem
 import org.w3c.dom.MessageEvent
 import org.w3c.dom.events.Event
 
@@ -59,8 +58,8 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
         if (!viewIsUnmounted) {
             console.log("View is alive")
 
-            val notificationResponse = JSON.parse<Resource<ShareItem>>(messageEvent.data.toString()).data!!
-            item.add(ShareSourceItem(ShareItem(notificationResponse.message.toString()), ShareType.INCOMING))
+            val shareItem = JSON.parse<Resource<ShareItem>>(messageEvent.data.toString()).data!!
+            item.add(ShareSourceItem(ShareItem(shareItem.message.toString()), ShareType.INCOMING))
 
 
             view.setData(item)

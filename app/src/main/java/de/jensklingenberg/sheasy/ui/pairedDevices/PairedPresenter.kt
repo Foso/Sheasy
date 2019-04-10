@@ -24,10 +24,8 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
         initializeDagger()
     }
 
+    private fun initializeDagger() = App.appComponent.inject(this)
 
-    override fun onItemClicked(payload: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
         val device = payload as? Device
@@ -59,7 +57,6 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
     }
 
 
-    private fun initializeDagger() = App.appComponent.inject(this)
 
 
     override fun revokeDevice(device: Device) {

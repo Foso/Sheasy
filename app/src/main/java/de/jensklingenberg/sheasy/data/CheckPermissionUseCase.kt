@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 class CheckPermissionUseCase(val context: Context) {
 
 
-    fun checkNotifcationPermission(): Boolean {
+    fun checkNotificationPermission(): Boolean {
 
         var weHaveNotificationListenerPermission = false
         for (service in NotificationManagerCompat.getEnabledListenerPackages(context)) {
@@ -23,7 +23,7 @@ class CheckPermissionUseCase(val context: Context) {
     fun requestNotificationPermission() {
         ContextCompat.startActivity(
             context,
-            Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS),
+            Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             null
         )
     }

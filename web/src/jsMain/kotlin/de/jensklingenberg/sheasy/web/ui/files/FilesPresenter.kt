@@ -43,14 +43,26 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
         fileDataSource.getFiles(folderPath).subscribeBy(
             next = { data ->
                 filesResult = data
-               // view.setData(data)
 
                 filesResult.map { respo ->
                     FileSourceItem(respo,
                         { setPath(respo.path) },
                         { event: Event -> handleClickListItem(event, respo) })
                 }.run {
-                    view.setData(this)
+                    if (this.isEmpty()) {
+
+                        view.setData(
+                            listOf(
+                                FileSourceItem(FileResponse("No Files", ""),
+                                    { },
+                                    { })
+                            )
+                        )
+
+                    } else {
+                        view.setData(this)
+
+                    }
                 }
             }, error = {
                 if (it is Error) {
@@ -63,15 +75,14 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
     override fun onSearch(query: String) {
         filesResult
-            .filter {item->
+            .filter { item ->
                 item.name.contains(query, true)
             }
-
             .map { respo ->
-            FileSourceItem(respo,
-                { setPath(respo.path) },
-                { event: Event -> handleClickListItem(event, respo) })
-        }
+                FileSourceItem(respo,
+                    { setPath(respo.path) },
+                    { event: Event -> handleClickListItem(event, respo) })
+            }
             .run(view::setData)
     }
 
@@ -126,7 +137,7 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
     }
 
     fun handleClickListItem(event: Event, fileResponse: FileResponse) {
-       view.handleClickListItem(event,fileResponse)
+        view.handleClickListItem(event, fileResponse)
 
 
     }

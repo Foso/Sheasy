@@ -1,15 +1,17 @@
 package de.jensklingenberg.sheasy.web.ui.notification
 
+import de.jensklingenberg.sheasy.model.WebSocketType
+import de.jensklingenberg.sheasy.model.WebsocketResource
 import de.jensklingenberg.sheasy.web.components.Notification.ReactNotificationOptions
+import de.jensklingenberg.sheasy.web.model.NotificationOptions
 import de.jensklingenberg.sheasy.web.model.response.NotificationResponse
-import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.ApiEndPoint.Companion.notificationWebSocketURL
+import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.Websocket
-import de.jensklingenberg.sheasy.web.usecase.NotificationOptions
 import org.w3c.dom.MessageEvent
 import org.w3c.dom.events.Event
 
-class NotificationPresenter(private val view: NotificationContract.View) : NotificationContract.Presenter{
+class NotificationPresenter(private val view: NotificationContract.View) : NotificationContract.Presenter {
     override fun onOpen(event: Event) {
 
 
@@ -20,7 +22,7 @@ class NotificationPresenter(private val view: NotificationContract.View) : Notif
 
     }
 
-        var myWebSocket : Websocket?=null
+    var myWebSocket: Websocket? = null
 
     /****************************************** React Lifecycle methods  */
 
@@ -28,7 +30,7 @@ class NotificationPresenter(private val view: NotificationContract.View) : Notif
 
 
     override fun componentDidMount() {
-       myWebSocket= MyWebSocket(notificationWebSocketURL,this)
+        myWebSocket = MyWebSocket(notificationWebSocketURL, this)
     }
 
     override fun componentWillUnmount() {
@@ -40,28 +42,51 @@ class NotificationPresenter(private val view: NotificationContract.View) : Notif
 
 
     override fun onMessage(messageEvent: MessageEvent) {
-        if(!viewIsUnmounted) {
+        if (!viewIsUnmounted) {
             console.log("View is alive")
 
-            val notificationResponse = JSON.parse<NotificationResponse>(messageEvent.data.toString())
 
-            val notiOptions = object : ReactNotificationOptions {
-                override var tag: String? = "dd"
-                override var icon: String? = "https://avatars3.githubusercontent.com/u/5015532?s=40&v=4"
-                override var body: String? = notificationResponse.subText
-                override var title: String? = notificationResponse.title
+            val resource = JSON.parse<WebsocketResource<NotificationResponse>>(messageEvent.data.toString())
+
+
+            when (resource.type.toString()) {
+                WebSocketType.Notification.toString() -> {
+
+                    val notificationResponse = resource.data!!
+
+
+                    // val notificationResponse = JSON.parse<NotificationResponse>(messageEvent.data.toString())
+
+                    val notiOptions = object : ReactNotificationOptions {
+                        override var tag: String? = "dd"
+                        override var icon: String? = "https://avatars3.githubusercontent.com/u/5015532?s=40&v=4"
+                        override var body: String? = notificationResponse.subText
+                        override var title: String? = notificationResponse.title
+                    }
+
+                    val notificationOptions = NotificationOptions(
+                        title = notificationResponse.title,
+                        subText = notificationResponse.subText,
+                        icon = "https://avatars3.githubusercontent.com/u/5015532?s=40&v=4",
+                        tag = notificationResponse.subText
+                    )
+
+                    view.showNotification(notificationOptions)
+                    console.log(resource.type.toString())
+                    console.log(WebSocketType.Notification.toString())
+
+                    if(resource.type.toString().equals(WebSocketType.Notification.toString()) ){
+
+                    }
+
+
+                    //   console.log(messageEvent.data)
+
+
+                }
             }
 
-            val notificationOptions = NotificationOptions(
-                title = notificationResponse.title,
-                subText = notificationResponse.subText,
-                icon = "https://avatars3.githubusercontent.com/u/5015532?s=40&v=4",
-                tag = notificationResponse.subText
-            )
-
-            view.showNotification(notificationOptions)
-            console.log(messageEvent.data)
-        }else{
+        } else {
             console.log("View is dead")
 
         }

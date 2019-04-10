@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy.web.ui.notification
 
 
-import de.jensklingenberg.sheasy.web.usecase.NotificationOptions
+import de.jensklingenberg.sheasy.web.model.NotificationOptions
 import de.jensklingenberg.sheasy.web.usecase.NotificationUseCase
 import react.RBuilder
 import react.RComponent
@@ -41,7 +41,6 @@ class NotificationView : RComponent<RProps, NotificationVState>(), NotificationC
         setState {
             notiTitle = reactNotificationOptions.title ?: ""
             notiOptions = reactNotificationOptions
-            console.log("HKjldfjkslajflajslkjdfs " + ignoreNotification)
             this.ignoreNotification = false
         }
 

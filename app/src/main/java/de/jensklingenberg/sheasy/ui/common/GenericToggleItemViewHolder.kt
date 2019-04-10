@@ -24,4 +24,6 @@ class GenericToggleItemViewHolder(viewParent: ViewGroup) :
             }
         }
     }
+
+
 }

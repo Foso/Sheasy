@@ -40,10 +40,6 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
         presenter.onCreate()
     }
 
-    override fun onItemClicked(payload: Any) {
-
-
-    }
 
 
     override fun setData(items: List<BaseDataSourceItem<*>>) {

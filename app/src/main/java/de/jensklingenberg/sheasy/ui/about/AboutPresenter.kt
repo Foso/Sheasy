@@ -8,12 +8,11 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItem
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import javax.inject.Inject
 
-class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter, OnEntryClickListener {
+class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
 
     @Inject
     lateinit var shareUseCase: ShareUseCase
