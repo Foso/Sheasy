@@ -45,13 +45,17 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
 
     override fun onCreate() {
+        loadPairedDevices()
+
+    }
+
+    private fun loadPairedDevices() {
         sheasyPrefDataSource.devicesRepository.authorizedDevices
             .map {
                 DeviceListItemSourceItem(it, this)
             }.run {
                 view.setData(this)
             }
-
     }
 
 
@@ -60,6 +64,8 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
     override fun revokeDevice(device: Device) {
         sheasyPrefDataSource.devicesRepository.authorizedDevices.remove(device)
+        loadPairedDevices()
+
     }
 
     override fun onDestroy() {

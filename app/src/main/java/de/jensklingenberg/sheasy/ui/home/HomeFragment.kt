@@ -65,7 +65,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         menu?.clear()
-        inflater?.inflate(R.menu.fragment_apps_options_menu, menu)
+        inflater?.inflate(R.menu.home_options_menu, menu)
         toolbarMenu = menu
         val server = menu?.findItem(R.id.menu_server)
 

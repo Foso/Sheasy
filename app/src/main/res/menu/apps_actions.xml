@@ -7,7 +7,5 @@
     <item
         android:id="@+id/menu_extract"
         android:title="@string/extract" />
-    <item
-        android:id="@+id/menu_delete"
-        android:title="string/menu_delete" />
+
 </menu>

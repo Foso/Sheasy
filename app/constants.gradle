@@ -20,7 +20,7 @@ ext {
                      kotlin_version     : '1.3.21',
                      minSdk             : 21,
                      serverPort         : "8766",
-                     targetSdk          : 27,
+                     targetSdk          : 28,
                      versionCode        : 1,
                      versionName        : '1.0.0',
                      websocketPort      : "8765"]

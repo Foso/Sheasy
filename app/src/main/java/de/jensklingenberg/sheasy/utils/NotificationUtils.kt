@@ -4,8 +4,10 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -15,6 +17,7 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.network.HTTPServerService.Companion.AUTHORIZE_DEVICE
 import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
+import java.util.*
 import javax.inject.Inject
 
 
@@ -54,81 +57,89 @@ class NotificationUtils : NotificationUseCase {
 
     override fun showConnectionRequest(ipaddress: String) {
 
+
         val intent = HTTPServerService.getIntent(context).apply {
             putExtra(AUTHORIZE_DEVICE, ipaddress)
         }
 
         val replyPendingIntent = PendingIntent.getService(
-            context,
-            System.currentTimeMillis().toInt(),
-            intent, 0
+            context, 0 /* Request code */, intent,
+            PendingIntent.FLAG_CANCEL_CURRENT
         )
 
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        createChannel()
+        val pendingIntent = PendingIntent.getActivity(
+            context, 0 /* Request code */, intent,
+            PendingIntent.FLAG_ONE_SHOT
+        )
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        val mBuilder = NotificationCompat.Builder(context, "55")
-            .setSmallIcon(R.mipmap.ic_launcher)
+        val notificationBuilder = NotificationCompat.Builder(context, "channelID")
+            .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentTitle("Connection from " + ipaddress)
             .setContentText("Do you want to accept the connection")
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setCategory(NotificationCompat.CATEGORY_ALARM)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setOngoing(true)
-            .setLights(Color.WHITE, 1000, 1000)
+            .setAutoCancel(true)
+            .setSound(defaultSoundUri)
+            .setContentIntent(pendingIntent)
             .addAction(R.mipmap.ic_launcher, "Accept", replyPendingIntent)
 
-            .addAction(R.mipmap.ic_launcher, "No Accept", replyPendingIntent).build()
+            .addAction(R.mipmap.ic_launcher, "No Accept", replyPendingIntent)
 
+        val notificationId = 1
+        notificationManager?.notify(notificationId, notificationBuilder.build())
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(createNotificationChannel("1", R.id.icon))
-
-        }
-        notificationManager.notify(103, mBuilder)
 
 
     }
 
 
-    override fun showServerNotification() {
-        BIG_TEXT_NOTIFICATION_KEY++
-
-        val pIntent = PendingIntent.getService(
-            context,
-            System.currentTimeMillis().toInt(),
-            HTTPServerService.stopIntent(context), 0
+    fun showNotification(heading: String, description: String, imageUrl: String, intent: Intent) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        createChannel()
+        val pendingIntent = PendingIntent.getActivity(
+            context, 0 /* Request code */, intent,
+            PendingIntent.FLAG_ONE_SHOT
         )
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        // Add to your action, enabling Direct Reply for it
-        val replayAction =
-            NotificationCompat.Action.Builder(R.drawable.ic_launcher_background, "Replay", pIntent)
-                .build()
-
-        val noti1 = NotificationCompat.Builder(context)
-            .setContentTitle("Sheasy Server running")
-            .setContentText("Server running at " + NetworkUtils.getIP(context) + ":" + BuildConfig.SERVER_PORT)
-
-            .setSubText("Server running at " + NetworkUtils.getIP(context) + ":" + BuildConfig.SERVER_PORT)
-            .setAutoCancel(false)
-            .setLargeIcon(
-                BitmapFactory.decodeResource(
-                    context.resources,
-                    R.mipmap.ic_launcher
-                )
-            )
+        val notificationBuilder = NotificationCompat.Builder(context, "channelID")
             .setSmallIcon(R.mipmap.ic_launcher)
-            .addAction(R.mipmap.ic_launcher, "Stop Server", pIntent)
+            .setContentTitle(heading)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
 
-            .setContentIntent(pIntent)
-            //.addAction(replayAction)
-            .setGroup(NOTIFICATION_GROUP_KEY)
+            .setContentText(description)
+            .setAutoCancel(true)
+            .setSound(defaultSoundUri)
+            .setContentIntent(pendingIntent)
 
-        notificationManager.notify(BIG_TEXT_NOTIFICATION_KEY, noti1.build())
+        val notificationId = 1
+        notificationManager?.notify(notificationId, notificationBuilder.build())
+    }
+
+    fun createChannel() {
+        if (Build.VERSION.SDK_INT < 26) {
+            return
+        }
+        val channel = NotificationChannel("channelID", "name", NotificationManager.IMPORTANCE_DEFAULT)
+        channel.description = "Description"
+        notificationManager.createNotificationChannel(channel)
+    }
+
+
+    override fun showServerNotification() {
+
+        showNotification("Sheasy Server running","Server running at " + NetworkUtils.getIP(context) + ":" + BuildConfig.SERVER_PORT,"hhhhh",Intent())
+
+
     }
 
 
     companion object {
         val NOTIFICATION_GROUP_KEY = "group_key"
         private var BIG_TEXT_NOTIFICATION_KEY = 0
+        val PRIMARY_CHANNEL = "default"
+        val SECONDARY_CHANNEL = "second"
     }
 
 

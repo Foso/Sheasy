@@ -11,6 +11,7 @@ import fi.iki.elonen.NanoWSD
 import io.ktor.server.netty.NettyApplicationEngine
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -69,7 +70,7 @@ class Server : WebSocketListener {
             .subscribeBy(onError = {
                 Log.d("runIn",it.message)
                 nettyApplicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
-            }, onSuccess = {})
+            }, onSuccess = {}).addTo(compositeDisposable)
 
 
         vibrationUseCase.vibrate()
@@ -78,8 +79,9 @@ class Server : WebSocketListener {
 
     fun stop() {
         Log.d("Server", "Server stopped")
-
         nettyApplicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+        compositeDisposable.dispose()
+
         nanoWSDWebSocketDataSource.stop()
 
         vibrationUseCase.vibrate()
