@@ -6,7 +6,7 @@ This project follows the [all-contributors](https://github.com/kentcdodds/all-co
 <!-- prettier-ignore -->
 | [<img src="https://avatars0.githubusercontent.com/u/5015532?v=3" width="100px;"/><br /><sub><b>Jens Klingenberg</b></sub>](https://jensklingenberg.de)<br />[💬](#question-Foso "Answering Questions") [💻](https://github.com/Foso/Sheasy/commits?author=Foso "Code") [🎨](#design-Foso "Design") [📖](https://github.com/Foso/Sheasy/commits?author=Foso "Documentation") [👀](#review-Foso "Reviewed Pull Requests") | 
 | :---: |
-| [<img src="https://avatars3.githubusercontent.com/u/38547278?v=3" width="100px;"/><br /><sub><b>Zularizal</b></sub>](#design-Zularizal "Design") [🎨](#design-Zularizal "Design") | 
+| [<img src="https://avatars3.githubusercontent.com/u/38547278?v=3" width="100px;"/><br /><sub><b>Zularizal</b></sub>](https://github.com/zularizal)<br /> [🎨](#design-Zularizal "Design") | 
 
 
 
