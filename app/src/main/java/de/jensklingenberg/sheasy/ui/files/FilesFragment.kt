@@ -65,20 +65,31 @@ class FilesFragment : BaseFragment(), FilesContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
+
         if (ContextCompat.checkSelfPermission(
-                requireActivity(),
+               requireContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE
-            ) !== PackageManager.PERMISSION_GRANTED
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
+
             permissionUtils.requestPermission(this, REQUEST_CAMERA_PERMISSION)
         }
 
         presenter = FilesPresenter(this)
 
         parseArguments()
+        setupRecyclerView()
+        updateFolderPathInfo(presenter.filePath)
+
+        presenter.loadFiles()
+        folderUpIv.setOnClickListener { presenter.folderUp() }
+    }
+
+    private fun setupRecyclerView() {
         recyclerView?.apply {
             adapter = baseAdapter.apply {
-                dataSource.emptyView = NoOrEmptyContentItem("No Files",R.drawable.ic_insert_drive_file_grey_700_24dp).toSourceItem()
+                dataSource.emptyView =
+                    NoOrEmptyContentItem("No Files", R.drawable.ic_insert_drive_file_grey_700_24dp).toSourceItem()
             }
             recyclerView.layoutManager = LinearLayoutManager(context)
             addItemDecoration(
@@ -88,10 +99,6 @@ class FilesFragment : BaseFragment(), FilesContract.View {
                 )
             )
         }
-        updateFolderPathInfo(presenter.filePath)
-
-        presenter.loadFiles()
-        folderUpIv.setOnClickListener { presenter.folderUp() }
     }
 
     private fun parseArguments() {

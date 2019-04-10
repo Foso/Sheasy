@@ -29,9 +29,6 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
     @Inject
     lateinit var shareUseCase: ShareUseCase
 
-    @Inject
-    lateinit var context: Context
-
 
     override val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -46,7 +43,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     override fun onCreate() {
 
-       loadFiles()
+        loadFiles()
 
     }
 
@@ -63,14 +60,13 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                     .run {
                         view.setData(this)
                     }
-            }, onError = {})
+            }, onError = { view.showError(it) })
             .addTo(compositeDisposable)
 
     }
 
 
     override fun folderUp() {
-
         filePath = filePath.replaceAfterLast("/", "")
         loadFiles()
         view.updateFolderPathInfo(filePath)

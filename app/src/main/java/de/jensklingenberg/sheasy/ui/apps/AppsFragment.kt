@@ -49,6 +49,15 @@ class AppsFragment : BaseFragment(), AppsContract.View {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        setupRecyclerView()
+
+        presenter = AppsPresenter(this)
+        presenter.onCreate()
+
+
+    }
+
+    private fun setupRecyclerView() {
         recyclerView?.apply {
             adapter = baseAdapter
             recyclerView.layoutManager = LinearLayoutManager(context)
@@ -60,11 +69,6 @@ class AppsFragment : BaseFragment(), AppsContract.View {
                 )
             )
         }
-
-        presenter = AppsPresenter(this)
-        presenter.onCreate()
-
-
     }
 
     override fun setData(list: List<BaseDataSourceItem<*>>) {

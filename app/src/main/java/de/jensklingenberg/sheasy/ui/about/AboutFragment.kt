@@ -44,13 +44,17 @@ class AboutFragment : BaseFragment(), AboutContract.View {
         super.onViewCreated(view, savedInstanceState)
 
 
+        setupRecyclerView()
+        presenter = AboutPresenter(this)
+        presenter.onCreate()
+
+    }
+
+    private fun setupRecyclerView() {
         recyclerView?.apply {
             adapter = aboutAdapter
             recyclerView.layoutManager = LinearLayoutManager(context)
         }
-        presenter = AboutPresenter(this)
-        presenter.onCreate()
-
     }
 
     /****************************************** Listener methods  */

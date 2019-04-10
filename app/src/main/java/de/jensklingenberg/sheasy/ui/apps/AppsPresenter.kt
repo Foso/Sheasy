@@ -9,7 +9,6 @@ import de.jensklingenberg.sheasy.ui.common.addTo
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -44,24 +43,9 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
 
     override fun onCreate() {
 
-        getApps()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(onNext = { appList ->
-                appList.data!!
-                    .sortedBy { it.name }
-                    .map { it.toSourceItem(this) }
-                    .run {
-                        view.setData(this)
-                    }
-            }, onError = {
-                view.showError(it)
-
-            }).addTo(compositeDisposable)
-
+        loadApps()
 
     }
-
 
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
@@ -110,17 +94,22 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
     }
 
     private fun loadApps() {
-        fileDataSource
-            .getApps()
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(Schedulers.newThread())
-            .subscribeBy(onSuccess = {
-                appsSubject.onNext(Resource.success(it))
+
+        getApps()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(onNext = { appList ->
+                appList.data!!
+                    .sortedBy { it.name }
+                    .map { it.toSourceItem(this) }
+                    .run {
+                        view.setData(this)
+                    }
             }, onError = {
-                snackbar.onError(Throwable("EROR"))
+                view.showError(it)
+
             }).addTo(compositeDisposable)
     }
-
 
 
     override fun onItemClicked(payload: Any) {
