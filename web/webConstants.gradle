@@ -26,7 +26,7 @@ ext {
 
 
     configuration = [
-            kotlin_version: '1.3.21',
+            kotlin_version: '1.3.30',
             versionCode   : 1,
             serverPort    : "8766",
             websocketPort : "8765",

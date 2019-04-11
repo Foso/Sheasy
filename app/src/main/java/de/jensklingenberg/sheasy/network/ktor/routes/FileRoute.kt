@@ -119,10 +119,6 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                     val multipart = call.receiveMultipart()
                     multipart.forEachPart { part ->
                         when (part) {
-                            is PartData.FormItem -> {
-                                val tt = ("FormItem: ${part.name} = ${part.value}")
-
-                            }
                             is PartData.FileItem -> {
                                 val tt = ("FileItem: ${part.name} -> ${part.originalFileName} of ${part.contentType}")
                                 val ext = File(part.originalFileName).extension
