@@ -16,15 +16,10 @@ import io.ktor.http.content.streamProvider
 import io.ktor.request.receiveMultipart
 import io.ktor.response.header
 import io.ktor.response.respond
-import io.ktor.routing.Route
-import io.ktor.routing.get
-import io.ktor.routing.param
-import io.ktor.routing.post
-import io.ktor.routing.route
+import io.ktor.routing.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.rx2.await
 import java.io.File
-import java.io.InputStream
 
 
 fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
@@ -161,33 +156,6 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
             }
 
 
-        }
-
-        param("upload") {
-            post {
-                val filePath = call.parameters["upload"] ?: ""
-
-                var resource = Resource.error("", "")
-                val multipart = call.receiveMultipart()
-                multipart.forEachPart { part ->
-                    when (part) {
-                        is PartData.FormItem -> {
-
-                        }
-                        is PartData.FileItem -> {
-                            part.streamProvider().use { its: InputStream ->
-                                fileRouteHandler.postUpload(filePath, filePath, its)
-                            }
-                        }
-                    }
-                }
-
-                resource.checkState(onError = {
-                    launch {
-                        call.respond(resource)
-                    }
-                })
-            }
         }
     }
 

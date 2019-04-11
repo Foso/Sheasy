@@ -4,7 +4,6 @@ import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.web.model.State
 import de.jensklingenberg.sheasy.web.model.response.App
-import de.jensklingenberg.sheasy.web.network.ResponseCallback
 import kodando.rxjs.Observable
 import org.w3c.files.File
 
