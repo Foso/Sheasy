@@ -12,4 +12,5 @@ workflows:
     - gradle-runner@1.8.3:
         inputs:
         - gradlew_path: ./gradlew
-        - gradle_task: clean assembleDebug
+        - gradle_task: clean web:deployToAppAssets
+
