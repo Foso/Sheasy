@@ -3,14 +3,17 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: android
 app:
   envs:
+  - APP_MODULE : app
   - GRADLEW_PATH: ./gradlew
     opts:
       is_expand: false
 workflows:
   dev:
     steps:
-    - gradle-runner@1.8.3:
+    - gradle-runner:
         inputs:
         - gradlew_path: ./gradlew
-        - gradle_task: clean web:deployToAppAssets
+        - gradle_task: clean clean web:deployToAppAssets app:assembleDebug
+    - deploy-to-bitrise-io : {}
+    - cache-push : {}
 
