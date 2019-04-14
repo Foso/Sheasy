@@ -1,13 +1,11 @@
 package network.ktor.routes
 
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.model.checkState
 import de.jensklingenberg.sheasy.network.routehandler.KtorApiHandler
 import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
 import io.ktor.application.call
-import io.ktor.http.HttpHeaders
-import io.ktor.response.header
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
@@ -19,14 +17,9 @@ import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import io.ktor.http.content.PartData
 import io.ktor.http.content.forEachPart
 import io.ktor.http.content.streamProvider
-import io.ktor.request.isMultipart
-import io.ktor.request.receive
 import io.ktor.request.receiveMultipart
-import io.ktor.request.receiveStream
-import io.ktor.response.respondTextWriter
 import io.ktor.routing.post
 import java.io.File
-import java.io.InputStream
 
 class DesktopKtorApiHandler: KtorApiHandler {
     override fun Route.file(fileRouteHandler: FileRouteHandler) {
@@ -43,7 +36,7 @@ class DesktopKtorApiHandler: KtorApiHandler {
                 get {
                 //    call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
                    // call.respond(Resource.success(MockTestDataSource.sharedFolders))
-                    call.respond(Resource.error(Error.NoSharedFoldersError().message,""))
+                    call.respond(Resource.error(SheasyError.NoSharedFoldersError().message,""))
                 }
                 param("upload") {
                     post {

@@ -8,7 +8,6 @@ interface NanoWSDWebSocketDataSource {
     val screenShareWebSocketMap: HashMap<String, ScreenShareWebSocket>
 
     fun openWebSocket(handshake: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket
-    fun addListener(webSocketListener: WebSocketListener)
     fun start()
     fun stop()
 

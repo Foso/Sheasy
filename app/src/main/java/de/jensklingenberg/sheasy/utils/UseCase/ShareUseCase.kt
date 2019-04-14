@@ -1,8 +1,10 @@
 package de.jensklingenberg.sheasy.utils.UseCase
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.core.content.ContextCompat
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
@@ -15,6 +17,9 @@ class ShareUseCase {
 
     @Inject
     lateinit var application: Application
+
+    @Inject
+    lateinit var context: Context
 
 
     @Inject
@@ -55,19 +60,19 @@ class ShareUseCase {
 
     fun share(file: File) {
 
-        val intentShareFile = Intent(Intent.ACTION_SEND)
+        val intentShareFile = Intent(Intent.ACTION_SEND).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         intentShareFile.type = URLConnection.guessContentTypeFromName(file.getName())
         intentShareFile.putExtra(
             Intent.EXTRA_STREAM,
-            Uri.parse("file://" + file.getAbsolutePath())
+            Uri.parse("content://" + file.path)
         )
 
         //if you need
         //intentShareFile.putExtra(Intent.EXTRA_SUBJECT,"Sharing File Subject);
         //intentShareFile.putExtra(Intent.EXTRA_TEXT, "Sharing File Description");
 
-        application.startActivity(Intent.createChooser(intentShareFile, "Share File"))
+        ContextCompat.startActivity(context,Intent.createChooser(intentShareFile, "Share File").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),null)
     }
 
     fun hostFolder(fileResponse: FileResponse) {

@@ -19,16 +19,16 @@ class EventRepository : EventDataSource {
 
     val list = mutableListOf<Event>()
 
-    val appsSubject: PublishSubject<List<Event>> = PublishSubject.create<List<Event>>()
+    val eventSubject: PublishSubject<List<Event>> = PublishSubject.create<List<Event>>()
 
 
     override fun getEvents(): Observable<List<Event>> {
-        return appsSubject.hide()
+        return eventSubject.hide()
     }
 
     override fun addEvent(event: Event) {
         list.add(event)
-        appsSubject.onNext(list)
+        eventSubject.onNext(list)
     }
 
 

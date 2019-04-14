@@ -47,13 +47,13 @@ open class FileRepository : FileDataSource {
             try {
                 File(folderPath)
                     .listFiles()
+                    .sortedBy { it.name }
                     .map {
                         FileResponse(
                             it.name,
                             it.path
                         )
                     }
-                    .sortedBy { it.name }
                     .run {
                         singleEmitter.onSuccess(this)
                     }
@@ -81,7 +81,7 @@ open class FileRepository : FileDataSource {
 
             val appsList = getAllInstalledApplications()
                 .map {
-                    mapToAppInfo(it)
+                    it.mapToAppInfo()
                 }
 
             if (appsList != cachedApps) {
@@ -102,13 +102,13 @@ open class FileRepository : FileDataSource {
 
     }
 
-    private fun mapToAppInfo(it: ApplicationInfo): AppInfo {
+    private fun ApplicationInfo.mapToAppInfo(): AppInfo {
         return AppInfo(
-            sourceDir = it.sourceDir,
-            name = pm.getApplicationLabel(it).toString(),
-            packageName = it.packageName,
+            sourceDir = this.sourceDir,
+            name = pm.getApplicationLabel(this).toString(),
+            packageName = this.packageName,
             installTime = pm.getPackageInfo(
-                it.packageName,
+                this.packageName,
                 0
             ).firstInstallTime.toString()
         )

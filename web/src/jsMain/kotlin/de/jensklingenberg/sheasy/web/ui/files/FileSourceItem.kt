@@ -22,7 +22,7 @@ interface OnFileClickListener{
 
 }
 
-class FileSourceItem(val fileResponse: FileResponse, val itemClickFunction:(Event)->Unit, val onMoreBtnClick:(Event)->Unit) : SourceItem() {
+class FileSourceItem(val fileResponse: FileResponse, val itemClickFunction:(Event)->Unit ={}, val onMoreBtnClick:(Event)->Unit ={}) : SourceItem() {
 
     override fun render(rBuilder: RBuilder) {
 
@@ -34,7 +34,7 @@ class FileSourceItem(val fileResponse: FileResponse, val itemClickFunction:(Even
 
                 ListItem {
                     attrs {
-                        // href = presenter.getFiles(it.path)
+                        // href = presenter.getFilesUrl(it.path)
                         component = "a"
                         divider = true
                         styleProps(textAlign = "left")

@@ -4,7 +4,7 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.data.CheckPermissionUseCase
-import de.jensklingenberg.sheasy.utils.NotificationUtils
+import de.jensklingenberg.sheasy.data.notification.NotificationUtils
 import de.jensklingenberg.sheasy.utils.PermissionUtils
 import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase

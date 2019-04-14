@@ -3,7 +3,7 @@ package network.ktor
 
 
 import de.jensklingenberg.sheasy.model.AppInfo
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.network.HttpMethod
@@ -19,18 +19,17 @@ import java.io.InputStream
 
 class DesktopFileRouteHandler(val fileDataSource: FileRepository) : FileRouteHandler {
 
+
     override fun getApps(): Single<List<AppInfo>> {
 
         return Single.just(mockAppList)
     }
 
-    override suspend fun apk(httpMethod: HttpMethod, packageName:String): Resource<Any> {
+    override suspend fun apk( packageName:String): Resource<Any> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun get(call: KtorApplicationCall): Resource<Any> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 
 
 
@@ -74,7 +73,7 @@ class DesktopFileRouteHandler(val fileDataSource: FileRepository) : FileRouteHan
                     it.path
                 )
             } ?: emptyList()
-        return Resource.error("NoSharedFoldersError",Error.NoSharedFoldersError().message)
+        return Resource.error("NoSharedFoldersError",SheasyError.NoSharedFoldersError().message)
 
 
     }

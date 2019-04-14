@@ -3,7 +3,7 @@ package de.jensklingenberg.sheasy.network.ktor.routehandler
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.network.HttpMethod
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
@@ -53,22 +53,17 @@ class AndroidFileRouteHandler : FileRouteHandler {
     }
 
     override suspend fun getShared(call: KtorApplicationCall): Resource<Any> {
-        //
 
         val filePath = call.parameter
 
         if (filePath.isEmpty()) {
 
             if (sheasyPrefDataSource.sharedFolders.isEmpty()) {
-                return Resource.error(Error.NoSharedFoldersError().message, "")
+                return Resource.error(SheasyError.NoSharedFoldersError().message, "")
 
             } else {
                 return Resource.success(sheasyPrefDataSource.sharedFolders)
             }
-
-
-            // return Resource.success(sheasyPrefDataSource.sharedFolders)
-
         } else {
 
             val allowedPath = sheasyPrefDataSource.sharedFolders.any { folderPath ->
@@ -89,6 +84,12 @@ class AndroidFileRouteHandler : FileRouteHandler {
 
     override suspend fun getDownload(filePath: String): Resource<Any> {
 
+
+
+
+
+
+
         val allowedPath = sheasyPrefDataSource.sharedFolders.any { folderPath ->
             folderPath.path.startsWith(filePath)
         }
@@ -101,8 +102,6 @@ class AndroidFileRouteHandler : FileRouteHandler {
             return Resource.success(fileInputStream.readBytes())
 
         } else {
-            //appsRepository.sendBroadcast(EventCategory.REQUEST, filePath)
-
             val fileList = fileDataSource
                 .getFiles(filePath)
                 .await()
@@ -118,8 +117,7 @@ class AndroidFileRouteHandler : FileRouteHandler {
         }
     }
 
-    override suspend fun apk(httpMethod: HttpMethod, packageName: String): Resource<Any> {
-
+    override suspend fun apk( packageName: String): Resource<Any> {
         fileDataSource
             .getApps(packageName)
             .await()
@@ -131,13 +129,7 @@ class AndroidFileRouteHandler : FileRouteHandler {
     }
 
 
-    override fun get(call: KtorApplicationCall): Resource<Any> {
-        when (call.requestedApiPath) {
 
-        }
-        return Resource.error("Could not find command FileRoute", "")
-
-    }
 
 
 }

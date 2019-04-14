@@ -1,6 +1,5 @@
 package de.jensklingenberg.sheasy.web.model
 
-import de.jensklingenberg.sheasy.web.model.StringRes.Companion.DRAWER_SCREENSHARE
 import de.jensklingenberg.sheasy.web.model.StringRes.Companion.TOOLBAR_ABOUT
 import de.jensklingenberg.sheasy.web.model.StringRes.Companion.TOOLBAR_APPS
 import de.jensklingenberg.sheasy.web.model.StringRes.Companion.TOOLBAR_HOME

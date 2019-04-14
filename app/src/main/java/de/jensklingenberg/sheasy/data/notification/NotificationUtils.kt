@@ -1,12 +1,11 @@
-package de.jensklingenberg.sheasy.utils
+package de.jensklingenberg.sheasy.data.notification
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -16,8 +15,8 @@ import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.network.HTTPServerService.Companion.AUTHORIZE_DEVICE
+import de.jensklingenberg.sheasy.utils.NetworkUtils
 import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
-import java.util.*
 import javax.inject.Inject
 
 
@@ -31,51 +30,39 @@ class NotificationUtils : NotificationUseCase {
     lateinit var notificationManager: NotificationManager
 
 
+    val CHANNEL_FTP_ID = "ftpChannel"
+    val FTP_ID = 5
+
+    val ConRequestId= 1
+    val ConRequest= "ConnectionRequestChannel"
+
+
     init {
         initializeDagger()
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(channelId: String, nameResId: Int): NotificationChannel {
-        val channelName = context.getString(nameResId)
-        val notificationChannel = NotificationChannel(
-            channelId, channelName, android.app.NotificationManager.IMPORTANCE_HIGH
-        )
-        notificationChannel.apply {
-            enableLights(true)
-            enableVibration(true)
-            setBypassDnd(true)
-            setShowBadge(true)
-            importance = android.app.NotificationManager.IMPORTANCE_HIGH
-        }
-
-        return notificationChannel
-    }
-
 
     override fun showConnectionRequest(ipaddress: String) {
 
 
-        val intent = HTTPServerService.getIntent(context).apply {
-            putExtra(AUTHORIZE_DEVICE, ipaddress)
-        }
+        val intent = HTTPServerService.autorizeDeviceIntent(context,ipaddress)
 
         val replyPendingIntent = PendingIntent.getService(
             context, 0 /* Request code */, intent,
             PendingIntent.FLAG_CANCEL_CURRENT
         )
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        createChannel()
+       // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        createChannel(ConRequest)
         val pendingIntent = PendingIntent.getActivity(
             context, 0 /* Request code */, intent,
             PendingIntent.FLAG_ONE_SHOT
         )
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        val notificationBuilder = NotificationCompat.Builder(context, "channelID")
+        val notificationBuilder = NotificationCompat.Builder(context, ConRequest)
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentTitle("Connection from " + ipaddress)
             .setContentText("Do you want to accept the connection")
@@ -86,8 +73,7 @@ class NotificationUtils : NotificationUseCase {
 
             .addAction(R.mipmap.ic_launcher, "No Accept", replyPendingIntent)
 
-        val notificationId = 1
-        notificationManager?.notify(notificationId, notificationBuilder.build())
+        notificationManager.notify(ConRequestId, notificationBuilder.build())
 
 
 
@@ -95,33 +81,40 @@ class NotificationUtils : NotificationUseCase {
 
 
     fun showNotification(heading: String, description: String, imageUrl: String, intent: Intent) {
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        createChannel()
+        val `when` = System.currentTimeMillis()
+
+
+       // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        createChannel(CHANNEL_FTP_ID)
         val pendingIntent = PendingIntent.getActivity(
-            context, 0 /* Request code */, intent,
+            context, 0 /* Request code */,  HTTPServerService.stopIntent(context),
             PendingIntent.FLAG_ONE_SHOT
         )
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        val notificationBuilder = NotificationCompat.Builder(context, "channelID")
+        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_FTP_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(heading)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-
+            .setContentText("COntent")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setTicker("TIckerTedst")
             .setContentText(description)
             .setAutoCancel(true)
+            .setWhen(`when`)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
+            .addAction(R.mipmap.ic_launcher, "Accept", pendingIntent)
 
-        val notificationId = 1
-        notificationManager?.notify(notificationId, notificationBuilder.build())
+        notificationManager.notify(FTP_ID, notificationBuilder.build())
     }
 
-    fun createChannel() {
+    fun createChannel(channelID: String) {
         if (Build.VERSION.SDK_INT < 26) {
             return
         }
-        val channel = NotificationChannel("channelID", "name", NotificationManager.IMPORTANCE_DEFAULT)
+        val channel = NotificationChannel(channelID, "Sheasy Server Notifications", NotificationManager.IMPORTANCE_HIGH)
         channel.description = "Description"
         notificationManager.createNotificationChannel(channel)
     }
@@ -129,7 +122,9 @@ class NotificationUtils : NotificationUseCase {
 
     override fun showServerNotification() {
 
-        showNotification("Sheasy Server running","Server running at " + NetworkUtils.getIP(context) + ":" + BuildConfig.SERVER_PORT,"hhhhh",Intent())
+        showNotification("Sheasy Server running","Server running at " + NetworkUtils.getIP(
+            context
+        ) + ":" + BuildConfig.SERVER_PORT,"hhhhh",Intent())
 
 
     }

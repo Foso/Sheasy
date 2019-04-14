@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.list_item_generic.view.*
 import javax.inject.Inject
 
 class AppInfoViewHolder(viewParent: ViewGroup) :
-    BaseViewHolder<AppInfoSourceItem>(viewParent, R.layout.list_item_generic) {
+    BaseViewHolder<AppInfoSourceItem>(viewParent, R.layout.list_item_app) {
 
     @Inject
     lateinit var pm: PackageManager
@@ -33,14 +33,16 @@ class AppInfoViewHolder(viewParent: ViewGroup) :
                 title.text = it.name
                 caption.text = it.packageName
                 icon.setImageDrawable(pm.getApplicationIcon(it.packageName))
-                item.setOnClickListener {
-                    item2.onEntryClickListener?.onItemClicked(appInfo)
-                }
+
                 moreBtn.visibility = View.VISIBLE
                 moreBtn.setOnClickListener {
                     item2.onEntryClickListener?.onMoreButtonClicked(it, appInfo)
                 }
             }
         }
+    }
+
+    interface OnClick{
+        fun onMoreButtonClicked(view: View, payload: Any)
     }
 }

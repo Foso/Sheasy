@@ -6,9 +6,9 @@ import components.materialui.icons.SendIcon
 import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.model.SourceItem
-import de.jensklingenberg.sheasy.web.ui.common.StringSourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
+import de.jensklingenberg.sheasy.web.ui.common.StringSourceItem
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.EventTarget
@@ -31,35 +31,9 @@ interface FileViewState : RState {
 
 
 class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
-    override fun setConnectedMessage(message: String) {
-        setState {
-           activeConnection=message
-        }
-
-    }
-
-    override fun showMessage(notificationOptions: SourceItem) {
-        setState {
-            item.add(notificationOptions)
-        }
-
-    }
-
-
     private var presenter: ShareContract.Presenter? = SharePresenter(this)
 
 
-    override fun setData(items: List<SourceItem>) {
-        setState {
-            this.item.clear()
-            this.item.addAll(items)
-        }
-    }
-
-
-    fun test(value: String) {
-        state.inpu = value
-    }
 
     /****************************************** React Lifecycle methods  */
 
@@ -92,8 +66,7 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
                     name = "search"
                     placeholder = "Input Message"
                     onChange = {
-                        test((it.target as HTMLInputElement).value)
-                        //presenter.onSearch((it.target as HTMLInputElement).value)
+                        onSearchInputChanged((it.target as HTMLInputElement).value)
                     }
                 }
             }
@@ -127,9 +100,36 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
 
     /****************************************** Presenter methods  */
 
+    override fun setData(items: List<SourceItem>) {
+        setState {
+            this.item.clear()
+            this.item.addAll(items)
+        }
+    }
+
+    override fun setConnectedMessage(message: String) {
+        setState {
+            activeConnection=message
+        }
+
+    }
+
+    override fun showMessage(notificationOptions: SourceItem) {
+        setState {
+            item.add(notificationOptions)
+        }
+
+    }
+
 
     /****************************************** Class methods  */
 
+
+
+
+    fun onSearchInputChanged(value: String) {
+        state.inpu = value
+    }
 
 }
 

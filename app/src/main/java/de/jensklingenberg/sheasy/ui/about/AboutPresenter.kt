@@ -67,6 +67,11 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
                 "Feedback",
                 context.getString(R.string.about_send_feedback),
                 R.drawable.ic_code_grey_700_24dp
+            ).toSourceItem(this),
+            GenericListItem(
+                "Commit",
+                BuildConfig.GIT_SHA,
+                R.drawable.ic_code_grey_700_24dp
             ).toSourceItem(this)
 
 

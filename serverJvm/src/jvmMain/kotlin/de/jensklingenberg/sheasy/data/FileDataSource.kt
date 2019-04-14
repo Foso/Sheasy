@@ -8,6 +8,9 @@ import java.io.InputStream
 
 
 interface FileDataSource {
+    companion object {
+        val STARTPAGE_PATH="web/index.html"
+    }
     fun getFiles(folderPath: String): Single<List<FileResponse>>
     fun getAssetFile(filePath: String): Single<InputStream>
     fun getApps(packageName:String=""): Single<List<AppInfo>>

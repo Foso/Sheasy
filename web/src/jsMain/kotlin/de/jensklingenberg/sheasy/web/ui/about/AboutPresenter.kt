@@ -5,7 +5,7 @@ import de.jensklingenberg.sheasy.web.components.materialui.icons.CodeIcon
 import de.jensklingenberg.sheasy.web.components.materialui.icons.InfoOutlinedIcon
 import de.jensklingenberg.sheasy.web.model.AboutItem
 import de.jensklingenberg.sheasy.web.model.ButtonItem
-import de.jensklingenberg.sheasy.web.model.LinkItem
+import de.jensklingenberg.sheasy.web.ui.common.LinkItem
 import de.jensklingenberg.sheasy.web.network.ApiEndPoint
 import de.jensklingenberg.sheasy.web.ui.common.ButtonSourceItem
 import de.jensklingenberg.sheasy.web.ui.common.GenericListHeaderSourceItem
@@ -22,15 +22,13 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
 
         view.setData(
             listOf(
-
                GenericListHeaderSourceItem(StringSourceItem("Info")),
                 AboutSourceItem(AboutItem("Sheasy", "v0.1", InfoOutlinedIcon)),
                 AboutSourceItem(AboutItem("Changelog","v0.1", HistoryIcon)),
-
                 GenericListHeaderSourceItem(StringSourceItem("License")),
                 AboutSourceItem(AboutItem("License", "Sheasy is licensed under Apache License 2.0", CodeIcon),{}),
-                LinkSourceItem(LinkItem("GIT PAGE", ApiEndPoint.repoSite, "_blank")),
-                        ButtonSourceItem(ButtonItem("Download Sheasy Apk"), this)
+                LinkSourceItem(LinkItem("GIT PAGE", ApiEndPoint.getRepoSite(), "_blank")),
+                ButtonSourceItem(ButtonItem("Download Sheasy Apk"), this)
 
             )
         )

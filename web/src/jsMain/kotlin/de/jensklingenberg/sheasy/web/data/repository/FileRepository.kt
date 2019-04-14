@@ -13,14 +13,12 @@ import org.w3c.files.File
 class FileRepository(val api: API) : FileDataSource {
     override fun downloadFile(fileResponse: FileResponse) {
             api.downloadFile(fileResponse.path)
-
     }
 
     override fun downloadApk(app: App?) {
-        if(app!=null){
+        app?.let{
           api.downloadApk(app.packageName)
         }
-
     }
 
     override fun uploadFile(file: File,folderPath: String): Observable<Resource<State>> {
@@ -34,7 +32,6 @@ class FileRepository(val api: API) : FileDataSource {
 
     override fun getFiles(folderPath: String): Observable<List<FileResponse>> {
        return  api.getFiles(folderPath)
-
     }
 
     override fun getApps(): Observable<List<App>> {

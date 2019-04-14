@@ -14,8 +14,8 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.SideMenuEntry
 import de.jensklingenberg.sheasy.ui.files.FilesFragmentDirections
+import de.jensklingenberg.sheasy.utils.PermissionUtils
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
-import de.jensklingenberg.sheasy.utils.extension.obtainViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -24,8 +24,14 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
 
     lateinit var mainActivityDrawer: MainActivityDrawer
-    lateinit var mainViewModel: MainViewModel
     lateinit var navController: NavController
+
+    @Inject
+    lateinit var permissionUtils: PermissionUtils
+
+    private val REQUEST_CAMERA_PERMISSION = 1
+
+
 
     init {
         initializeDagger()
@@ -50,11 +56,10 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         setupNavigation()
         handleIntent(intent)
         mainActivityDrawer = MainActivityDrawer(this)
-        mainViewModel = obtainViewModel(MainViewModel::class.java)
         //   requestNotificationPermission(this)
 
 
-
+            permissionUtils.requestPermission(this, REQUEST_CAMERA_PERMISSION)
 
     }
 
@@ -70,11 +75,9 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
                 if(item.navId==-1){
                     when(item.title){
                         getString(R.string.side_menu_share_app)->{
+
                             return true
                         }
-
-
-
 
                     }
                 }else{

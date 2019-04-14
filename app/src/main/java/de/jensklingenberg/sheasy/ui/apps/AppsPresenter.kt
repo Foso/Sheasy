@@ -35,16 +35,12 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
 
     init {
         initializeDagger()
-        loadApps()
     }
-
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
     override fun onCreate() {
-
         loadApps()
-
     }
 
 
@@ -72,15 +68,10 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
                     })
                 )
             }, onError = {
-                snackbar.onError(Throwable("EROR"))
+                snackbar.onError(it)
             }).addTo(compositeDisposable)
     }
 
-
-    /**
-     * @return a stream that emits when a notification should be displayed. The stream contains the
-     * notification text
-     */
     fun getApps(): Observable<Resource<List<AppInfo>>> {
         return appsSubject.hide()
     }
@@ -94,7 +85,6 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
     }
 
     private fun loadApps() {
-
         getApps()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -112,7 +102,5 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
     }
 
 
-    override fun onItemClicked(payload: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 }

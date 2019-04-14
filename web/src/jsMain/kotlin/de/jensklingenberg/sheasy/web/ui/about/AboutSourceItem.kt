@@ -28,11 +28,9 @@ class AboutSourceItem(
     override fun render(rBuilder: RBuilder) {
 
         with(rBuilder) {
-
-
                 ListItem {
                     attrs {
-                        // href = presenter.getFiles(it.path)
+                        // href = presenter.getFilesUrl(it.path)
                         component = "a"
                         divider = true
                         styleProps(textAlign = "left")
@@ -61,9 +59,6 @@ class AboutSourceItem(
                                     }
                                 }
                             }
-
-
-
                     }
 
                     onMoreBtnClick?.let {

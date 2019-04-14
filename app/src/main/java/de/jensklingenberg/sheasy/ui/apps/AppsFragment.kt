@@ -48,13 +48,9 @@ class AppsFragment : BaseFragment(), AppsContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-
         setupRecyclerView()
-
         presenter = AppsPresenter(this)
         presenter.onCreate()
-
-
     }
 
     private fun setupRecyclerView() {
@@ -71,11 +67,6 @@ class AppsFragment : BaseFragment(), AppsContract.View {
         }
     }
 
-    override fun setData(list: List<BaseDataSourceItem<*>>) {
-        baseAdapter.dataSource.setItems(list)
-        baseAdapter.notifyDataSetChanged()
-
-    }
 
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -101,6 +92,11 @@ class AppsFragment : BaseFragment(), AppsContract.View {
 
 
     /****************************************** Listener methods  */
+    override fun setData(list: List<BaseDataSourceItem<*>>) {
+        baseAdapter.dataSource.setItems(list)
+        baseAdapter.notifyDataSetChanged()
+
+    }
 
 
     override fun showError(it: Throwable?) {

@@ -23,12 +23,11 @@ import javax.inject.Inject
 
 class ServiceBinder : Binder()
 
-class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
+class HTTPServerService : Service() {
 
 
     companion object {
 
-      private  val ACTION_STOP="ACTION_STOP"
 
         lateinit var bind: ServiceBinder
         fun getIntent(context: Context) =
@@ -42,11 +41,18 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
         val ACTION_ON_ACTIVITY_RESULT = "ACTION_ON_ACTIVITY_RESULT"
         val AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
         val serverRunning: BehaviorSubject<Boolean> = BehaviorSubject.create<Boolean>()
+        private  val ACTION_STOP="ACTION_STOP"
 
+        fun autorizeDeviceIntent(context: Context,ipaddress: String): Intent {
+            val authIntent=  Intent(context, HTTPServerService::class.java).apply {
+                putExtra(AUTHORIZE_DEVICE, ipaddress)
+            }
+            return authIntent
+        }
     }
 
     @Inject
-    lateinit var notificationUtils1: NotificationUseCase
+    lateinit var notificationUseCase: NotificationUseCase
 
     @Inject
     lateinit var server: Server
@@ -54,8 +60,6 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
     @Inject
     lateinit var sheasyPref: SheasyPrefDataSource
-
-    var isRunning: Boolean = false
 
     /****************************************** Lifecycle methods  */
 
@@ -87,7 +91,6 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
 
             }
         }
-        isRunning = true
         return START_STICKY
 
 
@@ -101,7 +104,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
         filter.addAction(ACTION_ON_ACTIVITY_RESULT) //further more
         registerReceiver(receiver, filter)
 
-        notificationUtils1.showServerNotification()
+        notificationUseCase.showServerNotification()
         server.start()
         serverRunning.onNext(true)
     }
@@ -110,7 +113,6 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
         Log.d("this", "Server stopped")
 
         server.stop()
-        isRunning = false
 
         return super.stopService(name)
 
@@ -129,13 +131,7 @@ class HTTPServerService : Service(), ScreenRecord.ImageReadyListener {
     /****************************************** Listener methods  */
 
 
-    override fun onImageReady(string: String) {
-        server.sendData(Server.DataDestination.SCREENSHARE, string)
-    }
 
-    override fun onImageByte(byteArray: ByteArray) {
-        server.sendData(Server.DataDestination.SCREENSHARE, byteArray)
-    }
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {

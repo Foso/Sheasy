@@ -26,12 +26,8 @@ class NotificationUseCase{
                         options = notiOptions
                     }
                 }
-
             }
         }
-
-
-
     }
 
 }

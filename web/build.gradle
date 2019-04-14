@@ -16,6 +16,7 @@ repositories {
     jcenter()
     mavenCentral()
     mavenRepos.each { buildMaven(it) }
+    maven { url 'https://jitpack.io' }
 
 }
 detekt {
@@ -57,6 +58,7 @@ kotlin {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
                 compileOnly project(":libshared")
                 implementation("io.ktor:ktor-client-core:$libs.ktorClient")
+                implementation 'com.github.badoo.reaktive:reaktive:1.0.0-alpha1'
             }
 
         }
@@ -74,6 +76,7 @@ kotlin {
                 implementation "org.jetbrains.kotlin:kotlin-test-js"
                 implementation "br.danfma.kodando:kodando-rxjs:0.8.0"
                 implementation "io.ktor:ktor-client-js:$libs.ktorClient"
+                implementation "com.noheltcj:rx-common-js:$Versions.web.rxCommonJS"
             }
         }
 
@@ -101,7 +104,7 @@ kotlinFrontend {
         dependency("css-loader")
         dependency("style-loader")
         dependency("jest")
-        dependency("rxjs", "6.3.3")
+        dependency("rxjs", Versions.web.rxJS)
 
     }
 
@@ -128,18 +131,7 @@ task deployToAppAssets(type: Copy, dependsOn: ["build"]) {
     into "${appProject.projectDir}/src/main/assets/web"
 }
 
-task stopTomcat(type: Exec) {
-//    workingDir '../tomcat/bin'
 
-    //on linux
-    //  commandLine 'cd ${project.buildDir.path}'
-    commandLine 'cd ..'
-    commandLine 'pwd'
-
-    // commandLine './gradlew -t webpack-run'
-
-
-}
 
 // workaround for https://youtrack.jetbrains.com/issue/KT-27170
 configurations {

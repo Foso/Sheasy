@@ -15,8 +15,6 @@ interface HomeViewState : RState {
 }
 
 class HomeView : BaseComponent<RProps, HomeViewState>(), HomeContract.View {
-
-
     var presenter = HomePresenter(this)
 
 
@@ -37,8 +35,6 @@ class HomeView : BaseComponent<RProps, HomeViewState>(), HomeContract.View {
 
 
     override fun RBuilder.render() {
-        //toolbar()
-
         state.item.render(this)
     }
 }

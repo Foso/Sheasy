@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy.web.ui.about
 
 
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
@@ -30,15 +30,12 @@ class AboutView : BaseComponent<RProps, AboutState>(), AboutContract.View {
     }
 
     override fun componentDidMount() {
-
         presenter.componentDidMount()
     }
 
     override fun RBuilder.render() {
-
-            state.itemsList.render(this)
-
-        }
+        state.itemsList.render(this)
+    }
 
     /****************************************** Presenter methods  */
     override fun setData(items: List<SourceItem>) {
@@ -48,7 +45,7 @@ class AboutView : BaseComponent<RProps, AboutState>(), AboutContract.View {
         }
     }
 
-    override fun showError(error: Error) {}
+    override fun showError(error: SheasyError) {}
 
 }
 

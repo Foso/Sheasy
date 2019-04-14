@@ -26,11 +26,9 @@ class AppSourceItem(val app: App, val itemClickFunction: (Event) -> Unit, val on
     override fun render(rBuilder: RBuilder) {
 
         with(rBuilder) {
-
-
                 ListItem {
                     attrs {
-                        // href = presenter.getFiles(it.path)
+                        // href = presenter.getFilesUrl(it.path)
                         component = "a"
                         divider = true
                         styleProps(textAlign = "left")

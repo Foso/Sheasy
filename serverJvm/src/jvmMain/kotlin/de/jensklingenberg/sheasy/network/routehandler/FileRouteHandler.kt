@@ -9,7 +9,7 @@ import java.io.InputStream
 
 interface FileRouteHandler : RouteHandler {
     fun getApps(): Single<List<AppInfo>>
-    suspend fun apk(httpMethod: HttpMethod, packageName:String): Resource<Any>
+    suspend fun apk( packageName:String): Resource<Any>
     suspend fun getDownload(filePath : String): Resource<Any>
     suspend fun getShared(call: KtorApplicationCall): Resource<Any>
     fun postUpload(sourceFilePath: String, destinationFilePath: String, inputStream: InputStream): Resource<Any>

@@ -6,13 +6,11 @@ import components.materialui.FormControl
 import components.materialui.InputLabel
 import components.materialui.Menu
 import components.materialui.MenuItem
-import components.materialui.icons.AndroidIcon
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.components.materialui.icons.ArrowBackIcon
-import de.jensklingenberg.sheasy.web.components.materialui.icons.ArrowBackIconImport
 import de.jensklingenberg.sheasy.web.components.materialui.icons.CloudUploadIcon
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
@@ -23,7 +21,6 @@ import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.extension.selectedFile
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
-import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
 import kotlinx.html.DIV
 import kotlinx.html.InputType
@@ -35,7 +32,6 @@ import react.RProps
 import react.RState
 import react.dom.RDOMBuilder
 import react.dom.div
-import react.dom.img
 import react.setState
 
 
@@ -235,7 +231,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
 
 
-    override fun showError(error: Error) {
+    override fun showError(error: SheasyError) {
         setState {
             status = Status.ERROR
             snackbarMessage = error.message

@@ -20,19 +20,6 @@ class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataS
             : HashMap<String, ScreenShareWebSocket>
         get() = hashMapOf()
 
-
-    var webSocketListener: WebSocketListener? = null
-
-    override fun addListener(webSocketListener: WebSocketListener) {
-        this.webSocketListener = webSocketListener
-
-    }
-
-    override fun serveHttp(session: IHTTPSession?): Response {
-
-        return super.serveHttp(session)
-    }
-
     override fun openWebSocket(session: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket {
 
         when (session.uri) {
@@ -105,6 +92,7 @@ class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataS
             it.isClosed = true
         }
         screenShareWebSocketMap.clear()
+
         super.stop()
     }
 

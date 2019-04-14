@@ -34,9 +34,7 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
 
     override fun componentDidMount() {
         myWebSocket = MyWebSocket(de.jensklingenberg.sheasy.web.network.ApiEndPoint.shareWebSocketURL, this)
-
         view.setData(item)
-
     }
 
     override fun componentWillUnmount() {
@@ -68,7 +66,6 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
             console.log("View is dead")
 
         }
-
     }
 
 

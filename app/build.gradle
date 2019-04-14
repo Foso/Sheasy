@@ -145,6 +145,7 @@ task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
 }
 
 dependencies {
+
     implementation project(':serverJvm')
     implementation project(":libshared")
 
@@ -185,10 +186,10 @@ dependencies {
    // implementation "org.nanohttpd:nanohttpd:$libs.nanohttpd"
 
     //RxJava
-    implementation "io.reactivex.rxjava2:rxandroid:${libs.rxandroid}"
-    implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
+    implementation Libs.android.rxAndroid
+    implementation Libs.android.rxjava
     implementation "io.reactivex.rxjava2:rxkotlin:${libs.rxkotlin}"
-    implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha2'
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha1'
     implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0-alpha2'
     implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2'
     implementation 'com.jakewharton.rxbinding3:rxbinding-drawerlayout:3.0.0-alpha2'
@@ -200,7 +201,7 @@ dependencies {
     implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.0.0-alpha2'
 
     //Dagger
-    implementation "com.google.dagger:dagger-android:${libs.dagger}"
+    implementation Libs.android.dagger
     implementation "com.google.dagger:dagger-android-support:${libs.dagger}"
 
     // if you use the support libraries

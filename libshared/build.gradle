@@ -5,6 +5,10 @@ buildscript {
 apply plugin: 'kotlin-multiplatform'
 apply plugin: "kotlin-kapt"
 
+apply plugin: "greet"
+
+
+
 
 kotlin {
 

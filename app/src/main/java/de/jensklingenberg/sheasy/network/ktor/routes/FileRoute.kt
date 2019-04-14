@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.network.ktor.routes
 
-import de.jensklingenberg.sheasy.model.Error
+import android.util.Log
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.model.checkState
 import de.jensklingenberg.sheasy.network.HttpMethod
@@ -20,18 +21,33 @@ import io.ktor.routing.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.rx2.await
 import java.io.File
+import java.io.FileNotFoundException
 
 
 fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
-    route("file") {
 
+
+    /**
+     * GET
+     */
+    route("file") {
+        get("apps") {
+            //"file/apps"
+            fileRouteHandler
+                .getApps()
+                .await()
+                .run {
+                    call.response.debugCorsHeader()
+                    call.respond(Resource.success(this))
+                }
+        }
 
         route("app") {
             param("package") {
                 get {
                     val packageName = call.parameters["package"] ?: ""
                     fileRouteHandler
-                        .apk(HttpMethod.GET, packageName)
+                        .apk( packageName)
                         .checkState(onSuccess = { resource ->
                             launch {
                                 call.response.header(
@@ -62,7 +78,10 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                                         value = filepath.substringAfterLast(delimiter = "/")
                                     ).toString()
                                 )
-                                call.respond(it.data!!)
+                                it.data?.let {
+                                    call.respond(it)
+
+                                }
                             }
                         })
                 }
@@ -70,26 +89,9 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
             }
         }
 
-
-
-        get("apps") {
-            fileRouteHandler
-                .getApps()
-                .await()
-                .run {
-                    call.response.debugCorsHeader()
-                    call.respond(Resource.success(this))
-                }
-
-        }
-
-
-
         route("shared") {
             get {
-                //    call.response.header(HttpHeaders.AccessControlAllowOrigin, "*")
                 val filePath = call.parameters["folder"] ?: ""
-
 
                 val ktor = call.ktorApplicationCall(filePath).apply {
                     parameter = filePath
@@ -109,11 +111,14 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                         }
                     })
             }
+
+            /**
+             * POST
+             */
             param("upload") {
                 post {
                     val filePath2 = call.parameters["upload"] ?: ""
 
-                    val tt = call
                     val filePath = filePath2
 
                     val multipart = call.receiveMultipart()
@@ -125,20 +130,30 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
 
                                 val sourceFile = File(filePath + part.originalFileName)
 
-                                part.streamProvider().use { its ->
-                                    its.copyTo(sourceFile.outputStream())
-                                    its.close()
-                                    var fileExists = File(filePath + part.originalFileName).exists()
-                                    if (fileExists) {
-                                        call.response.debugCorsHeader()
+                                try {
+                                    part.streamProvider().use { its ->
 
-                                        call.respond(Resource.success("Filewrite okay"))
-                                    } else {
-                                        call.response.debugCorsHeader()
 
-                                        call.respond(Resource.error(Error.UploadFailedError().message, ""))
+                                        its.copyTo(sourceFile.outputStream())
+                                        its.close()
+                                        var fileExists = File(filePath + part.originalFileName).exists()
+                                        if (fileExists) {
+                                            call.response.debugCorsHeader()
+
+                                            call.respond(Resource.success("Filewrite okay"))
+                                        } else {
+                                            call.response.debugCorsHeader()
+
+                                            call.respond(Resource.error(SheasyError.UploadFailedError().message, ""))
+                                        }
                                     }
+                                }catch (io:FileNotFoundException){
+                                    Log.d("FileRoute: ",io.localizedMessage)
+                                    call.response.debugCorsHeader()
+
+                                    call.respond(Resource.error(SheasyError.UploadFailedError().message, ""))
                                 }
+
                             }
 
                             else -> {

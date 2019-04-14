@@ -6,7 +6,7 @@ import components.materialui.FormControl
 import components.materialui.Menu
 import components.materialui.MenuItem
 import components.materialui.Paper
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
@@ -18,7 +18,6 @@ import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
-import de.jensklingenberg.sheasy.web.ui.common.toolbar
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
@@ -43,17 +42,12 @@ interface AppsViewState : RState {
 
 
 class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
-
-
     val appsDataSource: FileDataSource = FileRepository(ReactHttpClient(NetworkPreferences()))
-
     val messageUseCase = MessageUseCase()
-
     private var presenter: AppsContract.Presenter = AppsPresenter(this, appsDataSource)
 
 
     /****************************************** React Lifecycle methods  */
-
 
     override fun AppsViewState.init() {
         status = Status.LOADING
@@ -76,10 +70,6 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
             attrs {
                 elevation = 1
             }
-
-
-
-
         }
         div {
             CircularProgress {
@@ -109,8 +99,6 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
                                 }
                             }
                         }
-
-
                     }
                     MenuItem {
 
@@ -150,14 +138,14 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     /****************************************** Presenter methods  */
 
-    override fun showError(error: Error) {
+    override fun showError(error: SheasyError) {
         setState {
             when (error) {
-                Error.NetworkError() -> {
+                SheasyError.NetworkError() -> {
                     status = Status.ERROR
                     state.errorMessage = "No Connection"
                 }
-                Error.NotAuthorizedError() -> {
+                SheasyError.NotAuthorizedError() -> {
                     status = Status.ERROR
                     state.errorMessage = "Device is not authorized"
                 }

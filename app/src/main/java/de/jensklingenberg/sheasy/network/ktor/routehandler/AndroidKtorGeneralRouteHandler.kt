@@ -3,7 +3,7 @@ package de.jensklingenberg.sheasy.network.ktor.routehandler
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.data.event.EventDataSource
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.Event
 import de.jensklingenberg.sheasy.model.EventCategory
 import de.jensklingenberg.sheasy.model.Resource
@@ -62,7 +62,7 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
         if (!sheasyPref.devicesRepository.authorizedDevices.contains(Device(call.remoteHostIp))) {
             notificationUseCase.showConnectionRequest(call.remoteHostIp)
             eventDataSource.addEvent(Event(EventCategory.CONNECTION, call.remoteHostIp))
-            return Resource.error(Error.NotAuthorizedError())
+            return Resource.error(SheasyError.NotAuthorizedError())
 
         } else {
 
@@ -72,10 +72,7 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
     }
 
-    override fun get(call: KtorApplicationCall): Resource<Any> {
-        return Resource.error("", "")
 
-    }
 
     override fun getStartPage(): Single<InputStream> {
         return fileDataSource

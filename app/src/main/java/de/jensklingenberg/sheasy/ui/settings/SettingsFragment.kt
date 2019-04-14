@@ -15,8 +15,6 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
 
     private val settingsAdapter = BaseAdapter()
 
-
-
     lateinit var presenter: SettingsContract.Presenter
 
 

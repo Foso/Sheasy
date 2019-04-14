@@ -2,7 +2,7 @@ package de.jensklingenberg.sheasy.web.ui.connection
 
 import de.jensklingenberg.sheasy.web.model.DrawerItems
 import de.jensklingenberg.sheasy.web.ui.home.HomeEntrySourceItem
-import de.jensklingenberg.sheasy.web.ui.home.HomeItem
+import de.jensklingenberg.sheasy.web.model.HomeItem
 
 class ConnectionPresenter(val view : ConnectionContract.View) : ConnectionContract.Presenter {
 

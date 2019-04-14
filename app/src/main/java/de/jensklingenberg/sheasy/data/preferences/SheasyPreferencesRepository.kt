@@ -32,7 +32,7 @@ class SheasyPreferencesRepository(val application: Application) : SheasyPrefData
     override val httpPort = 8766
     override val webSocketPort = 8765
 
-    override val defaultPath = "/storage/emulated/0/"
+    override val defaultPath = Environment.getExternalStorageDirectory().toString()
 
 
 }

@@ -36,16 +36,8 @@ import javax.inject.Inject
 
 class FilesFragment : BaseFragment(), FilesContract.View {
 
-
-    @Inject
-    lateinit var permissionUtils: PermissionUtils
-
     @Inject
     lateinit var messageUseCase: MessageUseCase
-
-
-    private val REQUEST_CAMERA_PERMISSION = 1
-
 
     private val baseAdapter = BaseAdapter()
     lateinit var presenter: FilesContract.Presenter
@@ -66,14 +58,7 @@ class FilesFragment : BaseFragment(), FilesContract.View {
 
         setHasOptionsMenu(true)
 
-        if (ContextCompat.checkSelfPermission(
-               requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
 
-            permissionUtils.requestPermission(this, REQUEST_CAMERA_PERMISSION)
-        }
 
         presenter = FilesPresenter(this)
 
@@ -131,8 +116,6 @@ class FilesFragment : BaseFragment(), FilesContract.View {
                 }
                 .also {
                     it.itemClicks()
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .observeOn(AndroidSchedulers.mainThread())
                         .doOnNext { menuItem ->
                             when (menuItem.itemId) {
                                 R.id.menu_share -> {
@@ -176,8 +159,8 @@ class FilesFragment : BaseFragment(), FilesContract.View {
         val server = menu?.findItem(R.id.menu_server)
 
             HTTPServerService.serverRunning
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(onNext = { running ->
                     if (running) {
                         server?.setIcon(R.drawable.ic_router_green_700_24dp)

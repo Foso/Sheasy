@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.web.ui.files
 
-import de.jensklingenberg.sheasy.model.Error
+import com.noheltcj.rxcommon.observables.Single
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.model.StringRes
@@ -18,10 +19,6 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
     /****************************************** React Lifecycle methods  */
 
-    init {
-
-    }
-
     override fun componentWillUnmount() {}
 
     override fun componentDidMount() {}
@@ -29,7 +26,6 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
     /****************************************** Presenter methods  */
     override fun navigateUp() {
         folderPath = folderPath.substringBeforeLast("/", "")
-
         getFiles()
     }
 
@@ -53,9 +49,7 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
                         view.setData(
                             listOf(
-                                FileSourceItem(FileResponse("No Files", ""),
-                                    { },
-                                    { })
+                                FileSourceItem(FileResponse("No Files", ""))
                             )
                         )
 
@@ -65,7 +59,7 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
                     }
                 }
             }, error = {
-                if (it is Error) {
+                if (it is SheasyError) {
                     view.showError(it)
 
                 }
@@ -99,7 +93,7 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
                     view.setData(this)
                 }
             }, error = {
-                if (it is Error) {
+                if (it is SheasyError) {
                     view.showError(it)
 
                 }
@@ -119,7 +113,7 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
                 view.showSnackBar(StringRes.MESSAGE_SUCCESS)
                 getFiles()
             }, error = {
-                if (it is Error) {
+                if (it is SheasyError) {
                     view.showError(it)
 
                 }
@@ -138,7 +132,5 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
     fun handleClickListItem(event: Event, fileResponse: FileResponse) {
         view.handleClickListItem(event, fileResponse)
-
-
     }
 }

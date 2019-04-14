@@ -1,18 +1,14 @@
 package de.jensklingenberg.sheasy.network.ktor.routes
 
-import android.system.Os.close
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.checkState
 import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import io.ktor.application.ApplicationCallPipeline
 import io.ktor.application.call
-import io.ktor.http.cio.websocket.CloseReason
 import io.ktor.http.cio.websocket.Frame
-import io.ktor.http.cio.websocket.readText
 import io.ktor.request.receive
 import io.ktor.response.respond
-import io.ktor.response.respondRedirect
 import io.ktor.routing.Route
 import io.ktor.routing.get
 import kotlinx.coroutines.launch
@@ -32,7 +28,7 @@ val cc = this
             launch {
 
 
-                if (it.message.equals(Error.NotAuthorizedError().message)) {
+                if (it.message.equals(SheasyError.NotAuthorizedError().message)) {
 
                     if (!filepath.contains("web/connection/")) {
                         generalRouteHandler.getConnectionPage()
@@ -69,13 +65,6 @@ val cc = this
                 call.respond(this)
 
             }
-    }
-
-    get("/share") {
-        val frame = call.receive<Frame>()
-
-        val cc = call
-        //call.respondRedirect("ws://192.168.178.20:8765/share")
     }
 
 }

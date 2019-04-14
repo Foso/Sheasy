@@ -14,7 +14,7 @@ interface AppsContract {
         fun onMoreButtonClicked(view: android.view.View, payload: Any)
     }
 
-    interface Presenter : MvpPresenter, OnEntryClickListener {
+    interface Presenter : MvpPresenter, AppInfoViewHolder.OnClick {
         fun searchApp(toString: String)
         fun extractApp(appInfo: AppInfo): Boolean
         fun shareApp(appInfo: AppInfo)

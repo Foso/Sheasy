@@ -1,13 +1,10 @@
 package de.jensklingenberg.sheasy.network
 
+import android.app.NotificationManager
 import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
-import de.jensklingenberg.sheasy.network.websocket.WebSocketListener
 import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
-import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
-import fi.iki.elonen.NanoHTTPD
-import fi.iki.elonen.NanoWSD
 import io.ktor.server.netty.NettyApplicationEngine
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
@@ -18,12 +15,15 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
-class Server : WebSocketListener {
+class Server {
 
 
     enum class DataDestination {
         SCREENSHARE, SHARE
     }
+
+    val compositeDisposable = CompositeDisposable()
+
 
     @Inject
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
@@ -35,16 +35,16 @@ class Server : WebSocketListener {
     @Inject
     lateinit var vibrationUseCase: VibrationUseCase
 
-    val compositeDisposable = CompositeDisposable()
 
     @Inject
     lateinit var nettyApplicationEngine: NettyApplicationEngine
 
 
+    @Inject
+    lateinit var notificationManager: NotificationManager
+
     init {
         initializeDagger()
-
-        nanoWSDWebSocketDataSource.addListener(this)
     }
 
 
@@ -56,28 +56,26 @@ class Server : WebSocketListener {
     fun start() {
         Log.d("Server", "Server running")
 
-
-
         nanoWSDWebSocketDataSource.start()
-
 
         Single.fromCallable {
             nettyApplicationEngine.start(wait = true)
+
             true
         }
             .subscribeOn(Schedulers.newThread())
             .observeOn(Schedulers.newThread())
             .subscribeBy(onError = {
-                Log.d("runIn",it.message)
+                Log.d("Server", it.message)
                 nettyApplicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
-            }, onSuccess = {}).addTo(compositeDisposable)
-
+            }).addTo(compositeDisposable)
 
         vibrationUseCase.vibrate()
 
     }
 
     fun stop() {
+        notificationManager.cancelAll()
         Log.d("Server", "Server stopped")
         nettyApplicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
         compositeDisposable.dispose()
@@ -119,12 +117,6 @@ class Server : WebSocketListener {
                 nanoWSDWebSocketDataSource.shareWebSocket?.send(data)
             }
         }
-    }
-
-
-    override fun openWebSocket(session: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket {
-        return nanoWSDWebSocketDataSource.openWebSocket(session)
-
     }
 
 

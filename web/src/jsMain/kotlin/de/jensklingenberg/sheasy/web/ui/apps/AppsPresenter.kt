@@ -1,6 +1,6 @@
 package de.jensklingenberg.sheasy.web.ui.apps
 
-import de.jensklingenberg.sheasy.model.Error
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.model.response.App
 import kodando.rxjs.observable.of
@@ -56,7 +56,7 @@ class AppsPresenter(private val view: AppsContract.View, val fileDataSource: Fil
 
                 // view.setData(appsResult)
             }, error = {
-                if (it is Error) {
+                if (it is SheasyError) {
                     view.showError(it)
                 }
             }

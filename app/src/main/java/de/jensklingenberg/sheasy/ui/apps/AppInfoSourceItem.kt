@@ -5,7 +5,8 @@ import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 
 
-class AppInfoSourceItem(appInfo: AppInfo, var onEntryClickListener: OnEntryClickListener? = null) :
+
+class AppInfoSourceItem(appInfo: AppInfo, var onEntryClickListener: AppInfoViewHolder.OnClick? = null) :
     BaseDataSourceItem<AppInfo>(AppInfoViewHolder::class.java) {
 
 

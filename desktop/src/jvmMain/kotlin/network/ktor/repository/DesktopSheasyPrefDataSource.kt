@@ -7,9 +7,15 @@ import de.jensklingenberg.sheasy.network.devices.DevicesDataSource
 class DesktopSheasyPrefDataSource(
 
 ) : SheasyPrefDataSource {
+    override val sharedFolders: ArrayList<FileResponse>
+        get() = arrayListOf(FileResponse("/storage/emulated/0/","/storage/emulated/0/"))
+
+
+
+    override val nonInterceptedFolders: List<String>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
     override val devicesRepository: DevicesDataSource
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-    override val sharedFolders = mutableListOf(FileResponse("/storage/emulated/0/","/storage/emulated/0/"))
 
     override var appFolder: String =""
 

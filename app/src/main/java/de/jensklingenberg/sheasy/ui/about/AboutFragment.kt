@@ -42,8 +42,6 @@ class AboutFragment : BaseFragment(), AboutContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         setupRecyclerView()
         presenter = AboutPresenter(this)
         presenter.onCreate()
@@ -102,8 +100,6 @@ class AboutFragment : BaseFragment(), AboutContract.View {
 
     override fun setData(items: List<BaseDataSourceItem<*>>) {
         aboutAdapter.dataSource.setItems(items)
-
-
     }
 
 
