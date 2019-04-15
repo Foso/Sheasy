@@ -13,8 +13,6 @@ interface NotificationContract {
         fun showNotification(reactNotificationOptions: NotificationOptions)
     }
 
-    interface Presenter : ReactPresenter, MyWebSocket.WebSocketListener{
-
-    }
+    interface Presenter : ReactPresenter, MyWebSocket.WebSocketListener
 
 }

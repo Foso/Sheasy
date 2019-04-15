@@ -19,7 +19,7 @@ buildscript {
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.17"
         classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.45"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.30"
-        classpath 'com.android.tools.build:gradle:3.3.2'
+
         classpath 'com.github.marcpoppleton:git-changelog:0.1.3'
         classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
         classpath "org.jetbrains.kotlin:kotlin-serialization:$configuration.kotlin_version"

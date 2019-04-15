@@ -74,7 +74,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
         div {
             CircularProgress {
                 attrs {
-                    styleProps(display = progressVisibiity())
+                    styleProps(display = progressVisibility())
                 }
             }
         }
@@ -187,7 +187,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
         }
     }
 
-    private fun progressVisibiity(): String {
+    private fun progressVisibility(): String {
         return when (state.status) {
             Status.LOADING -> {
                 ""

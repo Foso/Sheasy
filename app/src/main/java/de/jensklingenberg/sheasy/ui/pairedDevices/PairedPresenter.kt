@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
+import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
 import de.jensklingenberg.sheasy.web.model.Device
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -48,12 +50,18 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
     }
 
     private fun loadPairedDevices() {
+
+        val tt= mutableListOf<BaseDataSourceItem<*>>()
+        tt.add( GenericListHeaderSourceItem(
+            "Authorized"
+        ))
+
         sheasyPrefDataSource.devicesRepository.authorizedDevices
-            .map {
-                DeviceListItemSourceItem(it, this)
-            }.run {
-                view.setData(this)
+            .forEach {
+                tt.add(   DeviceListItemSourceItem(it, this))
             }
+
+        view.setData(tt)
     }
 
 

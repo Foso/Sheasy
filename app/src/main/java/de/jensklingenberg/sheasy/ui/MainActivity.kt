@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     /******************************************  Lifecycle methods  */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(de.jensklingenberg.sheasy.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         setupNavigation()
         handleIntent(intent)

@@ -9,6 +9,9 @@ import de.jensklingenberg.sheasy.network.HttpMethod
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
+import de.jensklingenberg.sheasy.utils.extension.debugCorsHeader
+import io.ktor.application.call
+import io.ktor.response.respond
 import io.reactivex.Single
 import kotlinx.coroutines.rx2.await
 import java.io.File
@@ -38,18 +41,20 @@ class AndroidFileRouteHandler : FileRouteHandler {
     override fun postUpload(
         sourceFilePath: String,
         destinationFilePath: String,
-        inputStream: InputStream
+        its: InputStream
     ): Resource<Any> {
 
         val sourceFile = File(sourceFilePath)
-        val destinationFile = File(destinationFilePath)
 
-        sourceFile.copyTo(destinationFile, true)
 
-        inputStream.copyTo(sourceFile.outputStream())
-
-        return Resource.error("postUploadError", "")
-
+        its.copyTo(sourceFile.outputStream())
+        its.close()
+        var fileExists = File(sourceFilePath).exists()
+        return if (fileExists) {
+            Resource.success("Filewrite okay")
+        } else {
+            Resource.error(SheasyError.UploadFailedError().message, "")
+        }
     }
 
     override suspend fun getShared(call: KtorApplicationCall): Resource<Any> {

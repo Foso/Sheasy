@@ -3,9 +3,11 @@ package de.jensklingenberg.sheasy.web.ui.home
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
+import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import react.RBuilder
 import react.RProps
 import react.RState
+import react.dom.div
 import react.setState
 
 
@@ -17,6 +19,7 @@ interface HomeViewState : RState {
 class HomeView : BaseComponent<RProps, HomeViewState>(), HomeContract.View {
     var presenter = HomePresenter(this)
 
+    /****************************************** React Lifecycle methods  */
 
     override fun HomeViewState.init() {
         item = emptyList()
@@ -27,6 +30,15 @@ class HomeView : BaseComponent<RProps, HomeViewState>(), HomeContract.View {
         presenter.componentDidMount()
     }
 
+
+
+    override fun RBuilder.render() {
+        state.item.render(this)
+    }
+
+    /****************************************** Presenter methods  */
+
+
     override fun setData(items: List<SourceItem>) {
         setState {
             this.item = items
@@ -34,13 +46,10 @@ class HomeView : BaseComponent<RProps, HomeViewState>(), HomeContract.View {
     }
 
 
-    override fun RBuilder.render() {
-        state.item.render(this)
-    }
 }
 
 
-fun RBuilder.app() = child(HomeView::class) {}
+fun RBuilder.home() = child(HomeView::class) {}
 
 
 

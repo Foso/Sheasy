@@ -1,13 +1,15 @@
 package de.jensklingenberg.sheasy.ui.files
 
-import android.content.Context
 import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
+import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
 import de.jensklingenberg.sheasy.ui.common.toSourceitem
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -48,22 +50,54 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
     }
 
     override fun loadFiles() {
+
+        sheasyPrefDataSource.sharedFoldersObs().subscribeBy(onNext = {
+
+            view.setData(it.map { x->x.toSourceitem(this) }
+            )
+        }) .addTo(compositeDisposable)
+
+
         fileDataSource
             .getFiles(filePath)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(onSuccess = { files ->
+                val tt = mutableListOf<BaseDataSourceItem<*>>()
+
+                tt.add(
+                    GenericListHeaderSourceItem(
+                        "Shared Folders"
+                    )
+                )
+
+                tt.addAll(
+
+
+                    sheasyPrefDataSource.sharedFolders.map {
+                        SharedFolderSourceItem(it)
+                    }
+                )
+
+                tt.add(
+                    GenericListHeaderSourceItem(
+                        "Folders"
+                    )
+                )
+
                 files
                     .sortedBy { it.isFile() }
-                    .map { it.toSourceitem(this) }
+                    .forEach { tt.add(it.toSourceitem(this)) }
 
-                    .run {
-                        view.setData(this)
-                    }
+                view.setData(tt)
+
             }, onError = { view.showError(it) })
             .addTo(compositeDisposable)
 
     }
+
+
+
 
 
     override fun folderUp() {
@@ -119,7 +153,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                     .map { it.toSourceitem(this) }
 
                     .run {
-                        view.setData(this)
+                        // view.setData(this)
                     }
             }, onError = {})
             .addTo(compositeDisposable)

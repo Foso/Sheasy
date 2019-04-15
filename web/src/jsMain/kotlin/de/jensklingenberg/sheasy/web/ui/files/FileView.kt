@@ -72,8 +72,6 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
     override fun RBuilder.render() {
 
-      //  toolbar()
-
         div {
             setupBackButton(this)
             setupUploadButton(this)

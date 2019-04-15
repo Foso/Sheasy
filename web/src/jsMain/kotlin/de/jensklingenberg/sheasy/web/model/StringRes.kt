@@ -31,8 +31,13 @@ class StringRes {
         const val MESSAGE_NO_CONNECTION = "No Connection"
         const val MESSAGE_SUCCESS = "SUCCESS"
 
-
+        /**
+         * Network
+         *
+         */
+        const val NOT_CONNECTED = "Not connected"
     }
+
 
 
 }

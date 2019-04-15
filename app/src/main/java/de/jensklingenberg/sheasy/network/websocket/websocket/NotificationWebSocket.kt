@@ -1,4 +1,4 @@
-package de.jensklingenberg.sheasy.network.websocket
+package de.jensklingenberg.sheasy.network.websocket.websocket
 
 import android.annotation.SuppressLint
 import android.util.Log

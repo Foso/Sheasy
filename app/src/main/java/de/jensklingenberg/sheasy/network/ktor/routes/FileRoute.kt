@@ -125,27 +125,26 @@ fun Route.handleFile(fileRouteHandler: FileRouteHandler) {
                     multipart.forEachPart { part ->
                         when (part) {
                             is PartData.FileItem -> {
-                                val tt = ("FileItem: ${part.name} -> ${part.originalFileName} of ${part.contentType}")
-                                val ext = File(part.originalFileName).extension
-
-                                val sourceFile = File(filePath + part.originalFileName)
+                                val sourceFilePath = filePath + part.originalFileName
 
                                 try {
                                     part.streamProvider().use { its ->
 
 
-                                        its.copyTo(sourceFile.outputStream())
-                                        its.close()
-                                        var fileExists = File(filePath + part.originalFileName).exists()
-                                        if (fileExists) {
-                                            call.response.debugCorsHeader()
+                                       fileRouteHandler.postUpload(sourceFilePath,sourceFilePath,its).checkState(onSuccess = {
+                                           launch {
+                                               call.response.debugCorsHeader()
+                                               call.respond(it)
+                                           }
+                                       },onError = {
+                                           launch {
+                                               call.response.debugCorsHeader()
+                                               call.respond(it)
+                                           }
+                                       })
 
-                                            call.respond(Resource.success("Filewrite okay"))
-                                        } else {
-                                            call.response.debugCorsHeader()
 
-                                            call.respond(Resource.error(SheasyError.UploadFailedError().message, ""))
-                                        }
+
                                     }
                                 }catch (io:FileNotFoundException){
                                     Log.d("FileRoute: ",io.localizedMessage)

@@ -1,5 +1,22 @@
 buildscript {
     apply from: './webConstants.gradle'
+
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+        mavenCentral()
+        mavenRepos.each { buildMaven(it) }
+    }
+
+    dependencies {
+
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.45"
+
+
+
+    }
+
 }
 plugins {
 

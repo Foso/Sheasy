@@ -8,8 +8,22 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.devices.DevicesRepository
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 
 class SheasyPreferencesRepository(val application: Application) : SheasyPrefDataSource {
+
+
+    val sharedFoldersSubject: PublishSubject<List<FileResponse>> = PublishSubject.create<List<FileResponse>>()
+
+
+    override fun addShareFolder(folder:FileResponse) {
+        sharedFolders.add(folder)
+        sharedFoldersSubject.onNext(sharedFolders?: emptyList())
+
+    }
+
+
     override val nonInterceptedFolders: List<String> = listOf("/web/connection/")
     override val devicesRepository = DevicesRepository()
 
@@ -28,6 +42,11 @@ class SheasyPreferencesRepository(val application: Application) : SheasyPrefData
 
     override val sharedFolders = arrayListOf<FileResponse>()
 
+
+    override fun sharedFoldersObs(): Observable<List<FileResponse>> {
+        return sharedFoldersSubject.hide()
+
+    }
 
     override val httpPort = 8766
     override val webSocketPort = 8765

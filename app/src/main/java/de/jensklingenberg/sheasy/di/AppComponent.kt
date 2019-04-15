@@ -7,10 +7,10 @@ import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRouteHandler
-import de.jensklingenberg.sheasy.network.websocket.MyWebSocket
-import de.jensklingenberg.sheasy.network.websocket.NotificationWebSocket
-import de.jensklingenberg.sheasy.network.websocket.ScreenShareWebSocket
-import de.jensklingenberg.sheasy.network.websocket.ShareWebSocket
+import de.jensklingenberg.sheasy.network.websocket.websocket.MyWebSocket
+import de.jensklingenberg.sheasy.network.websocket.websocket.NotificationWebSocket
+import de.jensklingenberg.sheasy.network.websocket.websocket.ScreenShareWebSocket
+import de.jensklingenberg.sheasy.network.websocket.websocket.ShareWebSocket
 import de.jensklingenberg.sheasy.service.NotificationListener
 import de.jensklingenberg.sheasy.ui.MainActivity
 import de.jensklingenberg.sheasy.ui.MainActivityDrawer

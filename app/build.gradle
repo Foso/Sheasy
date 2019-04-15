@@ -2,6 +2,19 @@ buildscript {
     apply from: './constants.gradle'
 
 
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+        mavenCentral()
+        mavenRepos.each { buildMaven(it) }
+    }
+    dependencies {
+
+        classpath 'com.android.tools.build:gradle:3.3.2'
+    }
+
+
 }
 
 plugins {

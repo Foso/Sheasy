@@ -20,7 +20,7 @@ fun Route.general(
 ) {
 
     intercept(ApplicationCallPipeline.Call) {
-val cc = this
+
         val filepath = "web/" + call.parameters.entries().firstOrNull { it.key == "filepath" }?.value?.joinToString("/")
 
         val resource = generalRouteHandler.intercept(call.ktorApplicationCall(filepath))

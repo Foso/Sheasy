@@ -6,6 +6,7 @@ import components.materialui.icons.SendIcon
 import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.model.SourceItem
+import de.jensklingenberg.sheasy.web.model.StringRes
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.StringSourceItem
@@ -34,7 +35,6 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
     private var presenter: ShareContract.Presenter? = SharePresenter(this)
 
 
-
     /****************************************** React Lifecycle methods  */
 
     override fun FileViewState.init() {
@@ -44,7 +44,7 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
         anchor = null
         item = arrayListOf()
         inpu = ""
-        activeConnection="Not connected"
+        activeConnection = StringRes.NOT_CONNECTED
 
     }
 
@@ -73,7 +73,7 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
         }
 
         Button {
-            SendIcon{}
+            SendIcon {}
             +"Send"
             attrs {
                 variant = "outlined"
@@ -109,7 +109,7 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
 
     override fun setConnectedMessage(message: String) {
         setState {
-            activeConnection=message
+            activeConnection = message
         }
 
     }
@@ -125,9 +125,7 @@ class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
     /****************************************** Class methods  */
 
 
-
-
-    fun onSearchInputChanged(value: String) {
+    private fun onSearchInputChanged(value: String) {
         state.inpu = value
     }
 

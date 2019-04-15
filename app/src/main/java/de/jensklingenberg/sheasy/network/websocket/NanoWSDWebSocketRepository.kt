@@ -2,6 +2,10 @@ package de.jensklingenberg.sheasy.network.websocket
 
 import android.util.Log
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.network.websocket.websocket.MyWebSocket
+import de.jensklingenberg.sheasy.network.websocket.websocket.NotificationWebSocket
+import de.jensklingenberg.sheasy.network.websocket.websocket.ScreenShareWebSocket
+import de.jensklingenberg.sheasy.network.websocket.websocket.ShareWebSocket
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import java.io.IOException
@@ -28,7 +32,8 @@ class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataS
                 if (screenShareWebSocketMap.containsKey(session.remoteIpAddress)) {
                     return screenShareWebSocketMap[session.remoteIpAddress]!!
                 } else {
-                    val screenShareWebSocket = ScreenShareWebSocket(session)
+                    val screenShareWebSocket =
+                        ScreenShareWebSocket(session)
                     screenShareWebSocketMap[session.remoteIpAddress] = screenShareWebSocket
                     return screenShareWebSocket
                 }
@@ -51,7 +56,8 @@ class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataS
                         if(it.isOpen){
                             return it
                         }else{
-                            shareWebSocket = ShareWebSocket(session)
+                            shareWebSocket =
+                                ShareWebSocket(session)
                             shareWebSocket?.let {
                                 return it
                             }

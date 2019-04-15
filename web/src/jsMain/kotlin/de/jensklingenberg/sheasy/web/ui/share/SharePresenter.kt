@@ -3,7 +3,9 @@ package de.jensklingenberg.sheasy.web.ui.share
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.model.ShareItem
 import de.jensklingenberg.sheasy.model.ShareType
+import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.model.SourceItem
+import de.jensklingenberg.sheasy.web.network.ApiEndPoint.Companion.shareWebSocketURL
 import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.Websocket
 import org.w3c.dom.MessageEvent
@@ -16,7 +18,7 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
 
     override fun onOpen(event: Event) {
         console.log((event))
-        view.setConnectedMessage("Connected to Server")
+        view.setConnectedMessage("Connected to Server: "+NetworkPreferences().hostname)
 
     }
 
@@ -33,7 +35,7 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
 
 
     override fun componentDidMount() {
-        myWebSocket = MyWebSocket(de.jensklingenberg.sheasy.web.network.ApiEndPoint.shareWebSocketURL, this)
+        myWebSocket = MyWebSocket(shareWebSocketURL, this)
         view.setData(item)
     }
 
@@ -44,8 +46,6 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
 
     override fun send(message: String) {
         item.add(ShareSourceItem(ShareItem(message), ShareType.OUTGOING))
-
-        console.log("HI" + message)
         myWebSocket?.send(message)
     }
 

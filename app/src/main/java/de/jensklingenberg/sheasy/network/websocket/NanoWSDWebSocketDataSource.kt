@@ -1,5 +1,6 @@
 package de.jensklingenberg.sheasy.network.websocket
 
+import de.jensklingenberg.sheasy.network.websocket.websocket.ScreenShareWebSocket
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 
