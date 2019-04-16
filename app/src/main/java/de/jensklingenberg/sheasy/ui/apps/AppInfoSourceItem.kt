@@ -21,3 +21,7 @@ class AppInfoSourceItem(appInfo: AppInfo, var onEntryClickListener: AppInfoViewH
 
 
 }
+
+inline fun AppInfo.toAppInfoSourceItem(onEntryClickListener: AppInfoViewHolder.OnClick? = null): AppInfoSourceItem {
+    return AppInfoSourceItem(this, onEntryClickListener)
+}

@@ -77,6 +77,11 @@ class ShareUseCase {
 
     fun hostFolder(fileResponse: FileResponse) {
         sheasyPrefDataSource.addShareFolder(fileResponse)
+
+    }
+
+    fun removeHostFolder(fileResponse: FileResponse){
+        sheasyPrefDataSource.removeShareFolder(fileResponse)
     }
 
 }

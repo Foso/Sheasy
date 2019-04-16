@@ -7,7 +7,8 @@ import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import java.io.File
 
 interface FilesContract {
-    interface Presenter : MvpPresenter, OnEntryClickListener {
+    interface Presenter : MvpPresenter,SharedFolderViewHolder.OnEntryClickListener,
+        FileResponseViewHolder.OnEntryClickListener {
         var filePath: String
 
         fun loadFiles()
@@ -19,7 +20,6 @@ interface FilesContract {
 
     interface View {
         fun updateFolderPathInfo(path: String)
-        fun showPopup(popup: FileResponse?, view: android.view.View)
         fun setData(list: List<BaseDataSourceItem<*>>)
         fun showError(it: Throwable)
 

@@ -9,7 +9,6 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
-import de.jensklingenberg.sheasy.web.model.Device
 import kotlinx.android.synthetic.main.fragment_share.*
 
 

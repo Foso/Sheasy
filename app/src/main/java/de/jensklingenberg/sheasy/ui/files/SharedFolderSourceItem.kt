@@ -2,11 +2,10 @@ package de.jensklingenberg.sheasy.ui.files
 
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 
 class SharedFolderSourceItem(
     fileResponse: FileResponse,
-    var onEntryClickListener: OnEntryClickListener? = null
+    var onEntryClickListener: SharedFolderViewHolder.OnEntryClickListener? = null
 ) :
     BaseDataSourceItem<FileResponse>(SharedFolderViewHolder::class.java) {
 
@@ -19,3 +18,5 @@ class SharedFolderSourceItem(
         setPayload(fileResponse)
     }
 }
+
+

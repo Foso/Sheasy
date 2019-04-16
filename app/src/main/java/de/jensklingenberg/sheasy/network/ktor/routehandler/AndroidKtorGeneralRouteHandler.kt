@@ -3,15 +3,11 @@ package de.jensklingenberg.sheasy.network.ktor.routehandler
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.data.event.EventDataSource
-import de.jensklingenberg.sheasy.model.SheasyError
-import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.model.EventCategory
-import de.jensklingenberg.sheasy.model.Resource
+import de.jensklingenberg.sheasy.model.*
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
-import de.jensklingenberg.sheasy.web.model.Device
 import io.reactivex.Single
 import java.io.InputStream
 import javax.inject.Inject
@@ -40,8 +36,10 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
     override suspend fun intercept(call: KtorApplicationCall): Resource<Any> {
 
         if (sheasyPref.acceptAllConnections) {
-            if (!sheasyPref.devicesRepository.authorizedDevices.contains(Device(call.remoteHostIp))) {
-                sheasyPref.devicesRepository.addAuthorizedDevice(Device(call.remoteHostIp))
+
+
+            if (sheasyPref.devicesRepository.authorizedDevices.none{device->device.ip.equals(call.remoteHostIp)}) {
+                sheasyPref.devicesRepository.addAuthorizedDevice(Device(call.remoteHostIp,authorizationType = AuthorizationType.AUTHORIZED))
                 eventDataSource.addEvent(Event(EventCategory.CONNECTION, call.remoteHostIp))
 
             }
@@ -59,7 +57,7 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
         }
 
 
-        if (!sheasyPref.devicesRepository.authorizedDevices.contains(Device(call.remoteHostIp))) {
+        if (!sheasyPref.devicesRepository.authorizedDevices.contains(Device(call.remoteHostIp,authorizationType = AuthorizationType.AUTHORIZED))) {
             notificationUseCase.showConnectionRequest(call.remoteHostIp)
             eventDataSource.addEvent(Event(EventCategory.CONNECTION, call.remoteHostIp))
             return Resource.error(SheasyError.NotAuthorizedError())

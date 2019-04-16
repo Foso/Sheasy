@@ -6,7 +6,7 @@ import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 
 class FileResponseSourceItem(
     fileResponse: FileResponse,
-    var onEntryClickListener: OnEntryClickListener? = null
+    var onEntryClickListener: FileResponseViewHolder.OnEntryClickListener? = null
 ) :
     BaseDataSourceItem<FileResponse>(FileResponseViewHolder::class.java) {
 
@@ -18,4 +18,8 @@ class FileResponseSourceItem(
     init {
         setPayload(fileResponse)
     }
+}
+
+fun FileResponse.toFileResponseSourceItem(onEntryClickListener: FileResponseViewHolder.OnEntryClickListener? = null): FileResponseSourceItem {
+    return FileResponseSourceItem(this, onEntryClickListener)
 }

@@ -2,9 +2,8 @@ package de.jensklingenberg.sheasy.ui.share
 
 import android.view.View
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.pairedDevices.DeviceListItemViewHolder
-import de.jensklingenberg.sheasy.web.model.Device
+import de.jensklingenberg.sheasy.model.Device
 
 
 class ShareItemSourceItem(

@@ -1,19 +1,34 @@
 package de.jensklingenberg.sheasy.data.devices
 
-import de.jensklingenberg.sheasy.network.devices.DevicesDataSource
-import de.jensklingenberg.sheasy.web.model.Device
+import de.jensklingenberg.sheasy.data.DevicesDataSource
+import de.jensklingenberg.sheasy.model.AuthorizationType
+import de.jensklingenberg.sheasy.model.Device
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 
 class DevicesRepository : DevicesDataSource {
 
-    override val authorizedDevices = mutableListOf<Device>()
+    val knownDevices: BehaviorSubject<List<Device>> = BehaviorSubject.create()
+   override val authorizedDevices = mutableListOf<Device>()
 
+
+    override fun getAuthorizedDevices(): Observable<List<Device>> {
+        return knownDevices.hide()
+    }
 
     override fun addAuthorizedDevice(device: Device) {
         authorizedDevices.add(device)
+        knownDevices.onNext(authorizedDevices)
+
     }
 
     override fun removeDevice(device: Device) {
-        authorizedDevices.remove(device)
+     val index =   authorizedDevices.indexOfFirst { knownDevice->knownDevice.ip.equals(device.ip) }
+        authorizedDevices.set(index,device.copy(authorizationType = AuthorizationType.REVOKED))
+        knownDevices.onNext(authorizedDevices)
+
+
+
     }
 
 }

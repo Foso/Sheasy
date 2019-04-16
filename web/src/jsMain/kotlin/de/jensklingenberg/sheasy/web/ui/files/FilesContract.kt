@@ -16,6 +16,7 @@ interface FilesContract {
         fun setData(items: List<SourceItem>)
 
         fun handleClickListItem(event: Event, fileResponse: FileResponse)
+        fun setContextMenuVisibility(visibility: Boolean)
     }
 
     interface Presenter : ReactPresenter {

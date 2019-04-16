@@ -1,15 +1,13 @@
 package de.jensklingenberg.sheasy.ui.files
 
-import android.view.View
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
-import de.jensklingenberg.sheasy.ui.common.toSourceitem
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -20,7 +18,6 @@ import javax.inject.Inject
 
 
 class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
-
 
     @Inject
     lateinit var fileDataSource: FileDataSource
@@ -51,35 +48,28 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     override fun loadFiles() {
 
-        sheasyPrefDataSource.sharedFoldersObs().subscribeBy(onNext = {
-
-            view.setData(it.map { x->x.toSourceitem(this) }
-            )
-        }) .addTo(compositeDisposable)
-
-
         fileDataSource
             .getFiles(filePath)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(onSuccess = { files ->
-                val tt = mutableListOf<BaseDataSourceItem<*>>()
+                val list = mutableListOf<BaseDataSourceItem<*>>()
 
-                tt.add(
-                    GenericListHeaderSourceItem(
-                        "Shared Folders"
-                    )
-                )
-
-                tt.addAll(
-
-
-                    sheasyPrefDataSource.sharedFolders.map {
-                        SharedFolderSourceItem(it)
+                list.addAll(
+                    sheasyPrefDataSource.sharedFolders.also {
+                        if(it.isNotEmpty()){
+                            list.add(
+                                GenericListHeaderSourceItem(
+                                    "Shared Folders"
+                                )
+                            )
+                        }
+                    }.map {
+                        SharedFolderSourceItem(it,this)
                     }
                 )
 
-                tt.add(
+                list.add(
                     GenericListHeaderSourceItem(
                         "Folders"
                     )
@@ -87,9 +77,9 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
                 files
                     .sortedBy { it.isFile() }
-                    .forEach { tt.add(it.toSourceitem(this)) }
+                    .forEach { list.add(it.toFileResponseSourceItem(this)) }
 
-                view.setData(tt)
+                view.setData(list)
 
             }, onError = { view.showError(it) })
             .addTo(compositeDisposable)
@@ -107,6 +97,11 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     }
 
+    override fun onUnHostFolderClicked(folderResponse: FileResponse) {
+        shareUseCase.removeHostFolder(folderResponse)
+
+    }
+
 
     /****************************************** Listener methods  */
     override fun onItemClicked(payload: Any) {
@@ -117,11 +112,17 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
     }
 
 
-    override fun onMoreButtonClicked(view: View, payload: Any) {
-        val item = payload as? FileResponse
+    override fun onPopupMenuClicked(fileResponse: FileResponse, id: Int) {
+        when(id){
+            R.id.menu_share -> {
+                shareUseCase.share(File(fileResponse.path))
+            }
+            R.id.menu_share_to_server -> {
+                shareUseCase.hostFolder(fileResponse)
 
-        this.view.showPopup(item, view)
 
+            }
+        }
 
     }
 
@@ -150,7 +151,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                 files
                     .filter { it.name.contains(fileName, true) }
                     .sortedBy { it.isFile() }
-                    .map { it.toSourceitem(this) }
+                    .map { it.toFileResponseSourceItem(this) }
 
                     .run {
                         // view.setData(this)

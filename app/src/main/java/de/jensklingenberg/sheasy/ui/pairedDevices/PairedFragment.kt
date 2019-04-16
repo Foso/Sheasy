@@ -9,7 +9,7 @@ import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.NoOrEmptyContentItem
-import de.jensklingenberg.sheasy.web.model.Device
+import de.jensklingenberg.sheasy.model.Device
 import kotlinx.android.synthetic.main.fragment_apps.*
 
 
@@ -35,6 +35,13 @@ class PairedFragment : BaseFragment(), PairedContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecycler()
+
+        pairedPresenter = PairedPresenter(this)
+        pairedPresenter.onCreate()
+    }
+
+    private fun setupRecycler() {
         recyclerView?.apply {
             adapter = aboutAdapter.apply {
                 dataSource.emptyView =
@@ -42,36 +49,10 @@ class PairedFragment : BaseFragment(), PairedContract.View {
             }
             recyclerView.layoutManager = LinearLayoutManager(context)
         }
-
-
-        pairedPresenter = PairedPresenter(this)
-        pairedPresenter.onCreate()
     }
 
 
-    override fun showContextMenu(device: Device, view: View) {
-        val popup = androidx.appcompat.widget.PopupMenu(requireContext(), view)
-            .apply {
-                menuInflater
-                    .inflate(R.menu.paired_devices_actions, menu)
 
-                setOnMenuItemClickListener { menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.menu_revoke -> {
-                            pairedPresenter.revokeDevice(device)
-                            true
-                        }
-                        else -> {
-                            true
-                        }
-                    }
-                }
-
-            }
-
-        popup.show()
-
-    }
 
     override fun setData(list: List<BaseDataSourceItem<*>>) {
         aboutAdapter.dataSource.setItems(list)

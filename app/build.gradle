@@ -1,21 +1,6 @@
 buildscript {
     apply from: './constants.gradle'
-
-
-    repositories {
-        mavenLocal()
-        google()
-        jcenter()
-        mavenCentral()
-        mavenRepos.each { buildMaven(it) }
     }
-    dependencies {
-
-        classpath 'com.android.tools.build:gradle:3.3.2'
-    }
-
-
-}
 
 plugins {
     id("com.android.application")
@@ -27,7 +12,7 @@ plugins {
     id("changelog")
     id("io.gitlab.arturbosch.detekt")
     //id('org.jetbrains.dokka')
-    id("kotlinx-serialization")
+  //  id("kotlinx-serialization")
 
 }
 apply plugin: 'org.jetbrains.dokka'
@@ -193,7 +178,6 @@ dependencies {
     implementation "io.ktor:ktor-gson:$libs.ktor_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
 
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0"
     //NanoHTTPD
     implementation "org.nanohttpd:nanohttpd-websocket:$libs.nanohttpdwebsocket"
    // implementation "org.nanohttpd:nanohttpd:$libs.nanohttpd"

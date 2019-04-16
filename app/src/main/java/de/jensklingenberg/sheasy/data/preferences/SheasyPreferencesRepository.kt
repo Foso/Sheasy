@@ -15,20 +15,24 @@ class SheasyPreferencesRepository(val application: Application) : SheasyPrefData
 
 
     val sharedFoldersSubject: PublishSubject<List<FileResponse>> = PublishSubject.create<List<FileResponse>>()
+    override val nonInterceptedFolders: List<String> = listOf("/web/connection/")
+    override val devicesRepository = DevicesRepository()
+    override var appFolder = Environment.getExternalStorageDirectory().toString() + "/Sheasy/"
 
-
-    override fun addShareFolder(folder:FileResponse) {
+    override fun addShareFolder(folder: FileResponse) {
         sharedFolders.add(folder)
-        sharedFoldersSubject.onNext(sharedFolders?: emptyList())
+        sharedFoldersSubject.onNext(sharedFolders)
 
     }
 
 
-    override val nonInterceptedFolders: List<String> = listOf("/web/connection/")
-    override val devicesRepository = DevicesRepository()
+    override fun removeShareFolder(folder: FileResponse) {
+        sharedFolders.remove(folder)
+        sharedFoldersSubject.onNext(sharedFolders)
+
+    }
 
 
-    override var appFolder = Environment.getExternalStorageDirectory().toString() + "/Sheasy/"
 
     override var acceptAllConnections: Boolean
         get() = PreferenceManager.getDefaultSharedPreferences(application).getBoolean(

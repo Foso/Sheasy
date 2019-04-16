@@ -22,6 +22,7 @@ import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.extension.selectedFile
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
+import io.ktor.http.CacheControl
 import kotlinx.html.DIV
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
@@ -113,9 +114,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
                         anchorEl = state.anchor
                         onClose = {
                             run {
-                                setState {
-                                    openMenu = false
-                                }
+                               setContextMenuVisibility(false)
                             }
                         }
 
@@ -131,16 +130,16 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
                         }
 
                     }
-                    MenuItem {
-                        +"Profile"
-                        attrs {
-                            styleProps(textAlign = "right")
-                            onClick = { event: Event -> handleMenuItemClick(event) }
-                        }
-                    }
+
                 }
             }
 
+        }
+    }
+
+  override  fun setContextMenuVisibility(visibility: Boolean){
+        setState {
+            openMenu = visibility
         }
     }
 

@@ -4,32 +4,58 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.model.Device
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
-import de.jensklingenberg.sheasy.ui.share.ShareItemSourceItem
 import kotlinx.android.synthetic.main.list_item_generic.view.*
 
 class DeviceListItemViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<DeviceListItemSourceItem>(viewParent, R.layout.list_item_generic) {
 
+    interface OnEntryClickListener {
+        fun onPopupMenuClicked(device: Device, id:Int)
+
+    }
 
     override fun onBindViewHolder(item: Any, diff: Bundle) {
 
-        val listItem = (item as DeviceListItemSourceItem).getPayload()
+        val device = (item as DeviceListItemSourceItem).getPayload()
 
-        listItem?.let {
+        device?.let {
             itemView.apply {
-                title.text = if(listItem.name.isEmpty()){
-                    listItem.ip
+                title.text = if(device.name.isEmpty()){
+                    device.ip
                 }else{
-                    listItem.name
+                    device.name
                 }
-                caption.text = listItem.ip
+                caption.text = device.ip
                 icon.setImageResource(R.drawable.ic_smartphone_black_24dp)
 
 
                 moreBtn.visibility = View.VISIBLE
                 moreBtn.setOnClickListener {
-                    item.onEntryClickListener?.onMoreButtonClicked(it, listItem)
+
+                    val popup = androidx.appcompat.widget.PopupMenu(it.context, it)
+                        .apply {
+                            menuInflater
+                                .inflate(R.menu.paired_devices_actions, menu)
+
+                            setOnMenuItemClickListener { menuItem ->
+                                when (menuItem.itemId) {
+                                    R.id.menu_revoke -> {
+                                        item?.onEntryClickListener?.onPopupMenuClicked(device,menuItem.itemId)
+                                       // pairedPresenter.revokeDevice(device)
+                                        true
+                                    }
+                                    else -> {
+                                        true
+                                    }
+                                }
+                            }
+
+                        }
+
+                    popup.show()
+
                 }
 
 

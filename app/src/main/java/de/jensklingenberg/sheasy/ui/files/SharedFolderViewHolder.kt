@@ -1,15 +1,25 @@
 package de.jensklingenberg.sheasy.ui.files
 
 import android.os.Bundle
+import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
+import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
 import kotlinx.android.synthetic.main.list_item_generic.view.*
+import java.io.File
 
 class SharedFolderViewHolder(viewParent: ViewGroup) :
-    BaseViewHolder<FileResponseSourceItem>(viewParent, R.layout.list_item_generic) {
+    BaseViewHolder<SharedFolderSourceItem>(viewParent, R.layout.list_item_generic) {
 
+    interface OnEntryClickListener {
+        fun onItemClicked(payload: Any)
+        fun onUnHostFolderClicked(folderResponse: FileResponse)
+
+    }
 
     override fun onBindViewHolder(item2: Any, diff: Bundle) {
 
@@ -31,7 +41,25 @@ class SharedFolderViewHolder(viewParent: ViewGroup) :
                 }
                 moreBtn.visibility = VISIBLE
                 moreBtn.setOnClickListener {
-                    item2.onEntryClickListener?.onMoreButtonClicked(it, fileResponse)
+                   // item2.onEntryClickListener?.onMoreButtonClicked(it, fileResponse)
+
+                    val popup = PopupMenu(it.context, it)
+                        .apply {
+                            menuInflater
+                                .inflate(R.menu.shared_folder_actions, menu)
+                        }
+                        .also {
+                            it.itemClicks()
+                                .doOnNext { menuItem ->
+                                    when (menuItem.itemId) {
+                                        R.id.menu_unhost_folder -> {
+                                            item2.onEntryClickListener?.onUnHostFolderClicked(fileResponse)
+                                        }
+
+                                    }
+                                }.subscribe()
+                        }
+                    popup.show()
                 }
             }
         }

@@ -5,3 +5,4 @@ data class FileResponse(val name: String, val path: String){
         return path.contains(".")
     }
 }
+

@@ -22,10 +22,4 @@ fun GenericToggleItem.toSourceItem(onEntryClickListener: OnEntryClickListener? =
     return GenericToggleItemSourceItem(this, onEntryClickListener)
 }
 
-inline fun AppInfo.toSourceItem(onEntryClickListener: AppInfoViewHolder.OnClick? = null): AppInfoSourceItem {
-    return AppInfoSourceItem(this, onEntryClickListener)
-}
 
-fun FileResponse.toSourceitem(onEntryClickListener: OnEntryClickListener? = null): FileResponseSourceItem {
-    return FileResponseSourceItem(this, onEntryClickListener)
-}

@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy.network
 
 import de.jensklingenberg.sheasy.model.FileResponse
-import de.jensklingenberg.sheasy.network.devices.DevicesDataSource
+import de.jensklingenberg.sheasy.data.DevicesDataSource
 import io.reactivex.Observable
 
 
@@ -25,4 +25,5 @@ interface SheasyPrefDataSource {
 
     fun sharedFoldersObs() : Observable<List<FileResponse>>
 
+    fun removeShareFolder(folder: FileResponse)
 }

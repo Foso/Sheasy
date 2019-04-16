@@ -9,7 +9,6 @@ import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.web.components.materialui.List
 import de.jensklingenberg.sheasy.web.components.materialui.ListItem
 import de.jensklingenberg.sheasy.web.components.materialui.icons.InsertDriveFileIcon
-import de.jensklingenberg.sheasy.web.model.OnEntryClickListener
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import kotlinx.html.js.onClickFunction
@@ -74,5 +73,7 @@ class FileSourceItem(val fileResponse: FileResponse, val itemClickFunction:(Even
         }
 
     }
+
+
 
 }

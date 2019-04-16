@@ -2,12 +2,14 @@ package de.jensklingenberg.sheasy.ui.apps
 
 import android.view.View
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.ui.common.addTo
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
+import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -44,9 +46,7 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
     }
 
 
-    override fun onMoreButtonClicked(view: View, payload: Any) {
-        this.view.onMoreButtonClicked(view, payload)
-    }
+
 
     override fun onDestroy() {
         compositeDisposable.dispose()
@@ -91,7 +91,7 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
             .subscribeBy(onNext = { appList ->
                 appList.data!!
                     .sortedBy { it.name }
-                    .map { it.toSourceItem(this) }
+                    .map { it.toAppInfoSourceItem(this) }
                     .run {
                         view.setData(this)
                     }
@@ -100,6 +100,21 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
 
             }).addTo(compositeDisposable)
     }
+
+    override fun onPopupMenuClicked(appInfo: AppInfo, id: Int) {
+        when (id) {
+            R.id.menu_share -> {
+                shareApp(appInfo)
+            }
+            R.id.menu_extract -> {
+                if (extractApp(appInfo)) {
+                    view.showMessage(R.string.Success)
+                }
+
+        }
+    }
+    }
+
 
 
 

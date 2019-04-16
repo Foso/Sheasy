@@ -17,7 +17,7 @@ interface HomeViewState : RState {
 }
 
 class HomeView : BaseComponent<RProps, HomeViewState>(), HomeContract.View {
-    var presenter = HomePresenter(this)
+    var presenter: HomeContract.Presenter= HomePresenter(this)
 
     /****************************************** React Lifecycle methods  */
 

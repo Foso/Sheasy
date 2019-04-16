@@ -1,3 +1,3 @@
-package de.jensklingenberg.sheasy.web.model
+package de.jensklingenberg.sheasy.model
 
- data class Device(val ip: String,val name:String="")
+ data class Device(val ip: String,val name:String="",val authorizationType: AuthorizationType=AuthorizationType.UNKNOWN)

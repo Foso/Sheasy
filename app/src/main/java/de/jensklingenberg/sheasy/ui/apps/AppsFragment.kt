@@ -27,6 +27,7 @@ import javax.inject.Inject
 class AppsFragment : BaseFragment(), AppsContract.View {
 
 
+
     private val baseAdapter = BaseAdapter()
 
     lateinit var presenter: AppsContract.Presenter
@@ -105,36 +106,12 @@ class AppsFragment : BaseFragment(), AppsContract.View {
     }
 
 
-    override fun onMoreButtonClicked(view: View, payload: Any) {
-        val appInfo = payload as? AppInfo
-        appInfo?.let {
-            val popup = PopupMenu(requireActivity(), view)
-                .apply {
-                    menuInflater
-                        .inflate(R.menu.apps_actions, menu)
-                }
-                .also {
-                    it.itemClicks()
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnNext { menuItem ->
-                            when (menuItem.itemId) {
-                                R.id.menu_share -> {
-                                    presenter.shareApp(appInfo)
-                                }
-                                R.id.menu_extract -> {
-                                    if (presenter.extractApp(appInfo)) {
-                                        messageUseCase.show(requireView(), "Succes")
-                                    }
-                                }
-                            }
-                        }.subscribe()
-                }
-            popup.show()
-        }
 
+
+
+    override fun showMessage(resId: Int) {
+        messageUseCase.show(requireView(),requireContext().getString(resId))
     }
-
 
 }
 

@@ -4,9 +4,15 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
+import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.model.AppInfo
+import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
+import de.jensklingenberg.sheasy.utils.extension.requireView
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.list_item_generic.view.*
 import javax.inject.Inject
 
@@ -36,13 +42,38 @@ class AppInfoViewHolder(viewParent: ViewGroup) :
 
                 moreBtn.visibility = View.VISIBLE
                 moreBtn.setOnClickListener {
-                    item2.onEntryClickListener?.onMoreButtonClicked(it, appInfo)
+
+                    val popup = PopupMenu(it.context, it)
+                        .apply {
+                            menuInflater
+                                .inflate(R.menu.apps_actions, menu)
+                        }
+                        .also {
+                            it.itemClicks()
+                                .subscribeOn(AndroidSchedulers.mainThread())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnNext { menuItem ->
+                                    when (menuItem.itemId) {
+                                        R.id.menu_share -> {
+                                            item2.onEntryClickListener?.onPopupMenuClicked(appInfo,menuItem.itemId)
+                                            //presenter.shareApp(appInfo)
+                                        }
+                                        R.id.menu_extract -> {
+                                            item2.onEntryClickListener?.onPopupMenuClicked(appInfo,menuItem.itemId)
+
+                                        }
+                                    }
+                                }.subscribe()
+                        }
+                    popup.show()
                 }
             }
         }
     }
 
     interface OnClick{
-        fun onMoreButtonClicked(view: View, payload: Any)
+        fun onPopupMenuClicked(appInfo:  AppInfo, id:Int)
+
+
     }
 }

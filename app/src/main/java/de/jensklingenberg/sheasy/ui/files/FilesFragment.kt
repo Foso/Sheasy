@@ -58,8 +58,6 @@ class FilesFragment : BaseFragment(), FilesContract.View {
 
         setHasOptionsMenu(true)
 
-
-
         presenter = FilesPresenter(this)
 
         parseArguments()
@@ -106,34 +104,6 @@ class FilesFragment : BaseFragment(), FilesContract.View {
 
     /****************************************** Listener methods  */
 
-
-    override fun showPopup(item: FileResponse?, view: View) {
-        item?.let { appInfo ->
-            val popup = PopupMenu(requireContext(), view)
-                .apply {
-                    menuInflater
-                        .inflate(R.menu.files_actions, menu)
-                }
-                .also {
-                    it.itemClicks()
-                        .doOnNext { menuItem ->
-                            when (menuItem.itemId) {
-                                R.id.menu_share -> {
-                                    presenter.share(File(item.path))
-                                }
-                                R.id.menu_share_to_server -> {
-                                    presenter.hostFolder(item)
-                                }
-                            }
-                        }.subscribe()
-                }
-            popup.show()
-
-
-        }
-
-
-    }
 
     override fun setData(list: List<BaseDataSourceItem<*>>) {
         baseAdapter.dataSource.setItems(list)
