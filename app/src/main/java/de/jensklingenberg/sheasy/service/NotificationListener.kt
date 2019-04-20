@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 
 /**
- * Created by jens on 16/2/18.
+ * NotificationListenerService to read the notifications on the device
  */
 
 

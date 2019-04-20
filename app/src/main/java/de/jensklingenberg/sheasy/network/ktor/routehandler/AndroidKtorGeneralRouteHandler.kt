@@ -5,18 +5,26 @@ import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.data.event.EventDataSource
 import de.jensklingenberg.sheasy.model.*
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
+import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
-import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
+import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
+import io.ktor.application.ApplicationCall
+import io.ktor.application.ApplicationCallPipeline
+import io.ktor.application.call
+import io.ktor.response.respond
+import io.ktor.routing.Route
+import io.ktor.routing.get
 import io.reactivex.Single
-import java.io.InputStream
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.rx2.await
 import javax.inject.Inject
 
 class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
 
+
     @Inject
-    lateinit var sheasyPref: SheasyPrefDataSource
+    lateinit var sheasyPrefDataSource: SheasyPrefDataSource
 
     @Inject
     lateinit var notificationUseCase: NotificationUseCase
@@ -33,62 +41,128 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    override suspend fun intercept(call: KtorApplicationCall): Resource<Any> {
-
-        if (sheasyPref.acceptAllConnections) {
+    private fun intercept(call: ApplicationCall): Single<Boolean> {
 
 
-            if (sheasyPref.devicesRepository.authorizedDevices.none{device->device.ip.equals(call.remoteHostIp)}) {
-                sheasyPref.devicesRepository.addAuthorizedDevice(Device(call.remoteHostIp,authorizationType = AuthorizationType.AUTHORIZED))
-                eventDataSource.addEvent(Event(EventCategory.CONNECTION, call.remoteHostIp))
+        return Single.create<Boolean> { singleEmitter ->
+
+            val filepath = "web/" + call.parameters.entries().firstOrNull { it.key == "filepath" }?.value?.joinToString("/")
+
+            val sheasyCall = call.ktorApplicationCall(filepath)
+
+            if (sheasyPrefDataSource.acceptAllConnections) {
+                if (sheasyPrefDataSource.devicesRepository.authorizedDevices.none { device -> device.ip == sheasyCall.remoteHostIp }) {
+                    sheasyPrefDataSource.devicesRepository.addAuthorizedDevice(
+                        Device(
+                            sheasyCall.remoteHostIp,
+                            authorizationType = AuthorizationType.AUTHORIZED
+                        )
+                    )
+                    eventDataSource.addEvent(ConnectionEvent( sheasyCall.remoteHostIp))
+
+                }
+                singleEmitter.onSuccess(false)
 
             }
-            return Resource.success("1")
+
+            val allowedPath = sheasyPrefDataSource.nonInterceptedFolders.any { folderPath ->
+                sheasyCall.requestedApiPath.startsWith(folderPath)
+            }
+
+            if (allowedPath) {
+                singleEmitter.onSuccess(false)
+            }
+
+
+            if (!sheasyPrefDataSource.devicesRepository.authorizedDevices.contains(
+                    Device(
+                        sheasyCall.remoteHostIp,
+                        authorizationType = AuthorizationType.AUTHORIZED
+                    )
+                )
+            ) {
+                notificationUseCase.showConnectionRequest(sheasyCall.remoteHostIp)
+                eventDataSource.addEvent(ConnectionEvent( sheasyCall.remoteHostIp))
+                singleEmitter.onError(SheasyError.NotAuthorizedError())
+
+
+
+            } else {
+
+                singleEmitter.onSuccess(false)
+
+            }
+
 
         }
 
-        val allowedPath = sheasyPref.nonInterceptedFolders.any { folderPath ->
-            call.requestedApiPath.startsWith(folderPath)
+
+
+
+    }
+
+    override fun handleRoute(route: Route) {
+        with(route){
+            intercept(ApplicationCallPipeline.Call) {
+
+
+                val filepath = "web/" + call.parameters.entries().firstOrNull { it.key == "filepath" }?.value?.joinToString("/")
+
+                intercept(call)
+                    .doOnError {error->
+                        when (error) {
+                            is SheasyError.NotAuthorizedError -> {
+                                launch {
+                                    if (!filepath.contains("web/connection/")) {
+                                        fileDataSource
+                                            .getFile(GeneralRouteHandler.CONNECTION_PAGE,true)
+                                            .map { it.readBytes() }
+                                            .await()
+                                            .run {
+                                                call.respond(this)
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .await()
+
+
+            }
+
+            get("/") {
+                fileDataSource
+                    .getFile(GeneralRouteHandler.STARTPAGE_PATH,true)
+                    .map { it.readBytes() }
+                    .await()
+                    .run {
+                        call.respond(this)
+                    }
+            }
+
+            get("web/{filepath...}") {
+                val filepath = "web/" + call.parameters.entries().first { it.key == "filepath" }.value.joinToString("/")
+
+                fileDataSource
+                    .getFile(filepath,true)
+                    .map { it.readBytes() }
+                    .await()
+                    .run {
+                        call.respond(this)
+
+                    }
+            }
         }
 
-        if (allowedPath) {
-            return Resource.success("1")
-
-        }
-
-
-        if (!sheasyPref.devicesRepository.authorizedDevices.contains(Device(call.remoteHostIp,authorizationType = AuthorizationType.AUTHORIZED))) {
-            notificationUseCase.showConnectionRequest(call.remoteHostIp)
-            eventDataSource.addEvent(Event(EventCategory.CONNECTION, call.remoteHostIp))
-            return Resource.error(SheasyError.NotAuthorizedError())
-
-        } else {
-
-            return Resource.success("1")
-
-        }
 
     }
 
 
-
-    override fun getStartPage(): Single<InputStream> {
-        return fileDataSource
-            .getAssetFile("web/index.html")
-
-    }
-
-    override fun getConnectionPage(): Single<InputStream> {
-        return fileDataSource
-            .getAssetFile("web/connection/connection.html")
-    }
-
-
-    override fun getFile(filePath: String): Single<InputStream> {
-        return fileDataSource
-            .getAssetFile(filePath)
-
-    }
 
 
 }
+
+
+
+

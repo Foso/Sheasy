@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : BaseFragment(), HomeContract.View {
 
 
-
     private val baseAdapter = BaseAdapter()
     lateinit var presenter: HomeContract.Presenter
 
@@ -57,7 +56,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         presenter = HomePresenter(this)
         presenter.onCreate()
 
-       // FtpNotification().createNotification(requireContext(),false)
+        // FtpNotification().createNotification(requireContext(),false)
 
     }
 

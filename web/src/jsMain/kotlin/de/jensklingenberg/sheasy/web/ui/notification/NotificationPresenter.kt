@@ -5,7 +5,7 @@ import de.jensklingenberg.sheasy.model.WebsocketResource
 import de.jensklingenberg.sheasy.web.components.Notification.ReactNotificationOptions
 import de.jensklingenberg.sheasy.web.model.NotificationOptions
 import de.jensklingenberg.sheasy.web.model.response.NotificationResponse
-import de.jensklingenberg.sheasy.web.network.ApiEndPoint.Companion.notificationWebSocketURL
+import de.jensklingenberg.sheasy.web.network.API.Companion.notificationWebSocketURL
 import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.Websocket
 import org.w3c.dom.MessageEvent

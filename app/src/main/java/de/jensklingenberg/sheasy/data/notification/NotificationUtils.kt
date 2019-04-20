@@ -8,15 +8,13 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.network.HTTPServerService
-import de.jensklingenberg.sheasy.network.HTTPServerService.Companion.AUTHORIZE_DEVICE
 import de.jensklingenberg.sheasy.utils.NetworkUtils
-import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
+import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 import javax.inject.Inject
 
 
@@ -33,8 +31,8 @@ class NotificationUtils : NotificationUseCase {
     val CHANNEL_FTP_ID = "ftpChannel"
     val FTP_ID = 5
 
-    val ConRequestId= 1
-    val ConRequest= "ConnectionRequestChannel"
+    val ConRequestId = 1
+    val ConRequest = "ConnectionRequestChannel"
 
 
     init {
@@ -47,14 +45,14 @@ class NotificationUtils : NotificationUseCase {
     override fun showConnectionRequest(ipaddress: String) {
 
 
-        val intent = HTTPServerService.autorizeDeviceIntent(context,ipaddress)
+        val intent = HTTPServerService.authorizeDeviceIntent(context, ipaddress)
 
         val replyPendingIntent = PendingIntent.getService(
             context, 0 /* Request code */, intent,
             PendingIntent.FLAG_CANCEL_CURRENT
         )
 
-       // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         createChannel(ConRequest)
         val pendingIntent = PendingIntent.getActivity(
             context, 0 /* Request code */, intent,
@@ -76,7 +74,6 @@ class NotificationUtils : NotificationUseCase {
         notificationManager.notify(ConRequestId, notificationBuilder.build())
 
 
-
     }
 
 
@@ -84,10 +81,10 @@ class NotificationUtils : NotificationUseCase {
         val `when` = System.currentTimeMillis()
 
 
-       // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         createChannel(CHANNEL_FTP_ID)
         val pendingIntent = PendingIntent.getActivity(
-            context, 0 /* Request code */,  HTTPServerService.stopIntent(context),
+            context, 0 /* Request code */, HTTPServerService.stopIntent(context),
             PendingIntent.FLAG_ONE_SHOT
         )
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -122,9 +119,11 @@ class NotificationUtils : NotificationUseCase {
 
     override fun showServerNotification() {
 
-        showNotification("Sheasy Server running","Server running at " + NetworkUtils.getIP(
-            context
-        ) + ":" + BuildConfig.SERVER_PORT,"hhhhh",Intent())
+        showNotification(
+            "Sheasy Server running", "Server running at " + NetworkUtils.getIP(
+                context
+            ) + ":" + BuildConfig.SERVER_PORT, "hhhhh", Intent()
+        )
 
 
     }

@@ -53,9 +53,9 @@ class NanoWSDWebSocketRepository @Inject constructor(sheasyPref: SheasyPrefDataS
                     }
                 } else {
                     shareWebSocket?.let {
-                        if(it.isOpen){
+                        if (it.isOpen) {
                             return it
-                        }else{
+                        } else {
                             shareWebSocket =
                                 ShareWebSocket(session)
                             shareWebSocket?.let {

@@ -8,6 +8,8 @@ import io.reactivex.subjects.PublishSubject
 
 class EventRepository : EventDataSource {
 
+    val eventSubject: PublishSubject<List<Event>> = PublishSubject.create<List<Event>>()
+    val list = mutableListOf<Event>()
 
     init {
         initializeDagger()
@@ -15,11 +17,6 @@ class EventRepository : EventDataSource {
 
 
     private fun initializeDagger() = App.appComponent.inject(this)
-
-
-    val list = mutableListOf<Event>()
-
-    val eventSubject: PublishSubject<List<Event>> = PublishSubject.create<List<Event>>()
 
 
     override fun getEvents(): Observable<List<Event>> {

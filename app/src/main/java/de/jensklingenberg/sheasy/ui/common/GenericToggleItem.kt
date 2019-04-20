@@ -5,5 +5,5 @@ data class GenericToggleItem(
     val caption: String,
     val drawable: Int,
     val checkedValue: Boolean = false,
-    val onToggle: (Boolean)->Unit
+    val onToggle: (Boolean) -> Unit
 )

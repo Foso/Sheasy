@@ -15,6 +15,7 @@ import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import java.io.IOException
@@ -58,10 +59,7 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
     }
 
     override fun onMessage(message: NanoWSD.WebSocketFrame) {
-        Log.d(TAG, message.textPayload.toString())
-        Log.d(TAG, "onMessage: ")
         message.setUnmasked()
-
     }
 
     override fun onPong(pong: NanoWSD.WebSocketFrame) {
@@ -75,18 +73,18 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
 
     override fun onOpen() {
         startRunner()
-        compositeDisposable.add(
-            notificationDataSource.notification.subscribeBy(onNext = {
-                Log.d(TAG, "onComp: ")
 
-                if (isOpen) {
-                    runInBackground {
-                        send(moshi.toJson(it))
-                    }
+        notificationDataSource.notification.subscribeBy(onNext = {
+            Log.d(TAG, "onComp: ")
+
+            if (isOpen) {
+                runInBackground {
+                    send(moshi.toJson(it))
                 }
+            }
 
-            })
-        )
+        }).addTo(compositeDisposable)
+
     }
 
     @SuppressLint("CheckResult")
@@ -105,13 +103,15 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
                 send(
                     adapter.toJson(
 
-                        WebsocketResource(WebSocketType.Notification,Notification(
-                            "test.package",
-                            "Testnotification",
-                            "testtext",
-                            "testsubtext " + t,
-                            0L
-                        ),"")
+                        WebsocketResource(
+                            WebSocketType.Notification, Notification(
+                                "test.package",
+                                "Testnotification",
+                                "testtext",
+                                "testsubtext " + t,
+                                0L
+                            ), ""
+                        )
 
                     )
                 )
@@ -124,7 +124,7 @@ open class NotificationWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.W
             .observeOn(Schedulers.newThread())
             .subscribe { _ ->
                 //Use result for something
-            }
+            }.addTo(compositeDisposable)
 
 
     }

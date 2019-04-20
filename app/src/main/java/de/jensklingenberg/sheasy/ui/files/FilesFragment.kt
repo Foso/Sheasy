@@ -1,36 +1,24 @@
 package de.jensklingenberg.sheasy.ui.files
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jakewharton.rxbinding3.appcompat.itemClicks
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.HTTPServerService
-import de.jensklingenberg.sheasy.ui.common.BaseAdapter
-import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
-import de.jensklingenberg.sheasy.ui.common.BaseFragment
-import de.jensklingenberg.sheasy.ui.common.NoOrEmptyContentItem
-import de.jensklingenberg.sheasy.ui.common.addTo
-import de.jensklingenberg.sheasy.utils.PermissionUtils
-import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
+import de.jensklingenberg.sheasy.ui.common.*
+import de.jensklingenberg.sheasy.data.usecase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_files.*
-import java.io.File
 import javax.inject.Inject
 
 
@@ -64,7 +52,7 @@ class FilesFragment : BaseFragment(), FilesContract.View {
         setupRecyclerView()
         updateFolderPathInfo(presenter.filePath)
 
-        presenter.loadFiles()
+        presenter.onCreate()
         folderUpIv.setOnClickListener { presenter.folderUp() }
     }
 
@@ -128,18 +116,17 @@ class FilesFragment : BaseFragment(), FilesContract.View {
 
         val server = menu?.findItem(R.id.menu_server)
 
-            HTTPServerService.serverRunning
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(onNext = { running ->
-                    if (running) {
-                        server?.setIcon(R.drawable.ic_router_green_700_24dp)
-                    } else {
-                        server?.setIcon(R.drawable.ic_router_black_24dp)
-                    }
+        HTTPServerService.serverRunning
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(onNext = { running ->
+                if (running) {
+                    server?.setIcon(R.drawable.ic_router_green_700_24dp)
+                } else {
+                    server?.setIcon(R.drawable.ic_router_black_24dp)
+                }
 
-                }).addTo(compositeDisposable)
-
+            }).addTo(compositeDisposable)
 
 
     }

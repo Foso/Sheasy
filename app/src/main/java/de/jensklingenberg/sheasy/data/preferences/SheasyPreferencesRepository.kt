@@ -8,31 +8,29 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.devices.DevicesRepository
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.BehaviorSubject
 
 class SheasyPreferencesRepository(val application: Application) : SheasyPrefDataSource {
 
 
-    val sharedFoldersSubject: PublishSubject<List<FileResponse>> = PublishSubject.create<List<FileResponse>>()
+    val sharedFoldersSubject: BehaviorSubject<List<FileResponse>> = BehaviorSubject.create<List<FileResponse>>()
+    override val sharedFolders = arrayListOf<FileResponse>()
     override val nonInterceptedFolders: List<String> = listOf("/web/connection/")
     override val devicesRepository = DevicesRepository()
     override var appFolder = Environment.getExternalStorageDirectory().toString() + "/Sheasy/"
+    override val httpPort = 8766
+    override val webSocketPort = 8765
+    override val defaultPath = Environment.getExternalStorageDirectory().toString()
 
     override fun addShareFolder(folder: FileResponse) {
         sharedFolders.add(folder)
         sharedFoldersSubject.onNext(sharedFolders)
-
     }
-
 
     override fun removeShareFolder(folder: FileResponse) {
         sharedFolders.remove(folder)
         sharedFoldersSubject.onNext(sharedFolders)
-
     }
-
-
 
     override var acceptAllConnections: Boolean
         get() = PreferenceManager.getDefaultSharedPreferences(application).getBoolean(
@@ -44,18 +42,10 @@ class SheasyPreferencesRepository(val application: Application) : SheasyPrefData
             apply()
         }
 
-    override val sharedFolders = arrayListOf<FileResponse>()
-
-
-    override fun sharedFoldersObs(): Observable<List<FileResponse>> {
-        return sharedFoldersSubject.hide()
+    override fun observeSharedFolders(): BehaviorSubject<List<FileResponse>> {
+        return sharedFoldersSubject
 
     }
-
-    override val httpPort = 8766
-    override val webSocketPort = 8765
-
-    override val defaultPath = Environment.getExternalStorageDirectory().toString()
 
 
 }

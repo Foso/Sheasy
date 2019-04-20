@@ -19,7 +19,7 @@ fun runInBackground(function: () -> Unit) {
         .subscribeOn(Schedulers.newThread())
         .observeOn(Schedulers.newThread())
         .subscribeBy(onError = {
-            Log.d("runIn",it.message)
+            Log.d("runIn", it.message)
 
         }, onSuccess = {})
 }

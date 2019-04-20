@@ -8,13 +8,15 @@ import dagger.Provides
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.SheasyApi
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.network.ktor.initNetty
+import de.jensklingenberg.sheasy.network.ktor.ktorApplicationModule
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketRepository
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -59,10 +61,16 @@ open class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideNettyApplicationEngine(sheasyPrefDataSource: SheasyPrefDataSource,generalRouteHandler:GeneralRouteHandler,fileRouteHandler:FileRouteHandler):NettyApplicationEngine =  initNetty(
-        sheasyPrefDataSource,
-        generalRouteHandler,
-        fileRouteHandler
-    )
+    fun provideNettyApplicationEngine(
+        sheasyPrefDataSource: SheasyPrefDataSource,
+        generalRouteHandler: GeneralRouteHandler,
+        fileRouteHandler: FileRouteHandler
+    ): NettyApplicationEngine =
+        embeddedServer(Netty, port = sheasyPrefDataSource.httpPort, module = {
+            ktorApplicationModule(
+                generalRouteHandler,
+                fileRouteHandler
+            )
+        })
 
 }

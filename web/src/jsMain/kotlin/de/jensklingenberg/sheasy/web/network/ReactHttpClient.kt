@@ -16,17 +16,17 @@ import kotlin.browser.window
 import kotlin.js.json
 
 
-class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API {
+class ReactHttpClient() : API {
 
 
     override fun downloadFile(path: String) {
         window.location.href =
-            ApiEndPoint.fileDownloadUrl(path)
+            API.fileDownloadUrl(path)
     }
 
     override fun downloadApk(packageName: String) {
         window.location.href =
-            ApiEndPoint.appDownloadUrl(packageName)
+            API.appDownloadUrl(packageName)
     }
 
     override fun uploadFile(file: File,folderPath: String): Observable<Resource<State>> {
@@ -36,7 +36,7 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
             formData.append(file.name, file, file.name)
 
             window.fetch(
-                ApiEndPoint.postUploadUrl(folderPath),
+                API.postUploadUrl(folderPath),
                 object : RequestInit {
                     override var method: String? = "POST"
                     override var body: dynamic = formData
@@ -62,16 +62,16 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
     }
 
     override fun getFiles(folderPath: String): Observable<List<FileResponse>> {
-        return download(ApiEndPoint.getFilesUrl(folderPath))
+        return download(API.getFilesUrl(folderPath))
     }
 
     override fun getShared(): Observable<List<FileResponse>> {
-        return download(ApiEndPoint.getSharedFolders())
+        return download(API.getSharedFolders())
     }
 
 
     override fun getApps(): Observable<List<App>> {
-        return download(ApiEndPoint.getAppsUrl())
+        return download(API.getAppsUrl())
     }
 
     private inline fun <reified T> download(path: String): Observable<List<T>> {
@@ -105,7 +105,7 @@ class ReactHttpClient(private val networkPreferences: NetworkPreferences) : API 
                 observer.complete()
 
             }.catch { error: Throwable ->
-                observer.error(SheasyError.NetworkError())
+                observer.error(error)
                 observer.complete()
 
             }

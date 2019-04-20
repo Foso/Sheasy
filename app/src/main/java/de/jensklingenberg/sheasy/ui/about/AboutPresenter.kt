@@ -5,14 +5,14 @@ import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
-import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
-import de.jensklingenberg.sheasy.ui.common.GenericListItem
-import de.jensklingenberg.sheasy.ui.common.toSourceItem
-import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
+import de.jensklingenberg.sheasy.ui.common.*
+import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
+    override val compositeDisposable = CompositeDisposable()
+
 
     @Inject
     lateinit var shareUseCase: ShareUseCase
@@ -49,11 +49,13 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
             ).toSourceItem(this)
 
             ,
-            GenericListItem(
-                context.getString(R.string.about_libraries),
-                "",
-                R.drawable.ic_code_grey_700_24dp
-            ).toSourceItem(this)
+            GenericListItemSourceItem(
+                GenericListItem(
+                    context.getString(R.string.about_libraries),
+                    "",
+                    R.drawable.ic_code_grey_700_24dp
+                ), this
+            )
             ,
             GenericListHeaderSourceItem(
                 "License"
@@ -86,6 +88,10 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
 
     override fun onItemClicked(payload: Any) {
         view.onItemClicked(payload)
+    }
+
+    override fun onDestroy() {
+        compositeDisposable.dispose()
     }
 
 }

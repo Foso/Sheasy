@@ -43,8 +43,6 @@ class EventLogFragment : BaseFragment(), EventLogContract.View {
         when (val item = payload) {
 
 
-
-
         }
 
     }

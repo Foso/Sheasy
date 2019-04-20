@@ -9,14 +9,12 @@ import de.jensklingenberg.sheasy.data.sideMenuEntries
 import de.jensklingenberg.sheasy.model.SideMenuEntry
 import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
     override val compositeDisposable: CompositeDisposable = CompositeDisposable()
-
 
 
     @Inject

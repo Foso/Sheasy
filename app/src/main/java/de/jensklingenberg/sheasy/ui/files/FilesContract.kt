@@ -3,11 +3,10 @@ package de.jensklingenberg.sheasy.ui.files
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.MvpPresenter
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 import java.io.File
 
 interface FilesContract {
-    interface Presenter : MvpPresenter,SharedFolderViewHolder.OnEntryClickListener,
+    interface Presenter : MvpPresenter, SharedFolderViewHolder.OnEntryClickListener,
         FileResponseViewHolder.OnEntryClickListener {
         var filePath: String
 

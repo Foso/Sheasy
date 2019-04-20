@@ -6,9 +6,9 @@ import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Resource
-import de.jensklingenberg.sheasy.network.HttpMethod
 import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
+import io.ktor.routing.Route
 import io.reactivex.Single
 import kotlinx.coroutines.rx2.await
 import main.MockTestDataSource.Companion.mockAppList
@@ -18,14 +18,7 @@ import java.io.FileInputStream
 import java.io.InputStream
 
 class DesktopFileRouteHandler(val fileDataSource: FileRepository) : FileRouteHandler {
-
-
-    override fun getApps(): Single<List<AppInfo>> {
-
-        return Single.just(mockAppList)
-    }
-
-    override suspend fun apk( packageName:String): Resource<Any> {
+    override fun handleRoute(route: Route) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -34,8 +27,7 @@ class DesktopFileRouteHandler(val fileDataSource: FileRepository) : FileRouteHan
 
 
 
-
-    override suspend fun getDownload(filePath : String): Resource<Any> {
+    suspend fun getFile(filePath : String): Resource<Any> {
 
 
         if (filePath.contains(".")) {
@@ -47,7 +39,7 @@ class DesktopFileRouteHandler(val fileDataSource: FileRepository) : FileRouteHan
             //appsRepository.sendBroadcast(EventCategory.REQUEST, filePath)
 
             val fileList = fileDataSource
-                .getFiles(filePath)
+                .observeFiles(filePath)
                 .await()
 
             if (fileList.isEmpty()) {
@@ -61,7 +53,7 @@ class DesktopFileRouteHandler(val fileDataSource: FileRepository) : FileRouteHan
         }
     }
 
-    override suspend fun getShared(call: KtorApplicationCall): Resource<Any> {
+    suspend fun getShared(call: KtorApplicationCall): Resource<Any> {
         if(call.parameter.contains("/storage")){
             call.parameter="/"
         }
@@ -78,7 +70,7 @@ class DesktopFileRouteHandler(val fileDataSource: FileRepository) : FileRouteHan
 
     }
 
-    override fun postUpload(
+    fun postUpload(
         sourceFilePath: String,
         destinationFilePath: String,
         inputStream: InputStream

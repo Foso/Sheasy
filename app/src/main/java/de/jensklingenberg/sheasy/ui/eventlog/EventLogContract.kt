@@ -11,7 +11,7 @@ interface EventLogContract {
         fun onItemClicked(payload: Any)
     }
 
-    interface Presenter: OnEntryClickListener {
+    interface Presenter : OnEntryClickListener {
         fun onCreate()
     }
 

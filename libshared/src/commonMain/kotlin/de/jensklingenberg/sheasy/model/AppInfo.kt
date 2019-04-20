@@ -1,10 +1,10 @@
 package de.jensklingenberg.sheasy.model
 
 
-data class AppInfo(
-    val sourceDir: String,
-    val name: String,
-    val packageName: String,
-    val installTime: String
+open class AppInfo(
+    open val sourceDir: String,
+    open val name: String,
+    open val  packageName: String,
+    open  val installTime: String
 )
 

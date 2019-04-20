@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.ui.files
 
 import android.os.Bundle
-import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
@@ -10,7 +9,6 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
 import kotlinx.android.synthetic.main.list_item_generic.view.*
-import java.io.File
 
 class FileResponseViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<FileResponseSourceItem>(viewParent, R.layout.list_item_generic) {
@@ -18,7 +16,7 @@ class FileResponseViewHolder(viewParent: ViewGroup) :
 
     interface OnEntryClickListener {
         fun onItemClicked(payload: Any)
-        fun onPopupMenuClicked(fileResponse: FileResponse,id:Int)
+        fun onPopupMenuClicked(fileResponse: FileResponse, id: Int)
 
     }
 
@@ -30,44 +28,76 @@ class FileResponseViewHolder(viewParent: ViewGroup) :
             itemView.apply {
                 title.text = fileResponse.name
                 caption.text = fileResponse.path
-                if (fileResponse.path.contains(".")) {
+                if (fileResponse.isFile()) {
                     icon.setImageResource(R.drawable.ic_insert_drive_file_grey_700_24dp)
+                    moreBtn.visibility = VISIBLE
+                    moreBtn.setOnClickListener {
+                        // item2.onEntryClickListener?.onMoreButtonClicked(it, fileResponse)
+
+                        val popup = PopupMenu(it.context, it)
+                            .apply {
+                                menuInflater
+                                    .inflate(R.menu.files_actions, menu)
+                            }
+                            .also {
+                                it.itemClicks()
+                                    .doOnNext { menuItem ->
+                                        item2.onEntryClickListener?.onPopupMenuClicked(
+                                            fileResponse,
+                                            menuItem.itemId
+                                        )
+
+                                    }.subscribe()
+                            }
+                        popup.show()
+
+                    }
+
 
                 } else {
+                    moreBtn.visibility = VISIBLE
                     icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
+                    moreBtn.setOnClickListener {
+                        // item2.onEntryClickListener?.onMoreButtonClicked(it, fileResponse)
+
+                        val popup = PopupMenu(it.context, it)
+                            .apply {
+                                menuInflater
+                                    .inflate(R.menu.folders_actions, menu)
+                            }
+                            .also {
+                                it.itemClicks()
+                                    .doOnNext { menuItem ->
+                                        when (menuItem.itemId) {
+                                            R.id.menu_share -> {
+                                                item2.onEntryClickListener?.onPopupMenuClicked(
+                                                    fileResponse,
+                                                    menuItem.itemId
+                                                )
+                                                // presenter.share(File(item.path))
+                                            }
+                                            R.id.menu_share_to_server -> {
+                                                item2.onEntryClickListener?.onPopupMenuClicked(
+                                                    fileResponse,
+                                                    menuItem.itemId
+                                                )
+
+
+                                            }
+                                        }
+                                    }.subscribe()
+                            }
+                        popup.show()
+
+                    }
+
 
                 }
                 item.setOnClickListener {
                     item2.onEntryClickListener?.onItemClicked(fileResponse)
                 }
-                moreBtn.visibility = VISIBLE
-                moreBtn.setOnClickListener {
-                   // item2.onEntryClickListener?.onMoreButtonClicked(it, fileResponse)
-
-                    val popup = PopupMenu(it.context, it)
-                        .apply {
-                            menuInflater
-                                .inflate(R.menu.files_actions, menu)
-                        }
-                        .also {
-                            it.itemClicks()
-                                .doOnNext { menuItem ->
-                                    when (menuItem.itemId) {
-                                        R.id.menu_share -> {
-                                            item2.onEntryClickListener?.onPopupMenuClicked(fileResponse,menuItem.itemId)
-                                           // presenter.share(File(item.path))
-                                        }
-                                        R.id.menu_share_to_server -> {
-                                            item2.onEntryClickListener?.onPopupMenuClicked(fileResponse,menuItem.itemId)
 
 
-                                        }
-                                    }
-                                }.subscribe()
-                        }
-                    popup.show()
-
-                }
             }
         }
 

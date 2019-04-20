@@ -9,7 +9,6 @@ import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.NoOrEmptyContentItem
-import de.jensklingenberg.sheasy.model.Device
 import kotlinx.android.synthetic.main.fragment_apps.*
 
 
@@ -50,8 +49,6 @@ class PairedFragment : BaseFragment(), PairedContract.View {
             recyclerView.layoutManager = LinearLayoutManager(context)
         }
     }
-
-
 
 
     override fun setData(list: List<BaseDataSourceItem<*>>) {

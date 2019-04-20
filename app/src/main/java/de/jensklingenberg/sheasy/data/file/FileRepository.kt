@@ -1,32 +1,33 @@
 package de.jensklingenberg.sheasy.data.file
 
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
+import de.jensklingenberg.sheasy.model.AndroidAppInfo
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import io.reactivex.Completable
 import io.reactivex.Single
-import java.io.File
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import javax.inject.Inject
 
 
 open class FileRepository : FileDataSource {
 
+
     private val cachedApps = mutableListOf<AppInfo>()
 
     @Inject
-    lateinit var pm: PackageManager
+    lateinit var packageManager: PackageManager
 
     @Inject
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
 
     @Inject
-    lateinit var asset: AssetManager
+    lateinit var assetManager: AssetManager
 
     init {
         initializeDagger()
@@ -34,15 +35,26 @@ open class FileRepository : FileDataSource {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    override fun getAssetFile(filePath: String): Single<InputStream> {
-        return Single.create<InputStream> { singleEmitter ->
 
-            val inputStream = asset.open(filePath)
-            singleEmitter.onSuccess(inputStream)
+    override fun getFile(filePath: String, isAssetFile: Boolean): Single<InputStream> {
+        return Single.create<InputStream> { singleEmitter ->
+            try {
+                if (isAssetFile) {
+                    singleEmitter.onSuccess(assetManager.open(filePath))
+                } else {
+                    val fileInputStream = FileInputStream(File(filePath))
+                    singleEmitter.onSuccess(fileInputStream)
+                }
+
+            } catch (ioEx: IOException) {
+                singleEmitter.onError(ioEx)
+            }
+
         }
     }
 
-    override fun getFiles(folderPath: String): Single<List<FileResponse>> {
+
+    override fun observeFiles(folderPath: String): Single<List<FileResponse>> {
         return Single.create<List<FileResponse>> { singleEmitter ->
             try {
                 File(folderPath)
@@ -79,9 +91,20 @@ open class FileRepository : FileDataSource {
                     }
             }
 
-            val appsList = getAllInstalledApplications()
+            val appsList = packageManager
+                .getInstalledApplications(PackageManager.PERMISSION_GRANTED)
+                .filter { packageManager.getLaunchIntentForPackage(it.packageName) != null }
                 .map {
-                    it.mapToAppInfo()
+                    AndroidAppInfo(
+                        sourceDir = it.sourceDir,
+                        name = packageManager.getApplicationLabel(it).toString(),
+                        packageName = it.packageName,
+                        installTime = packageManager.getPackageInfo(
+                            it.packageName,
+                            0
+                        ).firstInstallTime.toString(),
+                        drawable = packageManager.getApplicationIcon(it.packageName)
+                    )
                 }
 
             if (appsList != cachedApps) {
@@ -102,31 +125,24 @@ open class FileRepository : FileDataSource {
 
     }
 
-    private fun ApplicationInfo.mapToAppInfo(): AppInfo {
-        return AppInfo(
-            sourceDir = this.sourceDir,
-            name = pm.getApplicationLabel(this).toString(),
-            packageName = this.packageName,
-            installTime = pm.getPackageInfo(
-                this.packageName,
-                0
-            ).firstInstallTime.toString()
-        )
-    }
 
+    override fun extractApk(appInfo: AppInfo): Completable {
+        return Completable.create { singleEmitter ->
+            val file = File(appInfo.sourceDir)
+            val file2 = File(sheasyPrefDataSource.appFolder + appInfo.packageName + ".apk")
+            try {
+                file.copyTo(file2, true)
+                singleEmitter.onComplete()
+            } catch (ioException: IOException) {
+                singleEmitter.onError(ioException)
+            }
 
-    override fun extractApk(appInfo: AppInfo): Boolean {
-        val file = File(appInfo.sourceDir)
-        val file2 = File(sheasyPrefDataSource.appFolder + appInfo.packageName + ".apk")
-        return try {
-            file.copyTo(file2, true)
-            true
-        } catch (ioException: IOException) {
-            false
         }
+
+
     }
 
-    override fun getTempFile(appInfo: AppInfo): File {
+    override fun createTempFile(appInfo: AppInfo): File {
         val file = File(appInfo.sourceDir)
         val file2 = File(sheasyPrefDataSource.appFolder + "/temp/" + appInfo.packageName + ".apk")
 
@@ -134,11 +150,23 @@ open class FileRepository : FileDataSource {
         return file2
     }
 
-    private fun getAllInstalledApplications(): List<ApplicationInfo> {
-        return pm
-            .getInstalledApplications(PackageManager.PERMISSION_GRANTED)
-            .filter { pm.getLaunchIntentForPackage(it.packageName) != null }
-    }
+    override fun saveUploadedFile(destinationFilePath: String, inputStream: InputStream): Completable {
+        return Completable.create { singleEmitter ->
 
+            try {
+                val destinationFile = File(destinationFilePath)
+                inputStream.copyTo(destinationFile.outputStream())
+                inputStream.close()
+                if (File(destinationFilePath).exists()) {
+                    singleEmitter.onComplete()
+                } else {
+                    singleEmitter.onError(SheasyError.UploadFailedError())
+                }
+            } catch (io: FileNotFoundException) {
+                singleEmitter.onError(io)
+            }
+
+        }
+    }
 
 }

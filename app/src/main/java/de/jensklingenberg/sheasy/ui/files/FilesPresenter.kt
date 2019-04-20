@@ -7,7 +7,7 @@ import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
-import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
+import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -33,6 +33,10 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     override var filePath = ""
 
+    var shared: List<BaseDataSourceItem<*>> = emptyList()
+
+    var files: List<BaseDataSourceItem<*>> = emptyList()
+
     init {
         initializeDagger()
         filePath = sheasyPrefDataSource.defaultPath
@@ -48,38 +52,56 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     override fun loadFiles() {
 
-        fileDataSource
-            .getFiles(filePath)
+        //TODO: Combine the observables
+
+        sheasyPrefDataSource
+            .observeSharedFolders()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(onSuccess = { files ->
+            .subscribeBy { fileList ->
+
                 val list = mutableListOf<BaseDataSourceItem<*>>()
 
-                list.addAll(
-                    sheasyPrefDataSource.sharedFolders.also {
-                        if(it.isNotEmpty()){
-                            list.add(
-                                GenericListHeaderSourceItem(
-                                    "Shared Folders"
-                                )
+                shared = list.apply {
+                    if (fileList.isNotEmpty()) {
+                        add(
+                            GenericListHeaderSourceItem(
+                                "Shared Folders"
                             )
-                        }
-                    }.map {
-                        SharedFolderSourceItem(it,this)
+                        )
+                        addAll(fileList.map {
+                            SharedFolderSourceItem(it, this@FilesPresenter)
+                        })
                     }
-                )
 
-                list.add(
-                    GenericListHeaderSourceItem(
-                        "Folders"
-                    )
-                )
+                }
 
-                files
-                    .sortedBy { it.isFile() }
-                    .forEach { list.add(it.toFileResponseSourceItem(this)) }
+                view.setData(shared + files)
+            }.addTo(compositeDisposable)
 
-                view.setData(list)
+
+        fileDataSource
+            .observeFiles(filePath)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(onSuccess = { fileList ->
+                val list = mutableListOf<BaseDataSourceItem<*>>()
+
+                files = list.apply {
+                    if (fileList.isNotEmpty()) {
+                        add(
+                            GenericListHeaderSourceItem(
+                                "Folders"
+                            )
+                        )
+                        addAll(fileList.sortedBy { it.isFile() }.map {
+                            FileResponseSourceItem(it, this@FilesPresenter)
+                        })
+                    }
+
+                }
+
+                view.setData(shared + files)
 
             }, onError = { view.showError(it) })
             .addTo(compositeDisposable)
@@ -87,12 +109,9 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
     }
 
 
-
-
-
     override fun folderUp() {
         filePath = filePath.replaceAfterLast("/", "")
-        loadFiles()
+        // loadFiles()
         view.updateFolderPathInfo(filePath)
 
     }
@@ -113,14 +132,12 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
 
     override fun onPopupMenuClicked(fileResponse: FileResponse, id: Int) {
-        when(id){
+        when (id) {
             R.id.menu_share -> {
                 shareUseCase.share(File(fileResponse.path))
             }
             R.id.menu_share_to_server -> {
                 shareUseCase.hostFolder(fileResponse)
-
-
             }
         }
 
@@ -136,28 +153,13 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     }
 
-    override fun hostFolder(item: FileResponse) {
-        shareUseCase.hostFolder(item)
+    override fun hostFolder(fileResponse: FileResponse) {
+        shareUseCase.hostFolder(fileResponse)
 
     }
 
     override fun searchFile(fileName: String) {
-        fileDataSource
-            .getFiles(filePath)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
 
-            .subscribeBy(onSuccess = { files ->
-                files
-                    .filter { it.name.contains(fileName, true) }
-                    .sortedBy { it.isFile() }
-                    .map { it.toFileResponseSourceItem(this) }
-
-                    .run {
-                        // view.setData(this)
-                    }
-            }, onError = {})
-            .addTo(compositeDisposable)
 
     }
 

@@ -4,7 +4,7 @@ import android.app.NotificationManager
 import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
-import de.jensklingenberg.sheasy.utils.UseCase.VibrationUseCase
+import de.jensklingenberg.sheasy.data.usecase.VibrationUseCase
 import io.ktor.server.netty.NettyApplicationEngine
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable

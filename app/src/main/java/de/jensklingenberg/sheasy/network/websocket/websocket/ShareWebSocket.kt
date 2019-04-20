@@ -6,10 +6,7 @@ import com.squareup.moshi.Types
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.event.EventDataSource
 import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
-import de.jensklingenberg.sheasy.model.Event
-import de.jensklingenberg.sheasy.model.EventCategory
-import de.jensklingenberg.sheasy.model.Resource
-import de.jensklingenberg.sheasy.model.ShareItem
+import de.jensklingenberg.sheasy.model.*
 import de.jensklingenberg.sheasy.utils.extension.toJson
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
@@ -19,6 +16,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import java.io.IOException
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -59,12 +57,13 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
         Log.d(TAG, message.textPayload.toString())
         Log.d(TAG, "onMessage: " + message)
         message.setUnmasked()
-        eventDataSource.addEvent(Event(EventCategory.SHARE, message.textPayload))
+
+        eventDataSource.addEvent(MessageEvent(  message.textPayload ?: "", Date().toString(), MessageType.INCOMING))
 
     }
 
     override fun onPong(pong: NanoWSD.WebSocketFrame) {
-        Log.d(TAG, "onPong: ")
+        Log.d(TAG, "onPong: "+pong.textPayload)
     }
 
     override fun onException(exception: IOException) {
@@ -76,12 +75,7 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
         startRunner()
 
         notificationDataSource.notification.subscribeBy(onNext = {
-            Log.d(TAG, "onComp: ")
-
-
-                    send(moshi.toJson(it))
-
-
+            send(moshi.toJson(it))
         }).addTo(compositeDisposable)
 
     }
@@ -114,7 +108,7 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
         }
 
 
-        eventDataSource.addEvent(Event(EventCategory.SHARE, payload ?: ""))
+        eventDataSource.addEvent(MessageEvent( payload ?: "","hhh", MessageType.OUTGOING))
 
     }
 

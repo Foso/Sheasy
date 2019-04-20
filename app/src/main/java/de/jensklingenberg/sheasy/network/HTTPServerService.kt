@@ -10,9 +10,9 @@ import android.os.IBinder
 import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.model.AuthorizationType
-import de.jensklingenberg.sheasy.ui.common.OnResultActivity
-import de.jensklingenberg.sheasy.utils.UseCase.NotificationUseCase
 import de.jensklingenberg.sheasy.model.Device
+import de.jensklingenberg.sheasy.ui.common.OnResultActivity
+import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
@@ -27,9 +27,12 @@ class HTTPServerService : Service() {
 
 
     companion object {
+        private lateinit var bind: ServiceBinder
+        val ACTION_ON_ACTIVITY_RESULT = "ACTION_ON_ACTIVITY_RESULT"
+        val AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
+        val serverRunning: BehaviorSubject<Boolean> = BehaviorSubject.create<Boolean>()
+        private val ACTION_STOP = "ACTION_STOP"
 
-
-        lateinit var bind: ServiceBinder
         fun getIntent(context: Context) =
             Intent(context, HTTPServerService::class.java)
 
@@ -38,13 +41,8 @@ class HTTPServerService : Service() {
                 action = ACTION_STOP
             }
 
-        val ACTION_ON_ACTIVITY_RESULT = "ACTION_ON_ACTIVITY_RESULT"
-        val AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
-        val serverRunning: BehaviorSubject<Boolean> = BehaviorSubject.create<Boolean>()
-        private  val ACTION_STOP="ACTION_STOP"
-
-        fun autorizeDeviceIntent(context: Context,ipaddress: String): Intent {
-            val authIntent=  Intent(context, HTTPServerService::class.java).apply {
+        fun authorizeDeviceIntent(context: Context, ipaddress: String): Intent {
+            val authIntent = Intent(context, HTTPServerService::class.java).apply {
                 putExtra(AUTHORIZE_DEVICE, ipaddress)
             }
             return authIntent
@@ -85,7 +83,12 @@ class HTTPServerService : Service() {
             } else {
                 if (intent.hasExtra(AUTHORIZE_DEVICE)) {
                     val ipAddress = intent.getStringExtra(AUTHORIZE_DEVICE)
-                    sheasyPref.devicesRepository.addAuthorizedDevice(Device(ipAddress,authorizationType = AuthorizationType.AUTHORIZED))
+                    sheasyPref.devicesRepository.addAuthorizedDevice(
+                        Device(
+                            ipAddress,
+                            authorizationType = AuthorizationType.AUTHORIZED
+                        )
+                    )
                 }
                 return super.onStartCommand(intent, flags, startId)
 
@@ -129,8 +132,6 @@ class HTTPServerService : Service() {
     }
 
     /****************************************** Listener methods  */
-
-
 
 
     private val receiver = object : BroadcastReceiver() {

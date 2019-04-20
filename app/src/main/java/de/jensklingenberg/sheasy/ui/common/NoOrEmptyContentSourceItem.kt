@@ -1,7 +1,7 @@
 package de.jensklingenberg.sheasy.ui.common
 
 
-data class NoOrEmptyContentItem(val message: String = "",val iconID :Int) {
+data class NoOrEmptyContentItem(val message: String = "", val iconID: Int) {
     fun toSourceItem(): BaseDataSourceItem<*>? {
         return NoOrEmptyContentSourceItem(this)
 

@@ -57,7 +57,8 @@ class ScreenCaptureFragment : BaseFragment() {
 
     /****************************************** UI Widget Callbacks  */
     private fun startProjection() {
-        startActivityForResult(screenRecord.createScreenCaptureIntent(),
+        startActivityForResult(
+            screenRecord.createScreenCaptureIntent(),
             REQUEST_CODE
         )
     }

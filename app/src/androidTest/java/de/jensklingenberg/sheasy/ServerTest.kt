@@ -67,13 +67,9 @@ class ServerTest {
     fun getSharedTest() {
 
 
-        val response = sheasyApi.getShared().test().values()[0].body()
+        val response = sheasyApi.getShared().test()
 
-        val list = response!!.data!!
-
-        Assert.assertNotNull(list)
-
-        Assert.assertEquals(1, list.size)
+        Assert.assertEquals(1,response)
 
     }
 
@@ -81,7 +77,7 @@ class ServerTest {
     @Test
     fun getAppsTest() {
 
-        every { mockApplication.fileRepositoryy.getApps(any()) } returns Single.just(
+        every { mockApplication.fileRepository.getApps(any()) } returns Single.just(
             listOf(
                 AppInfo(
                     "",

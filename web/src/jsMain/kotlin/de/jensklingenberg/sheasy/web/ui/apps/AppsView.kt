@@ -42,7 +42,7 @@ interface AppsViewState : RState {
 
 
 class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
-    val appsDataSource: FileDataSource = FileRepository(ReactHttpClient(NetworkPreferences()))
+    val appsDataSource: FileDataSource = FileRepository(ReactHttpClient())
     val messageUseCase = MessageUseCase()
     private var presenter: AppsContract.Presenter = AppsPresenter(this, appsDataSource)
 

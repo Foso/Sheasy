@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.content.res.AssetManager
 import android.media.projection.MediaProjectionManager
 import android.net.wifi.WifiManager
+import android.os.Vibrator
 import android.view.WindowManager
 import dagger.Module
 import dagger.Provides
@@ -49,5 +50,10 @@ class AndroidModule {
     @Singleton
     fun provideMediaProjectionManager(context: Context): MediaProjectionManager =
         context.mediaProjectionManager()
+
+    @Provides
+    @Singleton
+    fun provideVibrator(context: Context): Vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
 
 }

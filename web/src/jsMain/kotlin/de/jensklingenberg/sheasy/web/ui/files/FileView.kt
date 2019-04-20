@@ -51,7 +51,7 @@ interface FileViewState : RState {
 class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
 
-    val appsDataSource: FileDataSource = FileRepository(ReactHttpClient(NetworkPreferences()))
+    val appsDataSource: FileDataSource = FileRepository(ReactHttpClient())
     var presenter = FilesPresenter(this, appsDataSource)
     val messageUseCase = MessageUseCase()
 

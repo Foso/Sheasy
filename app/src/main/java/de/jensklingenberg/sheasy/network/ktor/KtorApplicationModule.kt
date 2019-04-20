@@ -1,7 +1,5 @@
 package de.jensklingenberg.sheasy.network.ktor
 
-import de.jensklingenberg.sheasy.network.ktor.routes.general
-import de.jensklingenberg.sheasy.network.ktor.routes.handleFile
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 
@@ -15,7 +13,10 @@ import io.ktor.gson.gson
 import io.ktor.routing.route
 import io.ktor.routing.routing
 
-
+/**
+ * This is the configuration for the Ktor Server
+ *
+ */
 fun Application.ktorApplicationModule(
     generalRouteHandler: GeneralRouteHandler,
     fileRouteHandler: FileRouteHandler
@@ -36,26 +37,15 @@ fun Application.ktorApplicationModule(
             maxRangeCount = 10
         }
 
-
-
-        // anyHost()
-        // header(HttpHeaders.AccessControlAllowOrigin)
-        // allowCredentials = true
-
-
         routing {
-
-
             route("") {
-                general(generalRouteHandler)
+                generalRouteHandler.handleRoute(this)
 
                 route("/api/v1/") {
-                    handleFile(fileRouteHandler)
+                    fileRouteHandler.handleRoute(this)
                 }
             }
         }
-
-
     }
 
 }

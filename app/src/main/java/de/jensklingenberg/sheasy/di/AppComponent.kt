@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.di
 import dagger.Component
 import de.jensklingenberg.sheasy.data.event.EventRepository
 import de.jensklingenberg.sheasy.data.file.FileRepository
+import de.jensklingenberg.sheasy.data.notification.NotificationUtils
 import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
@@ -33,9 +34,8 @@ import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsPresenter
 import de.jensklingenberg.sheasy.ui.share.ShareFragment
 import de.jensklingenberg.sheasy.ui.share.SharePresenter
-import de.jensklingenberg.sheasy.data.notification.NotificationUtils
 import de.jensklingenberg.sheasy.utils.ScreenRecord
-import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
+import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
 import javax.inject.Singleton
 
 @Component(modules = [(AppModule::class), (UseCaseModule::class), (NetworkModule::class), (AndroidModule::class)])

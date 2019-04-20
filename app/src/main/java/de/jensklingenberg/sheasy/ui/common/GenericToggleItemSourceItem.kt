@@ -22,6 +22,4 @@ class GenericToggleItemSourceItem(
     }
 
 
-
-    
 }

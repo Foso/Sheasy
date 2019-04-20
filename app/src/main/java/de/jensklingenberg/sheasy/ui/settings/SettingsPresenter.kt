@@ -3,13 +3,9 @@ package de.jensklingenberg.sheasy.ui.settings
 import android.content.Context
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.CheckPermissionUseCase
+import de.jensklingenberg.sheasy.data.usecase.CheckPermissionUseCase
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
-import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
-import de.jensklingenberg.sheasy.ui.common.GenericListItem
-import de.jensklingenberg.sheasy.ui.common.GenericToggleItem
-import de.jensklingenberg.sheasy.ui.common.toSourceItem
+import de.jensklingenberg.sheasy.ui.common.*
 import de.jensklingenberg.sheasy.utils.NetworkUtils
 import javax.inject.Inject
 

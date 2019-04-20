@@ -4,20 +4,17 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jakewharton.rxbinding3.appcompat.itemClicks
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.addTo
-import de.jensklingenberg.sheasy.utils.UseCase.MessageUseCase
+import de.jensklingenberg.sheasy.data.usecase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_apps.*
@@ -25,7 +22,6 @@ import javax.inject.Inject
 
 
 class AppsFragment : BaseFragment(), AppsContract.View {
-
 
 
     private val baseAdapter = BaseAdapter()
@@ -69,7 +65,6 @@ class AppsFragment : BaseFragment(), AppsContract.View {
     }
 
 
-
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         menu?.clear()
         inflater?.inflate(R.menu.fragment_apps_options_menu, menu)
@@ -100,17 +95,14 @@ class AppsFragment : BaseFragment(), AppsContract.View {
     }
 
 
-    override fun showError(it: Throwable?) {
+    override fun showError(it: Throwable) {
         messageUseCase.show(requireView(), it?.message ?: "")
 
     }
 
 
-
-
-
     override fun showMessage(resId: Int) {
-        messageUseCase.show(requireView(),requireContext().getString(resId))
+        messageUseCase.show(requireView(), requireContext().getString(resId))
     }
 
 }

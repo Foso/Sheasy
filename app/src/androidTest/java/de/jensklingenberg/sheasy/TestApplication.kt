@@ -11,22 +11,20 @@ class TestApplication : App() {
 
 // val server: Server= mockk()
 
-lateinit var testAppComponent: TestAppComponent
+    lateinit var testAppComponent: TestAppComponent
 
-    var fileRepositoryy : FileRepository = mockk(relaxed=true)
+    var fileRepository: FileRepository = mockk(relaxed = true)
 
     override fun initializeDagger() {
 
         testAppComponent = DaggerTestAppComponent.builder()
-            .appModule(TestAppModule(this,fileRepositoryy))
+            .appModule(TestAppModule(this, fileRepository))
             .networkModule(TestNetworkModule())
             .useCaseModule(UseCaseModule())
             .build()
 
-        appComponent=testAppComponent
+        appComponent = testAppComponent
     }
-
-
 
 
 }

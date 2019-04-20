@@ -2,11 +2,8 @@ package de.jensklingenberg.sheasy.utils
 
 import android.Manifest
 import android.app.Activity
-import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 
 
 class PermissionUtils {
@@ -30,12 +27,20 @@ class PermissionUtils {
     fun requestPermission(fragment: Activity, requestCode: Int) {
 
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(fragment,Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            ActivityCompat.requestPermissions(fragment,arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), requestCode)
+        if (ActivityCompat.shouldShowRequestPermissionRationale(fragment, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            ActivityCompat.requestPermissions(
+                fragment,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                requestCode
+            )
 
 
         } else {
-            ActivityCompat.requestPermissions(fragment,arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), requestCode)
+            ActivityCompat.requestPermissions(
+                fragment,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                requestCode
+            )
         }
     }
 

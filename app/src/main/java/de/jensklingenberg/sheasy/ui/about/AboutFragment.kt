@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
@@ -13,7 +14,7 @@ import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
-import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
+import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
 import kotlinx.android.synthetic.main.fragment_apps.*
 import javax.inject.Inject
 
@@ -84,7 +85,7 @@ class AboutFragment : BaseFragment(), AboutContract.View {
                                 Intent.ACTION_VIEW,
                                 Uri.parse(getString(R.string.about_license_link))
                             )
-                        startActivity(browserIntent)
+                        ContextCompat.startActivity(requireContext(), browserIntent, null)
                     }
 
                     "Feedback" -> {

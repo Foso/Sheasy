@@ -2,7 +2,6 @@ package de.jensklingenberg.sheasy.ui.files
 
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
-import de.jensklingenberg.sheasy.ui.common.OnEntryClickListener
 
 class FileResponseSourceItem(
     fileResponse: FileResponse,
@@ -20,6 +19,3 @@ class FileResponseSourceItem(
     }
 }
 
-fun FileResponse.toFileResponseSourceItem(onEntryClickListener: FileResponseViewHolder.OnEntryClickListener? = null): FileResponseSourceItem {
-    return FileResponseSourceItem(this, onEntryClickListener)
-}

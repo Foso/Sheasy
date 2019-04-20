@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.ui.pairedDevices
 
 import android.content.Context
-import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.AuthorizationType
@@ -19,7 +18,7 @@ import javax.inject.Inject
 
 
 class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter {
-    override fun onPopupMenuClicked(device: Device, id: Int) {
+    override fun onContextMenuClick(device: Device, id: Int) {
         when (id) {
             R.id.menu_revoke -> {
                 revokeDevice(device)
@@ -46,7 +45,6 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)
-
 
 
     override fun onCreate() {
@@ -115,8 +113,6 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
             }
     }
-
-
 
 
 }

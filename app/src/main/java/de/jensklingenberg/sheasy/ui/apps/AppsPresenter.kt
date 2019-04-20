@@ -1,16 +1,15 @@
 package de.jensklingenberg.sheasy.ui.apps
 
-import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
-import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.ui.common.addTo
-import de.jensklingenberg.sheasy.ui.common.toSourceItem
-import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
-import de.jensklingenberg.sheasy.utils.extension.requireView
+import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
+import de.jensklingenberg.sheasy.model.AndroidAppInfo
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -21,7 +20,7 @@ import javax.inject.Inject
 class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
 
 
-    val appsSubject: PublishSubject<Resource<List<AppInfo>>> = PublishSubject.create<Resource<List<AppInfo>>>()
+    private val appsSubject: PublishSubject<List<AppInfo>> = PublishSubject.create<List<AppInfo>>()
 
     override val compositeDisposable = CompositeDisposable()
 
@@ -45,9 +44,6 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
         loadApps()
     }
 
-
-
-
     override fun onDestroy() {
         compositeDisposable.dispose()
     }
@@ -63,24 +59,24 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
             .observeOn(Schedulers.newThread())
             .subscribeBy(onSuccess = { appsList ->
                 appsSubject.onNext(
-                    Resource.success(appsList.filter {
+                    appsList.filter {
                         it.name.contains(query, ignoreCase = true)
-                    })
+                    }
                 )
             }, onError = {
                 snackbar.onError(it)
             }).addTo(compositeDisposable)
     }
 
-    fun getApps(): Observable<Resource<List<AppInfo>>> {
+    fun getApps(): Observable<List<AppInfo>> {
         return appsSubject.hide()
     }
 
     override fun shareApp(appInfo: AppInfo) {
-        shareUseCase.share(fileDataSource.getTempFile(appInfo))
+        shareUseCase.shareApp(appInfo)
     }
 
-    override fun extractApp(appInfo: AppInfo): Boolean {
+    override fun extractApp(appInfo: AppInfo): Completable {
         return fileDataSource.extractApk(appInfo)
     }
 
@@ -88,17 +84,17 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
         getApps()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(onNext = { appList ->
-                appList.data!!
+            .map { appList ->
+                appList
                     .sortedBy { it.name }
-                    .map { it.toAppInfoSourceItem(this) }
-                    .run {
-                        view.setData(this)
-                    }
-            }, onError = {
-                view.showError(it)
+                    .map {
 
-            }).addTo(compositeDisposable)
+                        AppInfoSourceItem(it as AndroidAppInfo,this)
+
+                    }
+            }
+            .subscribeBy(onNext = view::setData, onError = view::showError)
+            .addTo(compositeDisposable)
     }
 
     override fun onPopupMenuClicked(appInfo: AppInfo, id: Int) {
@@ -107,15 +103,16 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
                 shareApp(appInfo)
             }
             R.id.menu_extract -> {
-                if (extractApp(appInfo)) {
-                    view.showMessage(R.string.Success)
-                }
+                extractApp(appInfo).subscribeBy(
+                    onComplete = {
+                        view.showMessage(R.string.Success)
+                    }
+                ).addTo(compositeDisposable)
 
+
+            }
         }
     }
-    }
-
-
 
 
 }

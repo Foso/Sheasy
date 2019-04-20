@@ -3,9 +3,11 @@ package de.jensklingenberg.sheasy.ui.share
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.event.EventDataSource
 import de.jensklingenberg.sheasy.model.EventCategory
+import de.jensklingenberg.sheasy.model.MessageEvent
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.ui.common.toSourceItem
+import de.jensklingenberg.sheasy.ui.eventlog.EventSourceItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -38,14 +40,13 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
     override fun onCreate() {
 
         eventDataSource.getEvents()
-
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = {
                     view.setData(it
-                        .filter { it.category == EventCategory.SHARE }
-                        .map { it.toSourceItem() })
+                        .filter { it is MessageEvent }
+                        .map { MessageSourceItem(it as MessageEvent) })
                 }
             ).also { compositeDisposable.add(it) }
 

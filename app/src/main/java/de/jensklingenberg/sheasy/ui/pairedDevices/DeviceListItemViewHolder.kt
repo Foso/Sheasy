@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.ui.pairedDevices
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.Device
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
@@ -12,7 +13,7 @@ class DeviceListItemViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<DeviceListItemSourceItem>(viewParent, R.layout.list_item_generic) {
 
     interface OnEntryClickListener {
-        fun onPopupMenuClicked(device: Device, id:Int)
+        fun onContextMenuClick(device: Device, id: Int)
 
     }
 
@@ -22,38 +23,17 @@ class DeviceListItemViewHolder(viewParent: ViewGroup) :
 
         device?.let {
             itemView.apply {
-                title.text = if(device.name.isEmpty()){
+                title.text = if (device.name.isEmpty()) {
                     device.ip
-                }else{
+                } else {
                     device.name
                 }
                 caption.text = device.ip
                 icon.setImageResource(R.drawable.ic_smartphone_black_24dp)
 
-
                 moreBtn.visibility = View.VISIBLE
                 moreBtn.setOnClickListener {
-
-                    val popup = androidx.appcompat.widget.PopupMenu(it.context, it)
-                        .apply {
-                            menuInflater
-                                .inflate(R.menu.paired_devices_actions, menu)
-
-                            setOnMenuItemClickListener { menuItem ->
-                                when (menuItem.itemId) {
-                                    R.id.menu_revoke -> {
-                                        item?.onEntryClickListener?.onPopupMenuClicked(device,menuItem.itemId)
-                                       // pairedPresenter.revokeDevice(device)
-                                        true
-                                    }
-                                    else -> {
-                                        true
-                                    }
-                                }
-                            }
-
-                        }
-
+                    val popup = setupContextMenu(it, item, device)
                     popup.show()
 
                 }
@@ -61,5 +41,31 @@ class DeviceListItemViewHolder(viewParent: ViewGroup) :
 
             }
         }
+    }
+
+    private fun setupContextMenu(
+        it: View,
+        item: DeviceListItemSourceItem,
+        device: Device
+    ): PopupMenu {
+        return PopupMenu(it.context, it)
+            .apply {
+                menuInflater
+                    .inflate(R.menu.paired_devices_actions, menu)
+
+                setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.menu_revoke -> {
+                            item?.onEntryClickListener?.onContextMenuClick(device, menuItem.itemId)
+                            // pairedPresenter.revokeDevice(device)
+                            true
+                        }
+                        else -> {
+                            true
+                        }
+                    }
+                }
+
+            }
     }
 }

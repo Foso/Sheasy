@@ -8,8 +8,6 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.sideMenuEntries
-import de.jensklingenberg.sheasy.utils.UseCase.ShareUseCase
-import javax.inject.Inject
 
 
 class MainActivityDrawer(val activity: MainActivity) {
