@@ -110,25 +110,9 @@ class FilesFragment : BaseFragment(), FilesContract.View {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         menu?.clear()
-        inflater?.inflate(R.menu.fragment_apps_options_menu, menu)
+        inflater?.inflate(R.menu.fragment_files_options_menu, menu)
         toolbarMenu = menu
         initSearchView(menu)
-
-        val server = menu?.findItem(R.id.menu_server)
-
-        HTTPServerService.serverRunning
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(onNext = { running ->
-                if (running) {
-                    server?.setIcon(R.drawable.ic_router_green_700_24dp)
-                } else {
-                    server?.setIcon(R.drawable.ic_router_black_24dp)
-                }
-
-            }).addTo(compositeDisposable)
-
-
     }
 
     private fun initSearchView(menu: Menu?) {

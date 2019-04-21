@@ -27,10 +27,10 @@ class HTTPServerService : Service() {
 
 
     companion object {
-        private lateinit var bind: ServiceBinder
         val ACTION_ON_ACTIVITY_RESULT = "ACTION_ON_ACTIVITY_RESULT"
         val AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
-        val serverRunning: BehaviorSubject<Boolean> = BehaviorSubject.create<Boolean>()
+
+        private lateinit var bind: ServiceBinder
         private val ACTION_STOP = "ACTION_STOP"
 
         fun getIntent(context: Context) =
@@ -42,15 +42,12 @@ class HTTPServerService : Service() {
             }
 
         fun authorizeDeviceIntent(context: Context, ipaddress: String): Intent {
-            val authIntent = Intent(context, HTTPServerService::class.java).apply {
+            return Intent(context, HTTPServerService::class.java).apply {
                 putExtra(AUTHORIZE_DEVICE, ipaddress)
             }
-            return authIntent
         }
     }
 
-    @Inject
-    lateinit var notificationUseCase: NotificationUseCase
 
     @Inject
     lateinit var server: Server
@@ -102,49 +99,20 @@ class HTTPServerService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-
-        val filter = IntentFilter()
-        filter.addAction(ACTION_ON_ACTIVITY_RESULT) //further more
-        registerReceiver(receiver, filter)
-
-        notificationUseCase.showServerNotification()
         server.start()
-        serverRunning.onNext(true)
     }
 
     override fun stopService(name: Intent?): Boolean {
-        Log.d("this", "Server stopped")
-
         server.stop()
-
         return super.stopService(name)
 
     }
 
     override fun onDestroy() {
-        unregisterReceiver(receiver)
-
-        serverRunning.onNext(false)
-
         server.stop()
-
         super.onDestroy()
     }
 
-    /****************************************** Listener methods  */
-
-
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            if (action == ACTION_ON_ACTIVITY_RESULT) {
-                val resultCode = intent.extras.getInt(OnResultActivity.RESULT_CODE)
-
-
-                //action for sms received
-            }
-        }
-    }
 
 }
 

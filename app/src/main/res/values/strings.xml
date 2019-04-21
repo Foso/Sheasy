@@ -19,6 +19,7 @@
     <string name="revoke">Revoke</string>
     <string name="http_port">Http Port</string>
     <string name="websocket_port">Websocket Port</string>
+    <string name="authorize">Authorize</string>
 
     <!-- Server -->
     <string name="acceptAllConnections">Accept all connections</string>

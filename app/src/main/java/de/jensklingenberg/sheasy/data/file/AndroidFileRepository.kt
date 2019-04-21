@@ -15,7 +15,7 @@ import java.io.*
 import javax.inject.Inject
 
 
-open class FileRepository : FileDataSource {
+open class AndroidFileRepository : FileDataSource {
 
 
     private val cachedApps = mutableListOf<AppInfo>()
@@ -147,7 +147,7 @@ open class FileRepository : FileDataSource {
         val file2 = File(sheasyPrefDataSource.appFolder + "/temp/" + appInfo.packageName + ".apk")
 
         file.copyTo(file2, true)
-        return file2
+        return file
     }
 
     override fun saveUploadedFile(destinationFilePath: String, inputStream: InputStream): Completable {

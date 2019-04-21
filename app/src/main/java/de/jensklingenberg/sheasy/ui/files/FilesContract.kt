@@ -6,8 +6,10 @@ import de.jensklingenberg.sheasy.ui.common.MvpPresenter
 import java.io.File
 
 interface FilesContract {
-    interface Presenter : MvpPresenter, SharedFolderViewHolder.OnEntryClickListener,
-        FileResponseViewHolder.OnEntryClickListener {
+    interface Presenter : MvpPresenter,
+        SharedFolderViewHolder.OnEntryClickListener,
+        FolderViewHolder.OnEntryClickListener,
+        FileViewHolder.OnEntryClickListener {
         var filePath: String
 
         fun loadFiles()

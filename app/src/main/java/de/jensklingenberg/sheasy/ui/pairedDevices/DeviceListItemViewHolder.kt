@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
+import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.model.AuthorizationType
 import de.jensklingenberg.sheasy.model.Device
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
 import kotlinx.android.synthetic.main.list_item_generic.view.*
@@ -50,22 +52,23 @@ class DeviceListItemViewHolder(viewParent: ViewGroup) :
     ): PopupMenu {
         return PopupMenu(it.context, it)
             .apply {
-                menuInflater
-                    .inflate(R.menu.paired_devices_actions, menu)
-
-                setOnMenuItemClickListener { menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.menu_revoke -> {
-                            item?.onEntryClickListener?.onContextMenuClick(device, menuItem.itemId)
-                            // pairedPresenter.revokeDevice(device)
-                            true
-                        }
-                        else -> {
-                            true
-                        }
-                    }
+                if (device.authorizationType == AuthorizationType.AUTHORIZED) {
+                    menuInflater
+                        .inflate(R.menu.paired_devices_actions, menu)
+                } else if (device.authorizationType == AuthorizationType.AUTHORIZED) {
+                    menuInflater
+                        .inflate(R.menu.paired_devices_actions, menu)
                 }
+            }.also {
+                it.itemClicks()
+                    .doOnNext { menuItem ->
 
+                        item.onEntryClickListener?.onContextMenuClick(
+                            device,
+                            menuItem.itemId
+                        )
+
+                    }.subscribe()
             }
     }
 }

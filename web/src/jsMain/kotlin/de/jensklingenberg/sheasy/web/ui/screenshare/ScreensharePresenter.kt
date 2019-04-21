@@ -1,6 +1,6 @@
 package de.jensklingenberg.sheasy.web.ui.screenshare
 
-import de.jensklingenberg.sheasy.web.network.API
+import de.jensklingenberg.sheasy.web.network.HttpAPI
 import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.Websocket
 import org.w3c.dom.MessageEvent
@@ -23,7 +23,7 @@ class ScreensharePresenter(val view: ScreenshareContract.View) : ScreenshareCont
 
 
     override fun componentDidMount() {
-        myWebSocket=  MyWebSocket(API.screenshareWebSocketURL,this)
+        myWebSocket=  MyWebSocket(HttpAPI.screenshareWebSocketURL,this)
     }
 
     override fun componentWillUnmount() {}

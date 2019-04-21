@@ -17,11 +17,6 @@ class AppsPresenter(private val view: AppsContract.View, val fileDataSource: Fil
     override fun componentWillUnmount() {}
 
     override fun componentDidMount() {
-        val test = of("1")
-        test.subscribeBy(complete = {
-            console.log("Test")
-        })
-
 
     }
 

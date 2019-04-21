@@ -1,8 +1,8 @@
 package de.jensklingenberg.sheasy.web.data
 
+import network.SharedNetworkSettings
 import kotlin.browser.window
 
-const val apiVersion = "v1"
 
 class NetworkPreferences{
     /**
@@ -13,9 +13,6 @@ class NetworkPreferences{
 
     val apiVersion = "v1"
 
-    val httpPort = "8766"
-
-    val websocketPort = "8765"
 
     val port = window.location.port
 
@@ -28,7 +25,7 @@ class NetworkPreferences{
         window.location.hostname
     }
 
-    val baseurl = "http://${hostname}:$httpPort/api/${apiVersion}/"
+    val baseurl = "http://$hostname:${SharedNetworkSettings.httpPort}/api/${apiVersion}/"
 
 
 

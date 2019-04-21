@@ -111,6 +111,9 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
 
 
             }
+            R.id.menu_share_link->{
+                shareUseCase.shareDownloadLink(appInfo)
+            }
         }
     }
 

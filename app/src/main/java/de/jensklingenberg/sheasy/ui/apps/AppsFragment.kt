@@ -96,7 +96,7 @@ class AppsFragment : BaseFragment(), AppsContract.View {
 
 
     override fun showError(it: Throwable) {
-        messageUseCase.show(requireView(), it?.message ?: "")
+        messageUseCase.show(requireView(), it.message ?: "")
 
     }
 

@@ -2,6 +2,7 @@ package de.jensklingenberg.sheasy.network.ktor.routehandler
 
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
+import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.model.SheasyError
@@ -132,7 +133,7 @@ class AndroidFileRouteHandler : FileRouteHandler {
                         .await()
                         .run {
                             call.response.debugCorsHeader()
-                            call.respond(Resource.success(this))
+                            call.respond(Resource.success(this.map{AppInfo(it.sourceDir,it.name,it.packageName,it.installTime)}))
                         }
                 }
 

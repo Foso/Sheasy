@@ -4,13 +4,26 @@ import android.app.Application
 import android.os.Environment
 import android.preference.PreferenceManager
 import androidx.core.content.edit
+import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.devices.DevicesRepository
+import de.jensklingenberg.sheasy.data.usecase.GetIpUseCase
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import io.reactivex.subjects.BehaviorSubject
+import network.SharedNetworkSettings
+import javax.inject.Inject
 
 class SheasyPreferencesRepository(val application: Application) : SheasyPrefDataSource {
+
+    @Inject
+    lateinit var getIpUseCase: GetIpUseCase
+
+    init {
+        initializeDagger()
+    }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
 
 
     val sharedFoldersSubject: BehaviorSubject<List<FileResponse>> = BehaviorSubject.create<List<FileResponse>>()
@@ -18,7 +31,7 @@ class SheasyPreferencesRepository(val application: Application) : SheasyPrefData
     override val nonInterceptedFolders: List<String> = listOf("/web/connection/")
     override val devicesRepository = DevicesRepository()
     override var appFolder = Environment.getExternalStorageDirectory().toString() + "/Sheasy/"
-    override val httpPort = 8766
+    override val httpPort = SharedNetworkSettings.httpPort
     override val webSocketPort = 8765
     override val defaultPath = Environment.getExternalStorageDirectory().toString()
 
@@ -46,6 +59,14 @@ class SheasyPreferencesRepository(val application: Application) : SheasyPrefData
         return sharedFoldersSubject
 
     }
+
+    override fun getBaseUrl(): String {
+
+        return "http://"+getIpUseCase.getIP()+":"+httpPort+"/api/v1/"
+    }
+
+
+
 
 
 }

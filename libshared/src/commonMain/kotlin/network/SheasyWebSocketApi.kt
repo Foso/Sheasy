@@ -1,0 +1,6 @@
+package network
+
+interface SheasyWebSocketApi{
+
+
+}

@@ -11,8 +11,9 @@ import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
 import kotlinx.android.synthetic.main.list_item_generic.view.*
 
-class SharedFolderViewHolder(viewParent: ViewGroup) :
-    BaseViewHolder<SharedFolderSourceItem>(viewParent, R.layout.list_item_generic) {
+class FolderViewHolder(viewParent: ViewGroup) :
+    BaseViewHolder<FileResponseSourceItem>(viewParent, R.layout.list_item_generic) {
+
 
     interface OnEntryClickListener {
         fun onItemClicked(payload: Any)
@@ -22,24 +23,27 @@ class SharedFolderViewHolder(viewParent: ViewGroup) :
 
     override fun onBindViewHolder(item2: Any, diff: Bundle) {
 
-        val fileResponse = (item2 as SharedFolderSourceItem).getPayload()
+        val fileResponse = (item2 as FolderSourceItem).getPayload()
 
         fileResponse?.let {
             itemView.apply {
                 title.text = fileResponse.name
                 caption.text = fileResponse.path
+                moreBtn.visibility = VISIBLE
+                icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
+                moreBtn.setOnClickListener {
+                    val popup = setupContextMenu(it, item2, fileResponse)
+                    popup.show()
 
-                icon.setImageResource(R.drawable.ic_router_green_700_24dp)
+                }
+
+
 
                 item.setOnClickListener {
                     item2.onEntryClickListener?.onItemClicked(fileResponse)
                 }
-                moreBtn.visibility = VISIBLE
-                moreBtn.setOnClickListener {
 
-                    val popup = setupContextMenu(it, item2, fileResponse)
-                    popup.show()
-                }
+
             }
         }
 
@@ -47,22 +51,24 @@ class SharedFolderViewHolder(viewParent: ViewGroup) :
     }
 
     private fun setupContextMenu(
-        view: View,
-        sharedFolderSourceItem: SharedFolderSourceItem,
+        it: View,
+        item2: FolderSourceItem,
         fileResponse: FileResponse
     ): PopupMenu {
-        return PopupMenu(view.context, view)
+        return PopupMenu(it.context, it)
             .apply {
                 menuInflater
-                    .inflate(R.menu.shared_folder_actions, menu)
+                    .inflate(R.menu.folders_actions, menu)
             }
             .also {
                 it.itemClicks()
                     .doOnNext { menuItem ->
-                        sharedFolderSourceItem.onEntryClickListener?.onPopupMenuClicked(
+
+                        item2.onEntryClickListener?.onPopupMenuClicked(
                             fileResponse,
                             menuItem.itemId
                         )
+
                     }.subscribe()
             }
     }

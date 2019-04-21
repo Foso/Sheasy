@@ -77,7 +77,7 @@ class ServerTest {
     @Test
     fun getAppsTest() {
 
-        every { mockApplication.fileRepository.getApps(any()) } returns Single.just(
+        every { mockApplication.androidFileRepository.getApps(any()) } returns Single.just(
             listOf(
                 AppInfo(
                     "",

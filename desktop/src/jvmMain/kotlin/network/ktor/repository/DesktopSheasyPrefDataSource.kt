@@ -8,6 +8,10 @@ import io.reactivex.subjects.BehaviorSubject
 class DesktopSheasyPrefDataSource(
 
 ) : SheasyPrefDataSource {
+    override fun getBaseUrl(): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun addShareFolder(folder: FileResponse) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -40,7 +44,7 @@ class DesktopSheasyPrefDataSource(
 
 
     override val defaultPath = "/storage/emulated/0/"
-    override val httpPort = 8766
+    override val httpPort = "8766"
 
 
 

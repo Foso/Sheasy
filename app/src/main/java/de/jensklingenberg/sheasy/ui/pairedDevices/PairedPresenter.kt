@@ -18,18 +18,6 @@ import javax.inject.Inject
 
 
 class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter {
-    override fun onContextMenuClick(device: Device, id: Int) {
-        when (id) {
-            R.id.menu_revoke -> {
-                revokeDevice(device)
-                true
-            }
-            else -> {
-                true
-            }
-        }
-
-    }
 
     @Inject
     lateinit var context: Context
@@ -54,7 +42,40 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
     private fun loadPairedDevices() {
 
-        getAuthro()
+        sheasyPrefDataSource.devicesRepository.getAuthorizedDevices()
+            .map { devices ->
+
+                val list = arrayListOf<BaseDataSourceItem<*>>()
+
+
+                val autho = devices.filter { it.authorizationType == AuthorizationType.AUTHORIZED }
+
+                val revoked = devices.filter { it.authorizationType == AuthorizationType.REVOKED }
+
+                list.apply {
+
+                    if (revoked.isNotEmpty()) {
+                        add(
+                            GenericListHeaderSourceItem(
+                                "Revoked"
+                            )
+                        )
+                        addAll(devices.map { DeviceListItemSourceItem(it, this@PairedPresenter) })
+                    }
+
+                    if (autho.isNotEmpty()) {
+                        add(
+                            GenericListHeaderSourceItem(
+                                "Authorized"
+                            )
+                        )
+                        addAll(devices.map { DeviceListItemSourceItem(it, this@PairedPresenter) })
+                    }
+
+                }
+
+
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
@@ -67,13 +88,15 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
     override fun revokeDevice(device: Device) {
         sheasyPrefDataSource.devicesRepository.removeDevice(device)
-        // loadPairedDevices()
-
     }
 
     override fun onDestroy() {
         compositeDisposable.dispose()
 
+    }
+
+    fun authorizeDevice(device: Device) {
+        sheasyPrefDataSource.devicesRepository.addAuthorizedDevice(device)
     }
 
     fun getAuthro(): Observable<ArrayList<BaseDataSourceItem<*>>> {
@@ -113,6 +136,24 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
             }
     }
+
+    override fun onContextMenuClick(device: Device, id: Int) {
+        when (id) {
+            R.id.menu_revoke -> {
+                revokeDevice(device)
+                true
+            }
+            R.id.menu_authorize -> {
+                authorizeDevice(device)
+                true
+            }
+            else -> {
+                true
+            }
+        }
+
+    }
+
 
 
 }

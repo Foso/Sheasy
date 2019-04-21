@@ -66,7 +66,9 @@ open class NetworkModule {
         generalRouteHandler: GeneralRouteHandler,
         fileRouteHandler: FileRouteHandler
     ): NettyApplicationEngine =
-        embeddedServer(Netty, port = sheasyPrefDataSource.httpPort, module = {
+        embeddedServer(Netty,
+            port = sheasyPrefDataSource.httpPort.toInt(),
+            module = {
             ktorApplicationModule(
                 generalRouteHandler,
                 fileRouteHandler

@@ -5,7 +5,7 @@ import de.jensklingenberg.sheasy.model.ShareItem
 import de.jensklingenberg.sheasy.model.ShareType
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.model.SourceItem
-import de.jensklingenberg.sheasy.web.network.API.Companion.shareWebSocketURL
+import de.jensklingenberg.sheasy.web.network.HttpAPI.Companion.shareWebSocketURL
 import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.Websocket
 import org.w3c.dom.MessageEvent

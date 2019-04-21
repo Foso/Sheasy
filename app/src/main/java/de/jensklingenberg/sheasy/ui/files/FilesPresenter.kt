@@ -95,7 +95,13 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                             )
                         )
                         addAll(fileList.sortedBy { it.isFile() }.map {
-                            FileResponseSourceItem(it, this@FilesPresenter)
+                            if (it.isFile()) {
+                                FileResponseSourceItem(it, this@FilesPresenter)
+
+                            } else {
+                                FolderSourceItem(it, this@FilesPresenter)
+
+                            }
                         })
                     }
 
@@ -111,15 +117,11 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     override fun folderUp() {
         filePath = filePath.replaceAfterLast("/", "")
-        // loadFiles()
+         loadFiles()
         view.updateFolderPathInfo(filePath)
 
     }
 
-    override fun onUnHostFolderClicked(folderResponse: FileResponse) {
-        shareUseCase.removeHostFolder(folderResponse)
-
-    }
 
 
     /****************************************** Listener methods  */
@@ -138,6 +140,12 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
             }
             R.id.menu_share_to_server -> {
                 shareUseCase.hostFolder(fileResponse)
+            }
+            R.id.menu_share_link->{
+                shareUseCase.shareDownloadLink(fileResponse)
+            }
+            R.id.menu_unhost_folder->{
+                shareUseCase.removeHostFolder(fileResponse)
             }
         }
 

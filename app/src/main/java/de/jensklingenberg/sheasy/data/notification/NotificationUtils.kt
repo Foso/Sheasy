@@ -128,6 +128,10 @@ class NotificationUtils : NotificationUseCase {
 
     }
 
+   override fun cancelAll(){
+        notificationManager.cancelAll()
+    }
+
 
     companion object {
         val NOTIFICATION_GROUP_KEY = "group_key"

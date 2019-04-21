@@ -3,11 +3,11 @@ package de.jensklingenberg.sheasy.ui.files
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 
-class FileResponseSourceItem(
+class FolderSourceItem(
     fileResponse: FileResponse,
-    var onEntryClickListener: FileViewHolder.OnEntryClickListener? = null
+    var onEntryClickListener: FolderViewHolder.OnEntryClickListener? = null
 ) :
-    BaseDataSourceItem<FileResponse>(FileViewHolder::class.java) {
+    BaseDataSourceItem<FileResponse>(FolderViewHolder::class.java) {
 
 
     override fun areItemsTheSameInner(other: BaseDataSourceItem<FileResponse>): Boolean = false

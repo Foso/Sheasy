@@ -26,8 +26,6 @@ class DevicesRepository : DevicesDataSource {
         val index = authorizedDevices.indexOfFirst { knownDevice -> knownDevice.ip.equals(device.ip) }
         authorizedDevices.set(index, device.copy(authorizationType = AuthorizationType.REVOKED))
         knownDevices.onNext(authorizedDevices)
-
-
     }
 
 }

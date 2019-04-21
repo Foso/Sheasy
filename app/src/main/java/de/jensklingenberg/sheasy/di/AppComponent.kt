@@ -2,8 +2,9 @@ package de.jensklingenberg.sheasy.di
 
 import dagger.Component
 import de.jensklingenberg.sheasy.data.event.EventRepository
-import de.jensklingenberg.sheasy.data.file.FileRepository
+import de.jensklingenberg.sheasy.data.file.AndroidFileRepository
 import de.jensklingenberg.sheasy.data.notification.NotificationUtils
+import de.jensklingenberg.sheasy.data.preferences.SheasyPreferencesRepository
 import de.jensklingenberg.sheasy.network.HTTPServerService
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
@@ -45,7 +46,7 @@ interface AppComponent {
     fun inject(pairedPresenter: PairedPresenter)
 
     fun inject(httpServerService: HTTPServerService)
-    fun inject(fileRepository: FileRepository)
+    fun inject(androidFileRepository: AndroidFileRepository)
     fun inject(aboutFragment: AboutFragment)
     fun inject(pairedFragment: PairedFragment)
     fun inject(screenCaptureFragment: ScreenCaptureFragment)
@@ -81,5 +82,6 @@ interface AppComponent {
     fun inject(eventRepository: EventRepository)
     fun inject(mainActivityDrawer: MainActivityDrawer)
     fun inject(mainActivity: MainActivity)
+    fun inject(sheasyPreferencesRepository: SheasyPreferencesRepository)
 
 }

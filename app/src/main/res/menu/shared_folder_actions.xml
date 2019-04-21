@@ -3,6 +3,12 @@
 
 
     <item
+            android:id="@+id/menu_share_link"
+
+
+            android:title="Share Folder Link" />
+
+    <item
             android:id="@+id/menu_unhost_folder"
 
 

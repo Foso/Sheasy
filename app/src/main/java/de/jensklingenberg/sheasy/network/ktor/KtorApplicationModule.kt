@@ -1,5 +1,9 @@
 package de.jensklingenberg.sheasy.network.ktor
 
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
+import de.jensklingenberg.sheasy.model.AndroidAppInfo
+import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 
@@ -12,6 +16,11 @@ import io.ktor.features.gzip
 import io.ktor.gson.gson
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import java.lang.reflect.Type
+import android.R.attr.src
+import android.R.id
+import com.google.gson.*
+
 
 /**
  * This is the configuration for the Ktor Server
@@ -27,6 +36,7 @@ fun Application.ktorApplicationModule(
         install(ContentNegotiation) {
             gson {
                 setPrettyPrinting()
+
             }
         }
 
@@ -46,6 +56,7 @@ fun Application.ktorApplicationModule(
                 }
             }
         }
+
     }
 
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.network.HTTPServerService
+import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
@@ -77,7 +78,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         toolbarMenu = menu
         val server = menu?.findItem(R.id.menu_server)
 
-        HTTPServerService.serverRunning.subscribeOn(AndroidSchedulers.mainThread())
+        Server.serverRunning.subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(
                 AndroidSchedulers.mainThread()
             )

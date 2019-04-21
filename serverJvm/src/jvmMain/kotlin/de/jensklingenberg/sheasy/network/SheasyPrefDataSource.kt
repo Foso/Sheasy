@@ -11,7 +11,7 @@ interface SheasyPrefDataSource {
     var appFolder: String
     val defaultPath: String
     val sharedFolders: ArrayList<FileResponse>
-    val httpPort: Int
+    val httpPort: String
     var acceptAllConnections: Boolean
     val webSocketPort: Int
     val devicesRepository: DevicesDataSource
@@ -21,4 +21,6 @@ interface SheasyPrefDataSource {
     fun observeSharedFolders() : BehaviorSubject<List<FileResponse>>
 
     fun removeShareFolder(folder: FileResponse)
+
+    fun getBaseUrl():String
 }
