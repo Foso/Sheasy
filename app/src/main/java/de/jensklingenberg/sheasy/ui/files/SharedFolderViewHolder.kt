@@ -32,7 +32,7 @@ class SharedFolderViewHolder(viewParent: ViewGroup) :
                 icon.setImageResource(R.drawable.ic_router_green_700_24dp)
 
                 item.setOnClickListener {
-                    item2.onEntryClickListener?.onItemClicked(fileResponse)
+                 //   item2.onEntryClickListener?.onItemClicked(fileResponse)
                 }
                 moreBtn.visibility = VISIBLE
                 moreBtn.setOnClickListener {

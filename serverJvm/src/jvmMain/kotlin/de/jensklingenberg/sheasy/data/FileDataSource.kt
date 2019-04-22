@@ -19,7 +19,7 @@ interface FileDataSource {
     /**
      *
      */
-    fun getFile(filePath: String, isAssetFile: Boolean = false): Single<InputStream>
+    fun getFile(filePath: String, isAssetFile: Boolean = false): Single<File>
 
     /**
      * Get a list of the user installed Apps

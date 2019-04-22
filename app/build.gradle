@@ -26,6 +26,7 @@ android {
         exclude 'META-INF/kotlinx-coroutines-io.kotlin_module'
         exclude 'META-INF/INDEX.LIST'
         exclude 'META-INF/io.netty.versions.properties'
+        exclude 'META-INF/kotlinx-coroutines-core.kotlin_module'
 
     }
     compileSdkVersion configuration.compileSdk
@@ -150,6 +151,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+
     //AndroidX
     implementation "androidx.annotation:annotation:$libs.androidX.annotation"
     implementation "androidx.appcompat:appcompat:$libs.androidX.appcompat"
@@ -172,6 +174,8 @@ dependencies {
 
     //Ktor
     implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
+    implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
+   // implementation "io.ktor:ktor-locations:$libs.ktor_version"
     implementation "io.ktor:ktor-websockets:$libs.ktor_version"
     implementation "io.ktor:ktor:$libs.ktor_version"
     implementation "io.ktor:ktor-network-tls:$libs.ktor_version"
@@ -180,7 +184,7 @@ dependencies {
 
     //NanoHTTPD
     implementation "org.nanohttpd:nanohttpd-websocket:$libs.nanohttpdwebsocket"
-   // implementation "org.nanohttpd:nanohttpd:$libs.nanohttpd"
+ //   implementation 'org.nanohttpd:nanohttpd:2.3.1'
 
     //RxJava
     implementation Libs.android.rxAndroid

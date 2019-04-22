@@ -36,105 +36,120 @@ open class AndroidFileRepository : FileDataSource {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-    override fun getFile(filePath: String, isAssetFile: Boolean): Single<InputStream> {
-        return Single.create<InputStream> { singleEmitter ->
-            try {
-                if (isAssetFile) {
-                    singleEmitter.onSuccess(assetManager.open(filePath))
-                } else {
-                    val fileInputStream = FileInputStream(File(filePath))
-                    singleEmitter.onSuccess(fileInputStream)
-                }
+    override fun getFile(filePath: String, isAssetFile: Boolean): Single<File> = Single.create<File> { singleEmitter ->
+        try {
+            if (isAssetFile) {
+                val tempFile = File.createTempFile("prefix-", "-suffix")
 
-            } catch (ioEx: IOException) {
-                singleEmitter.onError(ioEx)
+                singleEmitter.onSuccess(writeBytesToFile(assetManager.open(filePath), tempFile))
+            } else {
+                singleEmitter.onSuccess(File(filePath))
             }
 
+        } catch (ioEx: IOException) {
+            singleEmitter.onError(ioEx)
+        }
+
+    }
+
+    @Throws(IOException::class)
+   private fun writeBytesToFile(input: InputStream, file: File): File {
+        var fos: FileOutputStream? = null
+        try {
+            val data = ByteArray(2048)
+            fos = FileOutputStream(file)
+            var test = input.read(data)
+            while ((test) > -1) {
+
+                fos.write(data, 0, test)
+                test = input.read(data)
+            }
+            return file
+        } catch (ex: Exception) {
+            //logger.error("Exception", ex)
+        } finally {
+            fos?.close()
+            return file
         }
     }
 
 
-    override fun observeFiles(folderPath: String): Single<List<FileResponse>> {
-        return Single.create<List<FileResponse>> { singleEmitter ->
-            try {
-                File(folderPath)
-                    .listFiles()
-                    .sortedBy { it.name }
-                    .map {
-                        FileResponse(
-                            it.name,
-                            it.path
-                        )
-                    }
-                    .run {
-                        singleEmitter.onSuccess(this)
-                    }
-            } catch (ioException: IOException) {
-                singleEmitter.onError(ioException)
-            }
-        }
-    }
-
-
-    override fun getApps(packageName: String): Single<List<AppInfo>> {
-        return Single.create<List<AppInfo>> { singleEmitter ->
-
-            if (cachedApps.isNotEmpty()) {
-                cachedApps
-                    .filter {
-                        when {
-                            packageName.isNotBlank() -> return@filter it.packageName == packageName
-                            else -> true
-                        }
-                    }.run {
-                        singleEmitter.onSuccess(this)
-                    }
-            }
-
-            val appsList = packageManager
-                .getInstalledApplications(PackageManager.PERMISSION_GRANTED)
-                .filter { packageManager.getLaunchIntentForPackage(it.packageName) != null }
+    override fun observeFiles(folderPath: String): Single<List<FileResponse>> = Single.create<List<FileResponse>> { singleEmitter ->
+        try {
+            File(folderPath)
+                .listFiles()
+                .sortedBy { it.name }
                 .map {
-                    AndroidAppInfo(
-                        sourceDir = it.sourceDir,
-                        name = packageManager.getApplicationLabel(it).toString(),
-                        packageName = it.packageName,
-                        installTime = packageManager.getPackageInfo(
-                            it.packageName,
-                            0
-                        ).firstInstallTime.toString(),
-                        drawable = packageManager.getApplicationIcon(it.packageName)
+                    FileResponse(
+                        it.name,
+                        it.path
                     )
                 }
+                .run {
+                    singleEmitter.onSuccess(this)
+                }
+        } catch (ioException: IOException) {
+            singleEmitter.onError(ioException)
+        }
+    }
 
-            if (appsList != cachedApps) {
-                cachedApps.clear()
-                cachedApps.addAll(appsList)
 
-                cachedApps
-                    .filter {
-                        when {
-                            packageName.isNotBlank() -> return@filter it.packageName == packageName
-                            else -> true
-                        }
-                    }.run {
-                        singleEmitter.onSuccess(this)
+    override fun getApps(packageName: String): Single<List<AppInfo>> = Single.create<List<AppInfo>> { singleEmitter ->
+
+        if (cachedApps.isNotEmpty()) {
+            cachedApps
+                .filter {
+                    when {
+                        packageName.isNotBlank() -> return@filter it.packageName == packageName
+                        else -> true
                     }
-            }
+                }.run {
+                    singleEmitter.onSuccess(this)
+                }
         }
 
+        val appsList = packageManager
+            .getInstalledApplications(PackageManager.PERMISSION_GRANTED)
+            .filter { packageManager.getLaunchIntentForPackage(it.packageName) != null }
+            .map {
+                AndroidAppInfo(
+                    sourceDir = it.sourceDir,
+                    name = packageManager.getApplicationLabel(it).toString(),
+                    packageName = it.packageName,
+                    installTime = packageManager.getPackageInfo(
+                        it.packageName,
+                        0
+                    ).firstInstallTime.toString(),
+                    drawable = packageManager.getApplicationIcon(it.packageName)
+                )
+            }
+
+        if (appsList != cachedApps) {
+            cachedApps.clear()
+            cachedApps.addAll(appsList)
+
+            cachedApps
+                .filter {
+                    when {
+                        packageName.isNotBlank() -> return@filter it.packageName == packageName
+                        else -> true
+                    }
+                }.run {
+                    singleEmitter.onSuccess(this)
+                }
+        }
     }
 
 
     override fun extractApk(appInfo: AppInfo): Completable {
-        return Completable.create { singleEmitter ->
+        return Completable.create { completableEmitter ->
             val file = File(appInfo.sourceDir)
-            val file2 = File(sheasyPrefDataSource.appFolder + appInfo.packageName + ".apk")
+            val file2 = File(sheasyPrefDataSource.appFolder + "/temp/" + appInfo.packageName + ".apk")
             try {
                 file.copyTo(file2, true)
-                singleEmitter.onComplete()
+                completableEmitter.onComplete()
             } catch (ioException: IOException) {
-                singleEmitter.onError(ioException)
+                completableEmitter.onError(ioException)
             }
 
         }
@@ -150,23 +165,21 @@ open class AndroidFileRepository : FileDataSource {
         return file
     }
 
-    override fun saveUploadedFile(destinationFilePath: String, inputStream: InputStream): Completable {
-        return Completable.create { singleEmitter ->
-
+    override fun saveUploadedFile(destinationFilePath: String, inputStream: InputStream): Completable =
+        Completable.create { completableEmitter ->
             try {
                 val destinationFile = File(destinationFilePath)
                 inputStream.copyTo(destinationFile.outputStream())
                 inputStream.close()
                 if (File(destinationFilePath).exists()) {
-                    singleEmitter.onComplete()
+                    completableEmitter.onComplete()
                 } else {
-                    singleEmitter.onError(SheasyError.UploadFailedError())
+                    completableEmitter.onError(SheasyError.UploadFailedError())
                 }
             } catch (io: FileNotFoundException) {
-                singleEmitter.onError(io)
+                completableEmitter.onError(io)
             }
 
         }
-    }
 
 }

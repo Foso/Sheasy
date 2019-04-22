@@ -1,5 +1,6 @@
 package de.jensklingenberg.sheasy.network.ktor.routehandler
 
+import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
@@ -20,11 +21,13 @@ import io.ktor.http.content.streamProvider
 import io.ktor.request.receiveMultipart
 import io.ktor.response.header
 import io.ktor.response.respond
+import io.ktor.response.respondFile
 import io.ktor.routing.*
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.rx2.await
+import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
 import javax.inject.Inject
@@ -77,6 +80,8 @@ class AndroidFileRouteHandler : FileRouteHandler {
                         .observeFiles(call.parameter)
                         .subscribeBy(onSuccess = {
                             singleEmitter.onSuccess(it)
+                        }, onError = {
+                            Log.e(this.javaClass.simpleName, it.message)
                         })
                 } else {
                     singleEmitter.onSuccess(sheasyPrefDataSource.sharedFolders)
@@ -87,214 +92,186 @@ class AndroidFileRouteHandler : FileRouteHandler {
         }
     }
 
-    private fun getFile(filePath: String): Single<InputStream> = Single.create<InputStream> { singleEmitter ->
+    private fun getFile(filePath: String) = Single.create<File> { singleEmitter ->
+            fileDataSource
+                .getFile(filePath)
+                .subscribeBy(
+                onSuccess = {file->
+                    singleEmitter.onSuccess(file)
 
-        if (filePath.contains(".")) {
-
-            fileDataSource.getFile(filePath).subscribeBy(
-                onSuccess = {
-                    singleEmitter.onSuccess(it)
-
+                }, onError = {
+                    singleEmitter.onError(SheasyError.PathNotFoundError())
                 }
             )
-
-        } else {
-            fileDataSource
-                .observeFiles(filePath)
-                .subscribeBy(
-                    onSuccess = { fileList ->
-                        if (fileList.isEmpty()) {
-                            singleEmitter.onError(SheasyError.PathNotFoundError())
-                        }
-
-                        singleEmitter.onError(SheasyError.PathNotFoundError())
-                    }
-                )
-        }
     }
 
     override fun handleRoute(route: Route) {
+
+        /**
+         * The routes below are part of the route "api/v1/file/"
+         */
         with(route) {
-            /**
-             * GET
-             */
-            route("file") {
-                get("apps") {
-                    //"file/apps"
-                    fileDataSource.getApps()
-                        .doOnError {
-                            if (it is SheasyError) {
-                                launch {
-                                    call.response.debugCorsHeader()
-                                    call.respond(Resource.error<SheasyError>(it))
-                                }
-                            }
-                        }
-                        .await()
-                        .run {
-                            call.response.debugCorsHeader()
-                            call.respond(Resource.success(this.map{AppInfo(it.sourceDir,it.name,it.packageName,it.installTime)}))
-                        }
-                }
 
-                route("app") {
-                    param("package") {
-                        get {
-                            val packageName = call.parameters["package"] ?: ""
-
-                            fileDataSource
-                                .getApps(packageName)
-                                .doOnError {error->
-                                    if (error is SheasyError) {
-                                        launch {
-                                            call.response.debugCorsHeader()
-                                            call.respond(Resource.error<SheasyError>(error))
-                                        }
-                                    }
-                                }
-                                .await()
-                                .run {
-
-                                    this.first { it.packageName.equals(packageName) }
-                                        .run {
-                                            call.response.header(
-                                                HttpHeaders.ContentDisposition,
-                                                ContentDisposition.Attachment.withParameter(
-                                                    ContentDisposition.Parameters.FileName,
-                                                    "$packageName.apk"
-                                                ).toString()
-                                            )
-                                            call.respond(FileInputStream(this.sourceDir).readBytes())
-                                        }
-                                }
-                        }
-                    }
-                }
-
-                route("file") {
-                    param("path") {
-                        get {
-                            val filepath = call.parameters["path"] ?: ""
-                            getFile(filepath)
-                                .doOnError {
-                                    if (it is SheasyError) {
-                                        launch {
-                                            call.response.debugCorsHeader()
-                                            call.respond(Resource.error<SheasyError>(it))
-                                        }
-                                    }
-                                }
-                                .await()
-
-                                .run {
-                                    call.response.header(
-                                        HttpHeaders.ContentDisposition,
-                                        ContentDisposition.Attachment.withParameter(
-                                            ContentDisposition.Parameters.FileName,
-                                            value = filepath.substringAfterLast(delimiter = "/")
-                                        ).toString()
-                                    )
-                                    call.respond(this.readBytes())
-                                }
-                        }
-
-                    }
-                }
-
-
-                route("folder") {
-                    param("path") {
-                        get {
-                            val filePath = call.parameters["path"] ?: ""
-
-                            val ktor = call.ktorApplicationCall(filePath).apply {
-                                parameter = filePath
-                            }
-
-                            getFilesList(ktor)
-                                .doOnError {
-                                    if (it is SheasyError) {
-                                        launch {
-                                            call.response.debugCorsHeader()
-                                            call.respond(Resource.error<SheasyError>(it))
-                                        }
-                                    }
-                                }
-                                .await()
-                                .run {
-                                    call.response.debugCorsHeader()
-                                    call.respond(Resource.success(this))
-                                }
-                        }
-
-                    }
-                }
-
-                route("shared") {
-                    get {
-                        getShared()
-                            .doOnError {error->
-                                if (error is SheasyError) {
-                                    launch {
-                                        call.response.debugCorsHeader()
-                                        call.respond(Resource.error<SheasyError>(error))
-                                    }
-                                }
-                            }
-                            .await()
-                            .run {
+            get("/apps") {
+                fileDataSource.getApps()
+                    .doOnError {
+                        if (it is SheasyError) {
+                            launch {
                                 call.response.debugCorsHeader()
-                                call.respond(Resource.success(this))
+                                call.respond(Resource.error<SheasyError>(it))
                             }
+                        }
+                    }
+                    .await()
+                    .run {
+                        call.response.debugCorsHeader()
+                        call.respond(Resource.success(this.map {
+                            AppInfo(
+                                it.sourceDir,
+                                it.name,
+                                it.packageName,
+                                it.installTime
+                            )
+                        }))
+                    }
+            }
 
+            get("/app/{package?}") {
+                val packageName = call.parameters["package"] ?: ""
 
+                fileDataSource
+                    .getApps(packageName)
+                    .doOnError { error ->
+                        if (error is SheasyError) {
+                            launch {
+                                call.response.debugCorsHeader()
+                                call.respond(Resource.error<SheasyError>(error))
+                            }
+                        }
+                    }
+                    .await()
+                    .run {
+
+                        this.first { it.packageName.equals(packageName) }
+                            .run {
+                                call.response.header(
+                                    HttpHeaders.ContentDisposition,
+                                    ContentDisposition.Attachment.withParameter(
+                                        ContentDisposition.Parameters.FileName,
+                                        "$packageName.apk"
+                                    ).toString()
+                                )
+                                call.respond(FileInputStream(this.sourceDir).readBytes())
+                            }
+                    }
+            }
+
+            get("/shared") {
+                getShared()
+                    .doOnError { error ->
+                        if (error is SheasyError) {
+                            launch {
+                                call.response.debugCorsHeader()
+                                call.respond(Resource.error<SheasyError>(error))
+                            }
+                        }
+                    }
+                    .await()
+                    .run {
+                        call.response.debugCorsHeader()
+                        call.respond(Resource.success(this))
                     }
 
-                    /**
-                     * POST
-                     */
-                    param("upload") {
-                        post {
-                            val filePath2 = call.parameters["upload"] ?: ""
 
-                            val multipart = call.receiveMultipart()
-                            multipart.forEachPart { part ->
-                                when (part) {
-                                    is PartData.FileItem -> {
-                                        val sourceFilePath = filePath2 + part.originalFileName
-                                        part.streamProvider().use { its ->
-                                            fileDataSource.saveUploadedFile(sourceFilePath, its)
-                                                .doOnError {
-                                                    if (it is SheasyError) {
-                                                        launch {
-                                                            call.response.debugCorsHeader()
-                                                            call.respond(Resource.error<SheasyError>(it))
-                                                        }
-                                                    }
-                                                }
-                                                .await()
-                                                .run {
-                                                    call.response.debugCorsHeader()
-                                                    call.respond(Resource.success(this))
-                                                }
-                                        }
+            }
 
+            get("/folder/{path?}") {
+                val filePath = call.parameters["path"] ?: ""
 
-                                    }
+                val ktor = call.ktorApplicationCall(filePath).apply {
+                    parameter = filePath
+                }
 
-                                    else -> {
-
-                                    }
-                                }
-
+                getFilesList(ktor)
+                    .doOnError {
+                        if (it is SheasyError) {
+                            launch {
+                                call.response.debugCorsHeader()
+                                call.respond(Resource.error<SheasyError>(it))
                             }
+                        }
+                    }
+                    .await()
+                    .run {
+                        call.response.debugCorsHeader()
+                        call.respond(Resource.success(this))
+                    }
+            }
+
+            get("/file/{path?}") {
+                val filepath = call.parameters["path"] ?: ""
+                getFile(filepath)
+                    .doOnError { error ->
+                        if (error is SheasyError) {
+                            launch {
+                                Log.d("Sheasy", error.message)
+                                call.response.debugCorsHeader()
+                                call.respond(Resource.error<SheasyError>(error))
+                            }
+                        }
+                    }
+                    .await()
+
+                    .run {
+                        call.response.header(
+                            HttpHeaders.ContentDisposition,
+                            ContentDisposition.Attachment.withParameter(
+                                ContentDisposition.Parameters.FileName,
+                                value = filepath.substringAfterLast(delimiter = "/")
+                            ).toString()
+                        )
+                        call.respondFile(this)
+                    }
+            }
+
+            post("/shared/{upload?}") {
+
+                val filePath2 = call.parameters["upload"] ?: ""
+
+                val multipart = call.receiveMultipart()
+                multipart.forEachPart { part ->
+                    when (part) {
+                        is PartData.FileItem -> {
+                            val sourceFilePath = filePath2 + part.originalFileName
+                            part.streamProvider().use { its ->
+                                fileDataSource.saveUploadedFile(sourceFilePath, its)
+                                    .doOnError {
+                                        if (it is SheasyError) {
+                                            launch {
+                                                call.response.debugCorsHeader()
+                                                call.respond(Resource.error<SheasyError>(it))
+                                            }
+                                        }
+                                    }
+                                    .await()
+                                    .run {
+                                        call.response.debugCorsHeader()
+                                        call.respond(Resource.success(this))
+                                    }
+                            }
+
+
+                        }
+
+                        else -> {
 
                         }
                     }
 
-
                 }
+
             }
+
         }
 
     }

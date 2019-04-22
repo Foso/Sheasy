@@ -38,7 +38,6 @@ class FolderViewHolder(viewParent: ViewGroup) :
                 }
 
 
-
                 item.setOnClickListener {
                     item2.onEntryClickListener?.onItemClicked(fileResponse)
                 }

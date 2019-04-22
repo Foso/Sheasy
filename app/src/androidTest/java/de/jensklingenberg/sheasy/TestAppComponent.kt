@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Component(modules = [(AppModule::class), (UseCaseModule::class),(NetworkModule::class),(AndroidModule::class)])
 @Singleton
 
-open interface TestAppComponent  :AppComponent{
+interface TestAppComponent  :AppComponent{
     fun inject(serverTest: ServerTest)
 
 

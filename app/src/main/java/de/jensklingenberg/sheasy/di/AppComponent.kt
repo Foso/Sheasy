@@ -5,7 +5,7 @@ import de.jensklingenberg.sheasy.data.event.EventRepository
 import de.jensklingenberg.sheasy.data.file.AndroidFileRepository
 import de.jensklingenberg.sheasy.data.notification.NotificationUtils
 import de.jensklingenberg.sheasy.data.preferences.SheasyPreferencesRepository
-import de.jensklingenberg.sheasy.network.HTTPServerService
+import de.jensklingenberg.sheasy.service.HTTPServerService
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRouteHandler

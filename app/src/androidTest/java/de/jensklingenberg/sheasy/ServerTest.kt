@@ -54,7 +54,8 @@ class ServerTest {
     @Before
     fun setup() {
         mockApplication.testAppComponent.inject(this)
-
+        every { mockApplication.testPreferences.httpPort } returns "8766"
+        every { mockApplication.testPreferences.webSocketPort } returns 8765
 
         mActivityRule.launchActivity(null)
         server.start()
@@ -77,6 +78,10 @@ class ServerTest {
     @Test
     fun getAppsTest() {
 
+
+
+        every { mockApplication.testPreferences.acceptAllConnections } returns true
+
         every { mockApplication.androidFileRepository.getApps(any()) } returns Single.just(
             listOf(
                 AppInfo(
@@ -88,20 +93,21 @@ class ServerTest {
             )
         )
 
-        val response = sheasyApi.getApps().test().values()[0].body()
+        val response = sheasyApi.getApps().test()
+        val body = response.values()[0].body()
 
-        val list = response!!.data!!
+        val list = body?.data
 
         Assert.assertNotNull(list)
 
-        Assert.assertEquals(1, list.size)
+        Assert.assertEquals(1, list?.size)
 
     }
 
 
     @After
     fun after() {
-        server.stop()
+       // server.stop()
 
     }
 

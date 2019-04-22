@@ -6,19 +6,22 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.network.HTTPServerService
+import de.jensklingenberg.sheasy.service.HTTPServerService
 import de.jensklingenberg.sheasy.utils.NetworkUtils
 import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 import javax.inject.Inject
 
 
 class NotificationUtils : NotificationUseCase {
+
 
 
     @Inject
@@ -140,5 +143,24 @@ class NotificationUtils : NotificationUseCase {
         val SECONDARY_CHANNEL = "second"
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun getForeGroundServiceNotification(context:Context): Notification {
+        val NOTIFICATION_CHANNEL_ID = "com.example.simpleapp"
+        val channelName = "My Background Service"
+        val chan = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE)
+        chan.lightColor = Color.BLUE
+        chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+        val manager = notificationManager
+        manager.createNotificationChannel(chan)
+
+        val notificationBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
+        val notification = notificationBuilder.setOngoing(true)
+            .setSmallIcon(android.R.drawable.ic_delete)
+            .setContentTitle("App is running in background")
+            .setPriority(NotificationManager.IMPORTANCE_MIN)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .build()
+return notification
+    }
 
 }

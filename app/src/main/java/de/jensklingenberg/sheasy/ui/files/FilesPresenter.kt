@@ -163,7 +163,6 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     override fun hostFolder(fileResponse: FileResponse) {
         shareUseCase.hostFolder(fileResponse)
-
     }
 
     override fun searchFile(fileName: String) {

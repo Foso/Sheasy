@@ -14,10 +14,13 @@ import io.reactivex.subjects.BehaviorSubject
 import network.SharedNetworkSettings
 import javax.inject.Inject
 
-class SheasyPreferencesRepository(val application: Application) : SheasyPrefDataSource {
+class SheasyPreferencesRepository() : SheasyPrefDataSource {
 
     @Inject
     lateinit var getIpUseCase: GetIpUseCase
+
+    @Inject
+    lateinit var application: Application
 
     init {
         initializeDagger()

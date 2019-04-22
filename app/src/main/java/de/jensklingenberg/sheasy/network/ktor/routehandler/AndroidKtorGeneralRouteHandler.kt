@@ -8,19 +8,22 @@ import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
+import de.jensklingenberg.sheasy.utils.extension.debugCorsHeader
 import io.ktor.application.ApplicationCall
 import io.ktor.application.ApplicationCallPipeline
 import io.ktor.application.call
+import io.ktor.request.uri
 import io.ktor.response.respond
+import io.ktor.response.respondText
 import io.ktor.routing.Route
 import io.ktor.routing.get
+import io.reactivex.Completable
 import io.reactivex.Single
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.rx2.await
 import javax.inject.Inject
 
 class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
-
 
 
     @Inject
@@ -41,38 +44,33 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    private fun intercept(call: ApplicationCall): Single<Boolean> {
+    private fun intercept(call: ApplicationCall): Completable = Completable.create { completableEmitter ->
+        val filepath = call.request.uri
 
+        val sheasyCall = call.ktorApplicationCall(filepath)
 
-        return Single.create<Boolean> { singleEmitter ->
-
-            val filepath = "web/" + call.parameters.entries().firstOrNull { it.key == "filepath" }?.value?.joinToString("/")
-
-            val sheasyCall = call.ktorApplicationCall(filepath)
-
-            if (sheasyPrefDataSource.acceptAllConnections) {
-                if (sheasyPrefDataSource.devicesRepository.authorizedDevices.none { device -> device.ip == sheasyCall.remoteHostIp }) {
-                    sheasyPrefDataSource.devicesRepository.addAuthorizedDevice(
-                        Device(
-                            sheasyCall.remoteHostIp,
-                            authorizationType = AuthorizationType.AUTHORIZED
-                        )
+        if (sheasyPrefDataSource.acceptAllConnections) {
+            if (sheasyPrefDataSource.devicesRepository.authorizedDevices.none { device -> device.ip == sheasyCall.remoteHostIp }) {
+                sheasyPrefDataSource.devicesRepository.addAuthorizedDevice(
+                    Device(
+                        sheasyCall.remoteHostIp,
+                        authorizationType = AuthorizationType.AUTHORIZED
                     )
-                    eventDataSource.addEvent(ConnectionEvent( sheasyCall.remoteHostIp))
-
-                }
-                singleEmitter.onSuccess(false)
+                )
+                eventDataSource.addEvent(ConnectionEvent(sheasyCall.remoteHostIp))
 
             }
-
+            completableEmitter.onComplete()
+            return@create
+        } else {
             val allowedPath = sheasyPrefDataSource.nonInterceptedFolders.any { folderPath ->
-                sheasyCall.requestedApiPath.startsWith(folderPath)
+                filepath.startsWith(folderPath)
             }
 
             if (allowedPath) {
-                singleEmitter.onSuccess(false)
+                completableEmitter.onComplete()
+                return@create
             }
-
 
             if (!sheasyPrefDataSource.devicesRepository.authorizedDevices.contains(
                     Device(
@@ -82,47 +80,38 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
                 )
             ) {
                 notificationUseCase.showConnectionRequest(sheasyCall.remoteHostIp)
-                eventDataSource.addEvent(ConnectionEvent( sheasyCall.remoteHostIp))
-                singleEmitter.onError(SheasyError.NotAuthorizedError())
-
-
-
+                eventDataSource.addEvent(ConnectionEvent(sheasyCall.remoteHostIp))
+                completableEmitter.onError(SheasyError.NotAuthorizedError())
             } else {
-
-                singleEmitter.onSuccess(false)
-
+                completableEmitter.onComplete()
             }
-
-
         }
-
-
-
-
     }
 
+
     override fun handleRoute(route: Route) {
-        with(route){
+        with(route) {
             intercept(ApplicationCallPipeline.Call) {
-
-
-                val filepath = "web/" + call.parameters.entries().firstOrNull { it.key == "filepath" }?.value?.joinToString("/")
+                val filepath = call.request.uri
 
                 intercept(call)
-                    .doOnError {error->
+                    .doOnError { error ->
                         when (error) {
                             is SheasyError.NotAuthorizedError -> {
-                                launch {
-                                    if (!filepath.contains("web/connection/")) {
+                                when (filepath) {
+
+                                    "/" -> launch {
                                         fileDataSource
-                                            .getFile(GeneralRouteHandler.CONNECTION_PAGE,true)
+                                            .getFile(GeneralRouteHandler.CONNECTION_PAGE, true)
                                             .map { it.readBytes() }
                                             .await()
                                             .run {
                                                 call.respond(this)
                                             }
                                     }
+                                    else -> finish()
                                 }
+
                             }
                         }
                     }
@@ -133,20 +122,37 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
             get("/") {
                 fileDataSource
-                    .getFile(GeneralRouteHandler.STARTPAGE_PATH,true)
-                    .map { it.readBytes() }
+                    .getFile(GeneralRouteHandler.STARTPAGE_PATH, true)
+                    .doOnError { error ->
+                        if (error is SheasyError) {
+                            launch {
+                                call.response.debugCorsHeader()
+                                call.respond(Resource.error<SheasyError>(error))
+                            }
+                        }
+                    }
+                    .map { it.inputStream().readBytes() }
                     .await()
                     .run {
                         call.respond(this)
                     }
             }
 
-            get("web/{filepath...}") {
-                val filepath = "web/" + call.parameters.entries().first { it.key == "filepath" }.value.joinToString("/")
+            get("/web/{filepath...}") {
+
+                val filepath = call.request.uri.replace("/web/","web/")
 
                 fileDataSource
-                    .getFile(filepath,true)
-                    .map { it.readBytes() }
+                    .getFile(filepath, true)
+                    .doOnError { error ->
+                        if (error is SheasyError) {
+                            launch {
+                                call.response.debugCorsHeader()
+                                call.respond(Resource.error<SheasyError>(error))
+                            }
+                        }
+                    }
+                    .map { it.inputStream().readBytes() }
                     .await()
                     .run {
                         call.respond(this)
@@ -157,8 +163,6 @@ class AndroidKtorGeneralRouteHandler : GeneralRouteHandler {
 
 
     }
-
-
 
 
 }

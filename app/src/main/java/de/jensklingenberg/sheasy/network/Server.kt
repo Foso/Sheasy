@@ -1,13 +1,14 @@
 package de.jensklingenberg.sheasy.network
 
-import android.app.NotificationManager
 import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
-import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.data.usecase.VibrationUseCase
-import io.ktor.server.netty.NettyApplicationEngine
-import io.reactivex.Single
+import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
+import io.ktor.server.engine.ApplicationEngine
+import io.reactivex.Completable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
@@ -43,7 +44,7 @@ class Server {
 
 
     @Inject
-    lateinit var nettyApplicationEngine: NettyApplicationEngine
+    lateinit var applicationEngine: ApplicationEngine
 
 
     @Inject
@@ -66,15 +67,21 @@ class Server {
         nanoWSDWebSocketDataSource.start()
         serverRunning.onNext(true)
 
-        Single.fromCallable {
-            nettyApplicationEngine.start(wait = true)
+        Completable.fromCallable {
+            try {
+                applicationEngine.start(wait = true)
+            }catch (exception:Exception){
+                Log.d("Server", exception.message)
+                applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+
+            }
 
             true
         }
             .subscribeOn(Schedulers.io())
             .subscribeBy(onError = {
                 Log.d("Server", it.message)
-                nettyApplicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+                applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
             }).addTo(compositeDisposable)
         notificationUseCase.showServerNotification()
 
@@ -87,7 +94,7 @@ class Server {
 
         notificationUseCase.cancelAll()
         Log.d("Server", "Server stopped")
-        nettyApplicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+        applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
         compositeDisposable.dispose()
 
         nanoWSDWebSocketDataSource.stop()

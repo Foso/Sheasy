@@ -11,13 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.network.HTTPServerService
+import de.jensklingenberg.sheasy.service.HTTPServerService
 import de.jensklingenberg.sheasy.ui.common.*
 import de.jensklingenberg.sheasy.data.usecase.MessageUseCase
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_files.*
 import javax.inject.Inject
 

@@ -1,20 +1,29 @@
-package de.jensklingenberg.sheasy.network
+package de.jensklingenberg.sheasy.service
 
 import android.app.Service
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Binder
 import android.os.IBinder
-import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.model.AuthorizationType
 import de.jensklingenberg.sheasy.model.Device
-import de.jensklingenberg.sheasy.ui.common.OnResultActivity
-import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
-import io.reactivex.subjects.BehaviorSubject
+import de.jensklingenberg.sheasy.network.Server
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import javax.inject.Inject
+import android.graphics.Bitmap.createScaledBitmap
+import android.R
+import android.app.Notification
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import android.os.Build.VERSION_CODES
+import android.os.Build.VERSION
+import android.os.Build.VERSION.SDK_INT
+import android.app.NotificationManager
+import android.app.NotificationChannel
+import android.graphics.Color
+import androidx.annotation.RequiresApi
+import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 
 
 /**
@@ -56,12 +65,19 @@ class HTTPServerService : Service() {
     @Inject
     lateinit var sheasyPref: SheasyPrefDataSource
 
+
+    @Inject
+    lateinit var notificationUseCase: NotificationUseCase
+
+
+
     /****************************************** Lifecycle methods  */
 
 
     init {
         initializeDagger()
-        bind = ServiceBinder()
+        bind =
+            ServiceBinder()
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)
@@ -87,22 +103,25 @@ class HTTPServerService : Service() {
                         )
                     )
                 }
-                return super.onStartCommand(intent, flags, startId)
+
 
             }
         }
         return START_STICKY
-
-
     }
 
 
     override fun onCreate() {
         super.onCreate()
         server.start()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            startMyOwnForeground()
+        else
+            startForeground(1, Notification())
     }
 
     override fun stopService(name: Intent?): Boolean {
+        stopForeground(true)
         server.stop()
         return super.stopService(name)
 
@@ -111,6 +130,11 @@ class HTTPServerService : Service() {
     override fun onDestroy() {
         server.stop()
         super.onDestroy()
+    }
+
+    @RequiresApi(VERSION_CODES.O)
+    private fun startMyOwnForeground() {
+        startForeground(2, notificationUseCase.getForeGroundServiceNotification(this))
     }
 
 

@@ -1,7 +1,9 @@
 package de.jensklingenberg.sheasy
 
 import android.app.Application
+import android.util.Log
 import de.jensklingenberg.sheasy.di.*
+import io.reactivex.plugins.RxJavaPlugins
 
 
 open class App : Application() {
@@ -13,6 +15,7 @@ open class App : Application() {
     override fun onCreate() {
         super.onCreate()
         initializeDagger()
+        RxJavaPlugins.setErrorHandler { throwable-> Log.e("Sheasy","RxError"+throwable.message) }
     }
 
     open fun initializeDagger() {

@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.network.HTTPServerService
+import de.jensklingenberg.sheasy.service.HTTPServerService
 import de.jensklingenberg.sheasy.utils.ScreenRecord
 import javax.inject.Inject
 
