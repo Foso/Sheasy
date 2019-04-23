@@ -16,7 +16,7 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:adjustViewBounds="true"
-        android:paddingBottom="12dp"
+        android:contentDescription="TODO" android:paddingBottom="12dp"
         android:paddingTop="12dp"
         android:src="@drawable/ic_arrow_back_white_24dp"
         android:visibility="gone"
@@ -31,7 +31,7 @@
         android:layout_below="@+id/backBtn"
 
         android:adjustViewBounds="true"
-        android:paddingBottom="12dp"
+        android:contentDescription="TODO" android:paddingBottom="12dp"
         android:paddingTop="12dp"
 
         android:src="@drawable/ic_menu_white_24dp"
@@ -45,7 +45,7 @@
         android:layout_toLeftOf="@id/pageTitleTv"
         android:layout_centerVertical="true"
         android:adjustViewBounds="true"
-        android:paddingBottom="12dp"
+        android:contentDescription="TODO" android:paddingBottom="12dp"
         android:paddingTop="12dp"
         android:src="@drawable/ic_arrow_upward_white_24dp"
         android:visibility="visible"
@@ -60,7 +60,7 @@
 
 
         android:adjustViewBounds="true"
-        android:paddingBottom="12dp"
+        android:contentDescription="TODO" android:paddingBottom="12dp"
         android:paddingTop="12dp"
         android:src="@drawable/ic_settings_white_24dp"
         android:visibility="gone"
@@ -91,7 +91,7 @@
         android:layout_height="@dimen/toolbar_height"
 
         android:adjustViewBounds="true"
-        android:paddingBottom="12dp"
+        android:contentDescription="TODO" android:paddingBottom="12dp"
         android:paddingTop="12dp"
         android:src="@drawable/ic_share_white_24dp"
         android:visibility="gone" />

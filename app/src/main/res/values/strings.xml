@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sheasy</string>
+    <string name="app_name">Sheasy - Share Easy</string>
     <string name="app_folder_directory">Sheasy</string>
 
     <string name="main_frag_tab_name">dd</string>
@@ -9,15 +9,40 @@
     <string name="record">Record</string>
     <string name="stop">Stop</string>
     <string name="description_info">Info</string>
-    <string name="permission_request">This sample needs permission for camera and audio recording.</string>
-    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
-    <string name="intro_message">
-        <![CDATA[
-            This sample demonstrates how to record video using Camera2 API.
-        ]]>
-    </string>
+
     <string name="share">Share</string>
     <string name="Success">Erfolg</string>
     <string name="Failed">Failed</string>
+    <string name="loading">Loading</string>
     <string name="path_general_main">/</string>
+    <string name="device_NOTAUTHORIZED">Device is not authorized</string>
+    <string name="revoke">Revoke</string>
+    <string name="http_port">Http Port</string>
+    <string name="websocket_port">Websocket Port</string>
+    <string name="authorize">Authorize</string>
+
+    <!-- Server -->
+    <string name="acceptAllConnections">Accept all connections</string>
+
+
+    <!-- Permissions -->
+    <string name="readNotifications">Read notifications</string>
+
+
+
+    <!-- About -->
+
+    <string name="about_libraries">Libraries</string>
+    <string name="About_Changelog">Changelog</string>
+    <string name="about_changelog_link">https://github.com/Foso/Sheasy/commits/develop</string>
+
+    <string name="about_License">License</string>
+    <string name="about_license_link">https://github.com/Foso/Sheasy/blob/develop/LICENSE</string>
+    <string name="about_license_caption">Sheasy is licensed under Apache License 2.0</string>
+    <string name="about_send_feedback">Send Feedback</string>
+
+
+    <string name="key_accept_all_connections">PORT</string>
+    <string name="side_menu_share_app">Share this app</string>
+
 </resources>

@@ -1,65 +1,60 @@
 package de.jensklingenberg.sheasy.di
 
 import android.app.Application
-import android.app.NotificationManager
 import android.content.Context
-import android.content.SharedPreferences
-import android.content.pm.PackageManager
-import android.preference.PreferenceManager
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.data.SheasyPreferences
-import de.jensklingenberg.sheasy.legacy.utils.extension.notificationManager
-import retrofit2.converter.moshi.MoshiConverterFactory
+import de.jensklingenberg.sheasy.data.FileDataSource
+import de.jensklingenberg.sheasy.data.event.EventDataSource
+import de.jensklingenberg.sheasy.data.event.EventRepository
+import de.jensklingenberg.sheasy.data.file.AndroidFileRepository
+import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
+import de.jensklingenberg.sheasy.data.notification.NotificationRepository
+import de.jensklingenberg.sheasy.data.preferences.SheasyPreferencesRepository
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.utils.ScreenRecord
 import javax.inject.Singleton
 
 @Module
-class AppModule(private val application: App) {
+open class AppModule(private val application: App) {
 
     @Provides
     @Singleton
     fun provideContext(): Context = application
 
-    @Provides
-    @Singleton
-    fun provideNotificationManager(context: Context): NotificationManager =
-        context.notificationManager()
-
-    @Provides
-    @Singleton
-    fun provideApp(): App = application
 
     @Provides
     @Singleton
     fun provideApplication(): Application = application
-
-    @Provides
-    @Singleton
-    fun providePackageManager(context: Context): PackageManager = context.packageManager
-
-
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(application: App): SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(application)
-
-
-    @Provides
-    @Singleton
-    fun provideSheasyPreferences(sharedPreferences: SharedPreferences): SheasyPreferences =
-        SheasyPreferences(sharedPreferences)
 
 
     @Provides
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder().build()
 
+    @Provides
+    @Singleton
+    fun provScreenRecord(): ScreenRecord =
+        ScreenRecord()
 
     @Provides
     @Singleton
-    fun provideMoshiConverter() = MoshiConverterFactory.create()
+    open fun provideSheasyPrefDataSource(application: Application): SheasyPrefDataSource =
+        SheasyPreferencesRepository()
 
+    @Provides
+    @Singleton
+    open fun provideFileDataSource(): FileDataSource = AndroidFileRepository()
+
+    @Provides
+    @Singleton
+    open fun provideNotificationDataSource(): NotificationDataSource =
+        NotificationRepository()
+
+    @Provides
+    @Singleton
+    open fun provideEventDataSource(): EventDataSource = EventRepository()
 
 }

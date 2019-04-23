@@ -1,1 +1,20 @@
-include ':app',':web',  ':models',  ':SharedCode'
+pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "kotlin-multiplatform") {
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
+            } else if (requested.id.id == "org.jetbrains.kotlin.frontend") {
+                useModule("org.jetbrains.kotlin:kotlin-frontend-plugin:${requested.version}")
+            }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    }
+}
+include ':app', ':web', ':libshared', ':desktop', ':serverJvm'
+
+

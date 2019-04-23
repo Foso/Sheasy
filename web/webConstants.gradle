@@ -1,0 +1,45 @@
+ext {
+
+    gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+    buildTime = new Date().format("yyyy-MM-dd'T'HH:mm:ss'Z'", TimeZone.getTimeZone("UTC"))
+    kotlinx_html_version = '0.6.11'
+    kotlin_frontend_version = '0.0.45'
+
+    react_version = '16.6.0'
+    kotlin_react_version = "16.6.0-pre.63-kotlin-1.3.11"
+    kotlin_react_dom_version = "16.6.0-pre.63-kotlin-1.3.11"
+
+    libs = [axios                 : '0.18.0',
+            bootstrap             : '^4.1.3',
+            core_js               : '3.0.0',
+            history               : '^4.7.2',
+            kodein                : "6.0.1",
+            ktorClient : "1.1.3",
+            react_draggable       : "3.0.5",
+            react_dropzone        : "7.0.1",
+            react_router_dom      : '^4.3.1',
+            react_web_notification: '0.3.2',
+            reactstrap            : '^6.5.0',
+            rxjs                  : '6.3.3',
+            simple_websocket      : '7.2.0'
+    ]
+
+
+    configuration = [
+            kotlin_version: '1.3.30',
+            versionCode   : 1,
+            serverPort    : "8766",
+            websocketPort : "8765",
+            versionName   : '1.0.0']
+
+    mavenRepos = ["https://dl.bintray.com/kotlin/kotlin-eap",
+                  "https://kotlin.bintray.com/kotlin/kotlinx",
+                  "https://dl.bintray.com/kotlin/ktor",
+                  "https://dl.bintray.com/kotlin/kotlin-js-wrappers",
+                 "https://dl.bintray.com/danfma/kotlin-kodando"
+
+
+    ]
+
+
+}

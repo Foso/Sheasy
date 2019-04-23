@@ -1,0 +1,64 @@
+buildscript {
+    apply from: './constants.gradle'
+}
+
+
+plugins {
+
+    id 'org.jetbrains.kotlin.multiplatform'
+
+}
+
+
+kotlin {
+    targets {
+        fromPreset(presets.jvm, 'jvm'){
+            configure([compilations.main]) {
+                tasks.getByName(compileKotlinTaskName).kotlinOptions {
+                    jvmTarget = "1.8"
+                }
+            }
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                implementation project(':libshared')
+
+            }
+
+        }
+
+
+        jvmMain {
+            resources.srcDirs += "resources"
+            dependencies {
+                api project(":libshared")
+
+                implementation project(":libshared")
+                implementation "io.ktor:ktor:$libs.ktor_version"
+
+                implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
+
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+                implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
+                implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
+                implementation "io.ktor:ktor-gson:$libs.ktor_version"
+                implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
+
+            }
+        }
+
+
+
+    }
+}
+
+// workaround for https://youtrack.jetbrains.com/issue/KT-27170
+configurations {
+    compileClasspath
+}
+

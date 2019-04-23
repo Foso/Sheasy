@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="libshared-js">
+    <output-path>$PROJECT_DIR$/libshared/build/libs</output-path>
+    <root id="archive" name="libshared-js.jar">
+      <element id="module-output" name="libshared_jsMain" />
+    </root>
+  </artifact>
+</component>

@@ -1,43 +1,45 @@
 <h1 align="center">Sheasy - Share Easy </h1>
 
+
+
 [![jCenter](https://img.shields.io/badge/Apache-2.0-green.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-range.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-range.svg?style=flat-square)](#contributors)
   <a href="https://twitter.com/intent/tweet?text=Hey, check out Sheasy - Share Easy Android App https://github.com/Foso/Sheasy via @jklingenberg_ #Android 
 "><img src="https://img.shields.io/twitter/url/https/github.com/angular-medellin/meetup.svg?style=social" alt="Tweet"></a>
 
+<h1 align=center>
+<img src="logo/horizontal.png" width=40%>
+</h1>
+
 > This an Android App that helps you share/manage your files on your Android Device through a WebInterface in the Browser
 
-## 🚩 Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#-features)
-- [Roadmap](#-roadmap)
-- [Architecture](#-architecture)
-- [Docs](#-docs)
-- [Feedback](#-feedback)
-- [Contributors](#-contributors)
+<hr>
+<p align="center"><a href="#introduction">Introduction</a> &bull; <a href="#-features">Features</a> &bull; <a href="##-roadmap">Roadmap</a> &bull; <a href="#-architecture">Architecture</a> &bull; <a href="#-docs">Docs</a> &bull; <a href="#-feedback">Feedback</a>&bull; <a href="#-docs">Docs</a> &bull; <a href="##-contributors">Contributors</a></p>
+<hr>
 
 ## Introduction
 The goal is to write an open source app that makes it super easy to share files from one device to another
 
 It's a hobby project i started to learn about Kotlin, React(Kotlin-JS) and Ktor. 
-At this time, this app is in an early stage (work-in-progress👷). I never worked with Ktor or Kotlin-React before and i'm still learning. Please keep that in my mind when you see parts in the code that don't follow best pratices (yet).
+
 
 
 
 ## 🎨 Features
 A few of the things you can do with Sheasy:
-- download apks
+- <a href="https://github.com/Foso/Sheasy/wiki/Download-Apks">download apks</a>
 
+- <a href="https://github.com/Foso/Sheasy/wiki/Download-Files">download files</a>
+
+- <a href="https://github.com/Foso/Sheasy/wiki/Upload-Files">upload files</a>
 
 
 ## 🗺️ Roadmap
 - [ ] show screen recording in browser
 - [ ] host only single folder like "python -m SimpleHTTPServer"
 - [ ] security
-- [ ] download files
 - [ ] receive notifications in browser
 - [ ] see device informations
 - [ ] see log of last transactions
@@ -45,9 +47,20 @@ A few of the things you can do with Sheasy:
 
 # 🏠 Architecture
 
+## Project Structure
+* <kbd>app</kbd> - Base android project directory that contains the app
+* <kbd>desktop</kbd> - A Kotlin Jvm project with the desktop server
+* <kbd>web</kbd> - The web client. This module is using the Kotlin Multiplatform Plugin, but is only configured to compile to Javascript/React.
+The main entry of the module is inside the <kbd>index.kt</kbd>.
+
+* <kbd>serverJvm</kbd> - Shared module for <kbd>app</kbd> and <kbd>desktop</kbd>, which contains server specific classes/interfaces
+
+* <kbd>libshared</kbd> - Shared module for <kbd>app, desktop and web</kbd>, which contains specific classes/interfaces like Error types or responses
+
+
 ## 🛠️ Built With
 ### Kotlin
-[![jCenter](https://img.shields.io/badge/Kotlin-1.3.0-green.svg
+[![jCenter](https://img.shields.io/badge/Kotlin-1.3.30-green.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
 
 The App is completely written in Kotlin (except the used JVM/JS libraries)
@@ -62,7 +75,8 @@ The App is completely written in Kotlin (except the used JVM/JS libraries)
 
 ### Backend
 * [Ktor](https://github.com/ktorio/ktor) - Used as Backend
-* [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - Only used for WebSockets, because Ktor's websocket need API23
+* [NanoHTTPD]() - Used for Websockets
+
 
 ### Frontend
 * [Kotlin React](https://kotlinlang.org/docs/tutorials/javascript/kotlin-to-javascript/kotlin-to-javascript.html) - Used for Web Frontend
@@ -70,7 +84,7 @@ The App is completely written in Kotlin (except the used JVM/JS libraries)
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Please take a look at the instructions in the [Wiki](https://github.com/Foso/Sheasy/wiki). 
 
 ## 📙 Docs
 Please take a look into the [Wiki](https://github.com/Foso/Sheasy/wiki) 

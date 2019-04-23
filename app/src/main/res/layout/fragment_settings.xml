@@ -1,37 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:id="@+id/portRL"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/serverPortTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Serverport"
-            />
-
-        <EditText
-            android:id="@+id/serverPortEt"
-            android:layout_toRightOf="@+id/serverPortTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="8766"
-            />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
 
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-    </RelativeLayout>
 
-    <Button
-        android:id="@+id/saveBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/portRL"
-        android:text="ddd"/>
+            android:layout_marginTop="8dp"
+            tools:listitem="@layout/list_item_file" />
 
-</RelativeLayout>
+
+</LinearLayout>

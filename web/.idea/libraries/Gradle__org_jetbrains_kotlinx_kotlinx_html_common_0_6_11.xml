@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jetbrains.kotlinx:kotlinx-html-common:0.6.11" type="kotlin.common">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-html-common/0.6.11/75d2a124cfc653170d8e51cfe2db3c5156a5f5c9/kotlinx-html-common-0.6.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-html-common/0.6.11/549a2ed0edda504c0206a833dc7b37500985b2a6/kotlinx-html-common-0.6.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

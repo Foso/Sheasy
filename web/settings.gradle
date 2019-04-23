@@ -1,2 +1,0 @@
-rootProject.name = 'sheasy-react-client'
-include ':web',  ':models',  ':common'

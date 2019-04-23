@@ -2,8 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="SharedCode_androidMain" target="1.6" />
-      <module name="SharedCode_androidTest" target="1.6" />
+      <module name="app_jvmMain" target="1.8" />
+      <module name="app_jvmTest" target="1.6" />
+      <module name="desktop_jvmMain" target="1.6" />
+      <module name="desktop_jvmTest" target="1.6" />
+      <module name="libshared_jvmMain" target="1.6" />
+      <module name="libshared_jvmTest" target="1.6" />
+      <module name="serverJvm_jvmMain" target="1.8" />
+      <module name="serverJvm_jvmTest" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

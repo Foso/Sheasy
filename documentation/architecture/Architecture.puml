@@ -1,0 +1,23 @@
+@startuml
+
+node libshared
+
+
+artifact App {
+  node Android
+}
+node serverJvm
+node Desktop
+node Web
+libshared -- serverJvm
+libshared -- Web
+serverJvm -- Android
+serverJvm -- Desktop
+
+artifact Foo1 {
+  node Foo2
+}
+
+serverJvm -- Foo2
+
+@enduml

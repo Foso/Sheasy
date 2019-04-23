@@ -1,33 +1,32 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript { 
+buildscript {
 
-    apply from: './constants.gradle'
+    apply from: './buildConstants.gradle'
 
     ext.buildMaven = { p -> repositories { maven { url p } } }
 
     repositories {
+        mavenLocal()
         google()
         jcenter()
         mavenCentral()
         mavenRepos.each { buildMaven(it) }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'com.benjaminsproule:swagger-gradle-plugin:+'
-        classpath "gradle.plugin.org.hidetake:gradle-swagger-generator-plugin:2.11.0"
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0-alpha08"
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$configuration.detektVersion"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.17"
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.45"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.30"
+        classpath 'com.android.tools.build:gradle:3.4.0'
+
         classpath 'com.github.marcpoppleton:git-changelog:0.1.3'
+        classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
 
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.0" }
+
+    }
 }
-
-plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC9.2"
-    id 'org.jetbrains.kotlin.jvm' version '1.3.0'
-}
-
-
 
 allprojects {
     ext.buildMaven = { p -> repositories { maven { url p } } }
@@ -39,27 +38,8 @@ allprojects {
         mavenRepos.each { buildMaven(it) }
         jcenter()
     }
+
 }
 
 
-repositories {
-    google()
-    mavenCentral()
 
-    mavenRepos.each { buildMaven(it) }
-    jcenter()
-
-}
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-}
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}

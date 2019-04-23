@@ -1,118 +1,156 @@
 buildscript {
-
-    apply from: './constants.gradle'
-
-
+    apply from: './webConstants.gradle'
 
     repositories {
+        mavenLocal()
+        google()
+        jcenter()
         mavenCentral()
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-        maven { url 'https://dl.bintray.com/kotlin/kotlinx' }
+        mavenRepos.each { buildMaven(it) }
     }
+
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:$kotlin_frontend_version"
+
+
+
+
     }
 
 }
+plugins {
 
-apply plugin: 'org.jetbrains.kotlin.frontend'
-apply plugin: 'kotlin2js'
-apply plugin: 'kotlin-dce-js'
+    id 'org.jetbrains.kotlin.multiplatform'
+    id 'org.jetbrains.kotlin.frontend'
+    id("io.gitlab.arturbosch.detekt")
+    id('com.moowork.node')
+    id("kotlin-dce-js")
 
-
-version '0.0.1'
+}
 
 repositories {
+    ext.buildMaven = { p -> repositories { maven { url p } } }
+    jcenter()
     mavenCentral()
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-    maven { url 'https://dl.bintray.com/kotlinx/kotlinx' }
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-js-wrappers' }
+    mavenRepos.each { buildMaven(it) }
+    maven { url 'https://jitpack.io' }
+
 }
-
-dependencies {
-    implementation project(':SharedCode')
-
-    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
-    compile "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
-    compile "org.jetbrains:kotlin-react:$kotlin_react_version"
-    compile "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
-    testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
+detekt {
+    toolVersion = "1.0.0.RC9.2"
+    input = files("src/jsMain/kotlin")
+    filters = ".*/resources/.*,.*/build/.*"
+    config = files("./default-detekt-config.yml")
 }
+kotlin {
 
+        js() {
+            configure([compilations.main]) {
+                tasks.getByName(compileKotlinTaskName).kotlinOptions {
+                    languageVersion = "1.3"
+                    sourceMap = true
+
+                    moduleKind = "commonjs"
+                    metaInfo = true
+                    outputFile = "${project.buildDir.path}/js/${project.name}.js"
+                }
+            }
+
+
+
+            configure(compilations.main) {
+                tasks.getByName(compileKotlinTaskName).kotlinOptions {
+                    main = "call"
+                }
+            }
+        }
+
+
+    sourceSets {
+
+        commonMain {
+            dependencies {
+                implementation "io.ktor:ktor-client-core:$libs.ktorClient"
+
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                compileOnly project(":libshared")
+                implementation("io.ktor:ktor-client-core:$libs.ktorClient")
+                implementation 'com.github.badoo.reaktive:reaktive:1.0.0-alpha1'
+            }
+
+        }
+
+        jsMain {
+            kotlin.srcDirs += "kotlin"
+            resources.srcDirs += "web"
+
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-js:$configuration.kotlin_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
+                implementation "org.jetbrains:kotlin-react:$kotlin_react_version"
+                implementation "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
+                implementation "org.kodein.di:kodein-di-erased-js:$libs.kodein"
+                implementation "org.jetbrains.kotlin:kotlin-test-js"
+                implementation "br.danfma.kodando:kodando-rxjs:0.8.0"
+                implementation "io.ktor:ktor-client-js:$libs.ktorClient"
+                implementation "com.noheltcj:rx-common-js:$Versions.web.rxCommonJS"
+            }
+        }
+
+    }
+}
 kotlinFrontend {
-    // downloadNodeJsVersion = 'latest'
+    downloadNodeJsVersion = 'latest'
 
     npm {
         dependency("bootstrap", "${libs.bootstrap}")
-        dependency("style-loader")
-        dependency("@material-ui/core")
+        dependency("@material-ui/core", "v3.7.0")
         dependency("@material-ui/icons")
         dependency("axios", "${libs.axios}")
-        dependency("core-js", "${libs.core_js}")
-        dependency("rxjs", "${libs.rxjs}")
-      //  dependency("qrcode.react")
         dependency("react-autosuggest")
         dependency("history", "${libs.history}")
         dependency("react-router-dom", "${libs.react_router_dom}")
         dependency("react-dev-utils", "^5.0.2")
-        dependency("react-draggable")
+        dependency("react-draggable", "${libs.react_draggable}")
         dependency("react-dropzone", "${libs.react_dropzone}")
-        dependency("react-lottie")
         dependency("react-web-notification", "${libs.react_web_notification}")
         dependency("reactstrap", "${libs.reactstrap}")
         dependency("simple-websocket", "${libs.simple_websocket}")
         dependency('react', react_version)
         dependency('react-dom', react_version)
-        devDependency("css-loader")
-        devDependency("style-loader")
+        dependency("css-loader")
+        dependency("style-loader")
+        dependency("jest")
+        dependency("rxjs", Versions.web.rxJS)
 
     }
 
-    sourceMaps = true
 
     webpackBundle {
-
-        port= 8088
-        bundleName = "main"
-        contentPath = file('src/main/web')
+        port = 8080
+        // mode= "production"
+        bundleName = "jsMain"
+        sourceMapEnabled = true
+        contentPath = file('src/jsMain/web')
         publicPath = "/web"
-        proxyUrl = 'http://localhost:8080'
+        //  proxyUrl = 'http://localhost:8080'
     }
 }
-
-compileKotlin2Js {
-    kotlinOptions.metaInfo = true
-    kotlinOptions.outputFile = "${project.buildDir.path}/js/${project.name}.js"
-    kotlinOptions.sourceMap = true
-    kotlinOptions.moduleKind = 'commonjs'
-    kotlinOptions.main = 'call'
-}
-
-
-
-sourceSets {
-    main {
-        kotlin.srcDirs += "src"
-        resources.srcDirs += "resources"
-        output.resourcesDir = "build/js/resources"
-    }
-    test {
-        kotlin.srcDirs += "test"
-        resources.srcDirs += "testResources"
-    }
-}
-
-kotlin {
-    experimental {
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.9' //version required
-}
-
 task serverPrepare(type: Copy, dependsOn: ["build"]) {
-    from "${project.buildDir.path}/build/bundle", "$rootDir/src/main/web"
-    into "${project.buildDir.path}/deploy"
+    from "./build/bundle", "./src/jsMain/web"
+    into "./deploy"
 }
+
+def appProject = project(':app')
+
+task deployToAppAssets(type: Copy, dependsOn: ["build"]) {
+    from "./build/bundle", "./src/jsMain/web"
+    into "${appProject.projectDir}/src/main/assets/web"
+}
+
+
+
+// workaround for https://youtrack.jetbrains.com/issue/KT-27170
+configurations {
+    compileClasspath
+}
+

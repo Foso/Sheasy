@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/sub_medium_spacing"
+        android:paddingRight="@dimen/medium_spacing"
+        android:paddingBottom="@dimen/sub_medium_spacing">
+
+        <ImageView
+                android:id="@+id/icon"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="@dimen/big_spacing"
+                android:layout_marginRight="@dimen/big_spacing"
+                android:contentDescription="TODO"
+                tools:src="@drawable/ic_settings_black_24dp"/>
+
+        <LinearLayout
+                android:id="@+id/item"
+
+                android:layout_toRightOf="@id/icon"
+                android:layout_toLeftOf="@id/shareBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_dark_background"
+                tools:text="Sicherheit" />
+
+            <TextView
+                android:id="@+id/caption"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FF616161"
+                tools:text="Bitte gibt hier ein Passwort ein test ste" />
+
+        </LinearLayout>
+
+        <ImageView
+                android:id="@+id/moreBtn"
+                android:visibility="gone"
+                android:contentDescription="TODO"
+                android:src="@drawable/ic_more_vert_black_24dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
+        />
+
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

@@ -46,7 +46,7 @@
       app:elevation="24dp"
       app:itemIconTint="@drawable/nav_item_color_state"
       app:itemTextColor="@drawable/nav_item_color_state"
-      app:menu="@menu/my_navigation_items"
+      app:menu="@menu/main_options_menu"
 
       />
 
