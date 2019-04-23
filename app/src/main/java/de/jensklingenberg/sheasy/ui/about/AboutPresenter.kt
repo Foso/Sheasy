@@ -74,6 +74,11 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
                 "Commit",
                 BuildConfig.GIT_SHA,
                 R.drawable.ic_code_grey_700_24dp
+            ).toSourceItem(this),
+            GenericListItem(
+                "BuildNumber",
+                BuildConfig.VERSION_CODE.toString(),
+                R.drawable.ic_code_grey_700_24dp
             ).toSourceItem(this)
 
 

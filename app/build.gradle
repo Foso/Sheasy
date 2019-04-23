@@ -31,6 +31,9 @@ android {
     }
     compileSdkVersion configuration.compileSdk
     defaultConfig {
+        def bitriseBuildNumber = System.getenv("BITRISE_BUILD_NUMBER")
+        versionCode bitriseBuildNumber? bitriseBuildNumber.toInteger() : 1
+
         buildConfigField "int", "SERVER_PORT", configuration.serverPort
         buildConfigField "int", "WEBSOCKET_PORT", configuration.websocketPort
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
@@ -39,7 +42,6 @@ android {
         applicationId configuration.applicationId
         minSdkVersion configuration.minSdk
         targetSdkVersion configuration.targetSdk
-        versionCode 1
         versionName configuration.appVersion
         testInstrumentationRunner "de.jensklingenberg.sheasy.UiTestsRunner"
 
