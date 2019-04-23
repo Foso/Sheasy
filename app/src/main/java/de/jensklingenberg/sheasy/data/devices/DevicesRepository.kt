@@ -24,8 +24,9 @@ class DevicesRepository : DevicesDataSource {
 
     override fun removeDevice(device: Device) {
         val index = authorizedDevices.indexOfFirst { knownDevice -> knownDevice.ip.equals(device.ip) }
-        authorizedDevices.set(index, device.copy(authorizationType = AuthorizationType.REVOKED))
+        authorizedDevices[index] = device.copy(authorizationType = AuthorizationType.REVOKED)
         knownDevices.onNext(authorizedDevices)
+
     }
 
 }
