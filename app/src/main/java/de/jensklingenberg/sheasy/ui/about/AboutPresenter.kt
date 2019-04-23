@@ -82,6 +82,8 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
             ).toSourceItem(this)
 
 
+
+
         )
 
         view.setData(list)
