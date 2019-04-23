@@ -27,6 +27,8 @@ class DevicesRepository : DevicesDataSource {
         authorizedDevices[index] = device.copy(authorizationType = AuthorizationType.REVOKED)
         knownDevices.onNext(authorizedDevices)
 
+
+
     }
 
 }
