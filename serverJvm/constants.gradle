@@ -1,5 +1,7 @@
 ext {
     libs = [
-            ktor_version         : '1.0.1'
+            ktor_version         : '1.0.1',
+            rxJava : "2.1.7"
+
     ]
 }

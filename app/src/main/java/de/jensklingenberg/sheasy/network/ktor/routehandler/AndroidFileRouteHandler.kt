@@ -78,8 +78,13 @@ class AndroidFileRouteHandler : FileRouteHandler {
                 if (allowedPath) {
                     fileDataSource
                         .observeFiles(call.parameter)
-                        .subscribeBy(onSuccess = {
-                            singleEmitter.onSuccess(it)
+                        .subscribeBy(onSuccess = { fileList ->
+                            singleEmitter.onSuccess(fileList.map {
+                                FileResponse(
+                                    it.name,
+                                    it.path
+                                )
+                            })
                         }, onError = {
                             Log.e(this.javaClass.simpleName, it.message)
                         })
@@ -93,10 +98,10 @@ class AndroidFileRouteHandler : FileRouteHandler {
     }
 
     private fun getFile(filePath: String) = Single.create<File> { singleEmitter ->
-            fileDataSource
-                .getFile(filePath)
-                .subscribeBy(
-                onSuccess = {file->
+        fileDataSource
+            .getFile(filePath)
+            .subscribeBy(
+                onSuccess = { file ->
                     singleEmitter.onSuccess(file)
 
                 }, onError = {
@@ -125,14 +130,17 @@ class AndroidFileRouteHandler : FileRouteHandler {
                     .await()
                     .run {
                         call.response.debugCorsHeader()
-                        call.respond(Resource.success(this.map {
-                            AppInfo(
-                                it.sourceDir,
-                                it.name,
-                                it.packageName,
-                                it.installTime
-                            )
-                        }))
+                        call.respond(
+                            Resource.success(
+                                this.map {
+                                    AppInfo(
+                                        it.sourceDir,
+                                        it.name,
+                                        it.packageName,
+                                        it.installTime
+                                    )
+                                })
+                        )
                     }
             }
 

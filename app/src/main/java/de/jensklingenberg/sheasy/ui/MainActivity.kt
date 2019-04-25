@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
 
                     val filePath = FilesFragmentDirections.ActionFilesFragmentSelf().setFilePath(uri.toString())
 
-                    // var bundle = bundleOf("filePath" to uri)
+                    // var bundle = bundleOf("fileResponse1" to uri)
                     navController.navigate(R.id.filesFragment, filePath.arguments)
                     break
                 }

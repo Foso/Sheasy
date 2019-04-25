@@ -146,7 +146,6 @@ task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
 }
 
 dependencies {
-
     implementation project(':serverJvm')
     implementation project(":libshared")
 
@@ -174,14 +173,6 @@ dependencies {
     implementation "com.serjltt.moshi:moshi-lazy-adapters:${libs.moshilazyadapters}"
     implementation "com.squareup.moshi:moshi-kotlin:${libs.moshikotlin}"
 
-    //Ktor
-    implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
-    implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
-   // implementation "io.ktor:ktor-locations:$libs.ktor_version"
-    implementation "io.ktor:ktor-websockets:$libs.ktor_version"
-    implementation "io.ktor:ktor:$libs.ktor_version"
-    implementation "io.ktor:ktor-network-tls:$libs.ktor_version"
-    implementation "io.ktor:ktor-gson:$libs.ktor_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
 
     //NanoHTTPD
@@ -223,12 +214,9 @@ dependencies {
 
     //Testing
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "$libs.mockitoVersion"
-    testImplementation 'com.nhaarman:mockito-kotlin:1.6.0'
 
     // testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${configuration.kotlin_version}"
-    testImplementation "junit:junit:${libs.junit}"
 
-    testImplementation "io.ktor:ktor-server-test-host:$libs.ktor_version"
     androidTestImplementation "io.mockk:mockk:${libs.mockkVersion}"
     androidTestImplementation "io.mockk:mockk-android:${libs.mockkVersion}"
     implementation "com.jakewharton.threetenabp:threetenabp:$libs.threetenabp"
@@ -238,12 +226,10 @@ dependencies {
 
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test:rules:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
 
     // Assertions
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.ext:truth:1.0.0'
-    androidTestImplementation 'com.google.truth:truth:0.42'
+    androidTestImplementation 'androidx.test.ext:truth:1.1.0'
 
     // Espresso dependencies
     androidTestImplementation "androidx.test.espresso:espresso-core:${libs.espressocore}"
@@ -260,7 +246,7 @@ dependencies {
     // dependency to appear on your APK's compile classpath or the test APK
 
     // classpath.
-    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.1.1'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
 
     implementation 'me.toptas.fancyshowcase:fancyshowcaseview:1.1.5'

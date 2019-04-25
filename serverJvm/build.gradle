@@ -36,18 +36,19 @@ kotlin {
             resources.srcDirs += "resources"
             dependencies {
                 api project(":libshared")
-
-                implementation project(":libshared")
-                implementation "io.ktor:ktor:$libs.ktor_version"
-
-                implementation "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
-
+                //implementation project(":libshared")
+                api "io.reactivex.rxjava2:rxjava:${libs.rxJava}"
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-                implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
                 implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
-                implementation "io.ktor:ktor-gson:$libs.ktor_version"
-                implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+                api "io.ktor:ktor-gson:$libs.ktor_version"
                 implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
+
+                api "io.ktor:ktor-server-netty:$libs.ktor_version"
+                api "io.ktor:ktor-server-jetty:$libs.ktor_version"
+               // implementation "io.ktor:ktor-locations:$libs.ktor_version"
+                api "io.ktor:ktor-websockets:$libs.ktor_version"
+                api "io.ktor:ktor:$libs.ktor_version"
+                api "io.ktor:ktor-network-tls:$libs.ktor_version"
 
             }
         }

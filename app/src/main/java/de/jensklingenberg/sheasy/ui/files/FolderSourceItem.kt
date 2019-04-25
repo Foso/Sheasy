@@ -1,18 +1,18 @@
 package de.jensklingenberg.sheasy.ui.files
 
-import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
+import java.io.File
 
 class FolderSourceItem(
-    fileResponse: FileResponse,
+    fileResponse: File,
     var onEntryClickListener: FolderViewHolder.OnEntryClickListener? = null
 ) :
-    BaseDataSourceItem<FileResponse>(FolderViewHolder::class.java) {
+    BaseDataSourceItem<File>(FolderViewHolder::class.java) {
 
 
-    override fun areItemsTheSameInner(other: BaseDataSourceItem<FileResponse>): Boolean = false
+    override fun areItemsTheSameInner(other: BaseDataSourceItem<File>): Boolean = false
 
-    override fun areContentsTheSameInner(other: BaseDataSourceItem<FileResponse>): Boolean = false
+    override fun areContentsTheSameInner(other: BaseDataSourceItem<File>): Boolean = false
 
     init {
         setPayload(fileResponse)
