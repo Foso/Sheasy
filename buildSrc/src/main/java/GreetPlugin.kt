@@ -2,6 +2,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 import org.gradle.kotlin.dsl.*
+import java.io.BufferedReader
 import java.io.File
 
 
@@ -11,7 +12,10 @@ class GreetPlugin : Plugin<Project> {
 
         println("I'm Compiling")
 
-       // File("/home/jens/Code/Android/Sheasy/buildSrc/src/hallo.txt").writeText(Libs.test)
+       //
 
+
+
+       // File("/home/jens/Code/Android/Sheasy/buildSrc/src/hallo.txt").writeText(gitSha)
     }
 }

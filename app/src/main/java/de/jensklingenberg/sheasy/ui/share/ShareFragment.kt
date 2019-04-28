@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.ui.share
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,17 +34,8 @@ class ShareFragment : BaseFragment(), ShareContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        recyclerView?.apply {
-            recyclerView.adapter = baseAdapter
-            recyclerView.layoutManager = LinearLayoutManager(context)
-            addItemDecoration(
-                DividerItemDecoration(
-                    requireContext(),
-                    DividerItemDecoration.VERTICAL
-                )
-            )
-        }
+        setHasOptionsMenu(true)
+        setupRecyclerView()
 
         presenter = SharePresenter(this)
         presenter.onCreate()
@@ -52,6 +44,29 @@ class ShareFragment : BaseFragment(), ShareContract.View {
             presenter.sendMessage(input.text.toString())
         }
 
+    }
+
+    private fun setupRecyclerView() {
+        recyclerView?.apply {
+            adapter = baseAdapter
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                getBaseActivity().mainActivityDrawer.toggleDrawer()
+            }
+        }
+
+        return true
     }
 
     override fun setData(items: List<BaseDataSourceItem<*>>) {

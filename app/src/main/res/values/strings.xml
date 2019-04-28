@@ -23,11 +23,11 @@
 
     <!-- Server -->
     <string name="acceptAllConnections">Accept all connections</string>
+    <string name="server">Server</string>
 
 
     <!-- Permissions -->
     <string name="readNotifications">Read notifications</string>
-
 
 
     <!-- About -->
@@ -44,5 +44,14 @@
 
     <string name="key_accept_all_connections">PORT</string>
     <string name="side_menu_share_app">Share this app</string>
+    <string name="Home.Title">Home</string>
+    <string name="Apps.Title">Apps</string>
+    <string name="Files.Title">Files</string>
+    <string name="Paired.Title">Paired</string>
+    <string name="Settings.Title">Settings</string>
+    <string name="EventLog.Title">EventLog</string>
+    <string name="Share.Title">Share Text</string>
+    <string name="About.Title">About</string>
+    <string name="share_this_app">Share this app</string>
 
 </resources>

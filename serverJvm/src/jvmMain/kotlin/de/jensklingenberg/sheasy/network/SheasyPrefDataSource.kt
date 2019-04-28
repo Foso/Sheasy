@@ -14,7 +14,6 @@ interface SheasyPrefDataSource {
     val httpPort: String
     var acceptAllConnections: Boolean
     val webSocketPort: Int
-    val devicesRepository: DevicesDataSource
     val nonInterceptedFolders: List<String>
 
     fun addShareFolder(folder:FileResponse)

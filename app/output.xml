@@ -1,3 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <checkstyle version="4.3">
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/about/AboutPresenter.kt">
+	<error line="8" column="1" severity="warning" message="de.jensklingenberg.sheasy.ui.common.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/settings/SettingsPresenter.kt">
+	<error line="8" column="1" severity="warning" message="de.jensklingenberg.sheasy.ui.common.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/ui/files/FilesFragment.kt">
+	<error line="17" column="1" severity="warning" message="de.jensklingenberg.sheasy.ui.common.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/di/UseCaseModule.kt">
+	<error line="9" column="1" severity="warning" message="de.jensklingenberg.sheasy.data.usecase.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/data/file/AndroidFileRepository.kt">
+	<error line="14" column="1" severity="warning" message="java.io.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/ktor/routehandler/AndroidKtorGeneralRouteHandler.kt">
+	<error line="7" column="1" severity="warning" message="de.jensklingenberg.sheasy.model.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/ktor/routehandler/AndroidFileRouteHandler.kt">
+	<error line="23" column="1" severity="warning" message="io.ktor.routing.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/websocket/NanoWSDWebSocketRepository.kt">
+	<error line="7" column="1" severity="warning" message="de.jensklingenberg.sheasy.network.websocket.websocket.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/network/websocket/websocket/ShareWebSocket.kt">
+	<error line="9" column="1" severity="warning" message="de.jensklingenberg.sheasy.model.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+</file>
+<file name="/home/jens/Code/Android/Sheasy/app/src/main/java/de/jensklingenberg/sheasy/App.kt">
+	<error line="5" column="1" severity="warning" message="de.jensklingenberg.sheasy.di.* is a wildcard import. Replace it with fully qualified imports." source="detekt.WildcardImport" />
+</file>
 </checkstyle>

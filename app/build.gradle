@@ -11,8 +11,6 @@ plugins {
     id("base")
     id("changelog")
     id("io.gitlab.arturbosch.detekt")
-    //id('org.jetbrains.dokka')
-  //  id("kotlinx-serialization")
 
 }
 apply plugin: 'org.jetbrains.dokka'
@@ -152,7 +150,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-
+ //   debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
     //AndroidX
     implementation "androidx.annotation:annotation:$libs.androidX.annotation"
     implementation "androidx.appcompat:appcompat:$libs.androidX.appcompat"
@@ -175,9 +173,16 @@ dependencies {
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
 
+
+    implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
+
+
     //NanoHTTPD
     implementation "org.nanohttpd:nanohttpd-websocket:$libs.nanohttpdwebsocket"
  //   implementation 'org.nanohttpd:nanohttpd:2.3.1'
+
+    implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+
 
     //RxJava
     implementation Libs.android.rxAndroid
@@ -217,9 +222,9 @@ dependencies {
 
     // testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${configuration.kotlin_version}"
 
-    androidTestImplementation "io.mockk:mockk:${libs.mockkVersion}"
     androidTestImplementation "io.mockk:mockk-android:${libs.mockkVersion}"
     implementation "com.jakewharton.threetenabp:threetenabp:$libs.threetenabp"
+
 
     // Core library
     androidTestImplementation 'androidx.test:core:1.1.0'

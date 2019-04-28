@@ -6,7 +6,7 @@ import android.service.notification.StatusBarNotification
 import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
-import de.jensklingenberg.sheasy.web.model.response.NotificationResponse
+import java.util.*
 import javax.inject.Inject
 
 
@@ -39,17 +39,13 @@ class NotificationListener : NotificationListenerService() {
             val text = it.getString(Notification.EXTRA_TEXT) ?: ""
             val subText = it.getString(Notification.EXTRA_SUB_TEXT) ?: ""
 
-            val postTime = sbn.postTime
+            val postTime = Date().toString()
             val packageName = sbn.packageName ?: ""
             Log.d("THIS", title)
-            val notResponse = NotificationResponse(packageName, title, text, subText, postTime)
+            val notification = de.jensklingenberg.sheasy.model.Notification(packageName, title, text, subText, postTime)
 
-            notificationDataSource.addNotification(notResponse)
+            notificationDataSource.addNotification(notification)
 
-            //  val pipp = Intent(MySharedMessageBroadcastReceiver.ACTION_NOTIFICATION)
-            //   pipp.putExtra(MySharedMessageBroadcastReceiver.ACTION_NOTIFICATION, notResponse)
-
-            //  sendBroadcast(pipp)
         }
 
     }

@@ -1,13 +1,12 @@
 package de.jensklingenberg.sheasy.network.websocket
 
-import de.jensklingenberg.sheasy.network.websocket.websocket.ScreenShareWebSocket
+import de.jensklingenberg.sheasy.network.websocket.websocket.SheasyWebSocket
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 
 interface NanoWSDWebSocketDataSource {
 
-    val screenShareWebSocketMap: HashMap<String, ScreenShareWebSocket>
-    var shareWebSocket: NanoWSD.WebSocket?
+    var shareWebSocket: SheasyWebSocket?
 
     fun openWebSocket(handshake: NanoHTTPD.IHTTPSession): NanoWSD.WebSocket
     fun start()

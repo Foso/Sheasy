@@ -37,11 +37,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
-                implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
-                implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
-                implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
-                implementation "io.ktor:ktor-gson:$libs.ktor_version"
-                implementation "io.ktor:ktor-websockets:$libs.ktor_version"
+
             }
 
         }
@@ -53,12 +49,7 @@ kotlin {
                // implementation 'de.jodamob.kotlin:kotlin-runner-junit4:0.3.1'
 
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-                implementation "io.ktor:ktor-server-jetty:$libs.ktor_version"
-                implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
-                implementation "io.ktor:ktor-html-builder:$libs.ktor_version"
-                implementation "io.ktor:ktor-gson:$libs.ktor_version"
-                implementation "io.ktor:ktor-websockets:$libs.ktor_version"
-                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
+
 
             }
         }

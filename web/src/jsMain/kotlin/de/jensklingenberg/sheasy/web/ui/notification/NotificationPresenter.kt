@@ -1,9 +1,9 @@
 package de.jensklingenberg.sheasy.web.ui.notification
 
+import de.jensklingenberg.sheasy.model.Notification
 import de.jensklingenberg.sheasy.model.WebSocketType
 import de.jensklingenberg.sheasy.model.WebsocketResource
 import de.jensklingenberg.sheasy.web.model.NotificationOptions
-import de.jensklingenberg.sheasy.web.model.response.NotificationResponse
 import de.jensklingenberg.sheasy.web.network.HttpAPI.Companion.notificationWebSocketURL
 import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.network.Websocket
@@ -42,10 +42,9 @@ class NotificationPresenter(private val view: NotificationContract.View) : Notif
 
     override fun onMessage(messageEvent: MessageEvent) {
         if (!viewIsUnmounted) {
-            console.log("View is alive")
 
 
-            val resource = JSON.parse<WebsocketResource<NotificationResponse>>(messageEvent.data.toString())
+            val resource = JSON.parse<WebsocketResource<Notification>>(messageEvent.data.toString())
 
 
             when (resource.type.toString()) {
@@ -56,8 +55,8 @@ class NotificationPresenter(private val view: NotificationContract.View) : Notif
                     val notificationOptions = NotificationOptions(
                         title = notificationResponse.title,
                         subText = notificationResponse.subText,
-                        icon = "https://avatars3.githubusercontent.com/u/5015532?s=40&v=4",
-                        tag = notificationResponse.subText
+                        icon = "",
+                        tag = notificationResponse.postTime
                     )
 
                     view.showNotification(notificationOptions)

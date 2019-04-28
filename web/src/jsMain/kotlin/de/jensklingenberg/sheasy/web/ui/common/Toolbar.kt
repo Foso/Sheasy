@@ -79,7 +79,7 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                         }
                         Grid {
                             Typography {
-                                +"Sheasy"
+                                +"Sheasy - Share Easy"
                                 attrs {
                                     color = "inherit"
                                     styleProps(textAlign = "right")

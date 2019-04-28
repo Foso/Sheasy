@@ -1,17 +1,14 @@
 package de.jensklingenberg.sheasy.ui.share
 
-import android.view.View
-import de.jensklingenberg.sheasy.model.Device
 import de.jensklingenberg.sheasy.model.MessageEvent
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
-import de.jensklingenberg.sheasy.ui.pairedDevices.DeviceListItemViewHolder
 
 
-class MessageSourceItem(
-    genericListItem: MessageEvent,
+class OutgoingMessageSourceItem(
+    messageEvent: MessageEvent,
     var onEntryClickListener: OnEntryClickListener? = null
 ) :
-    BaseDataSourceItem<MessageEvent>(MessageItemViewHolder::class.java) {
+    BaseDataSourceItem<MessageEvent>(OutgoingMessageItemViewHolder::class.java) {
 
 
     override fun areItemsTheSameInner(other: BaseDataSourceItem<MessageEvent>): Boolean {
@@ -24,13 +21,12 @@ class MessageSourceItem(
 
 
     init {
-        setPayload(genericListItem)
+        setPayload(messageEvent)
     }
 
 
     interface OnEntryClickListener {
         fun onItemClicked(payload: Any)
-        fun onMoreButtonClicked(view: View, payload: Any)
 
     }
 

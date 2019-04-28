@@ -44,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/md_dark_background"
-                    tools:text="Sicherheit"/>
+                    tools:text="Title"/>
 
             <TextView
                     android:id="@+id/caption"
@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#FF616161"
-                    tools:text="Bitte gibt hier ein Passwort ein test ste"/>
+                    tools:text="caption"/>
 
         </LinearLayout>
 

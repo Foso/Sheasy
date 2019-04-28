@@ -10,7 +10,7 @@ import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import react.RBuilder
 import react.dom.p
 
-class ShareSourceItem(val homeItem: ShareItem, val type: ShareType) : SourceItem() {
+class ShareSourceItem(val shareItem: ShareItem, val type: ShareType) : SourceItem() {
 
     override fun render(rBuilder: RBuilder) {
 
@@ -26,7 +26,7 @@ class ShareSourceItem(val homeItem: ShareItem, val type: ShareType) : SourceItem
 
                 ListItem {
                     attrs {
-                        href = homeItem.message
+                        href = shareItem.message
                         component = "a"
                         divider = true
                         if (this@ShareSourceItem.type == ShareType.INCOMING) {
@@ -39,7 +39,7 @@ class ShareSourceItem(val homeItem: ShareItem, val type: ShareType) : SourceItem
 
                     ListItemText {
                         attrs {
-                            this.primary = homeItem.message
+                            this.primary = shareItem.message
                         }
                     }
                 }

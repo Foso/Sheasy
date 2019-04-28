@@ -9,7 +9,7 @@ import io.reactivex.subjects.BehaviorSubject
 class DevicesRepository : DevicesDataSource {
 
     val knownDevices: BehaviorSubject<List<Device>> = BehaviorSubject.create()
-    override val authorizedDevices = mutableListOf<Device>()
+    override val auth = mutableListOf<Device>()
 
 
     override fun getAuthorizedDevices(): Observable<List<Device>> {
@@ -17,15 +17,15 @@ class DevicesRepository : DevicesDataSource {
     }
 
     override fun addAuthorizedDevice(device: Device) {
-        authorizedDevices.add(device)
-        knownDevices.onNext(authorizedDevices)
+        auth.add(device)
+        knownDevices.onNext(auth)
 
     }
 
     override fun removeDevice(device: Device) {
-        val index = authorizedDevices.indexOfFirst { knownDevice -> knownDevice.ip.equals(device.ip) }
-        authorizedDevices[index] = device.copy(authorizationType = AuthorizationType.REVOKED)
-        knownDevices.onNext(authorizedDevices)
+        val index = auth.indexOfFirst { knownDevice -> knownDevice.ip.equals(device.ip) }
+        auth[index] = device.copy(authorizationType = AuthorizationType.REVOKED)
+        knownDevices.onNext(auth)
 
 
 

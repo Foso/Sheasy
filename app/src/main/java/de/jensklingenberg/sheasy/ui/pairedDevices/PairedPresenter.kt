@@ -3,13 +3,13 @@ package de.jensklingenberg.sheasy.ui.pairedDevices
 import android.content.Context
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.data.DevicesDataSource
 import de.jensklingenberg.sheasy.model.AuthorizationType
 import de.jensklingenberg.sheasy.model.Device
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
 import de.jensklingenberg.sheasy.ui.common.addTo
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -28,6 +28,9 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
     @Inject
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
 
+    @Inject
+    lateinit var devicesDataSource: DevicesDataSource
+
     init {
         initializeDagger()
     }
@@ -42,7 +45,7 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
     private fun loadPairedDevices() {
 
-        sheasyPrefDataSource.devicesRepository.getAuthorizedDevices()
+        devicesDataSource.getAuthorizedDevices()
             .map { devices ->
 
                 val list = arrayListOf<BaseDataSourceItem<*>>()
@@ -87,7 +90,7 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
 
     override fun revokeDevice(device: Device) {
-        sheasyPrefDataSource.devicesRepository.removeDevice(device)
+        devicesDataSource.removeDevice(device)
     }
 
     override fun onDestroy() {
@@ -96,46 +99,10 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
     }
 
     fun authorizeDevice(device: Device) {
-        sheasyPrefDataSource.devicesRepository.addAuthorizedDevice(device)
+        devicesDataSource.addAuthorizedDevice(device)
     }
 
-    fun getAuthro(): Observable<ArrayList<BaseDataSourceItem<*>>> {
-        return sheasyPrefDataSource.devicesRepository.getAuthorizedDevices()
-            .map { devices ->
 
-                val list = arrayListOf<BaseDataSourceItem<*>>()
-
-
-                val autho = devices.filter { it.authorizationType == AuthorizationType.AUTHORIZED }
-
-                val revoked = devices.filter { it.authorizationType == AuthorizationType.REVOKED }
-
-                list.apply {
-
-                    if (revoked.isNotEmpty()) {
-                        add(
-                            GenericListHeaderSourceItem(
-                                "Revoked"
-                            )
-                        )
-                        addAll(devices.map { DeviceListItemSourceItem(it, this@PairedPresenter) })
-                    }
-
-                    if (autho.isNotEmpty()) {
-                        add(
-                            GenericListHeaderSourceItem(
-                                "Authorized"
-                            )
-                        )
-                        addAll(devices.map { DeviceListItemSourceItem(it, this@PairedPresenter) })
-                    }
-
-
-                }
-
-
-            }
-    }
 
     override fun onContextMenuClick(device: Device, id: Int) {
         when (id) {

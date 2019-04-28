@@ -14,20 +14,22 @@ object Versions {
 
 }
 
+val gitSha = Runtime
+    .getRuntime()
+    .exec("git rev-parse --short HEAD")
+    .let<Process, String> { process ->
+        process.waitFor()
+        val output = process.inputStream.use {
+            it.bufferedReader().use(BufferedReader::readText)
+        }
+        process.destroy()
+        output.trim()
+    }
+
 object BuildSrcConfig {
 
 
-    val gitSha = Runtime
-        .getRuntime()
-        .exec("git rev-parse --short HEAD")
-        .let<Process, String> { process ->
-            process.waitFor()
-            val output = process.inputStream.use {
-                it.bufferedReader().use(BufferedReader::readText)
-            }
-            process.destroy()
-            output.trim()
-        }
+
 
 }
 

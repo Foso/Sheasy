@@ -5,5 +5,7 @@ data class WebsocketResource<T>(val type: WebSocketType, val data: T?, val messa
 }
 
 enum class WebSocketType{
-    Notification
+    Notification,
+
+    MESSAGE
 }

@@ -6,6 +6,7 @@ import android.preference.PreferenceManager
 import androidx.core.content.edit
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.data.DevicesDataSource
 import de.jensklingenberg.sheasy.data.devices.DevicesRepository
 import de.jensklingenberg.sheasy.data.usecase.GetIpUseCase
 import de.jensklingenberg.sheasy.model.FileResponse
@@ -32,7 +33,6 @@ class SheasyPreferencesRepository() : SheasyPrefDataSource {
     val sharedFoldersSubject: BehaviorSubject<List<FileResponse>> = BehaviorSubject.create<List<FileResponse>>()
     override val sharedFolders = arrayListOf<FileResponse>()
     override val nonInterceptedFolders: List<String> = listOf("/web/connection/")
-    override val devicesRepository = DevicesRepository()
     override var appFolder = Environment.getExternalStorageDirectory().toString() + "/Sheasy/"
     override val httpPort = SharedNetworkSettings.httpPort
     override val webSocketPort = 8765

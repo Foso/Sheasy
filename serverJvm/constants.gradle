@@ -1,7 +1,9 @@
 ext {
     libs = [
             ktor_version         : '1.0.1',
-            rxJava : "2.1.7"
+            rxJava : "2.1.7",
+            mockkVersion         : '1.9',
+
 
     ]
 }

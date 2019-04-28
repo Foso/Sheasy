@@ -7,7 +7,7 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.event.EventDataSource
 import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
 import de.jensklingenberg.sheasy.model.*
-import de.jensklingenberg.sheasy.utils.extension.toJson
+import de.jensklingenberg.sheasy.utils.toplevel.runInBackground
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoWSD
 import io.reactivex.Observable
@@ -21,7 +21,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
-open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocket(handshake) {
+open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocket(handshake), SheasyWebSocket {
+
 
     @Inject
     lateinit var moshi: Moshi
@@ -43,57 +44,68 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
+    override fun onOpen() {
+        startRunner()
 
-    override fun onClose(
-        code: NanoWSD.WebSocketFrame.CloseCode,
-        reason: String,
-        initiatedByRemote: Boolean
-    ) {
-        compositeDisposable.dispose()
+        notificationDataSource
+            .notificationSubject
+            .subscribeBy(onNext = { notification ->
+                Log.d(TAG, "onComp: " + notification.title)
 
+                if (isOpen) {
+
+
+                    val typeA = Types.newParameterizedType(WebsocketResource::class.java, Notification::class.java)
+                    val adapter = moshi.adapter<WebsocketResource<Notification>>(typeA)
+
+                    runInBackground {
+                        send(
+                            adapter.toJson(
+                                WebsocketResource(
+                                    WebSocketType.Notification, notification, ""
+                                )
+
+                            )
+                        )
+                    }
+                }
+
+            }).addTo(compositeDisposable)
     }
 
-    override fun onMessage(message: NanoWSD.WebSocketFrame) {
-        Log.d(TAG, message.textPayload.toString())
-        Log.d(TAG, "onMessage: " + message)
-        message.setUnmasked()
+    override fun isOpen(): Boolean {
+        return super.isOpen()
+    }
 
-        eventDataSource.addEvent(MessageEvent(  message.textPayload ?: "", Date().toString(), MessageType.INCOMING))
+
+    override fun onMessage(message: NanoWSD.WebSocketFrame) {
+        message.setUnmasked()
+        eventDataSource.addEvent(MessageEvent(message.textPayload ?: "", Date().toString(), MessageType.INCOMING))
 
     }
 
     override fun onPong(pong: NanoWSD.WebSocketFrame) {
-        Log.d(TAG, "onPong: "+pong.textPayload)
+        Log.d(TAG, "onPong: " + pong.textPayload)
     }
 
     override fun onException(exception: IOException) {
         Log.d(TAG, "onException: " + exception.message)
     }
 
-
-    override fun onOpen() {
-        startRunner()
-
-        notificationDataSource.notification.subscribeBy(onNext = {
-            send(moshi.toJson(it))
-        }).addTo(compositeDisposable)
-
-    }
-
-    override fun send(payload: String?) {
+    override fun send(shareItem: ShareItem) {
         if (isOpen) {
             Observable
                 .fromCallable {
 
-                    val typeA = Types.newParameterizedType(Resource::class.java, ShareItem::class.java)
-                    val adapter = moshi.adapter<Resource<ShareItem>>(typeA)
+                    val typeA = Types.newParameterizedType(WebsocketResource::class.java, ShareItem::class.java)
+                    val adapter = moshi.adapter<WebsocketResource<ShareItem>>(typeA)
 
                     super.send(
                         adapter?.toJson(
-                            Resource.success(
-                                ShareItem(
-                                    payload
-                                )
+                            WebsocketResource(
+                                WebSocketType.MESSAGE, ShareItem(
+                                    shareItem.message
+                                ), ""
                             )
                         ) ?: ""
                     )
@@ -108,9 +120,9 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
         }
 
 
-        eventDataSource.addEvent(MessageEvent( payload ?: "","hhh", MessageType.OUTGOING))
-
+        eventDataSource.addEvent(MessageEvent(shareItem.message ?: "", Date().toString(), MessageType.OUTGOING))
     }
+
 
     private fun startRunner() {
         var t = 0
@@ -137,5 +149,13 @@ open class ShareWebSocket(handshake: NanoHTTPD.IHTTPSession?) : NanoWSD.WebSocke
 
     }
 
+    override fun onClose(
+        code: NanoWSD.WebSocketFrame.CloseCode,
+        reason: String,
+        initiatedByRemote: Boolean
+    ) {
+        compositeDisposable.dispose()
+
+    }
 
 }

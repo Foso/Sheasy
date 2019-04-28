@@ -32,7 +32,6 @@
                 android:id="@+id/item"
 
                 android:layout_toRightOf="@id/icon"
-                android:layout_toLeftOf="@id/shareBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -45,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/md_dark_background"
-                tools:text="Sicherheit" />
+                tools:text="Title" />
 
             <TextView
                 android:id="@+id/caption"
@@ -53,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#FF616161"
-                tools:text="Bitte gibt hier ein Passwort ein test ste" />
+                tools:text="caption" />
 
         </LinearLayout>
 

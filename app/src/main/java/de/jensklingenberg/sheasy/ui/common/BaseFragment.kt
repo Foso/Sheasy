@@ -12,24 +12,6 @@ import io.reactivex.disposables.Disposable
 
 open class BaseFragment : Fragment() {
 
-    val compositeDisposable = CompositeDisposable()
-
-    fun subscribe(disposable: Disposable): Disposable {
-        compositeDisposable.add(disposable)
-        return disposable
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        // compositeDisposable.clear()
-        compositeDisposable.dispose()
-        super.onDestroy()
-    }
-
-
     open fun getLayoutId(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

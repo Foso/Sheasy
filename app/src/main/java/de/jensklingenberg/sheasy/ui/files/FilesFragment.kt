@@ -53,39 +53,10 @@ class FilesFragment : BaseFragment(), FilesContract.View {
         parseArguments()
         setupRecyclerView()
         updateFolderPathInfo(presenter.fileResponse1)
-        setupMoreBtn()
         presenter.onCreate()
         folderUpIv.setOnClickListener { presenter.folderUp() }
     }
 
-    private fun setupMoreBtn() {
-        moreBtn.setOnClickListener {
-            val popup = setupContextMenu(it )
-            popup.show()
-
-        }
-
-    }
-
-    private fun setupContextMenu(it: View): PopupMenu {
-        return PopupMenu(it.context, it)
-            .apply {
-                menuInflater
-                    .inflate(R.menu.fragment_files_actions, menu)
-            }
-            .also {
-                it.itemClicks()
-                    .doOnNext { menuItem ->
-                        when(menuItem.itemId){
-                            R.id.menu_share_to_server->{
-                                presenter.hostActiveFolder()
-                            }
-                        }
-
-                    }.subscribe()
-            }
-
-    }
 
     private fun setupRecyclerView() {
         recyclerView?.apply {
@@ -113,7 +84,7 @@ class FilesFragment : BaseFragment(), FilesContract.View {
                 if (filepath.contains(".")) {
                     filepath = filepath.replaceAfterLast("/", "")
                 }
-                presenter.fileResponse1 = FileResponse(File(filepath).name,filepath)
+                presenter.fileResponse1 = FileResponse(File(filepath).name, filepath)
 
             }
 
@@ -163,18 +134,8 @@ class FilesFragment : BaseFragment(), FilesContract.View {
             android.R.id.home -> {
                 getBaseActivity().mainActivityDrawer.toggleDrawer()
             }
-            R.id.menu_server -> {
-                when (item.isChecked) {
-                    true -> {
-                        requireContext().stopService(HTTPServerService.getIntent(requireContext()))
-                        item.isChecked = false
-                    }
-                    false -> {
-                        requireContext().startService(HTTPServerService.getIntent(requireContext()))
-                        item.isChecked = true
-
-                    }
-                }
+            R.id.menu_share_to_server -> {
+                presenter.hostActiveFolder()
             }
         }
 

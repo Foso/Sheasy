@@ -14,7 +14,6 @@ import de.jensklingenberg.sheasy.data.notification.NotificationDataSource
 import de.jensklingenberg.sheasy.data.notification.NotificationRepository
 import de.jensklingenberg.sheasy.data.preferences.SheasyPreferencesRepository
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.utils.ScreenRecord
 import javax.inject.Singleton
 
 @Module
@@ -33,11 +32,6 @@ open class AppModule(private val application: App) {
     @Provides
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder().build()
-
-    @Provides
-    @Singleton
-    fun provScreenRecord(): ScreenRecord =
-        ScreenRecord()
 
     @Provides
     @Singleton

@@ -17,6 +17,7 @@ import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.addTo
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -26,7 +27,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     private val baseAdapter = BaseAdapter()
     lateinit var presenter: HomeContract.Presenter
-
+    val compositeDisposable = CompositeDisposable()
     var toolbarMenu: Menu? = null
 
 
@@ -56,9 +57,6 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
         presenter = HomePresenter(this)
         presenter.onCreate()
-
-        // FtpNotification().createNotification(requireContext(),false)
-
     }
 
 

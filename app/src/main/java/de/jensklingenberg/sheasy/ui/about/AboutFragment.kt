@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.ui.about
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +44,8 @@ class AboutFragment : BaseFragment(), AboutContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
         setupRecyclerView()
         presenter = AboutPresenter(this)
         presenter.onCreate()
@@ -54,6 +57,17 @@ class AboutFragment : BaseFragment(), AboutContract.View {
             adapter = aboutAdapter
             recyclerView.layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+            android.R.id.home -> {
+                getBaseActivity().mainActivityDrawer.toggleDrawer()
+            }
+        }
+
+        return true
     }
 
     /****************************************** Listener methods  */
