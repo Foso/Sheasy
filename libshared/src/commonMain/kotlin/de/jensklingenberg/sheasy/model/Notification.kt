@@ -5,5 +5,5 @@ data class Notification(
     val title: String?,
     val text: String?,
     val subText: String?,
-    val postTime: Long
+    val postTime: String?
 )

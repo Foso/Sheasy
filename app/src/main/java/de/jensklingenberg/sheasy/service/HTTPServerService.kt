@@ -23,6 +23,7 @@ import android.app.NotificationManager
 import android.app.NotificationChannel
 import android.graphics.Color
 import androidx.annotation.RequiresApi
+import de.jensklingenberg.sheasy.data.DevicesDataSource
 import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 
 
@@ -69,6 +70,9 @@ class HTTPServerService : Service() {
     @Inject
     lateinit var notificationUseCase: NotificationUseCase
 
+    @Inject
+    lateinit var devicesDataSource: DevicesDataSource
+
 
 
     /****************************************** Lifecycle methods  */
@@ -96,7 +100,7 @@ class HTTPServerService : Service() {
             } else {
                 if (intent.hasExtra(AUTHORIZE_DEVICE)) {
                     val ipAddress = intent.getStringExtra(AUTHORIZE_DEVICE)
-                    sheasyPref.devicesRepository.addAuthorizedDevice(
+                    devicesDataSource.addAuthorizedDevice(
                         Device(
                             ipAddress,
                             authorizationType = AuthorizationType.AUTHORIZED

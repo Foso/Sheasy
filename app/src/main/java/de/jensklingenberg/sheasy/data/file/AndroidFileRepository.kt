@@ -74,17 +74,11 @@ open class AndroidFileRepository : FileDataSource {
     }
 
 
-    override fun observeFiles(folderPath: String): Single<List<FileResponse>> = Single.create<List<FileResponse>> { singleEmitter ->
+    override fun observeFiles(folderPath: String): Single<List<File>> = Single.create<List<File>> { singleEmitter ->
         try {
             File(folderPath)
                 .listFiles()
                 .sortedBy { it.name }
-                .map {
-                    FileResponse(
-                        it.name,
-                        it.path
-                    )
-                }
                 .run {
                     singleEmitter.onSuccess(this)
                 }

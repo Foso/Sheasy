@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.ui.apps
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,8 +16,10 @@ import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.addTo
 import de.jensklingenberg.sheasy.data.usecase.MessageUseCase
+import de.jensklingenberg.sheasy.service.HTTPServerService
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_apps.*
 import javax.inject.Inject
 
@@ -28,6 +31,7 @@ class AppsFragment : BaseFragment(), AppsContract.View {
 
     lateinit var presenter: AppsContract.Presenter
 
+    val compositeDisposable = CompositeDisposable()
 
     @Inject
     lateinit var messageUseCase: MessageUseCase
@@ -71,6 +75,22 @@ class AppsFragment : BaseFragment(), AppsContract.View {
         initSearchView(menu)
 
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+            android.R.id.home -> {
+                getBaseActivity().mainActivityDrawer.toggleDrawer()
+            }
+        }
+
+        return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
     }
 
     /****************************************** Class methods  */

@@ -10,6 +10,14 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom" />
 
+    <item
+            android:id="@+id/menu_share_link"
 
+
+            android:title="Share File Link" />
+
+    <item
+            android:id="@+id/menu_share_to_server"
+            android:title="Host this File" />
 
 </menu>

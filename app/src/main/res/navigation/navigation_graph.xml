@@ -1,67 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation"
-    app:startDestination="@id/homeFragment">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/navigation"
+            app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="de.jensklingenberg.sheasy.ui.settings.SettingsFragment"
-        android:label="Settings" />
-
-
-    <fragment
-        android:id="@+id/homeFragment"
-        android:label="Sheasy"
-        android:name="de.jensklingenberg.sheasy.ui.home.HomeFragment" />
+            android:id="@+id/settingsFragment"
+            android:name="de.jensklingenberg.sheasy.ui.settings.SettingsFragment"
+            android:label="Settings"/>
 
 
     <fragment
-        android:id="@+id/appsFragment"
-        android:name="de.jensklingenberg.sheasy.ui.apps.AppsFragment"
-        android:label="Apps" />
+            android:id="@+id/homeFragment"
+            android:label="Sheasy - Share Easy"
+            android:name="de.jensklingenberg.sheasy.ui.home.HomeFragment"/>
 
+
+    <fragment
+            android:id="@+id/appsFragment"
+            android:name="de.jensklingenberg.sheasy.ui.apps.AppsFragment"
+            android:label="Apps"/>
 
 
     <fragment
             android:id="@+id/eventLogFragment"
             android:name="de.jensklingenberg.sheasy.ui.eventlog.EventLogFragment"
-            android:label="Log" />
+            android:label="Log"/>
 
     <fragment
             android:id="@+id/pairedFragment"
             android:name="de.jensklingenberg.sheasy.ui.pairedDevices.PairedFragment"
-            android:label="Paired" />
+            android:label="Paired"/>
 
 
     <fragment
-        android:id="@+id/filesFragment"
-        android:name="de.jensklingenberg.sheasy.ui.files.FilesFragment"
+            android:id="@+id/filesFragment"
+            android:name="de.jensklingenberg.sheasy.ui.files.FilesFragment"
 
-        android:label="Files">
+            android:label="Files">
         <argument
-            android:name="filePath"
-            android:defaultValue=" "
-            app:argType="string" />
+                android:name="filePath"
+                android:defaultValue=" "
+                app:argType="string"/>
         <deepLink android:id="@+id/deepLink" app:uri="file://*" android:autoVerify="true"/>
         <action android:id="@+id/action_filesFragment_self" app:destination="@id/filesFragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/aboutFragment"
-        android:name="de.jensklingenberg.sheasy.ui.about.AboutFragment"
-        android:label="About" />
+            android:id="@+id/aboutFragment"
+            android:name="de.jensklingenberg.sheasy.ui.about.AboutFragment"
+            android:label="About"/>
 
     <fragment
             android:id="@+id/shareFragment"
             android:name="de.jensklingenberg.sheasy.ui.share.ShareFragment"
-            android:label="Share" />
+            android:label="Share"/>
 
     <fragment
-        android:id="@+id/libsSupportFragment"
-        android:name="com.mikepenz.aboutlibraries.ui.LibsSupportFragment"
-        android:label="About Libraries"
-       />
+            android:id="@+id/libsSupportFragment"
+            android:name="com.mikepenz.aboutlibraries.ui.LibsSupportFragment"
+            android:label="About Libraries"
+    />
 
 </navigation>

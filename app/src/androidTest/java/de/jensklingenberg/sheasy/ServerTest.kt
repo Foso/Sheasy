@@ -54,8 +54,7 @@ class ServerTest {
     @Before
     fun setup() {
         mockApplication.testAppComponent.inject(this)
-        every { mockApplication.testPreferences.httpPort } returns "8766"
-        every { mockApplication.testPreferences.webSocketPort } returns 8765
+
 
         mActivityRule.launchActivity(null)
         server.start()

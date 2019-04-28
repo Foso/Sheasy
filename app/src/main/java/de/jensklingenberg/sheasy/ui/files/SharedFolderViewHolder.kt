@@ -10,12 +10,13 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
 import kotlinx.android.synthetic.main.list_item_generic.view.*
+import java.io.File
 
 class SharedFolderViewHolder(viewParent: ViewGroup) :
-    BaseViewHolder<SharedFolderSourceItem>(viewParent, R.layout.list_item_generic) {
+    BaseViewHolder<SharedFolderSourceItem>(viewParent, R.layout.list_item_shared) {
 
     interface OnEntryClickListener {
-        fun onItemClicked(payload: Any)
+        fun onItemClicked(payload: FileResponse)
         fun onPopupMenuClicked(fileResponse: FileResponse, id: Int)
 
     }
@@ -32,7 +33,7 @@ class SharedFolderViewHolder(viewParent: ViewGroup) :
                 icon.setImageResource(R.drawable.ic_router_green_700_24dp)
 
                 item.setOnClickListener {
-                 //   item2.onEntryClickListener?.onItemClicked(fileResponse)
+                    item2.onEntryClickListener?.onItemClicked(FileResponse(fileResponse.name,fileResponse.path))
                 }
                 moreBtn.visibility = VISIBLE
                 moreBtn.setOnClickListener {
@@ -49,7 +50,7 @@ class SharedFolderViewHolder(viewParent: ViewGroup) :
     private fun setupContextMenu(
         view: View,
         sharedFolderSourceItem: SharedFolderSourceItem,
-        fileResponse: FileResponse
+        fileResponse: File
     ): PopupMenu {
         return PopupMenu(view.context, view)
             .apply {
@@ -60,7 +61,7 @@ class SharedFolderViewHolder(viewParent: ViewGroup) :
                 it.itemClicks()
                     .doOnNext { menuItem ->
                         sharedFolderSourceItem.onEntryClickListener?.onPopupMenuClicked(
-                            fileResponse,
+                            FileResponse(fileResponse.name,fileResponse.path),
                             menuItem.itemId
                         )
                     }.subscribe()

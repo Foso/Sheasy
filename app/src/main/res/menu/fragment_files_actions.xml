@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+
+    <item
+            android:id="@+id/menu_share_link"
+
+
+            android:title="Share File Link" />
+
+    <item
+            android:id="@+id/menu_share_to_server"
+            android:title="Host this File" />
+</menu>

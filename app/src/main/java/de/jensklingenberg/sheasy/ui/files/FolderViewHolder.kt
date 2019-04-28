@@ -10,13 +10,14 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
 import kotlinx.android.synthetic.main.list_item_generic.view.*
+import java.io.File
 
 class FolderViewHolder(viewParent: ViewGroup) :
-    BaseViewHolder<FileResponseSourceItem>(viewParent, R.layout.list_item_generic) {
+    BaseViewHolder<FileSourceItem>(viewParent, R.layout.list_item_generic) {
 
 
     interface OnEntryClickListener {
-        fun onItemClicked(payload: Any)
+        fun onItemClicked(payload: FileResponse)
         fun onPopupMenuClicked(fileResponse: FileResponse, id: Int)
 
     }
@@ -32,14 +33,14 @@ class FolderViewHolder(viewParent: ViewGroup) :
                 moreBtn.visibility = VISIBLE
                 icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
                 moreBtn.setOnClickListener {
-                    val popup = setupContextMenu(it, item2, fileResponse)
+                    val popup = setupContextMenu(it, item2, FileResponse(fileResponse.name,fileResponse.path))
                     popup.show()
 
                 }
 
 
                 item.setOnClickListener {
-                    item2.onEntryClickListener?.onItemClicked(fileResponse)
+                    item2.onEntryClickListener?.onItemClicked(FileResponse(fileResponse.name,fileResponse.path))
                 }
 
 

@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.ui.settings
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.jensklingenberg.sheasy.App
@@ -28,7 +29,7 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setHasOptionsMenu(true)
         recyclerView?.apply {
             adapter = settingsAdapter
             recyclerView.layoutManager = LinearLayoutManager(context)
@@ -36,6 +37,17 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
 
         presenter = SettingsPresenter(this)
         presenter.onCreate()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+            android.R.id.home -> {
+                getBaseActivity().mainActivityDrawer.toggleDrawer()
+            }
+        }
+
+        return true
     }
 
 

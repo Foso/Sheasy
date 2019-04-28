@@ -55,9 +55,9 @@ class DeviceListItemViewHolder(viewParent: ViewGroup) :
                 if (device.authorizationType == AuthorizationType.AUTHORIZED) {
                     menuInflater
                         .inflate(R.menu.paired_devices_actions, menu)
-                } else if (device.authorizationType == AuthorizationType.AUTHORIZED) {
+                } else if (device.authorizationType == AuthorizationType.REVOKED) {
                     menuInflater
-                        .inflate(R.menu.paired_devices_actions, menu)
+                        .inflate(R.menu.revoked_devices_actions, menu)
                 }
             }.also {
                 it.itemClicks()

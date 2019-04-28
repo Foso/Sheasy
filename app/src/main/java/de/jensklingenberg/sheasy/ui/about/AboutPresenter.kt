@@ -5,8 +5,14 @@ import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.ui.common.*
+
 import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
+import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
+import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
+import de.jensklingenberg.sheasy.ui.common.GenericListItem
+import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
+
+import de.jensklingenberg.sheasy.ui.common.toSourceItem
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -74,7 +80,14 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
                 "Commit",
                 BuildConfig.GIT_SHA,
                 R.drawable.ic_code_grey_700_24dp
+            ).toSourceItem(this),
+            GenericListItem(
+                "BuildNumber",
+                BuildConfig.VERSION_CODE.toString(),
+                R.drawable.ic_code_grey_700_24dp
             ).toSourceItem(this)
+
+
 
 
         )

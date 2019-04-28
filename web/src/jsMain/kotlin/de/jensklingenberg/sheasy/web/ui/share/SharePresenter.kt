@@ -1,8 +1,9 @@
 package de.jensklingenberg.sheasy.web.ui.share
 
-import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.model.ShareItem
 import de.jensklingenberg.sheasy.model.ShareType
+import de.jensklingenberg.sheasy.model.WebSocketType
+import de.jensklingenberg.sheasy.model.WebsocketResource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.network.HttpAPI.Companion.shareWebSocketURL
@@ -56,11 +57,25 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
         if (!viewIsUnmounted) {
             console.log("View is alive")
 
-            val shareItem = JSON.parse<Resource<ShareItem>>(messageEvent.data.toString()).data!!
-            item.add(ShareSourceItem(ShareItem(shareItem.message.toString()), ShareType.INCOMING))
+
+            val resource = JSON.parse<WebsocketResource<ShareItem>>(messageEvent.data.toString())
 
 
-            view.setData(item)
+            when (resource.type.toString()) {
+                WebSocketType.MESSAGE.toString() -> {
+
+                    val shareItem= resource.data!!
+
+                    item.add(ShareSourceItem(ShareItem(shareItem.message.toString()), ShareType.INCOMING))
+
+
+                    view.setData(item)
+
+                }
+            }
+
+
+
             console.log(messageEvent.data)
         } else {
             console.log("View is dead")

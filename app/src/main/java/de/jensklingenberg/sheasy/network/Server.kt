@@ -4,11 +4,11 @@ import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 import de.jensklingenberg.sheasy.data.usecase.VibrationUseCase
+import de.jensklingenberg.sheasy.model.ShareItem
+import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import io.ktor.server.engine.ApplicationEngine
 import io.reactivex.Completable
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
@@ -36,8 +36,7 @@ class Server {
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
 
 
-    @Inject
-    lateinit var nanoWSDWebSocketDataSource: NanoWSDWebSocketDataSource
+
 
     @Inject
     lateinit var vibrationUseCase: VibrationUseCase
@@ -49,6 +48,10 @@ class Server {
 
     @Inject
     lateinit var notificationUseCase: NotificationUseCase
+
+
+    @Inject
+    lateinit var webSocketRouteHandler: WebSocketRouteHandler
 
     init {
         initializeDagger()
@@ -64,7 +67,7 @@ class Server {
 
         Log.d("Server", "Server running")
 
-        nanoWSDWebSocketDataSource.start()
+       // nanoWSDWebSocketDataSource.start()
         serverRunning.onNext(true)
 
         Completable.fromCallable {
@@ -97,7 +100,7 @@ class Server {
         applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
         compositeDisposable.dispose()
 
-        nanoWSDWebSocketDataSource.stop()
+      //  nanoWSDWebSocketDataSource.stop()
 
         vibrationUseCase.vibrate()
 
@@ -110,13 +113,12 @@ class Server {
     fun sendData(dataDestination: DataDestination, data: String) {
         when (dataDestination) {
 
-            DataDestination.SCREENSHARE -> {
-                nanoWSDWebSocketDataSource.screenShareWebSocketMap.values.forEach {
-                    it.send(data)
-                }
-            }
             DataDestination.SHARE -> {
-                nanoWSDWebSocketDataSource.shareWebSocket?.send(data)
+               // nanoWSDWebSocketDataSource.shareWebSocket?.send(ShareItem(data))
+                webSocketRouteHandler.send(ShareItem(data))
+            }
+            else -> {
+                throw NotImplementedError()
             }
         }
     }
@@ -124,16 +126,14 @@ class Server {
     fun sendData(dataDestination: DataDestination, data: ByteArray) {
         when (dataDestination) {
 
-            DataDestination.SCREENSHARE -> {
-                nanoWSDWebSocketDataSource.screenShareWebSocketMap.values.forEach {
-                    it.send(data)
-
-                }
-            }
             DataDestination.SHARE -> {
-                nanoWSDWebSocketDataSource.shareWebSocket?.send(data)
+                throw NotImplementedError()
+            }
+            else -> {
+                throw NotImplementedError()
             }
         }
+
     }
 
 

@@ -22,8 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:appComponentFactory"
-        android:appComponentFactory="whateverString"
+        android:usesCleartextTraffic="true"
         >
         <activity android:name="de.jensklingenberg.sheasy.ui.MainActivity">
             <intent-filter>

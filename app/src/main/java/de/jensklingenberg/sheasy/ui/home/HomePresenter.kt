@@ -26,21 +26,26 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
 
 
     val homeEntries = listOf(
-        SideMenuEntry("Apps", R.id.appsFragment, R.drawable.ic_android_black_24dp),
-        SideMenuEntry("Files", R.id.filesFragment, R.drawable.ic_smartphone_black_24dp),
-        SideMenuEntry("Paired", R.id.pairedFragment, R.drawable.ic_folder_grey_700_24dp),
-        SideMenuEntry("Settings", R.id.settingsFragment, R.drawable.ic_settings_black_24dp),
-        SideMenuEntry("Share", R.id.shareFragment, R.drawable.ic_settings_black_24dp),
-        SideMenuEntry("About", R.id.aboutFragment, R.drawable.ic_info_outline_black_24dp)
+        SideMenuEntry(R.string.Apps_Title, R.id.appsFragment, R.drawable.ic_android_black_24dp),
+        SideMenuEntry(R.string.Files_Title, R.id.filesFragment, R.drawable.ic_smartphone_black_24dp),
+        SideMenuEntry(R.string.Paired_Title, R.id.pairedFragment, R.drawable.ic_folder_grey_700_24dp),
+        SideMenuEntry(R.string.Settings_Title, R.id.settingsFragment, R.drawable.ic_settings_black_24dp),
+        SideMenuEntry(R.string.Share_Title, R.id.shareFragment, R.drawable.ic_settings_black_24dp),
+        SideMenuEntry(R.string.About_Title, R.id.aboutFragment, R.drawable.ic_info_outline_black_24dp)
     )
 
-    private fun initializeDagger() = App.appComponent.inject(this)
-
-
-    override fun stopService(intent: Intent) {
-        application.stopService(intent)
+    override fun onCreate() {
+        homeEntries
+            .toList()
+            .map {
+                GenericListItemSourceItem(GenericListItem(application.getString(it.title), "", it.iconRes),this)
+            }.run {
+                view.setData(this)
+            }
 
     }
+
+    private fun initializeDagger() = App.appComponent.inject(this)
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -52,7 +57,7 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
             is GenericListItemSourceItem -> {
                 val genericListItem = item.getPayload()
                 sideMenuEntries
-                    .first { it.title == genericListItem?.title }
+                    .first {application.getString(it.title) == genericListItem?.title }
                     .run {
                         view.navigateTo(this.navId)
 
@@ -62,26 +67,18 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
 
     }
 
-    override fun onCreate() {
 
-        homeEntries
-            .filter { it.title != "Home" }
-            .toList()
-            .map {
-                GenericListItem(it.title, "", it.iconRes).toSourceItem(this)
-            }.run {
-                view.setData(this)
-            }
 
+
+    override fun startService(intent: Intent) {
+        application.startService(intent)
+    }
+
+    override fun stopService(intent: Intent) {
+        application.stopService(intent)
     }
 
     override fun onDestroy() {
         compositeDisposable.dispose()
-    }
-
-    override fun startService(intent: Intent) {
-        application.startService(intent)
-
-
     }
 }

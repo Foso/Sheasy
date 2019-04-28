@@ -1,18 +1,18 @@
 package de.jensklingenberg.sheasy.data.notification
 
-import de.jensklingenberg.sheasy.web.model.response.NotificationResponse
+import de.jensklingenberg.sheasy.model.Notification
 import io.reactivex.subjects.PublishSubject
 
 class NotificationRepository : NotificationDataSource {
 
 
-    var notifications = arrayListOf<NotificationResponse>()
-    override val notification: PublishSubject<NotificationResponse> = PublishSubject.create()
+    var notifications = arrayListOf<Notification>()
+    override val notificationSubject: PublishSubject<Notification> = PublishSubject.create()
 
 
-    override fun addNotification(notResponse: NotificationResponse) {
+    override fun addNotification(notResponse: Notification) {
         notifications.add(notResponse)
-        notification.onNext(notResponse)
+        notificationSubject.onNext(notResponse)
     }
 
 }

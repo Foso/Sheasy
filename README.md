@@ -40,11 +40,8 @@ A few of the things you can do with Sheasy:
 
 
 ## 🗺️ Roadmap
-- [ ] show screen recording in browser
-- [ ] host only single folder like "python -m SimpleHTTPServer"
-- [ ] security
+- [ ] HTTPS
 - [ ] receive notifications in browser
-- [ ] see device informations
 - [ ] see log of last transactions
 
 
@@ -78,7 +75,7 @@ The App is completely written in Kotlin (except the used JVM/JS libraries)
 
 ### Backend
 * [Ktor](https://github.com/ktorio/ktor) - Used as Backend
-* [NanoHTTPD]() - Used for Websockets
+* [NanoHTTPD](https://github.com/NanoHttpd/nanohttpd) - Used for Websockets
 
 
 ### Frontend

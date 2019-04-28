@@ -5,18 +5,22 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.rxbinding3.appcompat.itemClicks
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.service.HTTPServerService
 import de.jensklingenberg.sheasy.ui.common.*
 import de.jensklingenberg.sheasy.data.usecase.MessageUseCase
+import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_files.*
+import java.io.File
 import javax.inject.Inject
 
 
@@ -48,11 +52,11 @@ class FilesFragment : BaseFragment(), FilesContract.View {
 
         parseArguments()
         setupRecyclerView()
-        updateFolderPathInfo(presenter.filePath)
-
+        updateFolderPathInfo(presenter.fileResponse1)
         presenter.onCreate()
         folderUpIv.setOnClickListener { presenter.folderUp() }
     }
+
 
     private fun setupRecyclerView() {
         recyclerView?.apply {
@@ -80,7 +84,7 @@ class FilesFragment : BaseFragment(), FilesContract.View {
                 if (filepath.contains(".")) {
                     filepath = filepath.replaceAfterLast("/", "")
                 }
-                presenter.filePath = filepath
+                presenter.fileResponse1 = FileResponse(File(filepath).name, filepath)
 
             }
 
@@ -99,10 +103,11 @@ class FilesFragment : BaseFragment(), FilesContract.View {
 
     /****************************************** Class methods  */
 
-    override fun updateFolderPathInfo(path: String) {
+    override fun updateFolderPathInfo(fileResponse: FileResponse) {
         folderPathLayout?.apply {
-            title.text = path
+            folderPath.text = fileResponse.path
         }
+        folderName.text = fileResponse.path.substringAfterLast("/")
     }
 
 
@@ -129,18 +134,8 @@ class FilesFragment : BaseFragment(), FilesContract.View {
             android.R.id.home -> {
                 getBaseActivity().mainActivityDrawer.toggleDrawer()
             }
-            R.id.menu_server -> {
-                when (item.isChecked) {
-                    true -> {
-                        requireContext().stopService(HTTPServerService.getIntent(requireContext()))
-                        item.isChecked = false
-                    }
-                    false -> {
-                        requireContext().startService(HTTPServerService.getIntent(requireContext()))
-                        item.isChecked = true
-
-                    }
-                }
+            R.id.menu_share_to_server -> {
+                presenter.hostActiveFolder()
             }
         }
 

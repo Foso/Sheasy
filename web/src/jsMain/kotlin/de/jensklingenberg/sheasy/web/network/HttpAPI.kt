@@ -14,7 +14,7 @@ interface HttpAPI :SheasyHttpApi{
 
     companion object {
 
-        val webSocketBaseUrl = "ws://${NetworkPreferences().hostname}:8765/"
+        val webSocketBaseUrl = "ws://${NetworkPreferences().hostname}:8766/"
         val notificationWebSocketURL = "${webSocketBaseUrl}notification"
         val shareWebSocketURL = "${webSocketBaseUrl}share"
         val screenshareWebSocketURL = "${webSocketBaseUrl}screenshare"

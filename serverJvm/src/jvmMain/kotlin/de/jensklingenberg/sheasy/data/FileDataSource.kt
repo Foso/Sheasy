@@ -13,7 +13,7 @@ interface FileDataSource {
     /**
      *
      */
-    fun observeFiles(folderPath: String): Single<List<FileResponse>>
+    fun observeFiles(folderPath: String): Single<List<File>>
 
 
     /**

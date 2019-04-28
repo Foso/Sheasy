@@ -1,6 +1,9 @@
 package de.jensklingenberg.sheasy.ui.pairedDevices
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.jensklingenberg.sheasy.App
@@ -35,6 +38,9 @@ class PairedFragment : BaseFragment(), PairedContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecycler()
+        setHasOptionsMenu(true)
+
+
 
         pairedPresenter = PairedPresenter(this)
         pairedPresenter.onCreate()
@@ -50,6 +56,16 @@ class PairedFragment : BaseFragment(), PairedContract.View {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+            android.R.id.home -> {
+                getBaseActivity().mainActivityDrawer.toggleDrawer()
+            }
+        }
+
+        return true
+    }
 
     override fun setData(list: List<BaseDataSourceItem<*>>) {
         aboutAdapter.dataSource.setItems(list)

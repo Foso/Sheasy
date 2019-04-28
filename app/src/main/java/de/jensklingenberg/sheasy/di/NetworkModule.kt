@@ -1,25 +1,25 @@
 package de.jensklingenberg.sheasy.di
 
 import android.net.wifi.WifiManager
-import android.text.format.Formatter
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import de.jensklingenberg.sheasy.data.DevicesDataSource
+import de.jensklingenberg.sheasy.data.devices.DevicesRepository
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.SheasyApi
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.network.ktor.ktorApplicationModule
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRouteHandler
+import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketRepository
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
-import io.ktor.server.jetty.Jetty
 import io.ktor.server.netty.Netty
-import io.ktor.server.netty.NettyApplicationEngine
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -37,9 +37,20 @@ open class NetworkModule {
     fun provideFileRouteHandler(): FileRouteHandler =
         AndroidFileRouteHandler()
 
+
+    @Provides
+    @Singleton
+    fun provideWebSocketRouteHandler(): WebSocketRouteHandler =
+        WebSocketRouteHandler()
+
+
     @Provides
     @Singleton
     open fun provideServer(): Server = Server()
+
+    @Provides
+    @Singleton
+    open fun provideDevicesDataSource(): DevicesDataSource = DevicesRepository()
 
 
     @Provides
@@ -53,7 +64,7 @@ open class NetworkModule {
     fun provideRetrofit(wm: WifiManager) = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .baseUrl("http://" + Formatter.formatIpAddress(wm.connectionInfo.ipAddress) + ":8766")
+        .baseUrl("http://localhost:8766/")
         .build()
 
 
@@ -63,10 +74,11 @@ open class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideNettyApplicationEngine(
+    open fun provideNettyApplicationEngine(
         sheasyPrefDataSource: SheasyPrefDataSource,
         generalRouteHandler: GeneralRouteHandler,
-        fileRouteHandler: FileRouteHandler
+        fileRouteHandler: FileRouteHandler,
+        webSocketRouteHandler: WebSocketRouteHandler
     ): ApplicationEngine =
         embeddedServer(
             Netty,
@@ -74,7 +86,8 @@ open class NetworkModule {
             module = {
             ktorApplicationModule(
                 generalRouteHandler,
-                fileRouteHandler
+                fileRouteHandler,
+                webSocketRouteHandler
             )
         })
 

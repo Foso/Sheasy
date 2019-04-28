@@ -1,5 +1,6 @@
 package de.jensklingenberg.sheasy.network.routehandler
 
+import de.jensklingenberg.sheasy.model.ShareItem
 import io.ktor.routing.Route
 import io.reactivex.Single
 import java.io.InputStream

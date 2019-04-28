@@ -11,7 +11,6 @@ import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandl
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRouteHandler
 import de.jensklingenberg.sheasy.network.websocket.websocket.MyWebSocket
 import de.jensklingenberg.sheasy.network.websocket.websocket.NotificationWebSocket
-import de.jensklingenberg.sheasy.network.websocket.websocket.ScreenShareWebSocket
 import de.jensklingenberg.sheasy.network.websocket.websocket.ShareWebSocket
 import de.jensklingenberg.sheasy.service.NotificationListener
 import de.jensklingenberg.sheasy.ui.MainActivity
@@ -21,7 +20,6 @@ import de.jensklingenberg.sheasy.ui.about.AboutPresenter
 import de.jensklingenberg.sheasy.ui.apps.AppInfoViewHolder
 import de.jensklingenberg.sheasy.ui.apps.AppsFragment
 import de.jensklingenberg.sheasy.ui.apps.AppsPresenter
-import de.jensklingenberg.sheasy.ui.common.OnResultActivity
 import de.jensklingenberg.sheasy.ui.eventlog.EventLogFragment
 import de.jensklingenberg.sheasy.ui.eventlog.EventLogPresenter
 import de.jensklingenberg.sheasy.ui.files.FilesFragment
@@ -30,13 +28,13 @@ import de.jensklingenberg.sheasy.ui.home.HomeFragment
 import de.jensklingenberg.sheasy.ui.home.HomePresenter
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedFragment
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedPresenter
-import de.jensklingenberg.sheasy.ui.screen.ScreenCaptureFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsPresenter
 import de.jensklingenberg.sheasy.ui.share.ShareFragment
 import de.jensklingenberg.sheasy.ui.share.SharePresenter
-import de.jensklingenberg.sheasy.utils.ScreenRecord
 import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
+import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
+import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketRepository
 import javax.inject.Singleton
 
 @Component(modules = [(AppModule::class), (UseCaseModule::class), (NetworkModule::class), (AndroidModule::class)])
@@ -49,7 +47,6 @@ interface AppComponent {
     fun inject(androidFileRepository: AndroidFileRepository)
     fun inject(aboutFragment: AboutFragment)
     fun inject(pairedFragment: PairedFragment)
-    fun inject(screenCaptureFragment: ScreenCaptureFragment)
 
 
     fun inject(settingsFragment: SettingsFragment)
@@ -59,9 +56,6 @@ interface AppComponent {
 
     fun inject(myWebSocket: MyWebSocket)
     fun inject(server: Server)
-    fun inject(screenShareWebSocket: ScreenShareWebSocket)
-    fun inject(screenRecord: ScreenRecord)
-    fun inject(onResultActivity: OnResultActivity)
     fun inject(filesFragment: FilesFragment)
     fun inject(shareUseCase: ShareUseCase)
     fun inject(androidKtorGeneralRouteHandler: AndroidKtorGeneralRouteHandler)
@@ -83,5 +77,7 @@ interface AppComponent {
     fun inject(mainActivityDrawer: MainActivityDrawer)
     fun inject(mainActivity: MainActivity)
     fun inject(sheasyPreferencesRepository: SheasyPreferencesRepository)
+    fun inject(nanoWSDWebSocketRepository: NanoWSDWebSocketRepository)
+    fun inject(webSocketRouteHandler: WebSocketRouteHandler)
 
 }

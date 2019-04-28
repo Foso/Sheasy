@@ -11,7 +11,7 @@ import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
 import kotlinx.android.synthetic.main.list_item_generic.view.*
 
 class FileViewHolder(viewParent: ViewGroup) :
-    BaseViewHolder<FileResponseSourceItem>(viewParent, R.layout.list_item_generic) {
+    BaseViewHolder<FileSourceItem>(viewParent, R.layout.list_item_shared) {
 
 
     interface OnEntryClickListener {
@@ -20,7 +20,7 @@ class FileViewHolder(viewParent: ViewGroup) :
 
     override fun onBindViewHolder(item2: Any, diff: Bundle) {
 
-        val fileResponse = (item2 as FileResponseSourceItem).getPayload()
+        val fileResponse = (item2 as FileSourceItem).getPayload()
 
         fileResponse?.let {
             itemView.apply {
@@ -30,7 +30,7 @@ class FileViewHolder(viewParent: ViewGroup) :
 
                 icon.setImageResource(R.drawable.ic_insert_drive_file_grey_700_24dp)
                 moreBtn.setOnClickListener {
-                    val popup = setupContextMenu(it, item2, fileResponse)
+                    val popup = setupContextMenu(it, item2, FileResponse(fileResponse.name,fileResponse.path))
                     popup.show()
 
                 }
@@ -42,7 +42,7 @@ class FileViewHolder(viewParent: ViewGroup) :
 
     private fun setupContextMenu(
         it: View,
-        item2: FileResponseSourceItem,
+        item2: FileSourceItem,
         fileResponse: FileResponse
     ): PopupMenu {
         return PopupMenu(it.context, it)

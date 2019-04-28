@@ -19,6 +19,8 @@ import javax.inject.Inject
 
 class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
+
+
     @Inject
     lateinit var fileDataSource: FileDataSource
 
@@ -31,7 +33,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     override val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    override var filePath = ""
+    override var fileResponse1 = FileResponse("","")
 
     var shared: List<BaseDataSourceItem<*>> = emptyList()
 
@@ -39,7 +41,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     init {
         initializeDagger()
-        filePath = sheasyPrefDataSource.defaultPath
+        fileResponse1= FileResponse(File(sheasyPrefDataSource.defaultPath).name,sheasyPrefDataSource.defaultPath)
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)
@@ -70,7 +72,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                             )
                         )
                         addAll(fileList.map {
-                            SharedFolderSourceItem(it, this@FilesPresenter)
+                            SharedFolderSourceItem(File(it.path), this@FilesPresenter)
                         })
                     }
 
@@ -81,7 +83,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
 
         fileDataSource
-            .observeFiles(filePath)
+            .observeFiles(fileResponse1.path)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(onSuccess = { fileList ->
@@ -94,9 +96,9 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                                 "Folders"
                             )
                         )
-                        addAll(fileList.sortedBy { it.isFile() }.map {
-                            if (it.isFile()) {
-                                FileResponseSourceItem(it, this@FilesPresenter)
+                        addAll(fileList.sortedBy { it.isFile }.map {
+                            if (it.isFile) {
+                                FileSourceItem(it, this@FilesPresenter)
 
                             } else {
                                 FolderSourceItem(it, this@FilesPresenter)
@@ -116,21 +118,25 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
 
     override fun folderUp() {
-        filePath = filePath.replaceAfterLast("/", "")
+
+        var oldFolderPath = fileResponse1.path
+        var newPath = oldFolderPath.replaceAfterLast("/", "")
+        fileResponse1 = FileResponse(File(newPath).name,newPath)
          loadFiles()
-        view.updateFolderPathInfo(filePath)
+        view.updateFolderPathInfo(fileResponse1)
 
     }
 
 
 
     /****************************************** Listener methods  */
-    override fun onItemClicked(payload: Any) {
-        val item = payload as FileResponse
-        filePath = item.path
+
+    override fun onItemClicked(item: FileResponse) {
+        fileResponse1 = item
         loadFiles()
-        view.updateFolderPathInfo(item.path)
+        view.updateFolderPathInfo(item)
     }
+
 
 
     override fun onPopupMenuClicked(fileResponse: FileResponse, id: Int) {
@@ -168,6 +174,10 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
     override fun searchFile(fileName: String) {
 
 
+    }
+
+    override fun hostActiveFolder() {
+       shareUseCase.hostFolder(fileResponse1)
     }
 
 

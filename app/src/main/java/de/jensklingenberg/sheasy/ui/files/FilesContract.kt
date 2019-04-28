@@ -10,17 +10,18 @@ interface FilesContract {
         SharedFolderViewHolder.OnEntryClickListener,
         FolderViewHolder.OnEntryClickListener,
         FileViewHolder.OnEntryClickListener {
-        var filePath: String
+        var fileResponse1: FileResponse
 
         fun loadFiles()
         fun folderUp()
         fun share(file: File)
         fun hostFolder(item: FileResponse)
         fun searchFile(fileName: String)
+        fun hostActiveFolder()
     }
 
     interface View {
-        fun updateFolderPathInfo(path: String)
+        fun updateFolderPathInfo(path: FileResponse)
         fun setData(list: List<BaseDataSourceItem<*>>)
         fun showError(it: Throwable)
 

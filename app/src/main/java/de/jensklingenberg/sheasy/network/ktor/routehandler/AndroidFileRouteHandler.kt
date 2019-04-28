@@ -8,8 +8,6 @@ import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.Resource
 import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
-import de.jensklingenberg.sheasy.network.extension.ktorApplicationCall
-import de.jensklingenberg.sheasy.network.ktor.KtorApplicationCall
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.utils.extension.debugCorsHeader
 import io.ktor.application.call
@@ -29,7 +27,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.rx2.await
 import java.io.File
 import java.io.FileInputStream
-import java.io.InputStream
 import javax.inject.Inject
 
 class AndroidFileRouteHandler : FileRouteHandler {
@@ -57,9 +54,8 @@ class AndroidFileRouteHandler : FileRouteHandler {
     }
 
 
-    private fun getFilesList(call: KtorApplicationCall): Single<List<FileResponse>> {
+    private fun getFilesList(filePath: String): Single<List<FileResponse>> {
         return Single.create<List<FileResponse>> { singleEmitter ->
-            val filePath = call.parameter
 
             if (filePath.isEmpty()) {
 
@@ -77,9 +73,14 @@ class AndroidFileRouteHandler : FileRouteHandler {
 
                 if (allowedPath) {
                     fileDataSource
-                        .observeFiles(call.parameter)
-                        .subscribeBy(onSuccess = {
-                            singleEmitter.onSuccess(it)
+                        .observeFiles(filePath)
+                        .subscribeBy(onSuccess = { fileList ->
+                            singleEmitter.onSuccess(fileList.map {
+                                FileResponse(
+                                    it.name,
+                                    it.path
+                                )
+                            })
                         }, onError = {
                             Log.e(this.javaClass.simpleName, it.message)
                         })
@@ -93,10 +94,10 @@ class AndroidFileRouteHandler : FileRouteHandler {
     }
 
     private fun getFile(filePath: String) = Single.create<File> { singleEmitter ->
-            fileDataSource
-                .getFile(filePath)
-                .subscribeBy(
-                onSuccess = {file->
+        fileDataSource
+            .getFile(filePath)
+            .subscribeBy(
+                onSuccess = { file ->
                     singleEmitter.onSuccess(file)
 
                 }, onError = {
@@ -125,14 +126,17 @@ class AndroidFileRouteHandler : FileRouteHandler {
                     .await()
                     .run {
                         call.response.debugCorsHeader()
-                        call.respond(Resource.success(this.map {
-                            AppInfo(
-                                it.sourceDir,
-                                it.name,
-                                it.packageName,
-                                it.installTime
-                            )
-                        }))
+                        call.respond(
+                            Resource.success(
+                                this.map {
+                                    AppInfo(
+                                        it.sourceDir,
+                                        it.name,
+                                        it.packageName,
+                                        it.installTime
+                                    )
+                                })
+                        )
                     }
             }
 
@@ -188,11 +192,7 @@ class AndroidFileRouteHandler : FileRouteHandler {
             get("/folder/{path?}") {
                 val filePath = call.parameters["path"] ?: ""
 
-                val ktor = call.ktorApplicationCall(filePath).apply {
-                    parameter = filePath
-                }
-
-                getFilesList(ktor)
+                getFilesList(filePath)
                     .doOnError {
                         if (it is SheasyError) {
                             launch {
