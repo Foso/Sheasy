@@ -1,0 +1,84 @@
+---
+swagger: "2.0"
+info:
+  description: "This is the API documentation for Sheasy."
+  version: "1.0.0"
+  title: "Sheasy API Doc"
+  contact:
+    email: "mail@jensklingenberg.de"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "192.168.178.20:8766"
+basePath: "/api/v1"
+tags:
+  - name: "file"
+    description: "Everything about the files route"
+    externalDocs:
+      description: "Find out more"
+      url: "https://github.com/Foso/Sheasy"
+schemes:
+  - "http"
+paths:
+  /file/apps:
+    get:
+      tags:
+        - "file"
+      summary: "Get list of installed Apps"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findPetsByStatus"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            items:
+              $ref: "#/definitions/FileResponseResource"
+  /file/shared:
+    get:
+      tags:
+        - "file"
+      summary: "Get list of shared folders"
+      description: "Multiple status values can be provided with comma separated strings"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/FileResponse"
+definitions:
+  FileResponseResource:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      path:
+        type: "string"
+      contact_info:
+        $ref: '#/definitions/AppInfo'
+  FileResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      path:
+        type: "string"
+
+  AppInfo:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      sourceDir:
+        type: "string"
+      packageName:
+        type: "string"
+      installTime:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
