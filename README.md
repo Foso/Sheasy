@@ -23,6 +23,12 @@
 <hr>
 
 ## Introduction
+
+<p align="center">
+  <img src ="https://raw.githubusercontent.com/Foso/Sheasy/develop/docs/screenshots/home/home_app_v0.1.png" height=500 />
+
+</p>
+
 The goal is to write an open source app that makes it super easy to share files from one device to another
 
 It's a hobby project i started to learn about Kotlin, React(Kotlin-JS) and Ktor. 
