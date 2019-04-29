@@ -22,7 +22,6 @@ class MyWebSocket(url: String, override val listener:WebSocketListener) : Websoc
         }
 
         webSocket.onclose = { event: Event ->
-            console.log("hhhh"+event)
 
             listener.onClose((event))
         }

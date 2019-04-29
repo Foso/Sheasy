@@ -9,9 +9,6 @@ import de.jensklingenberg.sheasy.service.HTTPServerService
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRouteHandler
-import de.jensklingenberg.sheasy.network.websocket.websocket.MyWebSocket
-import de.jensklingenberg.sheasy.network.websocket.websocket.NotificationWebSocket
-import de.jensklingenberg.sheasy.network.websocket.websocket.ShareWebSocket
 import de.jensklingenberg.sheasy.service.NotificationListener
 import de.jensklingenberg.sheasy.ui.MainActivity
 import de.jensklingenberg.sheasy.ui.MainActivityDrawer
@@ -34,7 +31,6 @@ import de.jensklingenberg.sheasy.ui.share.ShareFragment
 import de.jensklingenberg.sheasy.ui.share.SharePresenter
 import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
 import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
-import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketRepository
 import javax.inject.Singleton
 
 @Component(modules = [(AppModule::class), (UseCaseModule::class), (NetworkModule::class), (AndroidModule::class)])
@@ -54,7 +50,6 @@ interface AppComponent {
     fun inject(appsFragment: AppsFragment)
     fun inject(homeFragment: HomeFragment)
 
-    fun inject(myWebSocket: MyWebSocket)
     fun inject(server: Server)
     fun inject(filesFragment: FilesFragment)
     fun inject(shareUseCase: ShareUseCase)
@@ -65,19 +60,15 @@ interface AppComponent {
     fun inject(aboutPresenter: AboutPresenter)
     fun inject(settingsPresenter: SettingsPresenter)
     fun inject(notificationListener: NotificationListener)
-    fun inject(notificationWebSocket: NotificationWebSocket)
     fun inject(eventLogFragment: EventLogFragment)
     fun inject(eventLogPresenter: EventLogPresenter)
     fun inject(homePresenter: HomePresenter)
     fun inject(appsPresenter: AppsPresenter)
-    fun inject(shareWebSocket: ShareWebSocket)
     fun inject(sharePresenter: SharePresenter)
     fun inject(shareFragment: ShareFragment)
     fun inject(eventRepository: EventRepository)
     fun inject(mainActivityDrawer: MainActivityDrawer)
     fun inject(mainActivity: MainActivity)
     fun inject(sheasyPreferencesRepository: SheasyPreferencesRepository)
-    fun inject(nanoWSDWebSocketRepository: NanoWSDWebSocketRepository)
     fun inject(webSocketRouteHandler: WebSocketRouteHandler)
-
 }

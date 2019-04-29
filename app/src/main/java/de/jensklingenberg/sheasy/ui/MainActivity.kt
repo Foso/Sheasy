@@ -110,9 +110,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
                     val item = clipData.getItemAt(i)
                     val uri = item.uri
 
-                    val filePath = FilesFragmentDirections.ActionFilesFragmentSelf().setFilePath(uri.toString())
-
-                    // var bundle = bundleOf("fileResponse1" to uri)
+                    val filePath = FilesFragmentDirections.actionFilesFragmentSelf(uri.toString())
                     navController.navigate(R.id.filesFragment, filePath.arguments)
                     break
                 }

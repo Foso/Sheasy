@@ -6,7 +6,6 @@ import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 import de.jensklingenberg.sheasy.data.usecase.VibrationUseCase
 import de.jensklingenberg.sheasy.model.ShareItem
 import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
-import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
 import io.ktor.server.engine.ApplicationEngine
 import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
@@ -35,20 +34,14 @@ class Server {
     @Inject
     lateinit var sheasyPrefDataSource: SheasyPrefDataSource
 
-
-
-
     @Inject
     lateinit var vibrationUseCase: VibrationUseCase
-
 
     @Inject
     lateinit var applicationEngine: ApplicationEngine
 
-
     @Inject
     lateinit var notificationUseCase: NotificationUseCase
-
 
     @Inject
     lateinit var webSocketRouteHandler: WebSocketRouteHandler
@@ -66,8 +59,6 @@ class Server {
     fun start() {
 
         Log.d("Server", "Server running")
-
-       // nanoWSDWebSocketDataSource.start()
         serverRunning.onNext(true)
 
         Completable.fromCallable {
@@ -100,8 +91,6 @@ class Server {
         applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
         compositeDisposable.dispose()
 
-      //  nanoWSDWebSocketDataSource.stop()
-
         vibrationUseCase.vibrate()
 
     }
@@ -114,7 +103,6 @@ class Server {
         when (dataDestination) {
 
             DataDestination.SHARE -> {
-               // nanoWSDWebSocketDataSource.shareWebSocket?.send(ShareItem(data))
                 webSocketRouteHandler.send(ShareItem(data))
             }
             else -> {

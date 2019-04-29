@@ -6,7 +6,6 @@ plugins {
     id("com.android.application")
     id 'org.jetbrains.kotlin.multiplatform'
     id("kotlin-kapt")
-    id("androidx.navigation.safeargs")
     id("kotlin-android-extensions")
     id("base")
     id("changelog")
@@ -14,6 +13,7 @@ plugins {
 
 }
 apply plugin: 'org.jetbrains.dokka'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     packagingOptions {
@@ -32,8 +32,6 @@ android {
         def bitriseBuildNumber = System.getenv("BITRISE_BUILD_NUMBER")
         versionCode bitriseBuildNumber? bitriseBuildNumber.toInteger() : 1
 
-        buildConfigField "int", "SERVER_PORT", configuration.serverPort
-        buildConfigField "int", "WEBSOCKET_PORT", configuration.websocketPort
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
         buildConfigField "String", "APP_VERSION", "\"${configuration.appVersion}\""
@@ -90,7 +88,6 @@ android {
     lintOptions {
         abortOnError false
     }
-    buildToolsVersion '28.0.3'
 }
 
 
@@ -159,8 +156,6 @@ dependencies {
     implementation "androidx.core:core-ktx:$libs.ktx"
     implementation "androidx.fragment:fragment-ktx:$libs.androidX.fragment"
     implementation "androidx.recyclerview:recyclerview:${libs.androidX.general}"
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.0.0'
     implementation 'com.google.android.material:material:1.0.0'
 
     //NavigationLib
@@ -172,14 +167,6 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:${libs.moshikotlin}"
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
-
-
-    implementation "io.ktor:ktor-server-netty:$libs.ktor_version"
-
-
-    //NanoHTTPD
-    implementation "org.nanohttpd:nanohttpd-websocket:$libs.nanohttpdwebsocket"
- //   implementation 'org.nanohttpd:nanohttpd:2.3.1'
 
     implementation "io.ktor:ktor-websockets:$libs.ktor_version"
 

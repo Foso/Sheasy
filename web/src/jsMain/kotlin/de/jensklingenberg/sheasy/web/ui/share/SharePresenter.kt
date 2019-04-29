@@ -18,13 +18,11 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
     var item: ArrayList<SourceItem> = arrayListOf()
 
     override fun onOpen(event: Event) {
-        console.log((event))
         view.setConnectedMessage("Connected to Server: "+NetworkPreferences().hostname)
 
     }
 
     override fun onClose(messageEvent: Event) {
-        console.log("m" + messageEvent)
         view.setConnectedMessage("No connection")
 
     }

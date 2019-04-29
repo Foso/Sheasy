@@ -21,15 +21,11 @@ interface ListViewState : RState {
 class ListView(props: ListViewProps) : RComponent<ListViewProps, ListViewState>(props) {
 
     override fun componentDidMount() {
-        props.itemsListp.forEach {
-            console.log("HUUU")
-        }
+
     }
 
     override fun ListViewState.init(props: ListViewProps) {
-        props.itemsListp.forEach {
-            console.log("HUUU")
-        }
+
         itemsList = props.itemsListp//listOf(StringSourceItem("HHUU"))
 
     }

@@ -15,8 +15,6 @@ import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRou
 import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
 import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
-import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketDataSource
-import de.jensklingenberg.sheasy.network.websocket.NanoWSDWebSocketRepository
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -53,10 +51,7 @@ open class NetworkModule {
     open fun provideDevicesDataSource(): DevicesDataSource = DevicesRepository()
 
 
-    @Provides
-    @Singleton
-    fun provWebSocketDataSource(sheasyPreferences: SheasyPrefDataSource): NanoWSDWebSocketDataSource =
-        NanoWSDWebSocketRepository(sheasyPreferences)
+
 
 
     @Provides

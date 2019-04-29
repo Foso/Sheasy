@@ -17,6 +17,7 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.service.HTTPServerService
 import de.jensklingenberg.sheasy.utils.NetworkUtils
 import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
+import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import javax.inject.Inject
 
 
@@ -30,6 +31,8 @@ class NotificationUtils : NotificationUseCase {
     @Inject
     lateinit var notificationManager: NotificationManager
 
+    @Inject
+    lateinit var sheasyPrefDataSource: SheasyPrefDataSource
 
     val CHANNEL_FTP_ID = "ftpChannel"
     val FTP_ID = 5
@@ -125,7 +128,7 @@ class NotificationUtils : NotificationUseCase {
         showNotification(
             "Sheasy Server running", "Server running at " + NetworkUtils.getIP(
                 context
-            ) + ":" + BuildConfig.SERVER_PORT, "hhhhh", Intent()
+            ) + ":" + sheasyPrefDataSource.httpPort, "hhhhh", Intent()
         )
 
 

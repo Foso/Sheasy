@@ -3,7 +3,6 @@ package de.jensklingenberg.sheasy.web.ui.apps
 import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.model.response.App
-import kodando.rxjs.observable.of
 import kodando.rxjs.subscribeBy
 import org.w3c.dom.events.Event
 

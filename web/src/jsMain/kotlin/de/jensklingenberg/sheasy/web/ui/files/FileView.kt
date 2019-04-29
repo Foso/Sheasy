@@ -1,19 +1,13 @@
 package de.jensklingenberg.sheasy.web.ui.files
 
-import components.materialui.Button
-import components.materialui.CircularProgress
-import components.materialui.FormControl
-import components.materialui.InputLabel
-import components.materialui.Menu
-import components.materialui.MenuItem
-import de.jensklingenberg.sheasy.model.SheasyError
+import components.materialui.*
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.components.materialui.icons.ArrowBackIcon
 import de.jensklingenberg.sheasy.web.components.materialui.icons.CloudUploadIcon
 import de.jensklingenberg.sheasy.web.data.FileDataSource
-import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.data.repository.FileRepository
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
@@ -22,7 +16,6 @@ import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.extension.selectedFile
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
-import io.ktor.http.CacheControl
 import kotlinx.html.DIV
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
@@ -176,7 +169,6 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
     fun handleFile(event: Event) {
         event.target.selectedFile?.let {
-            console.log(it)
             presenter.uploadFile(it)
         }
 

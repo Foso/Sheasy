@@ -1,14 +1,12 @@
 package de.jensklingenberg.sheasy.web.ui.files
 
-import com.noheltcj.rxcommon.observables.Single
-import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.web.data.FileDataSource
 import de.jensklingenberg.sheasy.web.model.StringRes
 import kodando.rxjs.subscribeBy
 import org.w3c.dom.events.Event
 import org.w3c.files.File
-import react.setState
 
 class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataSource) :
     FilesContract.Presenter {

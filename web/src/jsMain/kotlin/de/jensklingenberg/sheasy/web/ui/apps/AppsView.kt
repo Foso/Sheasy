@@ -129,7 +129,11 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
                         onChange = {
                             presenter.onSearch((it.target as HTMLInputElement).value)
                         }
+                        fullWidth=true
                     }
+                }
+                attrs {
+                    this.fullWidth=true
                 }
             }
         }

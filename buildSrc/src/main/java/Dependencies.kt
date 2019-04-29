@@ -3,13 +3,15 @@ import java.io.BufferedReader
 object Versions {
 
     val dagger = "2.22.1"
-    val kotlin = "1.3.30"
+    val kotlin = "1.3.31"
     val rxAndroid = "2.1.0"
     val rxjava = "2.1.7"
 
     val web = object {
         val rxJS = "6.3.3"
         val rxCommonJS = "0.5.2"
+        val materialUiCore = "v3.7.0"
+        val kodando_rxjs = "0.8.0"
     }
 
 }

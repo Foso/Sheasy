@@ -11,6 +11,7 @@ buildscript {
 
     dependencies {
 
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.45"
 
 
 
@@ -18,25 +19,22 @@ buildscript {
 
 }
 plugins {
-
     id 'org.jetbrains.kotlin.multiplatform'
-    id 'org.jetbrains.kotlin.frontend'
     id("io.gitlab.arturbosch.detekt")
     id('com.moowork.node')
     id("kotlin-dce-js")
-
 }
 
+apply plugin: 'org.jetbrains.kotlin.frontend'
 repositories {
     ext.buildMaven = { p -> repositories { maven { url p } } }
     jcenter()
     mavenCentral()
     mavenRepos.each { buildMaven(it) }
-    maven { url 'https://jitpack.io' }
 
 }
 detekt {
-    toolVersion = "1.0.0.RC9.2"
+    toolVersion = "$libs.detektVersion"
     input = files("src/jsMain/kotlin")
     filters = ".*/resources/.*,.*/build/.*"
     config = files("./default-detekt-config.yml")
@@ -69,12 +67,9 @@ kotlin {
 
         commonMain {
             dependencies {
-                implementation "io.ktor:ktor-client-core:$libs.ktorClient"
 
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
                 compileOnly project(":libshared")
-                implementation("io.ktor:ktor-client-core:$libs.ktorClient")
-                implementation 'com.github.badoo.reaktive:reaktive:1.0.0-alpha1'
             }
 
         }
@@ -85,43 +80,36 @@ kotlin {
 
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-js:$configuration.kotlin_version"
-                implementation "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
-                implementation "org.jetbrains:kotlin-react:$kotlin_react_version"
-                implementation "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
-                implementation "org.kodein.di:kodein-di-erased-js:$libs.kodein"
+                implementation "org.jetbrains.kotlinx:kotlinx-html-js:$libs.kotlinx_html_version"
+                implementation "org.jetbrains:kotlin-react:$libs.kotlin_react_version"
+                implementation "org.jetbrains:kotlin-react-dom:$libs.kotlin_react_dom_version"
                 implementation "org.jetbrains.kotlin:kotlin-test-js"
-                implementation "br.danfma.kodando:kodando-rxjs:0.8.0"
-                implementation "io.ktor:ktor-client-js:$libs.ktorClient"
-                implementation "com.noheltcj:rx-common-js:$Versions.web.rxCommonJS"
+                implementation "br.danfma.kodando:kodando-rxjs:$libs.kodando_rxjs"
+                implementation "com.noheltcj:rx-common-js:$libs.rx_common_js"
             }
         }
-
     }
 }
 kotlinFrontend {
     downloadNodeJsVersion = 'latest'
 
     npm {
-        dependency("bootstrap", "${libs.bootstrap}")
-        dependency("@material-ui/core", "v3.7.0")
+        dependency("@material-ui/core", libs.material_ui_core)
         dependency("@material-ui/icons")
         dependency("axios", "${libs.axios}")
-        dependency("react-autosuggest")
-        dependency("history", "${libs.history}")
+        dependency("bootstrap", "${libs.bootstrap}")
         dependency("react-router-dom", "${libs.react_router_dom}")
-        dependency("react-dev-utils", "^5.0.2")
         dependency("react-draggable", "${libs.react_draggable}")
         dependency("react-dropzone", "${libs.react_dropzone}")
         dependency("react-web-notification", "${libs.react_web_notification}")
-        dependency("reactstrap", "${libs.reactstrap}")
-        dependency("simple-websocket", "${libs.simple_websocket}")
-        dependency('react', react_version)
-        dependency('react-dom', react_version)
+        dependency('react', libs.react_version)
+        dependency('react-dom', libs.react_version)
         dependency("css-loader")
+        dependency("reactstrap", "${libs.reactstrap}")
+        dependency("react-dev-utils", "^5.0.2")
+
         dependency("style-loader")
         dependency("jest")
-        dependency("rxjs", Versions.web.rxJS)
-
     }
 
 
@@ -146,7 +134,6 @@ task deployToAppAssets(type: Copy, dependsOn: ["build"]) {
     from "./build/bundle", "./src/jsMain/web"
     into "${appProject.projectDir}/src/main/assets/web"
 }
-
 
 
 // workaround for https://youtrack.jetbrains.com/issue/KT-27170

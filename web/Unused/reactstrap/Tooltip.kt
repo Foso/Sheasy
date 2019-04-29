@@ -1,5 +1,6 @@
-package components.reactstrap
+package de.jensklingenberg.sheasy.web.components.reactstrap
 
+import components.reactstrap.ReactStrapImport
 import org.w3c.dom.events.Event
 import react.RClass
 import react.RProps

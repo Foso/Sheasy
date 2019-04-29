@@ -27,7 +27,7 @@ class WebSocketRouteHandler{
 
 
     var channel: SendChannel<Frame>? = null
-    var notification: SendChannel<Frame>? = null
+    var notificationChannel: SendChannel<Frame>? = null
 
     val compositeDisposable = CompositeDisposable()
 
@@ -45,19 +45,19 @@ class WebSocketRouteHandler{
 
         notificationDataSource
             .notificationSubject
-            .subscribeBy(onNext = { notificatio ->
+            .subscribeBy(onNext = { notification ->
 
                 val parameterizedType =
                     Types.newParameterizedType(WebsocketResource::class.java, Notification::class.java)
                 val adapter = moshi.adapter<WebsocketResource<Notification>>(parameterizedType)
 
-                notification?.let {
+                notificationChannel?.let {
                     GlobalScope.launch {
                         it.send(
                             Frame.Text(
                                 adapter.toJson(
                                     WebsocketResource(
-                                        WebSocketType.Notification, notificatio, ""
+                                        WebSocketType.Notification, notification, ""
                                     )
 
                                 )
@@ -81,7 +81,7 @@ class WebSocketRouteHandler{
                     Frame.Text(
                         adapter?.toJson(
                             WebsocketResource(
-                                WebSocketType.MESSAGE,shareItem, ""
+                                WebSocketType.MESSAGE,shareItem
                             )
                         ) ?: ""
                     )
@@ -98,7 +98,7 @@ class WebSocketRouteHandler{
 
             webSocket("notification") {
                 // websocketSession
-                notification = outgoing
+                notificationChannel = outgoing
                 incoming.consumeEach { frame ->
 
                     when (frame) {

@@ -91,7 +91,6 @@ class SearchBar(props: DraggableProps) : RComponent<DraggableProps, aaad>(props)
         setState {
             text = value
         }
-        console.log(value)
     }
 
 

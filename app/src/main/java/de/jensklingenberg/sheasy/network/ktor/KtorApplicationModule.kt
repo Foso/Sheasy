@@ -25,7 +25,6 @@ fun Application.ktorApplicationModule(
     webSocketRouteHandler: WebSocketRouteHandler
 ) {
     with(this) {
-        //  install(DefaultHeaders)
 
         install(ContentNegotiation) {
             gson {
