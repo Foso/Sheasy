@@ -107,6 +107,7 @@ kotlinFrontend {
         dependency("css-loader")
         dependency("reactstrap", "${libs.reactstrap}")
         dependency("react-dev-utils", "^5.0.2")
+        dependency("rxjs", Versions.web.rxJS)
 
         dependency("style-loader")
         dependency("jest")

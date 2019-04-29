@@ -13,7 +13,7 @@ workflows:
     - gradle-runner:
         inputs:
         - gradlew_path: ./gradlew
-        - gradle_task: clean clean web:deployToAppAssets app:assembleDebug
+        - gradle_task: clean web:deployToAppAssets app:assembleDebug
     - deploy-to-bitrise-io : {}
     - cache-push : {}
 
