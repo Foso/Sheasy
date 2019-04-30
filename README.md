@@ -105,7 +105,7 @@ Feel free to send feedback on [Twitter](https://twitter.com/jklingenberg_) or [f
 Screenshots
 -----------
 [<img src="docs/screenshots/home/home_app_v0.1.png" width="200">](docs/screenshots/home/home_app_v0.1.png)
-[<img src="docs/screenshots/files/files_app_v0.1.png" width="200">](docs/screenshots/files/files_app_v0.1.pngg)
+[<img src="docs/screenshots/files/files_app_v0.1.png" width="200">](docs/screenshots/files/files_app_v0.1.png)
 [<img src="docs/screenshots/app/apps_app_v0.1.png" width="200">](docs/screenshots/app/apps_app_v0.1.png)
 
 
