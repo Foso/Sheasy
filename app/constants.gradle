@@ -21,8 +21,7 @@ ext {
                      serverPort         : "8766",
                      targetSdk          : 28,
                      versionCode        : 1,
-                     versionName        : '1.0.0',
-                     websocketPort      : "8765"]
+                     versionName        : '1.0.0']
 
 
     libs = [
@@ -40,10 +39,9 @@ ext {
             dagger               : '2.22.1',
             espressocore         : '3.1.0',
             junit                : '4.11',
-            ktor_version         : '1.1.4',
+            ktor_version         : '1.2.0',
             ktx                  : '1.0.1',
             leakcanaryVersion    : '1.5.4',
-            lifeCycleExtension   : '1.1.1',
             materialdrawer       : '6.0.6@aar',
             mockitoVersion       : '1.10.19',
             moshiConverterVersion: '2.3.0',
