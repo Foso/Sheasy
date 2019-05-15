@@ -102,6 +102,13 @@ This project follows the [all-contributors](https://github.com/kentcdodds/all-co
 
 Feel free to send feedback on [Twitter](https://twitter.com/jklingenberg_) or [file an issue](https://github.com/foso/sheasy/issues/new). Feature requests are always welcome. If you wish to contribute, please take a quick look at the [guidelines](./CONTRIBUTING.md)!
 
+Screenshots
+-----------
+[<img src="docs/screenshots/home/home_app_v0.1.png" width="200">](docs/screenshots/home/home_app_v0.1.png)
+[<img src="docs/screenshots/files/files_app_v0.1.png" width="200">](docs/screenshots/files/files_app_v0.1.png)
+[<img src="docs/screenshots/app/apps_app_v0.1.png" width="200">](docs/screenshots/app/apps_app_v0.1.png)
+
+
 
 ## 📜 License
 
