@@ -39,9 +39,6 @@ class PairedFragment : BaseFragment(), PairedContract.View {
 
         setupRecycler()
         setHasOptionsMenu(true)
-
-
-
         pairedPresenter = PairedPresenter(this)
         pairedPresenter.onCreate()
     }

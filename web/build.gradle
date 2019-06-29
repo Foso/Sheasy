@@ -10,11 +10,7 @@ buildscript {
     }
 
     dependencies {
-
         classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.45"
-
-
-
     }
 
 }
@@ -23,6 +19,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
     id('com.moowork.node')
     id("kotlin-dce-js")
+
 }
 
 apply plugin: 'org.jetbrains.kotlin.frontend'
@@ -41,26 +38,25 @@ detekt {
 }
 kotlin {
 
-        js() {
-            configure([compilations.main]) {
-                tasks.getByName(compileKotlinTaskName).kotlinOptions {
-                    languageVersion = "1.3"
-                    sourceMap = true
+    js() {
+        configure([compilations.main]) {
+            tasks.getByName(compileKotlinTaskName).kotlinOptions {
+                languageVersion = "1.3"
+                sourceMap = true
 
-                    moduleKind = "commonjs"
-                    metaInfo = true
-                    outputFile = "${project.buildDir.path}/js/${project.name}.js"
-                }
-            }
-
-
-
-            configure(compilations.main) {
-                tasks.getByName(compileKotlinTaskName).kotlinOptions {
-                    main = "call"
-                }
+                moduleKind = "commonjs"
+                metaInfo = true
+                outputFile = "${project.buildDir.path}/js/${project.name}.js"
             }
         }
+
+
+        configure(compilations.main) {
+            tasks.getByName(compileKotlinTaskName).kotlinOptions {
+                main = "call"
+            }
+        }
+    }
 
 
     sourceSets {
@@ -70,6 +66,7 @@ kotlin {
 
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
                 compileOnly project(":libshared")
+
             }
 
         }
@@ -86,6 +83,8 @@ kotlin {
                 implementation "org.jetbrains.kotlin:kotlin-test-js"
                 implementation "br.danfma.kodando:kodando-rxjs:$libs.kodando_rxjs"
                 implementation "com.noheltcj:rx-common-js:$libs.rx_common_js"
+                implementation(npm("@material-ui/core", libs.material_ui_core))
+
             }
         }
     }

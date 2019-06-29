@@ -66,7 +66,7 @@ The main entry of the module is inside the <kbd>index.kt</kbd>.
 
 ## 🛠️ Built With
 ### Kotlin
-[![jCenter](https://img.shields.io/badge/Kotlin-1.3.31-green.svg
+[![jCenter](https://img.shields.io/badge/Kotlin-1.3.40-green.svg
 )](https://github.com/Foso/Sheasy/blob/master/LICENSE)
 
 The App is completely written in Kotlin (except the used JVM/JS libraries)

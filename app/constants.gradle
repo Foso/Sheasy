@@ -16,7 +16,7 @@ ext {
                      buildGradle_version: '3.4.0-alpha01',
                      compileSdk         : 28,
                      detektVersion      : '1.0.0.RC14',
-                     kotlin_version     : '1.3.31',
+                     kotlin_version     : '1.3.40',
                      minSdk             : 21,
                      serverPort         : "8766",
                      targetSdk          : 28,

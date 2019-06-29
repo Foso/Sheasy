@@ -3,7 +3,7 @@ import java.io.BufferedReader
 object Versions {
 
     val dagger = "2.22.1"
-    val kotlin = "1.3.31"
+    val kotlin = "1.3.40"
     val rxAndroid = "2.1.0"
     val rxjava = "2.1.7"
 
