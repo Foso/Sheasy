@@ -83,7 +83,6 @@ kotlin {
                 implementation "org.jetbrains.kotlin:kotlin-test-js"
                 implementation "br.danfma.kodando:kodando-rxjs:$libs.kodando_rxjs"
                 implementation "com.noheltcj:rx-common-js:$libs.rx_common_js"
-                implementation(npm("@material-ui/core", libs.material_ui_core))
 
             }
         }
