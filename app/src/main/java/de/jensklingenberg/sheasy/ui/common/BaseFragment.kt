@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import de.jensklingenberg.sheasy.ui.MainActivity
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 
 
 open class BaseFragment : Fragment() {

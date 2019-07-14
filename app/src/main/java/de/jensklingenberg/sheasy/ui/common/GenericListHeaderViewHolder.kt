@@ -10,9 +10,9 @@ class GenericListHeaderViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<GenericListHeaderSourceItem>(viewParent, R.layout.list_item_header_generic) {
 
 
-    override fun onBindViewHolder(item: Any, diff: Bundle) {
+    override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
-        val itemTitle = (item as GenericListHeaderSourceItem).getPayload()
+        val itemTitle = (sourceItem as GenericListHeaderSourceItem).getPayload()
 
         itemView.apply {
             headerTitle.text = itemTitle

@@ -30,7 +30,7 @@ class FileViewHolder(viewParent: ViewGroup) :
 
                 icon.setImageResource(R.drawable.ic_insert_drive_file_grey_700_24dp)
                 moreBtn.setOnClickListener {
-                    val popup = setupContextMenu(it, item2, FileResponse(fileResponse.name,fileResponse.path))
+                    val popup = setupContextMenu(it, item2, FileResponse(fileResponse.name, fileResponse.path))
                     popup.show()
 
                 }

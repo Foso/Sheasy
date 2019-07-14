@@ -1,6 +1,6 @@
 buildscript {
     apply from: './constants.gradle'
-    }
+}
 
 plugins {
     id("com.android.application")
@@ -10,16 +10,16 @@ plugins {
     id("base")
     id("changelog")
     id("io.gitlab.arturbosch.detekt")
+    id 'org.jetbrains.dokka'
+    id 'androidx.navigation.safeargs.kotlin'
 
 }
-apply plugin: 'org.jetbrains.dokka'
-apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/DEPENDENCIES'
-        exclude  'META-INF/kotlinx-io.kotlin_module'
+        exclude 'META-INF/kotlinx-io.kotlin_module'
         exclude 'META-INF/atomicfu.kotlin_module'
         exclude 'META-INF/kotlinx-coroutines-io.kotlin_module'
         exclude 'META-INF/INDEX.LIST'
@@ -30,7 +30,7 @@ android {
     compileSdkVersion configuration.compileSdk
     defaultConfig {
         def bitriseBuildNumber = System.getenv("BITRISE_BUILD_NUMBER")
-        versionCode bitriseBuildNumber? bitriseBuildNumber.toInteger() : 1
+        versionCode bitriseBuildNumber ? bitriseBuildNumber.toInteger() : 1
 
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
@@ -147,13 +147,13 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
- //   debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
+    //   debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
     //AndroidX
     implementation "androidx.annotation:annotation:$libs.androidX.annotation"
     implementation "androidx.appcompat:appcompat:$libs.androidX.appcompat"
     implementation "androidx.cardview:cardview:$libs.androidX.cardview"
     implementation "androidx.constraintlayout:constraintlayout:${libs.androidX.constraintLayout}"
-    implementation "androidx.core:core-ktx:$libs.ktx"
+    implementation "androidx.core:core-ktx:$libs.androidX.ktx"
     implementation "androidx.fragment:fragment-ktx:$libs.androidX.fragment"
     implementation "androidx.recyclerview:recyclerview:${libs.androidX.general}"
     implementation 'com.google.android.material:material:1.0.0'
@@ -174,17 +174,12 @@ dependencies {
     //RxJava
     implementation Libs.android.rxAndroid
     implementation Libs.android.rxjava
+
+
     implementation "io.reactivex.rxjava2:rxkotlin:${libs.rxkotlin}"
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha1'
     implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0-alpha2'
     implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2'
-    implementation 'com.jakewharton.rxbinding3:rxbinding-drawerlayout:3.0.0-alpha2'
-    implementation 'com.jakewharton.rxbinding3:rxbinding-leanback:3.0.0-alpha2'
-    implementation 'com.jakewharton.rxbinding3:rxbinding-recyclerview:3.0.0-alpha2'
-    implementation 'com.jakewharton.rxbinding3:rxbinding-slidingpanelayout:3.0.0-alpha2'
-    implementation 'com.jakewharton.rxbinding3:rxbinding-swiperefreshlayout:3.0.0-alpha2'
-    implementation 'com.jakewharton.rxbinding3:rxbinding-viewpager:3.0.0-alpha2'
-    implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.0.0-alpha2'
 
     //Dagger
     implementation Libs.android.dagger
@@ -202,7 +197,12 @@ dependencies {
     }
     implementation 'co.zsmb:materialdrawer-kt:2.0.1'
     implementation "com.squareup.retrofit2:converter-moshi:${libs.moshiConverterVersion}"
-    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${libs.rxjava2Adapter}"
+
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${libs.retrofit}"
+    implementation "com.squareup.retrofit2:retrofit:${libs.retrofit}"
+
 
     //Testing
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "$libs.mockitoVersion"
@@ -210,18 +210,17 @@ dependencies {
     // testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${configuration.kotlin_version}"
 
     androidTestImplementation "io.mockk:mockk-android:${libs.mockkVersion}"
-    implementation "com.jakewharton.threetenabp:threetenabp:$libs.threetenabp"
 
 
     // Core library
-    androidTestImplementation 'androidx.test:core:1.1.0'
+    androidTestImplementation 'androidx.test:core:1.2.0'
 
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 
     // Assertions
-    androidTestImplementation 'androidx.test.ext:truth:1.1.0'
+    androidTestImplementation 'androidx.test.ext:truth:1.2.0'
 
     // Espresso dependencies
     androidTestImplementation "androidx.test.espresso:espresso-core:${libs.espressocore}"
@@ -238,12 +237,10 @@ dependencies {
     // dependency to appear on your APK's compile classpath or the test APK
 
     // classpath.
-    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.1.1'
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
 
     implementation 'me.toptas.fancyshowcase:fancyshowcaseview:1.1.5'
 }
-
 
 
 task copyFiles(type: Copy) {

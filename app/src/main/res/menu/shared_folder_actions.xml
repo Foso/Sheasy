@@ -12,5 +12,5 @@
             android:id="@+id/menu_unhost_folder"
 
 
-            android:title="UNHost Folder" />
+            android:title="@string/shared_folder_actions_unhost" />
 </menu>

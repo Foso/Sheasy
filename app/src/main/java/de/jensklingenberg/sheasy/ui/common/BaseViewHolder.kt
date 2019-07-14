@@ -30,5 +30,5 @@ abstract class BaseViewHolder<P : BaseDataSourceItem<*>>(viewParent: ViewGroup, 
         onBindViewHolder(item, diff)
     }
 
-    abstract fun onBindViewHolder(item: Any, diff: Bundle)
+    abstract fun onBindViewHolder(sourceItem: Any, diff: Bundle)
 }

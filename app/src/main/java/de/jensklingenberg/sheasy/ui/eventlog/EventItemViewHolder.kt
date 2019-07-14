@@ -10,9 +10,9 @@ class EventItemViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<EventSourceItem>(viewParent, R.layout.list_item_generic) {
 
 
-    override fun onBindViewHolder(item: Any, diff: Bundle) {
+    override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
-        val listItem = (item as EventSourceItem).getPayload()
+        val listItem = (sourceItem as EventSourceItem).getPayload()
 
         listItem?.let {
             itemView.apply {
@@ -20,7 +20,7 @@ class EventItemViewHolder(viewParent: ViewGroup) :
                 caption.text = listItem.category.title
                 // icon.setImageResource(listItem.drawable)
                 setOnClickListener {
-                    item.onEntryClickListener?.onItemClicked(item)
+                    sourceItem.onEntryClickListener?.onItemClicked(sourceItem)
                 }
 
 

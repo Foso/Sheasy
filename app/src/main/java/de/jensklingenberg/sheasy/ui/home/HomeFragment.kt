@@ -11,14 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.service.HTTPServerService
-import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
-import de.jensklingenberg.sheasy.ui.common.addTo
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -27,9 +22,8 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     private val baseAdapter = BaseAdapter()
     lateinit var presenter: HomeContract.Presenter
-    val compositeDisposable = CompositeDisposable()
     var toolbarMenu: Menu? = null
-
+    var serverIcon: MenuItem? = null
 
     init {
         initializeDagger()
@@ -74,21 +68,16 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         menu?.clear()
         inflater?.inflate(R.menu.home_options_menu, menu)
         toolbarMenu = menu
-        val server = menu?.findItem(R.id.menu_server)
+        serverIcon = menu?.findItem(R.id.menu_server)
+    }
 
-        Server.serverRunning.subscribeOn(AndroidSchedulers.mainThread())
-            .observeOn(
-                AndroidSchedulers.mainThread()
-            )
-            .subscribeBy(onNext = { running ->
-                if (running) {
-                    server?.setIcon(R.drawable.ic_router_green_700_24dp)
+    override fun setServerState(isRunning: Boolean) {
+        if (isRunning) {
+            serverIcon?.setIcon(R.drawable.ic_router_green_700_24dp)
 
-                } else {
-                    server?.setIcon(R.drawable.ic_router_black_24dp)
-                }
-
-            }).addTo(compositeDisposable)
+        } else {
+            serverIcon?.setIcon(R.drawable.ic_router_black_24dp)
+        }
 
     }
 

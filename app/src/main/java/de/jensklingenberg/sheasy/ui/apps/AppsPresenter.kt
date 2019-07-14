@@ -1,15 +1,16 @@
 package de.jensklingenberg.sheasy.ui.apps
 
+import android.view.View
+import androidx.appcompat.widget.PopupMenu
+import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.FileDataSource
-import de.jensklingenberg.sheasy.model.AppInfo
-import de.jensklingenberg.sheasy.ui.common.addTo
 import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
 import de.jensklingenberg.sheasy.model.AndroidAppInfo
-import io.reactivex.Completable
+import de.jensklingenberg.sheasy.model.AppInfo
+import de.jensklingenberg.sheasy.ui.common.addTo
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -20,6 +21,8 @@ import javax.inject.Inject
 class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
 
 
+    private val snackbar: PublishSubject<String> = PublishSubject.create()
+
     private val appsSubject: PublishSubject<List<AppInfo>> = PublishSubject.create<List<AppInfo>>()
 
     override val compositeDisposable = CompositeDisposable()
@@ -29,9 +32,7 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
 
 
     @Inject
-    lateinit var shareUseCase: ShareUseCase
-
-    val snackbar: PublishSubject<String> = PublishSubject.create()
+    lateinit var shareUseCaseProvider: ShareUseCase
 
 
     init {
@@ -52,7 +53,7 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
     /****************************************** Class methods  */
 
 
-    override fun searchApp(query: String) {
+    override fun searchApp(packageName: String) {
         fileDataSource
             .getApps()
             .subscribeOn(Schedulers.newThread())
@@ -60,7 +61,7 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
             .subscribeBy(onSuccess = { appsList ->
                 appsSubject.onNext(
                     appsList.filter {
-                        it.name.contains(query, ignoreCase = true)
+                        it.name.contains(packageName, ignoreCase = true)
                     }
                 )
             }, onError = {
@@ -72,15 +73,8 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
         return appsSubject.hide()
     }
 
-    override fun shareApp(appInfo: AppInfo) {
-        shareUseCase.shareApp(appInfo)
-    }
-
-    override fun extractApp(appInfo: AppInfo): Completable {
-        return fileDataSource.extractApk(appInfo)
-    }
-
     private fun loadApps() {
+        view.showMessage(R.string.state_loading)
         getApps()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -89,7 +83,7 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
                     .sortedBy { it.name }
                     .map {
 
-                        AppInfoSourceItem(it as AndroidAppInfo,this)
+                        AppInfoSourceItem(it as AndroidAppInfo, this)
 
                     }
             }
@@ -97,24 +91,45 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
             .addTo(compositeDisposable)
     }
 
-    override fun onPopupMenuClicked(appInfo: AppInfo, id: Int) {
+    private fun onPopupMenuClicked(appInfo: AppInfo, id: Int) {
         when (id) {
             R.id.menu_share -> {
-                shareApp(appInfo)
+                shareUseCaseProvider.shareApp(appInfo)
             }
             R.id.menu_extract -> {
-                extractApp(appInfo).subscribeBy(
-                    onComplete = {
-                        view.showMessage(R.string.Success)
-                    }
-                ).addTo(compositeDisposable)
+                fileDataSource.extractApk(appInfo)
+                    .subscribeBy(
+                        onComplete = {
+                            view.showMessage(R.string.Success)
+                        }
+                    ).addTo(compositeDisposable)
 
 
             }
-            R.id.menu_share_link->{
-                shareUseCase.shareDownloadLink(appInfo)
+            R.id.menu_share_link -> {
+                shareUseCaseProvider.shareDownloadLink(appInfo)
             }
         }
+    }
+
+    override fun onAppInfoMoreButtonClicked(
+        it: View,
+        appInfo: AndroidAppInfo
+    ) {
+        PopupMenu(it.context, it)
+            .apply {
+                menuInflater
+                    .inflate(R.menu.apps_actions, menu)
+            }
+            .also {
+                it.itemClicks()
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnNext { menuItem ->
+                        onPopupMenuClicked(appInfo, menuItem.itemId)
+                    }.subscribe()
+            }.show()
+
     }
 
 

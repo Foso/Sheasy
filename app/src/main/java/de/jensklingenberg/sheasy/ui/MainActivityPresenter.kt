@@ -1,5 +1,5 @@
 package de.jensklingenberg.sheasy.ui
 
-class MainActivityPresenter : MainActivityContract.Presenter{
+class MainActivityPresenter : MainActivityContract.Presenter {
 
 }

@@ -19,9 +19,9 @@ class DeviceListItemViewHolder(viewParent: ViewGroup) :
 
     }
 
-    override fun onBindViewHolder(item: Any, diff: Bundle) {
+    override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
-        val device = (item as DeviceListItemSourceItem).getPayload()
+        val device = (sourceItem as DeviceListItemSourceItem).getPayload()
 
         device?.let {
             itemView.apply {
@@ -35,7 +35,7 @@ class DeviceListItemViewHolder(viewParent: ViewGroup) :
 
                 moreBtn.visibility = View.VISIBLE
                 moreBtn.setOnClickListener {
-                    val popup = setupContextMenu(it, item, device)
+                    val popup = setupContextMenu(it, sourceItem, device)
                     popup.show()
 
                 }

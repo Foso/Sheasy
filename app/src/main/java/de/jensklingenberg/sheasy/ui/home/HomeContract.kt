@@ -9,6 +9,7 @@ interface HomeContract {
     interface View {
         fun setData(list: List<BaseDataSourceItem<*>>)
         fun navigateTo(navId: Int)
+        fun setServerState(isRunning: Boolean)
     }
 
     interface Presenter : MvpPresenter, OnEntryClickListener {

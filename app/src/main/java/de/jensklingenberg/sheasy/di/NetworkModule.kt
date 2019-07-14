@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.di
 
 import android.net.wifi.WifiManager
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import de.jensklingenberg.sheasy.data.DevicesDataSource
@@ -19,6 +18,7 @@ import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -51,9 +51,6 @@ open class NetworkModule {
     open fun provideDevicesDataSource(): DevicesDataSource = DevicesRepository()
 
 
-
-
-
     @Provides
     @Singleton
     fun provideRetrofit(wm: WifiManager) = Retrofit.Builder()
@@ -79,11 +76,11 @@ open class NetworkModule {
             Netty,
             port = sheasyPrefDataSource.httpPort.toInt(),
             module = {
-            ktorApplicationModule(
-                generalRouteHandler,
-                fileRouteHandler,
-                webSocketRouteHandler
-            )
-        })
+                ktorApplicationModule(
+                    generalRouteHandler,
+                    fileRouteHandler,
+                    webSocketRouteHandler
+                )
+            })
 
 }

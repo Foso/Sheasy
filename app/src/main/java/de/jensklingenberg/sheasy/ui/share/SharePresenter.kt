@@ -45,12 +45,12 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
                     view.setData(it
                         .filter { it is MessageEvent }
                         .map {
-                           val message= it as MessageEvent
-                            when(message.type){
-                                MessageType.INCOMING->{
+                            val message = it as MessageEvent
+                            when (message.type) {
+                                MessageType.INCOMING -> {
                                     IncomingMessageSourceItem(message)
                                 }
-                                MessageType.OUTGOING->{
+                                MessageType.OUTGOING -> {
                                     OutgoingMessageSourceItem(message)
                                 }
                             }

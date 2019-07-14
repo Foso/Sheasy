@@ -15,7 +15,7 @@ open class App : Application() {
     override fun onCreate() {
         super.onCreate()
         initializeDagger()
-        RxJavaPlugins.setErrorHandler { throwable-> Log.e("Sheasy","RxError"+throwable.message) }
+        RxJavaPlugins.setErrorHandler { throwable -> Log.e("Sheasy", "RxError" + throwable.message) }
     }
 
     open fun initializeDagger() {

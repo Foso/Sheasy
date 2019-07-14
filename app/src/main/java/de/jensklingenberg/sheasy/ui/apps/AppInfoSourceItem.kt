@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.ui.apps
 
 import de.jensklingenberg.sheasy.model.AndroidAppInfo
-import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 
 

@@ -5,20 +5,17 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.PopupMenu
-import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jakewharton.rxbinding3.appcompat.itemClicks
-import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.service.HTTPServerService
-import de.jensklingenberg.sheasy.ui.common.*
 import de.jensklingenberg.sheasy.data.usecase.MessageUseCase
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.ui.common.BaseAdapter
+import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
+import de.jensklingenberg.sheasy.ui.common.BaseFragment
+import de.jensklingenberg.sheasy.ui.common.NoOrEmptyContentItem
 import de.jensklingenberg.sheasy.utils.extension.requireView
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_files.*
 import java.io.File
 import javax.inject.Inject
@@ -119,12 +116,7 @@ class FilesFragment : BaseFragment(), FilesContract.View {
     }
 
     private fun initSearchView(menu: Menu?) {
-        val search = menu?.findItem(R.id.search)?.actionView as SearchView
-        search.queryTextChanges()
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { presenter.searchFile(it.toString()) }
-            .subscribe()
+
 
     }
 

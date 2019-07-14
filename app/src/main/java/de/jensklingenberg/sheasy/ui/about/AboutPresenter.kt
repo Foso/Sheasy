@@ -5,23 +5,13 @@ import android.view.View
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
-
-import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
-import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
-import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
-import de.jensklingenberg.sheasy.ui.common.GenericListItem
-import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
-
-import de.jensklingenberg.sheasy.ui.common.toSourceItem
+import de.jensklingenberg.sheasy.ui.common.*
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
     override val compositeDisposable = CompositeDisposable()
 
-
-    @Inject
-    lateinit var shareUseCase: ShareUseCase
 
     @Inject
     lateinit var context: Context
@@ -39,7 +29,6 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
             GenericListHeaderSourceItem(
                 "About"
             ),
-
 
             GenericListItem(
                 context.getString(R.string.app_name),
@@ -74,20 +63,18 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
             GenericListItem(
                 "Feedback",
                 context.getString(R.string.about_send_feedback),
-                R.drawable.ic_code_grey_700_24dp
+                R.drawable.ic_send_grey_700_24dp
+            ).toSourceItem(this),
+            GenericListItem(
+                "Feature Request",
+                context.getString(R.string.about_feature_request_message),
+                R.drawable.ic_send_grey_700_24dp
             ).toSourceItem(this),
             GenericListItem(
                 "Commit",
                 BuildConfig.GIT_SHA,
                 R.drawable.ic_code_grey_700_24dp
-            ).toSourceItem(this),
-            GenericListItem(
-                "BuildNumber",
-                BuildConfig.VERSION_CODE.toString(),
-                R.drawable.ic_code_grey_700_24dp
             ).toSourceItem(this)
-
-
 
 
         )

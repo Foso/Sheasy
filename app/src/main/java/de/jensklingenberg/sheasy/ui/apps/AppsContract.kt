@@ -1,10 +1,7 @@
 package de.jensklingenberg.sheasy.ui.apps
 
-import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.MvpPresenter
-import io.reactivex.Completable
-import io.reactivex.Single
 
 interface AppsContract {
     interface View {
@@ -14,8 +11,6 @@ interface AppsContract {
     }
 
     interface Presenter : MvpPresenter, AppInfoViewHolder.OnClick {
-        fun searchApp(toString: String)
-        fun extractApp(appInfo: AppInfo): Completable
-        fun shareApp(appInfo: AppInfo)
+        fun searchApp(packageName: String)
     }
 }

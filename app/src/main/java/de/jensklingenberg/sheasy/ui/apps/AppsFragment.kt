@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.data.usecase.MessageUseCase
 import de.jensklingenberg.sheasy.ui.common.BaseAdapter
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.BaseFragment
 import de.jensklingenberg.sheasy.ui.common.addTo
-import de.jensklingenberg.sheasy.data.usecase.MessageUseCase
-import de.jensklingenberg.sheasy.service.HTTPServerService
 import de.jensklingenberg.sheasy.utils.extension.requireView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -36,7 +35,7 @@ class AppsFragment : BaseFragment(), AppsContract.View {
     @Inject
     lateinit var messageUseCase: MessageUseCase
 
-    /****************************************** Lifecycle methods  */
+    /****************************************** Class methods  */
 
     init {
         initializeDagger()
@@ -89,11 +88,9 @@ class AppsFragment : BaseFragment(), AppsContract.View {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         compositeDisposable.dispose()
+        super.onDestroy()
     }
-
-    /****************************************** Class methods  */
 
 
     private fun initSearchView(menu: Menu?) {
@@ -102,7 +99,8 @@ class AppsFragment : BaseFragment(), AppsContract.View {
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { presenter.searchApp(it.toString()) }
-            .subscribe().addTo(compositeDisposable)
+            .subscribe()
+            .addTo(compositeDisposable)
 
     }
 
@@ -111,13 +109,11 @@ class AppsFragment : BaseFragment(), AppsContract.View {
     override fun setData(list: List<BaseDataSourceItem<*>>) {
         baseAdapter.dataSource.setItems(list)
         baseAdapter.notifyDataSetChanged()
-
     }
 
 
     override fun showError(it: Throwable) {
         messageUseCase.show(requireView(), it.message ?: "")
-
     }
 
 

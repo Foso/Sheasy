@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
-import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
@@ -18,54 +16,36 @@ class SharedFolderViewHolder(viewParent: ViewGroup) :
     interface OnEntryClickListener {
         fun onItemClicked(payload: FileResponse)
         fun onPopupMenuClicked(fileResponse: FileResponse, id: Int)
-
+        fun onPopupMenuClicked(view: View, fileResponse: FileResponse)
     }
 
-    override fun onBindViewHolder(item2: Any, diff: Bundle) {
+    override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
-        val fileResponse = (item2 as SharedFolderSourceItem).getPayload()
+        val file: File? = (sourceItem as SharedFolderSourceItem).getPayload()
 
-        fileResponse?.let {
+        file?.let {
             itemView.apply {
-                title.text = fileResponse.name
-                caption.text = fileResponse.path
+                title.text = file.name
+                caption.text = file.path
 
-                icon.setImageResource(R.drawable.ic_router_green_700_24dp)
+
+                if (sourceItem.isFolder) {
+                    icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
+                } else {
+                    icon.setImageResource(R.drawable.ic_insert_drive_file_grey_700_24dp)
+                }
 
                 item.setOnClickListener {
-                    item2.onEntryClickListener?.onItemClicked(FileResponse(fileResponse.name,fileResponse.path))
+                    sourceItem.onEntryClickListener?.onItemClicked(FileResponse(file.name, file.path))
                 }
                 moreBtn.visibility = VISIBLE
-                moreBtn.setOnClickListener {
-
-                    val popup = setupContextMenu(it, item2, fileResponse)
-                    popup.show()
+                moreBtn.setOnClickListener { view ->
+                    sourceItem.onEntryClickListener?.onPopupMenuClicked(view, FileResponse(file.name, file.path))
                 }
             }
         }
 
 
-    }
-
-    private fun setupContextMenu(
-        view: View,
-        sharedFolderSourceItem: SharedFolderSourceItem,
-        fileResponse: File
-    ): PopupMenu {
-        return PopupMenu(view.context, view)
-            .apply {
-                menuInflater
-                    .inflate(R.menu.shared_folder_actions, menu)
-            }
-            .also {
-                it.itemClicks()
-                    .doOnNext { menuItem ->
-                        sharedFolderSourceItem.onEntryClickListener?.onPopupMenuClicked(
-                            FileResponse(fileResponse.name,fileResponse.path),
-                            menuItem.itemId
-                        )
-                    }.subscribe()
-            }
     }
 
 

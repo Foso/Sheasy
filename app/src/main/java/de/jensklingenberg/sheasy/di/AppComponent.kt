@@ -5,10 +5,12 @@ import de.jensklingenberg.sheasy.data.event.EventRepository
 import de.jensklingenberg.sheasy.data.file.AndroidFileRepository
 import de.jensklingenberg.sheasy.data.notification.NotificationUtils
 import de.jensklingenberg.sheasy.data.preferences.SheasyPreferencesRepository
-import de.jensklingenberg.sheasy.service.HTTPServerService
+import de.jensklingenberg.sheasy.data.usecase.ShareUseCaseProvider
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidFileRouteHandler
 import de.jensklingenberg.sheasy.network.ktor.routehandler.AndroidKtorGeneralRouteHandler
+import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
+import de.jensklingenberg.sheasy.service.HTTPServerService
 import de.jensklingenberg.sheasy.service.NotificationListener
 import de.jensklingenberg.sheasy.ui.MainActivity
 import de.jensklingenberg.sheasy.ui.MainActivityDrawer
@@ -29,8 +31,6 @@ import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
 import de.jensklingenberg.sheasy.ui.settings.SettingsPresenter
 import de.jensklingenberg.sheasy.ui.share.ShareFragment
 import de.jensklingenberg.sheasy.ui.share.SharePresenter
-import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
-import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
 import javax.inject.Singleton
 
 @Component(modules = [(AppModule::class), (UseCaseModule::class), (NetworkModule::class), (AndroidModule::class)])
@@ -52,7 +52,7 @@ interface AppComponent {
 
     fun inject(server: Server)
     fun inject(filesFragment: FilesFragment)
-    fun inject(shareUseCase: ShareUseCase)
+    fun inject(shareUseCaseProvider: ShareUseCaseProvider)
     fun inject(androidKtorGeneralRouteHandler: AndroidKtorGeneralRouteHandler)
     fun inject(androidFileRouteHandler: AndroidFileRouteHandler)
     fun inject(appInfoViewHolder: AppInfoViewHolder)

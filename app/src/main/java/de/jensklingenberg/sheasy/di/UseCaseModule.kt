@@ -26,7 +26,7 @@ class UseCaseModule {
     @Provides
     @Singleton
     fun provideShareUseCase(): ShareUseCase =
-        ShareUseCase()
+        ShareUseCaseProvider()
 
     @Provides
     @Singleton
@@ -42,7 +42,6 @@ class UseCaseModule {
     @Provides
     @Singleton
     fun provideGetIpUseCase(wifiManager: WifiManager): GetIpUseCase = GetIpUseCase(wifiManager)
-
 
 
     @Provides

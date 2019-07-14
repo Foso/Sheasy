@@ -103,7 +103,6 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
     }
 
 
-
     override fun onContextMenuClick(device: Device, id: Int) {
         when (id) {
             R.id.menu_revoke -> {
@@ -120,7 +119,6 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
         }
 
     }
-
 
 
 }

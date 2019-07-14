@@ -1,30 +1,22 @@
 package de.jensklingenberg.sheasy.service
 
+import android.app.Notification
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Binder
+import android.os.Build
+import android.os.Build.VERSION_CODES
 import android.os.IBinder
+import androidx.annotation.RequiresApi
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.data.DevicesDataSource
+import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 import de.jensklingenberg.sheasy.model.AuthorizationType
 import de.jensklingenberg.sheasy.model.Device
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import javax.inject.Inject
-import android.graphics.Bitmap.createScaledBitmap
-import android.R
-import android.app.Notification
-import android.os.Build
-import androidx.core.app.NotificationCompat
-import android.os.Build.VERSION_CODES
-import android.os.Build.VERSION
-import android.os.Build.VERSION.SDK_INT
-import android.app.NotificationManager
-import android.app.NotificationChannel
-import android.graphics.Color
-import androidx.annotation.RequiresApi
-import de.jensklingenberg.sheasy.data.DevicesDataSource
-import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 
 
 /**
@@ -72,7 +64,6 @@ class HTTPServerService : Service() {
 
     @Inject
     lateinit var devicesDataSource: DevicesDataSource
-
 
 
     /****************************************** Lifecycle methods  */

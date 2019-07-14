@@ -12,17 +12,15 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import de.jensklingenberg.sheasy.App
-import de.jensklingenberg.sheasy.BuildConfig
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.service.HTTPServerService
-import de.jensklingenberg.sheasy.utils.NetworkUtils
 import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import de.jensklingenberg.sheasy.service.HTTPServerService
+import de.jensklingenberg.sheasy.utils.NetworkUtils
 import javax.inject.Inject
 
 
 class NotificationUtils : NotificationUseCase {
-
 
 
     @Inject
@@ -68,7 +66,7 @@ class NotificationUtils : NotificationUseCase {
 
         val notificationBuilder = NotificationCompat.Builder(context, ConRequest)
             .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setContentTitle("Connection from " + ipaddress)
+            .setContentTitle("Connection from $ipaddress")
             .setContentText("Do you want to accept the connection")
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
@@ -134,7 +132,7 @@ class NotificationUtils : NotificationUseCase {
 
     }
 
-   override fun cancelAll(){
+    override fun cancelAll() {
         notificationManager.cancelAll()
     }
 
@@ -147,7 +145,7 @@ class NotificationUtils : NotificationUseCase {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun getForeGroundServiceNotification(context:Context): Notification {
+    override fun getForeGroundServiceNotification(context: Context): Notification {
         val NOTIFICATION_CHANNEL_ID = "com.example.simpleapp"
         val channelName = "My Background Service"
         val chan = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE)
@@ -163,7 +161,7 @@ class NotificationUtils : NotificationUseCase {
             .setPriority(NotificationManager.IMPORTANCE_MIN)
             .setCategory(Notification.CATEGORY_SERVICE)
             .build()
-return notification
+        return notification
     }
 
 }

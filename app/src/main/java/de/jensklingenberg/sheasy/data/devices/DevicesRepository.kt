@@ -28,7 +28,6 @@ class DevicesRepository : DevicesDataSource {
         knownDevices.onNext(auth)
 
 
-
     }
 
 }

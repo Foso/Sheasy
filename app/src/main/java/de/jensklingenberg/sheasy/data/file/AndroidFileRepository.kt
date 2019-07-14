@@ -6,7 +6,6 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AndroidAppInfo
 import de.jensklingenberg.sheasy.model.AppInfo
-import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import io.reactivex.Completable
@@ -53,7 +52,7 @@ open class AndroidFileRepository : FileDataSource {
     }
 
     @Throws(IOException::class)
-   private fun writeBytesToFile(input: InputStream, file: File): File {
+    private fun writeBytesToFile(input: InputStream, file: File): File {
         var fos: FileOutputStream? = null
         try {
             val data = ByteArray(2048)

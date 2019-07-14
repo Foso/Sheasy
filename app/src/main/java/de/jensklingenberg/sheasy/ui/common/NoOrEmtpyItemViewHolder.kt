@@ -9,9 +9,9 @@ class NoOrEmtpyItemViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<NoOrEmptyContentSourceItem>(viewParent, R.layout.item_empty) {
 
 
-    override fun onBindViewHolder(item: Any, diff: Bundle) {
+    override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
-        val listItem = (item as NoOrEmptyContentSourceItem).getPayload()
+        val listItem = (sourceItem as NoOrEmptyContentSourceItem).getPayload()
 
         listItem?.let {
             itemView.apply {

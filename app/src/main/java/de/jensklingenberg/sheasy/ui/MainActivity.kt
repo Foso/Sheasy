@@ -2,27 +2,19 @@ package de.jensklingenberg.sheasy.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
-import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.mikepenz.materialdrawer.Drawer
-import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.SideMenuEntry
 import de.jensklingenberg.sheasy.ui.files.FilesFragmentDirections
 import de.jensklingenberg.sheasy.utils.PermissionUtils
-import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
-import de.jensklingenberg.sheasy.network.Server
-import de.jensklingenberg.sheasy.ui.common.addTo
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -45,7 +37,6 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)
-
 
 
     /******************************************  Lifecycle methods  */
@@ -93,7 +84,6 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     }
 
     /******************************************  Class methods  */
-
 
 
     fun handleIntent(intent: Intent) {

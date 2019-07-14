@@ -47,12 +47,6 @@ kotlin {
                 moduleKind = "commonjs"
                 metaInfo = true
                 outputFile = "${project.buildDir.path}/js/${project.name}.js"
-            }
-        }
-
-
-        configure(compilations.main) {
-            tasks.getByName(compileKotlinTaskName).kotlinOptions {
                 main = "call"
             }
         }
@@ -84,32 +78,30 @@ kotlin {
                 implementation "br.danfma.kodando:kodando-rxjs:$libs.kodando_rxjs"
                 implementation "com.noheltcj:rx-common-js:$libs.rx_common_js"
 
+                npm {
+                    dependency("@material-ui/core", libs.material_ui_core)
+                    dependency("@material-ui/icons")
+                    dependency("axios", "${libs.axios}")
+                    dependency("bootstrap", "${libs.bootstrap}")
+                    dependency("react-router-dom", "${libs.react_router_dom}")
+                    dependency("react-draggable", "${libs.react_draggable}")
+                    dependency("react-dropzone", "${libs.react_dropzone}")
+                    dependency("react-web-notification", "${libs.react_web_notification}")
+                    dependency('react', libs.react_version)
+                    dependency('react-dom', libs.react_version)
+                    dependency("css-loader")
+                    dependency("reactstrap", "${libs.reactstrap}")
+                    dependency("react-dev-utils", "^5.0.2")
+                    dependency("rxjs", Versions.web.rxJS)
+                    dependency("style-loader")
+                    dependency("jest")
+                }
             }
         }
     }
 }
 kotlinFrontend {
     downloadNodeJsVersion = 'latest'
-
-    npm {
-        dependency("@material-ui/core", libs.material_ui_core)
-        dependency("@material-ui/icons")
-        dependency("axios", "${libs.axios}")
-        dependency("bootstrap", "${libs.bootstrap}")
-        dependency("react-router-dom", "${libs.react_router_dom}")
-        dependency("react-draggable", "${libs.react_draggable}")
-        dependency("react-dropzone", "${libs.react_dropzone}")
-        dependency("react-web-notification", "${libs.react_web_notification}")
-        dependency('react', libs.react_version)
-        dependency('react-dom', libs.react_version)
-        dependency("css-loader")
-        dependency("reactstrap", "${libs.reactstrap}")
-        dependency("react-dev-utils", "^5.0.2")
-        dependency("rxjs", Versions.web.rxJS)
-
-        dependency("style-loader")
-        dependency("jest")
-    }
 
 
     webpackBundle {

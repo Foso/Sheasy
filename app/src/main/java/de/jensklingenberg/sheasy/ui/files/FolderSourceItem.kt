@@ -5,6 +5,7 @@ import java.io.File
 
 class FolderSourceItem(
     fileResponse: File,
+    val isFolder: Boolean,
     var onEntryClickListener: FolderViewHolder.OnEntryClickListener? = null
 ) :
     BaseDataSourceItem<File>(FolderViewHolder::class.java) {

@@ -5,6 +5,7 @@ import java.io.File
 
 class SharedFolderSourceItem(
     file: File,
+    val isFolder: Boolean,
     var onEntryClickListener: SharedFolderViewHolder.OnEntryClickListener? = null
 ) :
     BaseDataSourceItem<File>(SharedFolderViewHolder::class.java) {

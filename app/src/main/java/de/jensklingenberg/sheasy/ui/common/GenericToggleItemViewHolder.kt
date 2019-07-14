@@ -9,9 +9,9 @@ class GenericToggleItemViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<GenericToggleItemSourceItem>(viewParent, R.layout.settings_toggle_entry) {
 
 
-    override fun onBindViewHolder(item: Any, diff: Bundle) {
+    override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
-        val listItem = (item as GenericToggleItemSourceItem).getPayload()
+        val listItem = (sourceItem as GenericToggleItemSourceItem).getPayload()
 
         listItem?.let {
             itemView.apply {

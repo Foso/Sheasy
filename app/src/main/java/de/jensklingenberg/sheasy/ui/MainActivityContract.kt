@@ -1,12 +1,12 @@
 package de.jensklingenberg.sheasy.ui
 
-interface MainActivityContract{
+interface MainActivityContract {
 
-    interface View{
+    interface View {
 
     }
 
-    interface Presenter{
+    interface Presenter {
 
     }
 

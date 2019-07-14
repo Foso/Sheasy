@@ -10,7 +10,6 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
 import kotlinx.android.synthetic.main.list_item_generic.view.*
-import java.io.File
 
 class FolderViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<FileSourceItem>(viewParent, R.layout.list_item_generic) {
@@ -19,28 +18,35 @@ class FolderViewHolder(viewParent: ViewGroup) :
     interface OnEntryClickListener {
         fun onItemClicked(payload: FileResponse)
         fun onPopupMenuClicked(fileResponse: FileResponse, id: Int)
+        fun onPopupMenuClicked(view: View, fileResponse: FileResponse)
 
     }
 
-    override fun onBindViewHolder(item2: Any, diff: Bundle) {
+    override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
-        val fileResponse = (item2 as FolderSourceItem).getPayload()
+        val file = (sourceItem as FolderSourceItem).getPayload()
 
-        fileResponse?.let {
+        file?.let {
             itemView.apply {
-                title.text = fileResponse.name
-                caption.text = fileResponse.path
+                title.text = file.name
+                caption.text = file.path
                 moreBtn.visibility = VISIBLE
-                icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
+
+                if (sourceItem.isFolder) {
+                    icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
+                } else {
+                    icon.setImageResource(R.drawable.ic_insert_drive_file_grey_700_24dp)
+                }
+
                 moreBtn.setOnClickListener {
-                    val popup = setupContextMenu(it, item2, FileResponse(fileResponse.name,fileResponse.path))
+                    val popup = setupContextMenu(it, sourceItem, FileResponse(file.name, file.path))
                     popup.show()
 
                 }
 
 
                 item.setOnClickListener {
-                    item2.onEntryClickListener?.onItemClicked(FileResponse(fileResponse.name,fileResponse.path))
+                    sourceItem.onEntryClickListener?.onItemClicked(FileResponse(file.name, file.path))
                 }
 
 

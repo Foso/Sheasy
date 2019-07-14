@@ -13,9 +13,9 @@ class OutgoingMessageItemViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<OutgoingMessageSourceItem>(viewParent, R.layout.list_item_message) {
 
 
-    override fun onBindViewHolder(item: Any, diff: Bundle) {
+    override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
-        val messageEvent = (item as OutgoingMessageSourceItem).getPayload()
+        val messageEvent = (sourceItem as OutgoingMessageSourceItem).getPayload()
 
         messageEvent?.let {
             itemView.apply {

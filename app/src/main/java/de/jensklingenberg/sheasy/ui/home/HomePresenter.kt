@@ -7,10 +7,13 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.sideMenuEntries
 import de.jensklingenberg.sheasy.model.SideMenuEntry
+import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.ui.common.GenericListItem
 import de.jensklingenberg.sheasy.ui.common.GenericListItemSourceItem
-import de.jensklingenberg.sheasy.ui.common.toSourceItem
+import de.jensklingenberg.sheasy.ui.common.addTo
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
@@ -30,7 +33,7 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
         SideMenuEntry(R.string.Files_Title, R.id.filesFragment, R.drawable.ic_smartphone_black_24dp),
         SideMenuEntry(R.string.Paired_Title, R.id.pairedFragment, R.drawable.ic_folder_grey_700_24dp),
         SideMenuEntry(R.string.Settings_Title, R.id.settingsFragment, R.drawable.ic_settings_black_24dp),
-        SideMenuEntry(R.string.Share_Title, R.id.shareFragment, R.drawable.ic_settings_black_24dp),
+        //  SideMenuEntry(R.string.Share_Title, R.id.shareFragment, R.drawable.ic_settings_black_24dp),
         SideMenuEntry(R.string.About_Title, R.id.aboutFragment, R.drawable.ic_info_outline_black_24dp)
     )
 
@@ -38,10 +41,19 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
         homeEntries
             .toList()
             .map {
-                GenericListItemSourceItem(GenericListItem(application.getString(it.title), "", it.iconRes),this)
+                GenericListItemSourceItem(GenericListItem(application.getString(it.title), "", it.iconRes), this)
             }.run {
                 view.setData(this)
             }
+
+        Server.serverRunning.subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(
+                AndroidSchedulers.mainThread()
+            )
+            .subscribeBy(onNext = { running ->
+                view.setServerState(running)
+
+            }).addTo(compositeDisposable)
 
     }
 
@@ -57,7 +69,7 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
             is GenericListItemSourceItem -> {
                 val genericListItem = item.getPayload()
                 sideMenuEntries
-                    .first {application.getString(it.title) == genericListItem?.title }
+                    .first { application.getString(it.title) == genericListItem?.title }
                     .run {
                         view.navigateTo(this.navId)
 
@@ -66,8 +78,6 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
         }
 
     }
-
-
 
 
     override fun startService(intent: Intent) {

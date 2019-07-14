@@ -6,8 +6,6 @@ import android.preference.PreferenceManager
 import androidx.core.content.edit
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
-import de.jensklingenberg.sheasy.data.DevicesDataSource
-import de.jensklingenberg.sheasy.data.devices.DevicesRepository
 import de.jensklingenberg.sheasy.data.usecase.GetIpUseCase
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
@@ -65,11 +63,8 @@ class SheasyPreferencesRepository() : SheasyPrefDataSource {
 
     override fun getBaseUrl(): String {
 
-        return "http://"+getIpUseCase.getIP()+":"+httpPort+"/api/v1/"
+        return "http://" + getIpUseCase.getIP() + ":" + httpPort + "/api/v1/"
     }
-
-
-
 
 
 }

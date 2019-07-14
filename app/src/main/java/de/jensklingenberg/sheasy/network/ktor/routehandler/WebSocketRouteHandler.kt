@@ -22,8 +22,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-class WebSocketRouteHandler{
-
+class WebSocketRouteHandler {
 
 
     var channel: SendChannel<Frame>? = null
@@ -81,7 +80,7 @@ class WebSocketRouteHandler{
                     Frame.Text(
                         adapter?.toJson(
                             WebsocketResource(
-                                WebSocketType.MESSAGE,shareItem
+                                WebSocketType.MESSAGE, shareItem
                             )
                         ) ?: ""
                     )
@@ -93,8 +92,8 @@ class WebSocketRouteHandler{
     }
 
 
-    fun websocket(route:Route){
-        with(route){
+    fun websocket(route: Route) {
+        with(route) {
 
             webSocket("notification") {
                 // websocketSession

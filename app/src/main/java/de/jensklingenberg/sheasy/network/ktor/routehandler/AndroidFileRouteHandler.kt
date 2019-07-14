@@ -20,7 +20,9 @@ import io.ktor.request.receiveMultipart
 import io.ktor.response.header
 import io.ktor.response.respond
 import io.ktor.response.respondFile
-import io.ktor.routing.*
+import io.ktor.routing.Route
+import io.ktor.routing.get
+import io.ktor.routing.post
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.coroutines.launch
@@ -45,7 +47,7 @@ class AndroidFileRouteHandler : FileRouteHandler {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-    private fun getShared(): Single<List<FileResponse>> = Single.create<List<FileResponse>> { singleEmitter ->
+    private fun getShared(): Single<List<FileResponse>> = Single.create { singleEmitter ->
         if (sheasyPrefDataSource.sharedFolders.isEmpty()) {
             singleEmitter.onError(SheasyError.NoSharedFoldersError())
         } else {
@@ -54,43 +56,41 @@ class AndroidFileRouteHandler : FileRouteHandler {
     }
 
 
-    private fun getFilesList(filePath: String): Single<List<FileResponse>> {
-        return Single.create<List<FileResponse>> { singleEmitter ->
+    private fun getFilesList(filePath: String): Single<List<FileResponse>> = Single.create { singleEmitter ->
 
-            if (filePath.isEmpty()) {
+        if (filePath.isEmpty()) {
 
-                if (sheasyPrefDataSource.sharedFolders.isEmpty()) {
-                    singleEmitter.onError(SheasyError.NoSharedFoldersError())
+            if (sheasyPrefDataSource.sharedFolders.isEmpty()) {
+                singleEmitter.onError(SheasyError.NoSharedFoldersError())
 
-                } else {
-                    singleEmitter.onSuccess(sheasyPrefDataSource.sharedFolders)
-                }
             } else {
+                singleEmitter.onSuccess(sheasyPrefDataSource.sharedFolders)
+            }
+        } else {
 
-                val allowedPath = sheasyPrefDataSource.sharedFolders.any { folderPath ->
-                    filePath.startsWith(folderPath.path)
-                }
-
-                if (allowedPath) {
-                    fileDataSource
-                        .observeFiles(filePath)
-                        .subscribeBy(onSuccess = { fileList ->
-                            singleEmitter.onSuccess(fileList.map {
-                                FileResponse(
-                                    it.name,
-                                    it.path
-                                )
-                            })
-                        }, onError = {
-                            Log.e(this.javaClass.simpleName, it.message)
-                        })
-                } else {
-                    singleEmitter.onSuccess(sheasyPrefDataSource.sharedFolders)
-                }
+            val allowedPath = sheasyPrefDataSource.sharedFolders.any { folderPath ->
+                filePath.startsWith(folderPath.path)
             }
 
-
+            if (allowedPath) {
+                fileDataSource
+                    .observeFiles(filePath)
+                    .subscribeBy(onSuccess = { fileList ->
+                        singleEmitter.onSuccess(fileList.map {
+                            FileResponse(
+                                it.name,
+                                it.path
+                            )
+                        })
+                    }, onError = {
+                        Log.e(this.javaClass.simpleName, it.message)
+                    })
+            } else {
+                singleEmitter.onSuccess(sheasyPrefDataSource.sharedFolders)
+            }
         }
+
+
     }
 
     private fun getFile(filePath: String) = Single.create<File> { singleEmitter ->

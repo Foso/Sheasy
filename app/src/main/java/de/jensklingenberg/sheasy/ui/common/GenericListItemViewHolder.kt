@@ -9,9 +9,9 @@ class GenericListItemViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<GenericListItemSourceItem>(viewParent, R.layout.list_item_generic) {
 
 
-    override fun onBindViewHolder(item: Any, diff: Bundle) {
+    override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
-        val listItem = (item as GenericListItemSourceItem).getPayload()
+        val listItem = (sourceItem as GenericListItemSourceItem).getPayload()
 
         listItem?.let {
             itemView.apply {
@@ -19,7 +19,7 @@ class GenericListItemViewHolder(viewParent: ViewGroup) :
                 caption.text = listItem.caption
                 icon.setImageResource(listItem.drawable)
                 setOnClickListener {
-                    item.onEntryClickListener?.onItemClicked(item)
+                    sourceItem.onEntryClickListener?.onItemClicked(sourceItem)
                 }
 
 

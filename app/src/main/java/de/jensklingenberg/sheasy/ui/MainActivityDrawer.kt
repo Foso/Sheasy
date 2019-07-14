@@ -33,8 +33,6 @@ class MainActivityDrawer(val activity: MainActivity) : OnCheckedChangeListener {
 
         initDrawer()
 
-
-
         Server.serverRunning.subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(
                 AndroidSchedulers.mainThread()

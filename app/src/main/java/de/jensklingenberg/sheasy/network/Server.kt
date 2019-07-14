@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class Server {
 
-    companion object{
+    companion object {
         val serverRunning: BehaviorSubject<Boolean> = BehaviorSubject.create<Boolean>()
 
     }
@@ -64,7 +64,7 @@ class Server {
         Completable.fromCallable {
             try {
                 applicationEngine.start(wait = true)
-            }catch (exception:Exception){
+            } catch (exception: Exception) {
                 Log.d("Server", exception.message)
                 applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
 
