@@ -102,7 +102,11 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                             .sortedBy { it.isFile }
                             .map { file ->
                                 if (file.isFile) {
-                                    FileSourceItem(file, this@FilesPresenter)
+                                    FileSourceItem(
+                                        file,
+                                        this@FilesPresenter,
+                                        { fileResponse -> onItemClicked(fileResponse) },
+                                        { view, fileResponse -> onPopupMenuClicked(view, fileResponse) })
                                 } else {
                                     FolderSourceItem(file, file.isFile, this@FilesPresenter)
 

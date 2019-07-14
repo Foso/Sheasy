@@ -10,24 +10,25 @@ import react.RBuilder
 import react.dom.button
 import kotlin.browser.window
 
-class ButtonSourceItem(val buttonItem: ButtonItem, var onEntryClickListener: OnEntryClickListener? = null) : SourceItem() {
+class ButtonSourceItem(val buttonItem: ButtonItem, var onEntryClickListener: OnEntryClickListener? = null) :
+    SourceItem() {
 
     override fun render(rBuilder: RBuilder) {
         with(rBuilder) {
 
-                button {
-                    attrs {
-                        text(buttonItem.title)
-                        onClickFunction = {
-                            window.location.href =
-                                SharedNetworkSettings(
-                                    NetworkPreferences().baseurl).appDownloadUrl("de.jensklingenberg.sheasy")
-                            onEntryClickListener?.onItemClicked("TEST")
-                        }
+            button {
+                attrs {
+                    text(buttonItem.title)
+                    onClickFunction = {
+                        window.location.href =
+                            SharedNetworkSettings(
+                                NetworkPreferences().baseurl
+                            ).appDownloadUrl("de.jensklingenberg.sheasy")
+                        onEntryClickListener?.onItemClicked("TEST")
                     }
                 }
             }
-
+        }
 
 
     }

@@ -6,12 +6,8 @@ import components.materialui.icons.PlayArrowIcon
 import components.materialui.icons.SkipNextIcon
 import components.materialui.icons.SkipPreviousIcon
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import react.*
 import react.dom.p
-import react.setState
 
 interface MediaViewProps : RProps {
     var show: Boolean

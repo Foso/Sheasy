@@ -9,7 +9,6 @@
 
 package components.materialui.icons
 
-import components.materialui.ButtonProps
 import components.materialui.IconProps
 import react.RClass
 

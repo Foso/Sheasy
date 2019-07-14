@@ -17,7 +17,10 @@ class GenericListItemViewHolder(viewParent: ViewGroup) :
             itemView.apply {
                 title.text = listItem.title
                 caption.text = listItem.caption
-                icon.setImageResource(listItem.drawable)
+                if (listItem.drawable != NO_IMAGE) {
+                    icon.setImageResource(listItem.drawable)
+                }
+
                 setOnClickListener {
                     sourceItem.onEntryClickListener?.onItemClicked(sourceItem)
                 }

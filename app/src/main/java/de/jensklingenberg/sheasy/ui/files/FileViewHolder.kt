@@ -53,6 +53,7 @@ class FileViewHolder(viewParent: ViewGroup) :
             .also {
                 it.itemClicks()
                     .doOnNext { menuItem ->
+
                         item2.onEntryClickListener?.onPopupMenuClicked(
                             fileResponse,
                             menuItem.itemId

@@ -26,9 +26,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
     override fun onCreate() {
 
         val list = listOf<BaseDataSourceItem<*>>(
-            GenericListHeaderSourceItem(
-                "About"
-            ),
+           
 
             GenericListItem(
                 context.getString(R.string.app_name),
@@ -47,14 +45,19 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
             GenericListItemSourceItem(
                 GenericListItem(
                     context.getString(R.string.about_libraries),
-                    "",
+                    "List of used open source libraries",
                     R.drawable.ic_code_grey_700_24dp
                 ), this
             )
             ,
-            GenericListHeaderSourceItem(
-                "License"
-            ),
+            GenericListItemSourceItem(
+                GenericListItem(
+                    context.getString(R.string.privacy_policy),
+                    "",
+                    NO_IMAGE
+                ), this
+            )
+            ,
             GenericListItem(
                 context.getString(R.string.about_License),
                 context.getString(R.string.about_license_caption),
@@ -73,7 +76,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
             GenericListItem(
                 "Commit",
                 BuildConfig.GIT_SHA,
-                R.drawable.ic_code_grey_700_24dp
+                NO_IMAGE
             ).toSourceItem(this)
 
 
@@ -81,6 +84,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
 
         view.setData(list)
     }
+
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

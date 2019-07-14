@@ -4,7 +4,6 @@ import kotlinx.html.CommonAttributeGroupFacade
 import kotlinx.html.style
 
 
-
 inline fun LayoutProps.styleProps(textAlign: String = "", display: String = "", width: String = "") {
     style = de.jensklingenberg.sheasy.web.ui.common.styleProps(textAlign = textAlign, display = display, width = width)
 

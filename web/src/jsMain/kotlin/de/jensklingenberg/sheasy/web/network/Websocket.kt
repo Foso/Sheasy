@@ -3,10 +3,10 @@ package de.jensklingenberg.sheasy.web.network
 import org.w3c.dom.MessageEvent
 import org.w3c.dom.events.Event
 
-interface Websocket{
-   val listener: MyWebSocket.WebSocketListener
+interface Websocket {
+    val listener: MyWebSocket.WebSocketListener
 
-    fun send(message:String)
+    fun send(message: String)
 
     fun close()
 

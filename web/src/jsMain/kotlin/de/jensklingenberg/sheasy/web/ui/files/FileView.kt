@@ -107,7 +107,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
                         anchorEl = state.anchor
                         onClose = {
                             run {
-                               setContextMenuVisibility(false)
+                                setContextMenuVisibility(false)
                             }
                         }
 
@@ -130,7 +130,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
         }
     }
 
-  override  fun setContextMenuVisibility(visibility: Boolean){
+    override fun setContextMenuVisibility(visibility: Boolean) {
         setState {
             openMenu = visibility
         }
@@ -154,7 +154,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
                 }
                 Button {
-                    CloudUploadIcon{}
+                    CloudUploadIcon {}
                     +"Upload"
                     attrs {
                         component = "span"
@@ -167,7 +167,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
     }
 
-    fun handleFile(event: Event) {
+    private fun handleFile(event: Event) {
         event.target.selectedFile?.let {
             presenter.uploadFile(it)
         }
@@ -177,7 +177,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
     private fun setupBackButton(rdomBuilder: RDOMBuilder<DIV>) {
         rdomBuilder.run {
             Button {
-                ArrowBackIcon{}
+                ArrowBackIcon {}
 
                 +"Back"
                 attrs {
@@ -205,11 +205,11 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
                             presenter.onSearch((it.target as HTMLInputElement).value)
                         }
 
-                        fullWidth=true
+                        fullWidth = true
                     }
                 }
                 attrs {
-                    this.fullWidth=true
+                    this.fullWidth = true
                 }
             }
         }
@@ -217,7 +217,6 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
 
     /****************************************** Presenter methods  */
-
 
 
     override fun showError(error: SheasyError) {
@@ -258,7 +257,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
         }
     }
 
-   override fun handleClickListItem(event: Event, fileResponse: FileResponse) {
+    override fun handleClickListItem(event: Event, fileResponse: FileResponse) {
         val currentTarget = event.currentTarget
         setState {
             openMenu = !openMenu

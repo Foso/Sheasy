@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
@@ -56,6 +57,12 @@ class AboutFragment : BaseFragment(), AboutContract.View {
         recyclerView?.apply {
             adapter = aboutAdapter
             recyclerView.layoutManager = LinearLayoutManager(context)
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
         }
     }
 
@@ -113,6 +120,9 @@ class AboutFragment : BaseFragment(), AboutContract.View {
                     "Feedback" -> {
                         startActivity(shareUseCaseProvider.feedbackMailIntent())
                     }
+                    getString(R.string.privacy_policy) -> {
+                        showPrivacyPolicy()
+                    }
                 }
 
             }
@@ -120,6 +130,14 @@ class AboutFragment : BaseFragment(), AboutContract.View {
 
     }
 
+
+    private fun showPrivacyPolicy() {
+        val newFragment = DisplayRawFileFragment.newInstance(
+            requireContext().getString(R.string.privacy_policy),
+            R.raw.privacy_policy
+        )
+        newFragment.show(activity?.fragmentManager, "dialog")
+    }
 
     override fun setData(items: List<BaseDataSourceItem<*>>) {
         aboutAdapter.dataSource.setItems(items)

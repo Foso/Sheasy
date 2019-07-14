@@ -15,7 +15,6 @@ class SharedFolderViewHolder(viewParent: ViewGroup) :
 
     interface OnEntryClickListener {
         fun onItemClicked(payload: FileResponse)
-        fun onPopupMenuClicked(fileResponse: FileResponse, id: Int)
         fun onPopupMenuClicked(view: View, fileResponse: FileResponse)
     }
 

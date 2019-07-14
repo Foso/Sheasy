@@ -16,7 +16,7 @@ import kotlin.browser.document
 import kotlin.browser.window
 
 
-class Application  {
+class Application {
 
     val routeList = listOf(
         Route("/", HomeView::class, true),

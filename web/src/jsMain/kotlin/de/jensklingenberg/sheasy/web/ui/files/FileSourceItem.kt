@@ -17,11 +17,15 @@ import react.RBuilder
 import react.dom.p
 
 
-interface OnFileClickListener{
+interface OnFileClickListener {
 
 }
 
-class FileSourceItem(val fileResponse: FileResponse, val itemClickFunction:(Event)->Unit ={}, val onMoreBtnClick:(Event)->Unit ={}) : SourceItem() {
+class FileSourceItem(
+    val fileResponse: FileResponse,
+    val itemClickFunction: (Event) -> Unit = {},
+    val onMoreBtnClick: (Event) -> Unit = {}
+) : SourceItem() {
 
     override fun render(rBuilder: RBuilder) {
 
@@ -40,11 +44,11 @@ class FileSourceItem(val fileResponse: FileResponse, val itemClickFunction:(Even
                     }
 
                     ListItemIcon {
-                        if(!fileResponse.name.contains(".")){
+                        if (!fileResponse.name.contains(".")) {
                             FolderIcon {}
 
-                        }else{
-                            InsertDriveFileIcon{}
+                        } else {
+                            InsertDriveFileIcon {}
                         }
                     }
 
@@ -73,9 +77,6 @@ class FileSourceItem(val fileResponse: FileResponse, val itemClickFunction:(Even
         }
 
     }
-
-
-
 
 
 }

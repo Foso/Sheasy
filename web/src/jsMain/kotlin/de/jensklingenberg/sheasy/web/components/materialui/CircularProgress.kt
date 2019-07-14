@@ -13,7 +13,6 @@ package components.materialui
 import de.jensklingenberg.sheasy.web.ui.common.LayoutProps
 import react.RClass
 import react.RProps
-import react.ReactElement
 
 @JsModule("@material-ui/core/CircularProgress/CircularProgress")
 external val CircularProgressImport: dynamic

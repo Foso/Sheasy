@@ -6,10 +6,9 @@ import de.jensklingenberg.sheasy.web.model.NotificationOptions
 import react.RBuilder
 
 
+class NotificationUseCase {
 
-class NotificationUseCase{
-
-    fun showNotification(rBuilder: RBuilder,notificationOptions: NotificationOptions){
+    fun showNotification(rBuilder: RBuilder, notificationOptions: NotificationOptions) {
         notificationOptions?.let {
             val notiOptions = object : ReactNotificationOptions {
                 override var tag: String? = notificationOptions.tag

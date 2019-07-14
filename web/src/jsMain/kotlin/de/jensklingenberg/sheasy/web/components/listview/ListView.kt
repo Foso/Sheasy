@@ -31,14 +31,12 @@ class ListView(props: ListViewProps) : RComponent<ListViewProps, ListViewState>(
     }
 
     override fun RBuilder.render() {
-       state.itemsList.render(this)
+        state.itemsList.render(this)
 
     }
 
 
-
 }
-
 
 
 fun RBuilder.listView(itemsList2: List<SourceItem>) = child(ListView::class) {

@@ -12,12 +12,12 @@ abstract class SourceItem : ReactView {
 inline fun List<ReactView>.render(rBuilder: RBuilder) {
 
 
-        this@render.forEach {
-            with(rBuilder) {
-                it.render(this)
-            }
-
+    this@render.forEach {
+        with(rBuilder) {
+            it.render(this)
         }
+
+    }
 
 }
 

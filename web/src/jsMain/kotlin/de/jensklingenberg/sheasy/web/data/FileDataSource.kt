@@ -8,11 +8,11 @@ import kodando.rxjs.Observable
 import org.w3c.files.File
 
 
-interface FileDataSource{
+interface FileDataSource {
     fun getShared(): Observable<List<FileResponse>>
     fun getApps(): Observable<List<App>>
     fun getFiles(folderPath: String): Observable<List<FileResponse>>
-    fun uploadFile(file: File,folderPath: String): Observable<Resource<State>>
-    fun downloadApk(app:App?)
+    fun uploadFile(file: File, folderPath: String): Observable<Resource<State>>
+    fun downloadApk(app: App?)
     fun downloadFile(fileResponse: FileResponse)
 }

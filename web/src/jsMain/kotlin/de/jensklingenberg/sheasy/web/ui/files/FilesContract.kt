@@ -12,7 +12,7 @@ interface FilesContract {
     interface View {
 
         fun showError(error: SheasyError)
-        fun showSnackBar(message:String)
+        fun showSnackBar(message: String)
         fun setData(items: List<SourceItem>)
 
         fun handleClickListItem(event: Event, fileResponse: FileResponse)

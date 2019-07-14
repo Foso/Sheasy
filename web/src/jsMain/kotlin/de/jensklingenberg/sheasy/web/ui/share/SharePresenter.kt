@@ -18,7 +18,7 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
     var item: ArrayList<SourceItem> = arrayListOf()
 
     override fun onOpen(event: Event) {
-        view.setConnectedMessage("Connected to Server: "+NetworkPreferences().hostname)
+        view.setConnectedMessage("Connected to Server: " + NetworkPreferences().hostname)
 
     }
 
@@ -62,7 +62,7 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
             when (resource.type.toString()) {
                 WebSocketType.MESSAGE.toString() -> {
 
-                    val shareItem= resource.data!!
+                    val shareItem = resource.data!!
 
                     item.add(ShareSourceItem(ShareItem(shareItem.message.toString()), ShareType.INCOMING))
 

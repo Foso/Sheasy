@@ -2,11 +2,7 @@
 
 package de.jensklingenberg.sheasy.web.components.router
 
-import react.Component
-import react.RClass
-import react.RProps
-import react.RState
-import react.ReactElement
+import react.*
 
 
 @JsName("HashRouter")

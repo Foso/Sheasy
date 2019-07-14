@@ -1,23 +1,11 @@
 package de.jensklingenberg.sheasy.web.ui.common
 
-import components.materialui.AppBar
-import components.materialui.Grid
-import components.materialui.IconButton
-import components.materialui.ListItemIcon
-import components.materialui.Toolbar
-import components.materialui.Typography
-import components.materialui.icons.DownloadIcon
+import components.materialui.*
 import components.materialui.icons.MenuIcon
-import de.jensklingenberg.sheasy.web.components.materialui.icons.NotificationsActiveIcon
-import de.jensklingenberg.sheasy.web.components.materialui.icons.NotificationsOffIcon
 import de.jensklingenberg.sheasy.web.model.DrawerItems
 import de.jensklingenberg.sheasy.web.ui.notification.NotificationView
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import react.*
 import react.dom.div
-import react.setState
 
 
 interface ToolbarState : RState {
@@ -46,7 +34,7 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                 .values(), this@BaseToolbar.state.open, { toggleDrawer() }
         )
         setupAppBar(this)
-        if(state.showNotificationView){
+        if (state.showNotificationView) {
             NotificationView()
 
         }
@@ -93,36 +81,36 @@ class BaseToolbar : RComponent<RProps, ToolbarState>() {
                         }
                         Grid {
                             div {
-                                ListItemIcon {
+                                /*  ListItemIcon {
 
-                                    if(state.showNotificationView){
-                                        NotificationsActiveIcon {
-                                            attrs {
-
-
-                                            }
-
-                                        }
-                                    }else{
-                                        NotificationsOffIcon {
-                                            attrs {
+                                      if(state.showNotificationView){
+                                          NotificationsActiveIcon {
+                                              attrs {
 
 
-                                            }
+                                              }
 
-                                        }
-                                    }
-
-
-                                    attrs {
-                                        onClick = {
-                                            toggleNotification()
-
-                                        }
-                                    }
+                                          }
+                                      }else{
+                                          NotificationsOffIcon {
+                                              attrs {
 
 
-                                }
+                                              }
+
+                                          }
+                                      }
+
+
+                                      attrs {
+                                          onClick = {
+                                              toggleNotification()
+
+                                          }
+                                      }
+
+
+                                  }*/
                                 //  MediaView()
 
                                 attrs {

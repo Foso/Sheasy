@@ -17,13 +17,13 @@ class ScreensharePresenter(val view: ScreenshareContract.View) : ScreenshareCont
 
     }
 
-    var myWebSocket : Websocket?=null
+    var myWebSocket: Websocket? = null
 
     /****************************************** React Lifecycle methods  */
 
 
     override fun componentDidMount() {
-        myWebSocket=  MyWebSocket(HttpAPI.screenshareWebSocketURL,this)
+        myWebSocket = MyWebSocket(HttpAPI.screenshareWebSocketURL, this)
     }
 
     override fun componentWillUnmount() {}

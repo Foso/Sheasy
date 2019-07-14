@@ -11,9 +11,7 @@ package components.materialui
 
 import org.w3c.dom.events.Event
 import react.RClass
-import react.RComponent
 import react.RProps
-import react.RState
 
 @JsModule("@material-ui/core/Snackbar/Snackbar")
 external val SnackbarImport: dynamic

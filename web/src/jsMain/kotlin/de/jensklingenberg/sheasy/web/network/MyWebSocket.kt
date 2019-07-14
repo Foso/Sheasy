@@ -6,7 +6,7 @@ import org.w3c.dom.WebSocket
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 
-class MyWebSocket(url: String, override val listener:WebSocketListener) : Websocket {
+class MyWebSocket(url: String, override val listener: WebSocketListener) : Websocket {
 
 
     val webSocket = WebSocket(url)
@@ -32,8 +32,6 @@ class MyWebSocket(url: String, override val listener:WebSocketListener) : Websoc
         webSocket.addEventListener("dd", EventListener { })
 
     }
-
-
 
 
     override fun close() {

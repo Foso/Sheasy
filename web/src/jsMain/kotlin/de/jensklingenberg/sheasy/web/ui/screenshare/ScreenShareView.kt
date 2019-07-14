@@ -1,14 +1,10 @@
 package de.jensklingenberg.sheasy.web.ui.screenshare
 
 
+import de.jensklingenberg.sheasy.web.ui.common.toolbar
+import react.*
 import react.dom.div
 import react.dom.img
-import de.jensklingenberg.sheasy.web.ui.common.toolbar
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
-import react.setState
 
 interface AboutState : RState {
     var open: Boolean
@@ -22,7 +18,7 @@ class ScreenShareView : RComponent<RProps, AboutState>(), ScreenshareContract.Vi
 
 
     override fun componentDidMount() {
-        presenter   = ScreensharePresenter(this)
+        presenter = ScreensharePresenter(this)
         presenter?.componentDidMount()
 
     }

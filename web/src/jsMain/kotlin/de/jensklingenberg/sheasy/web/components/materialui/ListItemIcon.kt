@@ -17,7 +17,7 @@ import react.ReactElement
 @JsModule("@material-ui/core/ListItemIcon/ListItemIcon")
 external val ListItemIconImport: dynamic
 
-external interface ListItemIconProps : RProps,StandardProps {
+external interface ListItemIconProps : RProps, StandardProps {
     var children: ReactElement
 }
 

@@ -30,7 +30,7 @@ android {
     compileSdkVersion configuration.compileSdk
     defaultConfig {
         def bitriseBuildNumber = System.getenv("BITRISE_BUILD_NUMBER")
-        versionCode bitriseBuildNumber ? bitriseBuildNumber.toInteger() : 1
+        versionCode 1
 
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""

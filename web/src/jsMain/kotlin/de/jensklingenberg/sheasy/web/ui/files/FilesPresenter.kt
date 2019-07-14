@@ -101,11 +101,10 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
     }
 
-    fun setContextMenuVisibility(visibility: Boolean){
+    fun setContextMenuVisibility(visibility: Boolean) {
 
         view.setContextMenuVisibility(visibility)
     }
-
 
 
     override fun uploadFile(file: File) {
@@ -136,7 +135,7 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
     }
 
-    fun handleClickListItem(event: Event, fileResponse: FileResponse) {
+    private fun handleClickListItem(event: Event, fileResponse: FileResponse) {
         view.handleClickListItem(event, fileResponse)
     }
 }

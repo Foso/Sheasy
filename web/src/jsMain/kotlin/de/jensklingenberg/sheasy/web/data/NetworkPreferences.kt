@@ -4,7 +4,7 @@ import network.SharedNetworkSettings
 import kotlin.browser.window
 
 
-class NetworkPreferences{
+class NetworkPreferences {
     /**
     Change the testingAddress to the IP of your server
      */
@@ -26,7 +26,6 @@ class NetworkPreferences{
     }
 
     val baseurl = "http://$hostname:${SharedNetworkSettings.httpPort}/api/${apiVersion}/"
-
 
 
 }

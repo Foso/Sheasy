@@ -22,6 +22,7 @@
     <string name="http_port">Server Port</string>
     <string name="websocket_port">Websocket Port</string>
     <string name="authorize">Authorize</string>
+    <string name="privacy_policy">Privacy Policy</string>
 
     <!-- Server -->
     <string name="acceptAllConnections">Accept all connections</string>

@@ -7,9 +7,9 @@ ext {
     libs = [axios                   : '0.18.0',
             kotlinx_html_version    : '0.6.11',
             react_version           : '16.6.0',
-            detektVersion      : '1.0.0.RC9.2',
-            bootstrap             : '^4.1.3',
-            core_js               : '3.0.0',
+            detektVersion           : '1.0.0.RC9.2',
+            bootstrap               : '^4.1.3',
+            core_js                 : '3.0.0',
             kotlin_frontend_version : '0.0.45',
             kotlin_react_version    : "16.6.0-pre.63-kotlin-1.3.11",
             kotlin_react_dom_version: "16.6.0-pre.63-kotlin-1.3.11",
@@ -18,9 +18,9 @@ ext {
             react_router_dom        : '^4.3.1',
             react_web_notification  : '0.3.2',
             material_ui_core        : "v3.7.0",
-            kodando_rxjs            :"0.8.0",
-            rx_common_js            :"0.5.2",
-            reactstrap            : '^6.5.0',
+            kodando_rxjs            : "0.8.0",
+            rx_common_js            : "0.5.2",
+            reactstrap              : '^6.5.0',
 
             rxjs                    : '6.3.3'
     ]
@@ -33,11 +33,11 @@ ext {
 
     mavenRepos = [
             "https://dl.bintray.com/danfma/kotlin-kodando",
-                  "https://dl.bintray.com/kotlin/kotlin-eap",
-                  "https://dl.bintray.com/kotlin/kotlin-js-wrappers",
-                  "https://jitpack.io",
-                  "https://kotlin.bintray.com/kotlin/kotlinx",
-                  "https://plugins.gradle.org/m2/"
+            "https://dl.bintray.com/kotlin/kotlin-eap",
+            "https://dl.bintray.com/kotlin/kotlin-js-wrappers",
+            "https://jitpack.io",
+            "https://kotlin.bintray.com/kotlin/kotlinx",
+            "https://plugins.gradle.org/m2/"
 
 
     ]

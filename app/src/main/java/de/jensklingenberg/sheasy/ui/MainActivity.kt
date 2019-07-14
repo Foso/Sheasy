@@ -12,6 +12,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.SideMenuEntry
+import de.jensklingenberg.sheasy.ui.about.DisplayRawFileFragment
 import de.jensklingenberg.sheasy.ui.files.FilesFragmentDirections
 import de.jensklingenberg.sheasy.utils.PermissionUtils
 import io.reactivex.disposables.CompositeDisposable
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     @Inject
     lateinit var permissionUtils: PermissionUtils
 
-    private val REQUEST_CAMERA_PERMISSION = 1
+    private val REQUEST_FILE_PERMISSION = 1
 
 
     init {
@@ -47,13 +48,15 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
         setupNavigation()
         handleIntent(intent)
         mainActivityDrawer = MainActivityDrawer(this)
-        permissionUtils.requestPermission(this, REQUEST_CAMERA_PERMISSION)
+        permissionUtils.requestPermission(this, REQUEST_FILE_PERMISSION)
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         mainActivityDrawer.onDestroy()
     }
+
 
 
     /******************************************  Listener methods  */

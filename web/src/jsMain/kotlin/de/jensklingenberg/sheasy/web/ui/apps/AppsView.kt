@@ -1,20 +1,15 @@
 package de.jensklingenberg.sheasy.web.ui.apps
 
 
-import components.materialui.CircularProgress
-import components.materialui.FormControl
-import components.materialui.Menu
-import components.materialui.MenuItem
-import components.materialui.Paper
+import components.materialui.*
 import de.jensklingenberg.sheasy.model.SheasyError
+import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.data.FileDataSource
-import de.jensklingenberg.sheasy.web.data.NetworkPreferences
 import de.jensklingenberg.sheasy.web.data.repository.FileRepository
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.model.response.App
-import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
@@ -72,7 +67,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
             }
         }
         div {
-            CircularProgress {
+            CircularProgress<CircularProgressProps> {
                 attrs {
                     styleProps(display = progressVisibility())
                 }
@@ -129,11 +124,11 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
                         onChange = {
                             presenter.onSearch((it.target as HTMLInputElement).value)
                         }
-                        fullWidth=true
+                        fullWidth = true
                     }
                 }
                 attrs {
-                    this.fullWidth=true
+                    this.fullWidth = true
                 }
             }
         }

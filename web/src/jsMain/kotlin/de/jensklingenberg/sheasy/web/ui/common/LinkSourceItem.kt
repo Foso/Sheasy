@@ -9,7 +9,7 @@ import react.dom.div
 class LinkSourceItem(val linkItem: LinkItem) : SourceItem() {
 
     override fun render(rBuilder: RBuilder) {
-        with(rBuilder){
+        with(rBuilder) {
             div {
                 a {
                     +linkItem.title
