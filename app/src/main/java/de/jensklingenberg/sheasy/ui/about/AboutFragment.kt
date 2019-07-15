@@ -123,6 +123,7 @@ class AboutFragment : BaseFragment(), AboutContract.View {
                     getString(R.string.privacy_policy) -> {
                         showPrivacyPolicy()
                     }
+
                 }
 
             }

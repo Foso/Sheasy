@@ -31,7 +31,7 @@ class DisplayRawFileFragment : DialogFragment() {
             .setTitle(title)
             .setMessage(msg)
             .setPositiveButton(
-                R.string.acceptAllConnections
+                R.string.okay
             ) { dialog, whichButton -> dialog.dismiss() }
             .create()
     }

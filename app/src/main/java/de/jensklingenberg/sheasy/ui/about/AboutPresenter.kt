@@ -26,7 +26,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
     override fun onCreate() {
 
         val list = listOf<BaseDataSourceItem<*>>(
-           
+
 
             GenericListItem(
                 context.getString(R.string.app_name),
@@ -37,7 +37,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
             ,
             GenericListItem(
                 context.getString(R.string.About_Changelog),
-                "",
+                "See the latest development changelog",
                 R.drawable.ic_history_grey_700_24dp
             ).toSourceItem(this)
 
@@ -53,7 +53,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
             GenericListItemSourceItem(
                 GenericListItem(
                     context.getString(R.string.privacy_policy),
-                    "",
+                    "See the privacy policy of Sheasy",
                     NO_IMAGE
                 ), this
             )

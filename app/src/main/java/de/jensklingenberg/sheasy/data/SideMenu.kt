@@ -15,6 +15,7 @@ val sideMenuEntries = listOf(
     //  SideMenuEntry(R.string.EventLog_Title, R.id.eventLogFragment, R.drawable.ic_settings_black_24dp),
     //SideMenuEntry(R.string.Share_Title, R.id.shareFragment, R.drawable.ic_settings_black_24dp),
     SideMenuEntry(R.string.share_this_app, -1, R.drawable.ic_share_black_24dp),
+    SideMenuEntry(R.string.menu_help, -1, R.drawable.ic_live_help_black_24dp),
 
     SideMenuEntry(R.string.About_Title, R.id.aboutFragment, R.drawable.ic_info_outline_black_24dp)
     // SideMenuEntry("Screenshare", R.id.recordFragment, R.drawable.ic_info_outline_black_24dp)

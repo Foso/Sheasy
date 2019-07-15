@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +13,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.SideMenuEntry
-import de.jensklingenberg.sheasy.ui.about.DisplayRawFileFragment
 import de.jensklingenberg.sheasy.ui.files.FilesFragmentDirections
 import de.jensklingenberg.sheasy.utils.PermissionUtils
 import io.reactivex.disposables.CompositeDisposable
@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     }
 
 
-
     /******************************************  Listener methods  */
 
     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*, *>?): Boolean {
@@ -71,6 +70,14 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
                         R.string.side_menu_share_app -> {
 
                             return true
+                        }
+                        R.string.menu_help -> {
+                            val browserIntent =
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(getString(R.string.help_sheasy_wiki))
+                                )
+                            startActivity(browserIntent)
                         }
 
                     }
