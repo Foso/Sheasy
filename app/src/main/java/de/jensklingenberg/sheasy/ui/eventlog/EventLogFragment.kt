@@ -49,7 +49,7 @@ class EventLogFragment : BaseFragment(), EventLogContract.View {
 
 
     override fun setData(items: List<BaseDataSourceItem<*>>) {
-        aboutAdapter.dataSource.setItems(items)
+        aboutAdapter.setItems(items)
 
 
     }

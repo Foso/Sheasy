@@ -70,8 +70,7 @@ class ShareFragment : BaseFragment(), ShareContract.View {
     }
 
     override fun setData(items: List<BaseDataSourceItem<*>>) {
-        baseAdapter.dataSource.setItems(items)
-        baseAdapter.notifyDataSetChanged()
+        baseAdapter.setItems(items)
 
     }
 

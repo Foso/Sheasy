@@ -63,8 +63,7 @@ class PairedFragment : BaseFragment(), PairedContract.View {
     }
 
     override fun setData(list: List<BaseDataSourceItem<*>>) {
-        aboutAdapter.dataSource.setItems(list)
-        aboutAdapter.notifyDataSetChanged()
+        aboutAdapter.setItems(list)
 
     }
 

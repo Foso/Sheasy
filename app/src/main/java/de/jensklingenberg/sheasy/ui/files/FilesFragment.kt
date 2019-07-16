@@ -93,8 +93,7 @@ class FilesFragment : BaseFragment(), FilesContract.View {
 
 
     override fun setData(list: List<BaseDataSourceItem<*>>) {
-        baseAdapter.dataSource.setItems(list)
-        baseAdapter.notifyDataSetChanged()
+        baseAdapter.setItems(list)
     }
 
 

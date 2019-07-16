@@ -25,6 +25,7 @@ import de.jensklingenberg.sheasy.ui.files.FilesFragment
 import de.jensklingenberg.sheasy.ui.files.FilesPresenter
 import de.jensklingenberg.sheasy.ui.home.HomeFragment
 import de.jensklingenberg.sheasy.ui.home.HomePresenter
+import de.jensklingenberg.sheasy.ui.notification.ServerNotification
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedFragment
 import de.jensklingenberg.sheasy.ui.pairedDevices.PairedPresenter
 import de.jensklingenberg.sheasy.ui.settings.SettingsFragment
@@ -71,4 +72,5 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
     fun inject(sheasyPreferencesRepository: SheasyPreferencesRepository)
     fun inject(webSocketRouteHandler: WebSocketRouteHandler)
+    fun inject(serverNotification: ServerNotification)
 }

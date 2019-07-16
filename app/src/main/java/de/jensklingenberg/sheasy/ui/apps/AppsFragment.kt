@@ -107,8 +107,7 @@ class AppsFragment : BaseFragment(), AppsContract.View {
 
     /****************************************** Listener methods  */
     override fun setData(list: List<BaseDataSourceItem<*>>) {
-        baseAdapter.dataSource.setItems(list)
-        baseAdapter.notifyDataSetChanged()
+        baseAdapter.setItems(list)
     }
 
 

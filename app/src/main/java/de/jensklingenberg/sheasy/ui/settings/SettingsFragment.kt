@@ -87,7 +87,7 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
 
 
     override fun setData(items: List<BaseDataSourceItem<*>>) {
-        settingsAdapter.dataSource.setItems(items)
+        settingsAdapter.setItems(items)
 
     }
 

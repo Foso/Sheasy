@@ -77,9 +77,9 @@ class Server {
                 Log.d("Server", it.message)
                 applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
             }).addTo(compositeDisposable)
-        notificationUseCase.showServerNotification()
+        //notificationUseCase.showServerNotification()
 
-        vibrationUseCase.vibrate()
+        // vibrationUseCase.vibrate()
 
     }
 

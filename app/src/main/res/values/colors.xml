@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="semitransparent_grey">#66777777</color>
 
     <!--Accent Color Collection-->
     <color name="accent_red">#f44336</color>

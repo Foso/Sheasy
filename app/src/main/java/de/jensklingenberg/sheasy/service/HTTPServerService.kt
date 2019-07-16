@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.service
 
 import android.app.Notification
+import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.os.IBinder
 import androidx.annotation.RequiresApi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.DevicesDataSource
+import de.jensklingenberg.sheasy.data.notification.NotificationUtils
 import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 import de.jensklingenberg.sheasy.model.AuthorizationType
 import de.jensklingenberg.sheasy.model.Device
@@ -30,7 +32,13 @@ class HTTPServerService : Service() {
 
     companion object {
         val ACTION_ON_ACTIVITY_RESULT = "ACTION_ON_ACTIVITY_RESULT"
+        val ACTION_STOP_SERVER = "ACTION_STOP_SERVER"
+
         val AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
+
+
+        const val NOTIFICAITON_ID = 0
+
 
         private lateinit var bind: ServiceBinder
         private val ACTION_STOP = "ACTION_STOP"
@@ -65,6 +73,8 @@ class HTTPServerService : Service() {
     @Inject
     lateinit var devicesDataSource: DevicesDataSource
 
+    @Inject
+    lateinit var notificationManager: NotificationManager
 
     /****************************************** Lifecycle methods  */
 
@@ -88,6 +98,10 @@ class HTTPServerService : Service() {
                 stopService(intent)
 
                 return START_STICKY
+            } else if (it.action?.equals(ACTION_STOP_SERVER) == true) {
+                stopService(intent)
+
+                return START_STICKY
             } else {
                 if (intent.hasExtra(AUTHORIZE_DEVICE)) {
                     val ipAddress = intent.getStringExtra(AUTHORIZE_DEVICE)
@@ -97,6 +111,7 @@ class HTTPServerService : Service() {
                             authorizationType = AuthorizationType.AUTHORIZED
                         )
                     )
+                    notificationManager.cancel(NotificationUtils.NOTIFICATION_CHANNEL_ID_CONNECTION_REQUEST_ID)
                 }
 
 
@@ -112,7 +127,7 @@ class HTTPServerService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             startMyOwnForeground()
         else
-            startForeground(1, Notification())
+            startForeground(NotificationUtils.NOTIFICATION_CHANNEL_ID_SERVER_STATE_ID, Notification())
     }
 
     override fun stopService(name: Intent?): Boolean {
@@ -129,7 +144,10 @@ class HTTPServerService : Service() {
 
     @RequiresApi(VERSION_CODES.O)
     private fun startMyOwnForeground() {
-        startForeground(2, notificationUseCase.getForeGroundServiceNotification(this))
+        startForeground(
+            NotificationUtils.NOTIFICATION_CHANNEL_ID_SERVER_STATE_ID,
+            notificationUseCase.getForeGroundServiceNotification(this)
+        )
     }
 
 

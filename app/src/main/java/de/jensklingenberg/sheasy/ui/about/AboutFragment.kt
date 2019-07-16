@@ -141,7 +141,7 @@ class AboutFragment : BaseFragment(), AboutContract.View {
     }
 
     override fun setData(items: List<BaseDataSourceItem<*>>) {
-        aboutAdapter.dataSource.setItems(items)
+        aboutAdapter.setItems(items)
     }
 
 

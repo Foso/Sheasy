@@ -5,7 +5,6 @@ import android.content.Context
 
 interface NotificationUseCase {
     fun showConnectionRequest(ipaddress: String)
-    fun showServerNotification()
     fun cancelAll()
     fun getForeGroundServiceNotification(context: Context): Notification
 }
