@@ -5,7 +5,7 @@ import android.net.wifi.WifiManager
 import android.os.Vibrator
 import dagger.Module
 import dagger.Provides
-import de.jensklingenberg.sheasy.data.notification.NotificationUtils
+import de.jensklingenberg.sheasy.data.notification.NotificationProvider
 import de.jensklingenberg.sheasy.data.usecase.*
 import de.jensklingenberg.sheasy.utils.PermissionUtils
 import javax.inject.Singleton
@@ -36,7 +36,7 @@ class UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideNotifUtils(): NotificationUseCase = NotificationUtils()
+    fun provideNotifUtils(): NotificationUseCase = NotificationProvider()
 
 
     @Provides

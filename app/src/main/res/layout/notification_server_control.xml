@@ -10,6 +10,7 @@
             android:id="@+id/txtvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/one_grid_unit"
             android:maxLines="1"
             android:textColor="@color/accent_black"
             android:textSize="@dimen/text_size_medium"
@@ -17,6 +18,8 @@
             tools:text="Sheasy - Share Easy"/>
 
     <Button android:id="@+id/stopBtn"
+            android:layout_marginStart="@dimen/one_grid_unit"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtvTitle"

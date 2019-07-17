@@ -1,6 +1,9 @@
 package de.jensklingenberg.sheasy.ui.pairedDevices
 
 import android.content.Context
+import android.view.View
+import androidx.appcompat.widget.PopupMenu
+import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.DevicesDataSource
@@ -45,7 +48,7 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
     private fun loadPairedDevices() {
 
-        devicesDataSource.getAuthorizedDevices()
+        devicesDataSource.getDevices()
             .map { devices ->
 
                 val list = arrayListOf<BaseDataSourceItem<*>>()
@@ -53,17 +56,21 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
                 val autho = devices.filter { it.authorizationType == AuthorizationType.AUTHORIZED }
 
-                val revoked = devices.filter { it.authorizationType == AuthorizationType.REVOKED }
+                val revoked = devices.filter { it.authorizationType == AuthorizationType.UNAUTH }
 
                 list.apply {
 
                     if (revoked.isNotEmpty()) {
                         add(
                             GenericListHeaderSourceItem(
-                                "Revoked"
+                                "Unauthorized"
                             )
                         )
-                        addAll(devices.map { DeviceListItemSourceItem(it, this@PairedPresenter) })
+                        addAll(devices.map {
+                            DeviceListItemSourceItem(
+                                it
+                            ) { view, item, device -> setupUnathorizedContextMenu(view, item, device) }
+                        })
                     }
 
                     if (autho.isNotEmpty()) {
@@ -72,7 +79,11 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
                                 "Authorized"
                             )
                         )
-                        addAll(devices.map { DeviceListItemSourceItem(it, this@PairedPresenter) })
+                        addAll(devices.map {
+                            DeviceListItemSourceItem(
+                                it
+                            ) { view, item, device -> setupContextMenu(view, item, device) }
+                        })
                     }
 
                 }
@@ -93,17 +104,61 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
         devicesDataSource.removeDevice(device)
     }
 
-    override fun onDestroy() {
-        compositeDisposable.dispose()
-
-    }
 
     fun authorizeDevice(device: Device) {
         devicesDataSource.addAuthorizedDevice(device)
     }
 
+    fun setupContextMenu(
+        it: View,
+        item: DeviceListItemSourceItem,
+        device: Device
+    ) {
+        PopupMenu(it.context, it)
+            .apply {
+                if (device.authorizationType == AuthorizationType.AUTHORIZED) {
+                    menuInflater
+                        .inflate(R.menu.paired_devices_actions, menu)
+                }
+            }.also {
+                it.itemClicks()
+                    .doOnNext { menuItem ->
 
-    override fun onContextMenuClick(device: Device, id: Int) {
+                        onContextMenuClick(
+                            device,
+                            menuItem.itemId
+                        )
+
+                    }.subscribe()
+            }.show()
+    }
+
+    fun setupUnathorizedContextMenu(
+        it: View,
+        item: DeviceListItemSourceItem,
+        device: Device
+    ) {
+        PopupMenu(it.context, it)
+            .apply {
+                if (device.authorizationType == AuthorizationType.UNAUTH) {
+                    menuInflater
+                        .inflate(R.menu.revoked_devices_actions, menu)
+                }
+            }.also {
+                it.itemClicks()
+                    .doOnNext { menuItem ->
+
+                        onContextMenuClick(
+                            device,
+                            menuItem.itemId
+                        )
+
+                    }.subscribe()
+            }.show()
+    }
+
+
+    fun onContextMenuClick(device: Device, id: Int) {
         when (id) {
             R.id.menu_revoke -> {
                 revokeDevice(device)
@@ -120,5 +175,9 @@ class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter 
 
     }
 
+    override fun onDestroy() {
+        compositeDisposable.dispose()
+
+    }
 
 }

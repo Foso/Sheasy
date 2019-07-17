@@ -11,8 +11,7 @@ interface PairedContract {
 
     }
 
-    interface Presenter : MvpPresenter,
-        DeviceListItemViewHolder.OnEntryClickListener {
+    interface Presenter : MvpPresenter {
         fun revokeDevice(device: Device)
 
 

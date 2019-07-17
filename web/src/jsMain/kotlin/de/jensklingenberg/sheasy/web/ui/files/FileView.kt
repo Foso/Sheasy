@@ -36,7 +36,7 @@ interface FileViewState : RState {
     var anchor: EventTarget?
     var selectedFile: FileResponse?
     var item: List<SourceItem>
-
+    var contextMenuName: String
 
 }
 
@@ -87,7 +87,7 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
         div {
             CircularProgress {
                 attrs {
-                    styleProps(display = progressVisibiity())
+                    styleProps(display = progressVisibility())
                 }
             }
         }
@@ -98,36 +98,73 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
     }
 
     private fun setupContextMenu(rBuilder: RBuilder) {
-        rBuilder.run {
-            div {
-                Menu {
-                    attrs {
-                        id = "simple-menu"
-                        open = state.openMenu
-                        anchorEl = state.anchor
-                        onClose = {
-                            run {
-                                setContextMenuVisibility(false)
+        when (state.contextMenuName) {
+            "file" -> {
+                rBuilder.run {
+                    div {
+                        Menu {
+                            attrs {
+                                id = "simple-menu"
+                                open = state.openMenu
+                                anchorEl = state.anchor
+                                onClose = {
+                                    run {
+                                        setContextMenuVisibility(false)
+                                    }
+                                }
+
+
                             }
-                        }
+                            MenuItem {
+                                +"Download"
+                                attrs {
+                                    styleProps(textAlign = "right")
+                                    onClick = {
+                                        presenter.getFile(state.selectedFile)
+                                    }
+                                }
 
-
-                    }
-                    MenuItem {
-                        +"Download"
-                        attrs {
-                            styleProps(textAlign = "right")
-                            onClick = {
-                                presenter.getFile(state.selectedFile)
                             }
-                        }
 
+                        }
                     }
 
                 }
             }
+            "folder" -> {
+                rBuilder.run {
+                    div {
+                        Menu {
+                            attrs {
+                                id = "simple-menu"
+                                open = state.openMenu
+                                anchorEl = state.anchor
+                                onClose = {
+                                    run {
+                                        setContextMenuVisibility(false)
+                                    }
+                                }
 
+
+                            }
+                            MenuItem {
+                                +"DONNTNTNTN"
+                                attrs {
+                                    styleProps(textAlign = "right")
+                                    onClick = {
+                                        presenter.getFile(state.selectedFile)
+                                    }
+                                }
+
+                            }
+
+                        }
+                    }
+
+                }
+            }
         }
+
     }
 
     override fun setContextMenuVisibility(visibility: Boolean) {
@@ -244,9 +281,9 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
     /****************************************** Class methods  */
 
-    fun errorsnackbarVisibility(): Boolean = state.status == Status.ERROR
+    private fun errorsnackbarVisibility(): Boolean = state.status == Status.ERROR
 
-    fun progressVisibiity(): String {
+    private fun progressVisibility(): String {
         return when (state.status) {
             Status.LOADING -> {
                 ""
@@ -259,22 +296,26 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
     override fun handleClickListItem(event: Event, fileResponse: FileResponse) {
         val currentTarget = event.currentTarget
-        setState {
-            openMenu = !openMenu
-            anchor = currentTarget
-            selectedFile = fileResponse
+
+        if (fileResponse.name.contains(".")) {
+            setState {
+                openMenu = !openMenu
+                anchor = currentTarget
+                selectedFile = fileResponse
+                contextMenuName = "file"
+            }
+        } else {
+            setState {
+                openMenu = !openMenu
+                anchor = currentTarget
+                selectedFile = fileResponse
+                contextMenuName = "folder"
+            }
         }
+
 
     }
 
-    fun handleMenuItemClick(event: Event) {
-
-
-        setState {
-            openMenu = false
-            anchor = null
-        }
-    }
 
 }
 

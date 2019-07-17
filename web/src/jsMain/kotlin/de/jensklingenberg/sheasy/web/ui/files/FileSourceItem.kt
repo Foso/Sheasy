@@ -37,18 +37,17 @@ class FileSourceItem(
 
                 ListItem {
                     attrs {
-                        // href = presenter.getFilesUrl(it.path)
                         component = "a"
                         divider = true
                         styleProps(textAlign = "left")
                     }
 
                     ListItemIcon {
-                        if (!fileResponse.name.contains(".")) {
+                        if (fileResponse.name.contains(".")) {
+                            InsertDriveFileIcon {}
+                        } else {
                             FolderIcon {}
 
-                        } else {
-                            InsertDriveFileIcon {}
                         }
                     }
 
@@ -61,16 +60,22 @@ class FileSourceItem(
                         }
 
                     }
-
                     IconButton {
+                        if (fileResponse.name.contains(".")) {
+                            MoreVertIcon {}
 
-                        MoreVertIcon {}
+                        }
+
                         attrs {
                             asDynamic()["aria-owns"] = "simple-menu"
                             asDynamic()["aria-haspopup"] = true
                             onClick = onMoreBtnClick
                         }
+
+
                     }
+
+
                 }
             }
 

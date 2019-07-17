@@ -67,5 +67,10 @@ class PairedFragment : BaseFragment(), PairedContract.View {
 
     }
 
+    override fun onDestroy() {
+        pairedPresenter.onDestroy()
+        super.onDestroy()
+    }
+
 
 }

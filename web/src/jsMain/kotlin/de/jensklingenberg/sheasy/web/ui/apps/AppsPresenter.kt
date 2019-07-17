@@ -35,7 +35,8 @@ class AppsPresenter(private val view: AppsContract.View, val fileDataSource: Fil
 
     override fun getApps() {
 
-        fileDataSource.getApps().subscribeBy(
+        fileDataSource.getApps()
+            .subscribeBy(
             next = {
                 appsResult = it
 

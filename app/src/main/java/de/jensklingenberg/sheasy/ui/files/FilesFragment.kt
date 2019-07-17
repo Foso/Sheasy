@@ -138,6 +138,10 @@ class FilesFragment : BaseFragment(), FilesContract.View {
         messageUseCase.show(requireView(), it.message.toString())
     }
 
+    override fun onDestroy() {
+        presenter.onDestroy()
+        super.onDestroy()
+    }
 
 }
 

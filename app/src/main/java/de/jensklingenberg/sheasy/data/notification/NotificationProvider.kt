@@ -20,7 +20,7 @@ import de.jensklingenberg.sheasy.utils.NetworkUtils
 import javax.inject.Inject
 
 
-class NotificationUtils : NotificationUseCase {
+class NotificationProvider : NotificationUseCase {
 
 
     @Inject
@@ -162,18 +162,10 @@ class NotificationUtils : NotificationUseCase {
         return chan
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun getForeGroundServiceNotification(context: Context): Notification {
-        val chan = NotificationChannel(
-            NOTIFICATION_CHANNEL_SERVER_STATE_ID,
-            NOTIFICATION_CHANNEL_SERVER_STATE_NAME,
-            NotificationManager.IMPORTANCE_NONE
-        )
-        chan.description = "SHUBIBIBI"
-
-        chan.lightColor = Color.BLUE
-        chan.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-        notificationManager.createNotificationChannel(getServerStateNotificationChannel())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(getServerStateNotificationChannel())
+        }
 
         val notificationBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_SERVER_STATE_ID)
         val notification = notificationBuilder.setOngoing(true)
@@ -181,7 +173,7 @@ class NotificationUtils : NotificationUseCase {
             .setContent(
                 ServerNotification(
                     context, NotificationItem(
-                        "Server running at " + NetworkUtils.getIP(
+                        "Sheasy - Server running at " + NetworkUtils.getIP(
                             context
                         ) + ":" + sheasyPrefDataSource.httpPort
                     )

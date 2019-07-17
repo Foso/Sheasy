@@ -5,7 +5,7 @@ import io.reactivex.Observable
 
 interface DevicesDataSource {
     //   val auth: MutableList<Device>
-    fun getAuthorizedDevices(): Observable<List<Device>>
+    fun getDevices(): Observable<List<Device>>
 
     fun addAuthorizedDevice(device: Device)
     fun removeDevice(device: Device)

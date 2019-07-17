@@ -3,7 +3,7 @@ package de.jensklingenberg.sheasy.di
 import dagger.Component
 import de.jensklingenberg.sheasy.data.event.EventRepository
 import de.jensklingenberg.sheasy.data.file.AndroidFileRepository
-import de.jensklingenberg.sheasy.data.notification.NotificationUtils
+import de.jensklingenberg.sheasy.data.notification.NotificationProvider
 import de.jensklingenberg.sheasy.data.preferences.SheasyPreferencesRepository
 import de.jensklingenberg.sheasy.data.usecase.ShareUseCaseProvider
 import de.jensklingenberg.sheasy.network.Server
@@ -47,7 +47,7 @@ interface AppComponent {
 
 
     fun inject(settingsFragment: SettingsFragment)
-    fun inject(notificationUtils: NotificationUtils)
+    fun inject(notificationProvider: NotificationProvider)
     fun inject(appsFragment: AppsFragment)
     fun inject(homeFragment: HomeFragment)
 

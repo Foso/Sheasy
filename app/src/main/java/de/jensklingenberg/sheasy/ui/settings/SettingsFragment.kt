@@ -91,5 +91,9 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
 
     }
 
+    override fun onDestroy() {
+        presenter.onDestroy()
+        super.onDestroy()
+    }
 
 }

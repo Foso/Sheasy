@@ -1,18 +1,15 @@
 package de.jensklingenberg.sheasy.service
 
-import android.app.Notification
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Binder
 import android.os.Build
-import android.os.Build.VERSION_CODES
 import android.os.IBinder
-import androidx.annotation.RequiresApi
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.DevicesDataSource
-import de.jensklingenberg.sheasy.data.notification.NotificationUtils
+import de.jensklingenberg.sheasy.data.notification.NotificationProvider
 import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 import de.jensklingenberg.sheasy.model.AuthorizationType
 import de.jensklingenberg.sheasy.model.Device
@@ -111,7 +108,7 @@ class HTTPServerService : Service() {
                             authorizationType = AuthorizationType.AUTHORIZED
                         )
                     )
-                    notificationManager.cancel(NotificationUtils.NOTIFICATION_CHANNEL_ID_CONNECTION_REQUEST_ID)
+                    notificationManager.cancel(NotificationProvider.NOTIFICATION_CHANNEL_ID_CONNECTION_REQUEST_ID)
                 }
 
 
@@ -124,10 +121,17 @@ class HTTPServerService : Service() {
     override fun onCreate() {
         super.onCreate()
         server.start()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            startMyOwnForeground()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForeground(
+                NotificationProvider.NOTIFICATION_CHANNEL_ID_SERVER_STATE_ID,
+                notificationUseCase.getForeGroundServiceNotification(this)
+            )
+        }
         else
-            startForeground(NotificationUtils.NOTIFICATION_CHANNEL_ID_SERVER_STATE_ID, Notification())
+            startForeground(
+                NotificationProvider.NOTIFICATION_CHANNEL_ID_SERVER_STATE_ID,
+                notificationUseCase.getForeGroundServiceNotification(this)
+            )
     }
 
     override fun stopService(name: Intent?): Boolean {
@@ -140,14 +144,6 @@ class HTTPServerService : Service() {
     override fun onDestroy() {
         server.stop()
         super.onDestroy()
-    }
-
-    @RequiresApi(VERSION_CODES.O)
-    private fun startMyOwnForeground() {
-        startForeground(
-            NotificationUtils.NOTIFICATION_CHANNEL_ID_SERVER_STATE_ID,
-            notificationUseCase.getForeGroundServiceNotification(this)
-        )
     }
 
 

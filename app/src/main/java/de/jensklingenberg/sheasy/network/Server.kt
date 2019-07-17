@@ -7,7 +7,8 @@ import de.jensklingenberg.sheasy.data.usecase.VibrationUseCase
 import de.jensklingenberg.sheasy.model.ShareItem
 import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
 import io.ktor.server.engine.ApplicationEngine
-import io.reactivex.Completable
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
@@ -58,25 +59,33 @@ class Server {
 
     fun start() {
 
-        Log.d("Server", "Server running")
-        serverRunning.onNext(true)
-
-        Completable.fromCallable {
+        Single.create<Boolean> { emitter ->
             try {
                 applicationEngine.start(wait = true)
+                emitter.onSuccess(true)
+
             } catch (exception: Exception) {
                 Log.d("Server", exception.message)
-                applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+                emitter.onError(exception)
 
             }
 
-            true
         }
             .subscribeOn(Schedulers.io())
-            .subscribeBy(onError = {
-                Log.d("Server", it.message)
-                applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
-            }).addTo(compositeDisposable)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onSuccess = {
+                    Log.d("Server", "Server running")
+                    serverRunning.onNext(true)
+
+                },
+
+                onError = {
+                    Log.d("Server", it.message)
+                    applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+                    serverRunning.onNext(false)
+
+                }).addTo(compositeDisposable)
         //notificationUseCase.showServerNotification()
 
         // vibrationUseCase.vibrate()

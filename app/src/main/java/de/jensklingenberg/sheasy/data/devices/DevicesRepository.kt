@@ -12,19 +12,27 @@ class DevicesRepository : DevicesDataSource {
     override val auth = mutableListOf<Device>()
 
 
-    override fun getAuthorizedDevices(): Observable<List<Device>> {
+    override fun getDevices(): Observable<List<Device>> {
         return knownDevices.hide()
     }
 
     override fun addAuthorizedDevice(device: Device) {
-        auth.add(device)
+        val index = auth.indexOfFirst { knownDevice -> knownDevice.ip == device.ip }
+
+        val dev = device.copy(authorizationType = AuthorizationType.AUTHORIZED)
+        if (index == -1) {
+            auth.add(dev)
+        } else {
+            auth[index] = dev
+
+        }
         knownDevices.onNext(auth)
 
     }
 
     override fun removeDevice(device: Device) {
-        val index = auth.indexOfFirst { knownDevice -> knownDevice.ip.equals(device.ip) }
-        auth[index] = device.copy(authorizationType = AuthorizationType.REVOKED)
+        val index = auth.indexOfFirst { knownDevice -> knownDevice.ip == device.ip }
+        auth[index] = device.copy(authorizationType = AuthorizationType.UNAUTH)
         knownDevices.onNext(auth)
 
 

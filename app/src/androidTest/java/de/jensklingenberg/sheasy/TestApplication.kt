@@ -26,7 +26,7 @@ class TestApplication : App() {
     override fun initializeDagger() {
 
 val list = arrayListOf<Device>()
-every { devicesRepository.getAuthorizedDevices() } returns Observable.just(list)
+        every { devicesRepository.getDevices() } returns Observable.just(list)
 
         every { devicesRepository.auth } returns list
 

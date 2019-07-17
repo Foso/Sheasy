@@ -74,7 +74,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                             )
                         )
                         addAll(fileList.map { fileResponse ->
-                            SharedFolderSourceItem(File(fileResponse.path), fileResponse.isFile(), this@FilesPresenter)
+                            SharedFolderSourceItem(fileResponse, fileResponse.isFile(), this@FilesPresenter)
                         })
                     }
 
@@ -102,13 +102,31 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                             .sortedBy { it.isFile }
                             .map { file ->
                                 if (file.isFile) {
-                                    FileSourceItem(
+                                    FolderSourceItem(
                                         file,
-                                        this@FilesPresenter,
-                                        { fileResponse -> onItemClicked(fileResponse) },
-                                        { view, fileResponse -> onPopupMenuClicked(view, fileResponse) })
+                                        !file.isFile,
+                                        R.drawable.ic_insert_drive_file_grey_700_24dp,
+                                        this@FilesPresenter
+                                    ) { view, fileResponse ->
+                                        setupContextMenu(
+                                            view,
+                                            fileResponse,
+                                            R.menu.files_actions
+                                        )
+                                    }
                                 } else {
-                                    FolderSourceItem(file, file.isFile, this@FilesPresenter)
+                                    FolderSourceItem(
+                                        file,
+                                        !file.isFile,
+                                        R.drawable.ic_folder_grey_700_24dp,
+                                        this@FilesPresenter
+                                    ) { view, fileResponse ->
+                                        setupContextMenu(
+                                            view,
+                                            fileResponse,
+                                            R.menu.folders_actions
+                                        )
+                                    }
 
                                 }
                             })
@@ -180,6 +198,29 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     }
 
+
+    private fun setupContextMenu(
+        it: View,
+        fileResponse: FileResponse,
+        menuId: Int
+    ) {
+        PopupMenu(it.context, it)
+            .apply {
+                menuInflater
+                    .inflate(menuId, menu)
+            }
+            .also {
+                it.itemClicks()
+                    .doOnNext { menuItem ->
+
+                        onPopupMenuClicked(
+                            fileResponse,
+                            menuItem.itemId
+                        )
+
+                    }.subscribe()
+            }.show()
+    }
 
     override fun share(file: File) {
         shareUseCaseProvider.share(file)

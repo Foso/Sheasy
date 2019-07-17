@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
-import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
@@ -32,21 +30,15 @@ class FolderViewHolder(viewParent: ViewGroup) :
                 caption.text = file.path
                 moreBtn.visibility = VISIBLE
 
-                if (sourceItem.isFolder) {
-                    icon.setImageResource(R.drawable.ic_folder_grey_700_24dp)
-                } else {
-                    icon.setImageResource(R.drawable.ic_insert_drive_file_grey_700_24dp)
-                }
-
+                icon.setImageResource(sourceItem.imageId)
                 moreBtn.setOnClickListener {
-                    val popup = setupContextMenu(it, sourceItem, FileResponse(file.name, file.path))
-                    popup.show()
+                    sourceItem.onContextMenuButtonClickedFunction(it, FileResponse(file.name, file.path))
+
 
                 }
 
 
                 item.setOnClickListener {
-                    sourceItem.onEntryClickListener?.onItemClicked(FileResponse(file.name, file.path))
                 }
 
 
@@ -54,29 +46,6 @@ class FolderViewHolder(viewParent: ViewGroup) :
         }
 
 
-    }
-
-    private fun setupContextMenu(
-        it: View,
-        item2: FolderSourceItem,
-        fileResponse: FileResponse
-    ): PopupMenu {
-        return PopupMenu(it.context, it)
-            .apply {
-                menuInflater
-                    .inflate(R.menu.folders_actions, menu)
-            }
-            .also {
-                it.itemClicks()
-                    .doOnNext { menuItem ->
-
-                        item2.onEntryClickListener?.onPopupMenuClicked(
-                            fileResponse,
-                            menuItem.itemId
-                        )
-
-                    }.subscribe()
-            }
     }
 
 

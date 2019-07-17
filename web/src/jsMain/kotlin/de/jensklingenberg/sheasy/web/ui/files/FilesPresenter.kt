@@ -81,23 +81,24 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
     override fun getShared() {
 
-        fileDataSource.getShared().subscribeBy(
-            next = { data ->
-                filesResult = data
-                filesResult.map { respo ->
-                    FileSourceItem(respo,
-                        { setPath(respo.path) },
-                        { event: Event -> handleClickListItem(event, respo) })
-                }.run {
-                    view.setData(this)
+        fileDataSource
+            .getShared()
+            .subscribeBy(
+                next = { data ->
+                    filesResult = data.sortedBy { it.name.contains(".") }
+                    filesResult.map { respo ->
+                        FileSourceItem(respo,
+                            { setPath(respo.path) },
+                            { event: Event -> handleClickListItem(event, respo) })
+                    }.run {
+                        view.setData(this)
+                    }
+                }, error = { error ->
+                    if (error is SheasyError) {
+                        view.showError(error)
+                    }
                 }
-            }, error = {
-                if (it is SheasyError) {
-                    view.showError(it)
-
-                }
-            }
-        )
+            )
 
     }
 

@@ -3,8 +3,6 @@ package de.jensklingenberg.sheasy.ui.files
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
-import com.jakewharton.rxbinding3.appcompat.itemClicks
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
@@ -30,37 +28,12 @@ class FileViewHolder(viewParent: ViewGroup) :
 
                 icon.setImageResource(R.drawable.ic_insert_drive_file_grey_700_24dp)
                 moreBtn.setOnClickListener {
-                    val popup = setupContextMenu(it, item2, FileResponse(fileResponse.name, fileResponse.path))
-                    popup.show()
-
+                    item2.onContextMenuButtonClickedFunction(it, FileResponse(fileResponse.name, fileResponse.path))
                 }
             }
         }
 
 
-    }
-
-    private fun setupContextMenu(
-        it: View,
-        item2: FileSourceItem,
-        fileResponse: FileResponse
-    ): PopupMenu {
-        return PopupMenu(it.context, it)
-            .apply {
-                menuInflater
-                    .inflate(R.menu.files_actions, menu)
-            }
-            .also {
-                it.itemClicks()
-                    .doOnNext { menuItem ->
-
-                        item2.onEntryClickListener?.onPopupMenuClicked(
-                            fileResponse,
-                            menuItem.itemId
-                        )
-
-                    }.subscribe()
-            }
     }
 
 

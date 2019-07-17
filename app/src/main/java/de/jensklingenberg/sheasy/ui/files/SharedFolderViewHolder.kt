@@ -8,7 +8,6 @@ import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseViewHolder
 import kotlinx.android.synthetic.main.list_item_generic.view.*
-import java.io.File
 
 class SharedFolderViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<SharedFolderSourceItem>(viewParent, R.layout.list_item_shared) {
@@ -20,7 +19,7 @@ class SharedFolderViewHolder(viewParent: ViewGroup) :
 
     override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
-        val file: File? = (sourceItem as SharedFolderSourceItem).getPayload()
+        val file: FileResponse? = (sourceItem as SharedFolderSourceItem).getPayload()
 
         file?.let {
             itemView.apply {

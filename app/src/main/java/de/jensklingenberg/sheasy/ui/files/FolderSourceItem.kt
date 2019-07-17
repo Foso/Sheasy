@@ -1,12 +1,17 @@
 package de.jensklingenberg.sheasy.ui.files
 
+import android.view.View
+import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import java.io.File
 
 class FolderSourceItem(
     fileResponse: File,
     val isFolder: Boolean,
-    var onEntryClickListener: FolderViewHolder.OnEntryClickListener? = null
+    val imageId: Int,
+    var onEntryClickListener: FolderViewHolder.OnEntryClickListener? = null,
+    var onContextMenuButtonClickedFunction: (view: View, fileResponse: FileResponse) -> Unit = { _, _ -> }
+
 ) :
     BaseDataSourceItem<File>(FolderViewHolder::class.java) {
 
