@@ -43,9 +43,8 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
             .subscribeBy(
                 onNext = {
                     view.setData(it
-                        .filter { it is MessageEvent }
-                        .map {
-                            val message = it as MessageEvent
+                        .filterIsInstance<MessageEvent>()
+                        .map { message ->
                             when (message.type) {
                                 MessageType.INCOMING -> {
                                     IncomingMessageSourceItem(message)

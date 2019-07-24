@@ -17,8 +17,8 @@ import kotlin.browser.window
 import kotlin.js.json
 
 
-class ReactHttpClient() : HttpAPI {
-    val networkSettings = SharedNetworkSettings(NetworkPreferences().baseurl)
+class ReactHttpClient : HttpAPI {
+    private val networkSettings = SharedNetworkSettings(NetworkPreferences().baseurl)
 
 
     override fun fileDownloadUrl(path: String): String {
@@ -32,7 +32,6 @@ class ReactHttpClient() : HttpAPI {
 
     override fun getSharedFoldersUrl(): String {
         return networkSettings.getSharedFoldersUrl()
-
     }
 
     override fun getFilesUrl(path: String): String {
@@ -129,6 +128,10 @@ class ReactHttpClient() : HttpAPI {
                             SheasyError.NoSharedFoldersError().message -> {
                                 observer.error(SheasyError.NoSharedFoldersError())
 
+                            }
+
+                            SheasyError.NotAuthorizedError().message -> {
+                                observer.error(SheasyError.NotAuthorizedError())
                             }
                             else -> observer.error(SheasyError.UNKNOWNERROR())
 

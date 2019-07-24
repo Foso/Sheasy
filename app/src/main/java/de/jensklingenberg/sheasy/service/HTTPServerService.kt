@@ -126,8 +126,7 @@ class HTTPServerService : Service() {
                 NotificationProvider.NOTIFICATION_CHANNEL_ID_SERVER_STATE_ID,
                 notificationUseCase.getForeGroundServiceNotification(this)
             )
-        }
-        else
+        } else
             startForeground(
                 NotificationProvider.NOTIFICATION_CHANNEL_ID_SERVER_STATE_ID,
                 notificationUseCase.getForeGroundServiceNotification(this)

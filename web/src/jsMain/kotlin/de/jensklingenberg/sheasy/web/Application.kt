@@ -1,6 +1,3 @@
-import de.jensklingenberg.sheasy.web.components.router.hashRouter
-import de.jensklingenberg.sheasy.web.components.router.route
-import de.jensklingenberg.sheasy.web.components.router.switch
 import de.jensklingenberg.sheasy.web.model.Route
 import de.jensklingenberg.sheasy.web.ui.about.AboutView
 import de.jensklingenberg.sheasy.web.ui.apps.AppsView
@@ -12,6 +9,9 @@ import de.jensklingenberg.sheasy.web.ui.screenshare.ScreenShareView
 import de.jensklingenberg.sheasy.web.ui.share.ShareView
 import kotlinext.js.requireAll
 import react.dom.render
+import react.router.dom.hashRouter
+import react.router.dom.route
+import react.router.dom.switch
 import kotlin.browser.document
 import kotlin.browser.window
 

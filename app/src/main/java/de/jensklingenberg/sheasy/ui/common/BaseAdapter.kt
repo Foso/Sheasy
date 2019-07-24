@@ -34,7 +34,7 @@ class BaseAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int, payloads: List<Any>) {
         val item = dataSource[position]
         //determine, if the empty state should fit the height of the recycler view
-       
+
         holder.onBindViewHolderInternal(item, payloads)
     }
 

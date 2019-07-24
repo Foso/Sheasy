@@ -177,7 +177,7 @@ class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
 
     private fun snackbarVisibility(): Boolean {
         return when (state.status) {
-            Status.ERROR -> {
+            Status.ERROR, Status.LOADING -> {
                 true
             }
             else -> {

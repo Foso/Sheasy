@@ -6,11 +6,11 @@ import de.jensklingenberg.sheasy.web.model.response.App
 import kodando.rxjs.subscribeBy
 import org.w3c.dom.events.Event
 
-class AppsPresenter(private val view: AppsContract.View, val fileDataSource: FileDataSource) :
+class AppsPresenter(private val view: AppsContract.View, private val fileDataSource: FileDataSource) :
     AppsContract.Presenter {
 
 
-    var appsResult = listOf<App>()
+    private var appsResult = listOf<App>()
 
     /****************************************** React Lifecycle methods  */
     override fun componentWillUnmount() {}
@@ -37,25 +37,23 @@ class AppsPresenter(private val view: AppsContract.View, val fileDataSource: Fil
 
         fileDataSource.getApps()
             .subscribeBy(
-            next = {
-                appsResult = it
+                next = {
+                    appsResult = it
 
-                appsResult.map { respo ->
-                    AppSourceItem(respo,
-                        { },
-                        { event: Event -> view.handleClickListItem(event, respo) })
-                }.run {
-                    view.setData(this)
+                    appsResult
+                        .map { respo ->
+                            AppSourceItem(respo,
+                                { },
+                                { event: Event -> view.handleClickListItem(event, respo) })
+                        }.run {
+                            view.setData(this)
+                        }
+                }, error = {
+                    if (it is SheasyError) {
+                        view.showError(it)
+                    }
                 }
-
-
-                // view.setData(appsResult)
-            }, error = {
-                if (it is SheasyError) {
-                    view.showError(it)
-                }
-            }
-        )
+            )
 
 
     }

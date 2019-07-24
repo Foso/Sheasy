@@ -33,7 +33,7 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
         SideMenuEntry(R.string.Files_Title, R.id.filesFragment, R.drawable.ic_smartphone_black_24dp),
         SideMenuEntry(R.string.Paired_Title, R.id.pairedFragment, R.drawable.ic_folder_grey_700_24dp),
         SideMenuEntry(R.string.Settings_Title, R.id.settingsFragment, R.drawable.ic_settings_black_24dp),
-        //  SideMenuEntry(R.string.Share_Title, R.id.shareFragment, R.drawable.ic_settings_black_24dp),
+        SideMenuEntry(R.string.Share_Title, R.id.shareFragment, R.drawable.ic_settings_black_24dp),
         SideMenuEntry(R.string.About_Title, R.id.aboutFragment, R.drawable.ic_info_outline_black_24dp)
     )
 
@@ -60,7 +60,7 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
     private fun initializeDagger() = App.appComponent.inject(this)
 
     override fun onMoreButtonClicked(view: View, payload: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onItemClicked(payload: Any) {
@@ -69,14 +69,12 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
             is GenericListItemSourceItem -> {
                 val genericListItem = item.getPayload()
                 sideMenuEntries
-                    .first { application.getString(it.title) == genericListItem?.title }
-                    .run {
-                        view.navigateTo(this.navId)
-
+                    .firstOrNull { application.getString(it.title) == genericListItem?.title }
+                    ?.let {
+                        view.navigateTo(it.navId)
                     }
             }
         }
-
     }
 
 

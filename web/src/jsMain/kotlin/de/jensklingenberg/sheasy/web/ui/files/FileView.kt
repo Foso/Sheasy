@@ -44,19 +44,17 @@ interface FileViewState : RState {
 class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
 
 
-    val appsDataSource: FileDataSource = FileRepository(ReactHttpClient())
-    var presenter = FilesPresenter(this, appsDataSource)
-    val messageUseCase = MessageUseCase()
+    private val fileDataSource: FileDataSource = FileRepository(ReactHttpClient())
+    private var presenter = FilesPresenter(this, fileDataSource)
+    private val messageUseCase = MessageUseCase()
 
     /****************************************** React Lifecycle methods  */
 
     override fun FileViewState.init() {
-
         status = Status.LOADING
         openMenu = false
         anchor = null
         item = emptyList()
-
     }
 
     override fun componentDidMount() {
@@ -297,25 +295,17 @@ class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
     override fun handleClickListItem(event: Event, fileResponse: FileResponse) {
         val currentTarget = event.currentTarget
 
-        if (fileResponse.name.contains(".")) {
-            setState {
-                openMenu = !openMenu
-                anchor = currentTarget
-                selectedFile = fileResponse
-                contextMenuName = "file"
-            }
-        } else {
-            setState {
-                openMenu = !openMenu
-                anchor = currentTarget
-                selectedFile = fileResponse
-                contextMenuName = "folder"
+        setState {
+            openMenu = !openMenu
+            anchor = currentTarget
+            selectedFile = fileResponse
+            contextMenuName = if (fileResponse.name.contains(".")) {
+                "file"
+            } else {
+                "folder"
             }
         }
-
-
     }
-
 
 }
 

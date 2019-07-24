@@ -61,7 +61,7 @@ class NotificationPresenter(private val view: NotificationContract.View) : Notif
 
                     view.showNotification(notificationOptions)
                     console.log(resource.type.toString())
-                    console.log(WebSocketType.Notification.toString())
+
 
                 }
             }

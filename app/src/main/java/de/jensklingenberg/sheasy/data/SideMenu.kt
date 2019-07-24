@@ -13,7 +13,7 @@ val sideMenuEntries = listOf(
     SideMenuEntry(R.string.Paired_Title, R.id.pairedFragment, R.drawable.ic_folder_grey_700_24dp),
     SideMenuEntry(R.string.Settings_Title, R.id.settingsFragment, R.drawable.ic_settings_black_24dp),
     //  SideMenuEntry(R.string.EventLog_Title, R.id.eventLogFragment, R.drawable.ic_settings_black_24dp),
-    //SideMenuEntry(R.string.Share_Title, R.id.shareFragment, R.drawable.ic_settings_black_24dp),
+    SideMenuEntry(R.string.Share_Title, R.id.shareFragment, R.drawable.ic_settings_black_24dp),
     SideMenuEntry(R.string.share_this_app, -1, R.drawable.ic_share_black_24dp),
     SideMenuEntry(R.string.menu_help, -1, R.drawable.ic_live_help_black_24dp),
 

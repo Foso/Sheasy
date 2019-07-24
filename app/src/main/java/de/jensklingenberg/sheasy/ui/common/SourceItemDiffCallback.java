@@ -1,4 +1,3 @@
-
 package de.jensklingenberg.sheasy.ui.common;
 
 import androidx.annotation.Nullable;

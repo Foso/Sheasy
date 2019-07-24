@@ -14,3 +14,9 @@
 .App-ticker {
   font-size: medium;
 }
+
+.List-Header{
+ color: #03a9f4;
+ font-weight: bold;
+  padding: 20px;
+}

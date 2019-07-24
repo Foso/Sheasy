@@ -98,6 +98,17 @@ class WebSocketRouteHandler {
             webSocket("notification") {
                 // websocketSession
                 notificationChannel = outgoing
+                notificationDataSource.addNotification(
+                    Notification(
+                        "de.jensklingenberg.sheasy",
+                        "Connected to Server",
+                        "",
+                        "",
+                        ""
+                    )
+                )
+
+
                 incoming.consumeEach { frame ->
 
                     when (frame) {

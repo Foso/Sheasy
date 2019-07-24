@@ -9,6 +9,7 @@ import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import react.RBuilder
 import react.dom.p
+import kotlin.js.Date
 
 class ShareSourceItem(val shareItem: ShareItem, val type: ShareType) : SourceItem() {
 
@@ -20,7 +21,7 @@ class ShareSourceItem(val shareItem: ShareItem, val type: ShareType) : SourceIte
                     component = "nav"
                 }
                 p {
-                    +"22:00"
+                    +Date.now().toString()
 
                 }
 

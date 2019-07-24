@@ -77,22 +77,20 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
                 context.getString(R.string.appFolder),
                 sheasyPrefDataSource.appFolder,
                 R.drawable.ic_info_outline_grey_700_24dp
-            ).toSourceItem()
-
-
-            /*  GenericListHeaderSourceItem(
-                  "Permissions"
-              ),
-              GenericToggleItem(
-                  context.getString(R.string.readNotifications),
-                  sheasyPrefDataSource.webSocketPort.toString(),
-                  R.drawable.ic_info_outline_grey_700_24dp,
-                  checkPermissionUseCase.checkNotificationPermission()
-              ) { value ->
-                  if (value) {
-                      checkPermissionUseCase.requestNotificationPermission()
-                  }
-              }.toSourceItem()*/
+            ).toSourceItem(),
+            GenericListHeaderSourceItem(
+                "Permissions"
+            ),
+            GenericToggleItem(
+                context.getString(R.string.readNotifications),
+                sheasyPrefDataSource.webSocketPort.toString(),
+                R.drawable.ic_info_outline_grey_700_24dp,
+                checkPermissionUseCase.checkNotificationPermission()
+            ) { value ->
+                if (value) {
+                    checkPermissionUseCase.requestNotificationPermission()
+                }
+            }.toSourceItem()
 
         )
 

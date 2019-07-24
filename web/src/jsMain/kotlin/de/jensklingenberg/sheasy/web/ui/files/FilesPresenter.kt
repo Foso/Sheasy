@@ -8,11 +8,11 @@ import kodando.rxjs.subscribeBy
 import org.w3c.dom.events.Event
 import org.w3c.files.File
 
-class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataSource) :
+class FilesPresenter(val view: FilesContract.View, private val fileDataSource: FileDataSource) :
     FilesContract.Presenter {
 
 
-    val defaultPath = "/"
+    private val defaultPath = "/"
     var folderPath = defaultPath
     var filesResult = listOf<FileResponse>()
 
@@ -35,35 +35,40 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
 
     override fun getFiles() {
 
-        fileDataSource.getFiles(folderPath).subscribeBy(
-            next = { data ->
-                filesResult = data
+        fileDataSource
+            .getFiles(folderPath)
+            .subscribeBy(
+                next = { data ->
+                    filesResult = data
 
-                filesResult.map { respo ->
-                    FileSourceItem(respo,
-                        { setPath(respo.path) },
-                        { event: Event -> handleClickListItem(event, respo) })
-                }.run {
-                    if (this.isEmpty()) {
+                    filesResult
+                        .map { respo ->
+                            FileSourceItem(respo,
+                                { setPath(respo.path) },
+                                { event: Event -> handleClickListItem(event, respo) })
+                        }
+                        .run {
+                            if (this.isEmpty()) {
 
-                        view.setData(
-                            listOf(
-                                FileSourceItem(FileResponse("No Files", ""))
-                            )
-                        )
+                                view.setData(
+                                    listOf(
+                                        FileSourceItem(FileResponse("No Files", ""))
+                                    )
+                                )
 
-                    } else {
-                        view.setData(this)
+                            } else {
+                                view.setData(this)
+
+                            }
+                        }
+                },
+                error = {
+                    if (it is SheasyError) {
+                        view.showError(it)
 
                     }
                 }
-            }, error = {
-                if (it is SheasyError) {
-                    view.showError(it)
-
-                }
-            }
-        )
+            )
     }
 
     override fun onSearch(query: String) {
@@ -85,14 +90,16 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
             .getShared()
             .subscribeBy(
                 next = { data ->
-                    filesResult = data.sortedBy { it.name.contains(".") }
-                    filesResult.map { respo ->
-                        FileSourceItem(respo,
-                            { setPath(respo.path) },
-                            { event: Event -> handleClickListItem(event, respo) })
-                    }.run {
-                        view.setData(this)
-                    }
+                    filesResult = data
+                        .sortedBy { it.name.contains(".") }
+                    filesResult
+                        .map { respo ->
+                            FileSourceItem(respo,
+                                { setPath(respo.path) },
+                                { event: Event -> handleClickListItem(event, respo) })
+                        }.run {
+                            view.setData(this)
+                        }
                 }, error = { error ->
                     if (error is SheasyError) {
                         view.showError(error)
@@ -125,8 +132,6 @@ class FilesPresenter(val view: FilesContract.View, val fileDataSource: FileDataS
                 }
             }
         )
-
-
     }
 
     override fun getFile(fileResponse: FileResponse?) {

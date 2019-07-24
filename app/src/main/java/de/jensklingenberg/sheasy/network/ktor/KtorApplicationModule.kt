@@ -32,9 +32,7 @@ fun Application.ktorApplicationModule(
 
             }
         }
-        install(WebSockets) {
-
-        }
+        install(WebSockets)
 
         install(Compression) {
             gzip()

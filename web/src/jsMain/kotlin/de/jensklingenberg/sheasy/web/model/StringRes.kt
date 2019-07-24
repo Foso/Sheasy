@@ -19,6 +19,7 @@ class StringRes {
         const val TOOLBAR_HOME = "Home"
         const val TOOLBAR_APPS = "Apps"
         const val TOOLBAR_ABOUT = "About"
+        const val TOOLBAR_SHARE = "Share"
 
         /**
          * DRAWER
