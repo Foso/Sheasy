@@ -8,16 +8,12 @@ import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.StringRes
 import de.jensklingenberg.sheasy.web.model.render
-import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.StringSourceItem
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.EventTarget
-import react.RBuilder
-import react.RProps
-import react.RState
+import react.*
 import react.dom.div
-import react.setState
 
 
 interface FileViewState : RState {
@@ -31,7 +27,7 @@ interface FileViewState : RState {
 }
 
 
-class ShareView : BaseComponent<RProps, FileViewState>(), ShareContract.View {
+class ShareView : RComponent<RProps, FileViewState>(), ShareContract.View {
     private var presenter: ShareContract.Presenter? = SharePresenter(this)
 
 

@@ -1,16 +1,12 @@
 package de.jensklingenberg.sheasy.web.ui.connection
 
 import de.jensklingenberg.sheasy.web.model.SourceItem
-import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
-import react.RBuilder
-import react.RProps
-import react.RState
+import react.*
 import react.dom.div
 import react.dom.h1
 import react.dom.img
 import react.dom.p
-import react.setState
 
 
 interface ConnectionViewState : RState {
@@ -18,7 +14,7 @@ interface ConnectionViewState : RState {
 
 }
 
-class ConnectionView : BaseComponent<RProps, ConnectionViewState>(), ConnectionContract.View {
+class ConnectionView : RComponent<RProps, ConnectionViewState>(), ConnectionContract.View {
 
 
     var presenter = ConnectionPresenter(this)

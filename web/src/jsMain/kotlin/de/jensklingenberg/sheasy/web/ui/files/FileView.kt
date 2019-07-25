@@ -12,7 +12,6 @@ import de.jensklingenberg.sheasy.web.data.repository.FileRepository
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
-import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.extension.selectedFile
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
@@ -21,12 +20,9 @@ import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
-import react.RBuilder
-import react.RProps
-import react.RState
+import react.*
 import react.dom.RDOMBuilder
 import react.dom.div
-import react.setState
 
 
 interface FileViewState : RState {
@@ -41,7 +37,7 @@ interface FileViewState : RState {
 }
 
 
-class FileView : BaseComponent<RProps, FileViewState>(), FilesContract.View {
+class FileView : RComponent<RProps, FileViewState>(), FilesContract.View {
 
 
     private val fileDataSource: FileDataSource = FileRepository(ReactHttpClient())

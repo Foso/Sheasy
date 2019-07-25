@@ -14,6 +14,7 @@ import de.jensklingenberg.sheasy.ui.common.addTo
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
@@ -46,12 +47,15 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
                 view.setData(this)
             }
 
-        Server.serverRunning.subscribeOn(AndroidSchedulers.mainThread())
+        Server.serverRunning
+            .subscribeOn(Schedulers.io())
             .observeOn(
                 AndroidSchedulers.mainThread()
             )
             .subscribeBy(onNext = { running ->
                 view.setServerState(running)
+
+            },onError = {
 
             }).addTo(compositeDisposable)
 

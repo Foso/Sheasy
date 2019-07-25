@@ -5,11 +5,7 @@ import de.jensklingenberg.sheasy.model.SheasyError
 import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
-import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
-import react.RBuilder
-import react.RProps
-import react.RState
-import react.setState
+import react.*
 
 interface AboutState : RState {
     var itemsList: List<SourceItem>
@@ -17,7 +13,7 @@ interface AboutState : RState {
 }
 
 
-class AboutView : BaseComponent<RProps, AboutState>(), AboutContract.View {
+class AboutView : RComponent<RProps, AboutState>(), AboutContract.View {
 
 
     private val presenter: AboutContract.Presenter = AboutPresenter(this)

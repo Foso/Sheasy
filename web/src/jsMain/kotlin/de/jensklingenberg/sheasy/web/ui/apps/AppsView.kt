@@ -11,18 +11,14 @@ import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import de.jensklingenberg.sheasy.web.model.response.App
 import de.jensklingenberg.sheasy.web.network.ReactHttpClient
-import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
-import react.RBuilder
-import react.RProps
-import react.RState
+import react.*
 import react.dom.div
-import react.setState
 
 
 interface AppsViewState : RState {
@@ -36,7 +32,7 @@ interface AppsViewState : RState {
 }
 
 
-class AppsView : BaseComponent<RProps, AppsViewState>(), AppsContract.View {
+class AppsView : RComponent<RProps, AppsViewState>(), AppsContract.View {
     private val appsDataSource: FileDataSource = FileRepository(ReactHttpClient())
     private val messageUseCase = MessageUseCase()
     private var presenter: AppsContract.Presenter = AppsPresenter(this, appsDataSource)

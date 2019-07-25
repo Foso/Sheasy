@@ -7,12 +7,8 @@ import de.jensklingenberg.sheasy.data.usecase.VibrationUseCase
 import de.jensklingenberg.sheasy.model.ShareItem
 import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
 import io.ktor.server.engine.ApplicationEngine
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -57,35 +53,23 @@ class Server {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    fun start() {
+    fun start(): Completable {
 
-        Single.create<Boolean> { emitter ->
+        return Completable.create { emitter ->
             try {
                 applicationEngine.start(wait = true)
-                emitter.onSuccess(true)
+                serverRunning.onNext(true)
+                emitter.onComplete()
 
             } catch (exception: Exception) {
                 Log.d("Server", exception.message)
-                emitter.onError(exception)
+                serverRunning.onNext(false)
 
+                emitter.onError(exception)
             }
 
         }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = {
-                    Log.d("Server", "Server running")
-                    serverRunning.onNext(true)
 
-                },
-
-                onError = {
-                    Log.d("Server", it.message)
-                    applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
-                    serverRunning.onNext(false)
-
-                }).addTo(compositeDisposable)
         //notificationUseCase.showServerNotification()
 
         // vibrationUseCase.vibrate()
@@ -98,7 +82,7 @@ class Server {
         notificationUseCase.cancelAll()
         Log.d("Server", "Server stopped")
         applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
-        compositeDisposable.dispose()
+        compositeDisposable.clear()
 
         vibrationUseCase.vibrate()
 

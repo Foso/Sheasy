@@ -2,11 +2,7 @@ package de.jensklingenberg.sheasy.web.ui.home
 
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
-import de.jensklingenberg.sheasy.web.ui.common.BaseComponent
-import react.RBuilder
-import react.RProps
-import react.RState
-import react.setState
+import react.*
 
 
 interface HomeViewState : RState {
@@ -14,7 +10,7 @@ interface HomeViewState : RState {
 
 }
 
-class HomeView : BaseComponent<RProps, HomeViewState>(), HomeContract.View {
+class HomeView :  RComponent<RProps, HomeViewState>(), HomeContract.View {
     var presenter: HomeContract.Presenter = HomePresenter(this)
 
     /****************************************** React Lifecycle methods  */
@@ -31,6 +27,7 @@ class HomeView : BaseComponent<RProps, HomeViewState>(), HomeContract.View {
 
     override fun RBuilder.render() {
         state.item.render(this)
+
     }
 
     /****************************************** Presenter methods  */

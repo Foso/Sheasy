@@ -15,6 +15,8 @@ import de.jensklingenberg.sheasy.model.AuthorizationType
 import de.jensklingenberg.sheasy.model.Device
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
@@ -119,8 +121,11 @@ class HTTPServerService : Service() {
 
 
     override fun onCreate() {
-        super.onCreate()
-        server.start()
+        server
+            .start()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(
                 NotificationProvider.NOTIFICATION_CHANNEL_ID_SERVER_STATE_ID,
