@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.web.ui.notification
 
 import de.jensklingenberg.sheasy.web.model.NotificationOptions
-import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.ui.common.ReactPresenter
 
 interface NotificationContract {
@@ -10,6 +9,6 @@ interface NotificationContract {
         fun showNotification(reactNotificationOptions: NotificationOptions)
     }
 
-    interface Presenter : ReactPresenter, MyWebSocket.WebSocketListener
+    interface Presenter : ReactPresenter
 
 }

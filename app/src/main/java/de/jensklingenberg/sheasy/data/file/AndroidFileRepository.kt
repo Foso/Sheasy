@@ -35,7 +35,7 @@ open class AndroidFileRepository : FileDataSource {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-    override fun getFile(filePath: String, isAssetFile: Boolean): Single<File> = Single.create<File> { singleEmitter ->
+    override fun getFile(filePath: String, isAssetFile: Boolean): Single<File> = Single.create { singleEmitter ->
         try {
             if (isAssetFile) {
                 val tempFile = File.createTempFile("prefix-", "-suffix")
@@ -73,7 +73,7 @@ open class AndroidFileRepository : FileDataSource {
     }
 
 
-    override fun observeFiles(folderPath: String): Single<List<File>> = Single.create<List<File>> { singleEmitter ->
+    override fun observeFiles(folderPath: String): Single<List<File>> = Single.create { singleEmitter ->
         try {
             File(folderPath)
                 .listFiles()
@@ -87,7 +87,7 @@ open class AndroidFileRepository : FileDataSource {
     }
 
 
-    override fun getApps(packageName: String): Single<List<AppInfo>> = Single.create<List<AppInfo>> { singleEmitter ->
+    override fun getApps(packageName: String): Single<List<AppInfo>> = Single.create { singleEmitter ->
 
         if (cachedApps.isNotEmpty()) {
             cachedApps

@@ -53,35 +53,33 @@ class Server {
 
     private fun initializeDagger() = App.appComponent.inject(this)
 
-    fun start(): Completable {
+    fun start(): Completable = Completable.create { emitter ->
+        try {
+            applicationEngine.start(wait = true)
+            emitter.onComplete()
 
-        return Completable.create { emitter ->
-            try {
-                applicationEngine.start(wait = true)
-                serverRunning.onNext(true)
-                emitter.onComplete()
+        } catch (exception: Exception) {
+            Log.d("Server", exception.message)
+            applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
 
-            } catch (exception: Exception) {
-                Log.d("Server", exception.message)
-                serverRunning.onNext(false)
-
-                emitter.onError(exception)
-            }
+            emitter.onError(exception)
 
         }
 
-        //notificationUseCase.showServerNotification()
-
-        // vibrationUseCase.vibrate()
-
     }
 
+
+    //notificationUseCase.showServerNotification()
+
+    // vibrationUseCase.vibrate()
+
     fun stop() {
+        applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+
         serverRunning.onNext(false)
 
         notificationUseCase.cancelAll()
         Log.d("Server", "Server stopped")
-        applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
         compositeDisposable.clear()
 
         vibrationUseCase.vibrate()

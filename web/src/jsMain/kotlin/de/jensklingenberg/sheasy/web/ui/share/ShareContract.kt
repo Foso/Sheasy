@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.web.ui.share
 
 import de.jensklingenberg.sheasy.web.model.SourceItem
-import de.jensklingenberg.sheasy.web.network.MyWebSocket
 import de.jensklingenberg.sheasy.web.ui.common.ReactPresenter
 
 interface ShareContract {
@@ -12,7 +11,7 @@ interface ShareContract {
         fun setConnectedMessage(message: String)
     }
 
-    interface Presenter : ReactPresenter, MyWebSocket.WebSocketListener {
+    interface Presenter : ReactPresenter {
         fun send(message: String)
     }
 

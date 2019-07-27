@@ -7,11 +7,8 @@ import de.jensklingenberg.sheasy.model.Status
 import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.components.materialui.icons.ArrowBackIcon
 import de.jensklingenberg.sheasy.web.components.materialui.icons.CloudUploadIcon
-import de.jensklingenberg.sheasy.web.data.FileDataSource
-import de.jensklingenberg.sheasy.web.data.repository.FileRepository
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
-import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import de.jensklingenberg.sheasy.web.ui.common.extension.selectedFile
 import de.jensklingenberg.sheasy.web.ui.common.styleProps
 import de.jensklingenberg.sheasy.web.usecase.MessageUseCase
@@ -40,8 +37,7 @@ interface FileViewState : RState {
 class FileView : RComponent<RProps, FileViewState>(), FilesContract.View {
 
 
-    private val fileDataSource: FileDataSource = FileRepository(ReactHttpClient())
-    private var presenter = FilesPresenter(this, fileDataSource)
+    private var presenter = FilesPresenter(this)
     private val messageUseCase = MessageUseCase()
 
     /****************************************** React Lifecycle methods  */
@@ -54,6 +50,7 @@ class FileView : RComponent<RProps, FileViewState>(), FilesContract.View {
     }
 
     override fun componentDidMount() {
+        presenter.componentDidMount()
         presenter.getShared()
 
     }

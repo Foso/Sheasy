@@ -1,17 +1,25 @@
 package de.jensklingenberg.sheasy.web.ui.files
 
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.RefreshClientEvent
 import de.jensklingenberg.sheasy.model.SheasyError
+import de.jensklingenberg.sheasy.web.data.EventDataSource
 import de.jensklingenberg.sheasy.web.data.FileDataSource
+import de.jensklingenberg.sheasy.web.data.repository.EventRepository
+import de.jensklingenberg.sheasy.web.data.repository.FileRepository
 import de.jensklingenberg.sheasy.web.model.StringRes
+import de.jensklingenberg.sheasy.web.network.ReactHttpClient
 import kodando.rxjs.subscribeBy
 import org.w3c.dom.events.Event
 import org.w3c.files.File
 
-class FilesPresenter(val view: FilesContract.View, private val fileDataSource: FileDataSource) :
+class FilesPresenter(
+    val view: FilesContract.View
+) :
     FilesContract.Presenter {
-
-
+    val TAG = "FilesPresenter"
+    private val eventDataSource: EventDataSource = EventRepository()
+    private val fileDataSource: FileDataSource = FileRepository(ReactHttpClient())
     private val defaultPath = "/"
     var folderPath = defaultPath
     var filesResult = listOf<FileResponse>()
@@ -20,7 +28,22 @@ class FilesPresenter(val view: FilesContract.View, private val fileDataSource: F
 
     override fun componentWillUnmount() {}
 
-    override fun componentDidMount() {}
+    override fun componentDidMount() {
+        eventDataSource
+            .observeClientEvents()
+            .subscribeBy(
+                next = {
+                    console.log(TAG + it.message)
+
+                        console.log(TAG + "JES")
+                        getShared()
+
+                }, error = {
+
+                }
+            )
+
+    }
 
     /****************************************** Presenter methods  */
     override fun navigateUp() {

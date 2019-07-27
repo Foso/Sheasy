@@ -74,7 +74,7 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
                         item.isChecked = false
                     }
                     false -> {
-                        presenter.startService(HTTPServerService.getIntent(requireContext()))
+                        presenter.startService(HTTPServerService.getStartIntent(requireContext()))
 
                         item.isChecked = true
 

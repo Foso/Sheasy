@@ -20,15 +20,11 @@ kotlin {
                     moduleKind = "commonjs"
                     metaInfo = true
                   //  outputFile = "${project.buildDir.path}/js/${project.name}.js"
-
-                }
-            }
-
-            configure(compilations.main) {
-                tasks.getByName(compileKotlinTaskName).kotlinOptions {
                     main = "call"
                 }
             }
+
+
         }
        jvm()
 

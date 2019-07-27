@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.DevicesDataSource
 import de.jensklingenberg.sheasy.data.notification.NotificationProvider
@@ -16,6 +17,9 @@ import de.jensklingenberg.sheasy.model.Device
 import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -32,6 +36,7 @@ class HTTPServerService : Service() {
     companion object {
         val ACTION_ON_ACTIVITY_RESULT = "ACTION_ON_ACTIVITY_RESULT"
         val ACTION_STOP_SERVER = "ACTION_STOP_SERVER"
+        val ACTION_START_SERVER = "ACTION_START_SERVER"
 
         val AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
 
@@ -42,8 +47,10 @@ class HTTPServerService : Service() {
         private lateinit var bind: ServiceBinder
         private val ACTION_STOP = "ACTION_STOP"
 
-        fun getIntent(context: Context) =
-            Intent(context, HTTPServerService::class.java)
+        fun getStartIntent(context: Context) =
+            Intent(context, HTTPServerService::class.java).apply {
+                action = ACTION_START_SERVER
+            }
 
         fun stopIntent(context: Context) =
             Intent(context, HTTPServerService::class.java).apply {
@@ -75,6 +82,9 @@ class HTTPServerService : Service() {
     @Inject
     lateinit var notificationManager: NotificationManager
 
+    val compositeDisposable = CompositeDisposable()
+
+
     /****************************************** Lifecycle methods  */
 
 
@@ -101,6 +111,10 @@ class HTTPServerService : Service() {
                 stopService(intent)
 
                 return START_STICKY
+            } else if (it.action?.equals(ACTION_START_SERVER) == true) {
+                startServ()
+
+                return START_STICKY
             } else {
                 if (intent.hasExtra(AUTHORIZE_DEVICE)) {
                     val ipAddress = intent.getStringExtra(AUTHORIZE_DEVICE)
@@ -119,12 +133,25 @@ class HTTPServerService : Service() {
         return START_STICKY
     }
 
-
-    override fun onCreate() {
+    private fun startServ() {
         server
             .start()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onComplete = {
+                    Log.d("Server", "Server running")
+                    Server.serverRunning.onNext(true)
+
+
+                },
+
+                onError = {
+                    Log.d("Server", it.message)
+                    Server.serverRunning.onNext(false)
+
+                }).addTo(compositeDisposable)
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(
@@ -136,12 +163,21 @@ class HTTPServerService : Service() {
                 NotificationProvider.NOTIFICATION_CHANNEL_ID_SERVER_STATE_ID,
                 notificationUseCase.getForeGroundServiceNotification(this)
             )
+
+    }
+
+
+    override fun onCreate() {
+
     }
 
     override fun stopService(name: Intent?): Boolean {
-        stopForeground(true)
+        compositeDisposable.dispose()
         server.stop()
-        return super.stopService(name)
+
+        stopForeground(true)
+         super.stopService(name)
+        return true
 
     }
 

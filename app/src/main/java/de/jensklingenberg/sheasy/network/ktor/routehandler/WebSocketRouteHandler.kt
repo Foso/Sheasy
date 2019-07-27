@@ -66,6 +66,30 @@ class WebSocketRouteHandler {
                 }
             }).addTo(compositeDisposable)
 
+        eventDataSource.clientEventSubject
+            .subscribeBy(onNext = { event ->
+                val parameterizedType =
+                    Types.newParameterizedType(WebsocketResource::class.java, ClientEvent::class.java)
+                val adapter = moshi.adapter<WebsocketResource<ClientEvent>>(parameterizedType)
+
+                notificationChannel?.let {
+                    GlobalScope.launch {
+                        it.send(
+                            Frame.Text(
+                                adapter.toJson(
+                                    WebsocketResource(
+                                        WebSocketType.EVENT, event, ""
+                                    )
+
+                                )
+                            )
+                        )
+                    }
+                }
+            }, onError = {
+
+            }).addTo(compositeDisposable)
+
     }
 
     private fun initializeDagger() = App.appComponent.inject(this)

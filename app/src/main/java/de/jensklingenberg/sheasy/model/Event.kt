@@ -11,3 +11,4 @@ class MessageEvent(override var text: String, override var time: String = "", va
 
 class ConnectionEvent(override var text: String, override var time: String = "") :
     Event(EventCategory.CONNECTION, text, time)
+

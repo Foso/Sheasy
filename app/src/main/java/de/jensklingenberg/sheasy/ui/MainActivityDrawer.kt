@@ -66,7 +66,7 @@ class MainActivityDrawer(val activity: MainActivity) : OnCheckedChangeListener {
             R.string.server -> {
                 when (isChecked) {
                     true -> {
-                        activity.startService(HTTPServerService.getIntent(activity))
+                        activity.startService(HTTPServerService.getStartIntent(activity))
                     }
                     false -> {
 

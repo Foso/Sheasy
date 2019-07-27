@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.data.event
 
 import de.jensklingenberg.sheasy.App
+import de.jensklingenberg.sheasy.model.ClientEvent
 import de.jensklingenberg.sheasy.model.Event
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -8,7 +9,10 @@ import io.reactivex.subjects.PublishSubject
 
 class EventRepository : EventDataSource {
 
-    val eventSubject: PublishSubject<List<Event>> = PublishSubject.create<List<Event>>()
+
+    override val clientEventSubject: PublishSubject<ClientEvent> = PublishSubject.create()
+
+    private val eventSubject: PublishSubject<List<Event>> = PublishSubject.create()
     val list = mutableListOf<Event>()
 
     init {
@@ -28,5 +32,13 @@ class EventRepository : EventDataSource {
         eventSubject.onNext(list)
     }
 
+    override fun addClientEvent(event: ClientEvent) {
+        clientEventSubject.onNext(event)
 
+    }
+
+    override fun observeClientEvents(): Observable<ClientEvent> {
+        return clientEventSubject
+
+    }
 }

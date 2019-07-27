@@ -16,9 +16,9 @@ import react.dom.p
 
 
 class AboutSourceItem(
-    val aboutItem: AboutItem,
-    val itemClickFunction: ((Event) -> Unit?)? = null,
-    val onMoreBtnClick: ((Event) -> Unit?)? = null
+    private val aboutItem: AboutItem,
+    private val itemClickFunction: ((Event) -> Unit?)? = null,
+    private val onMoreBtnClick: ((Event) -> Unit?)? = null
 ) :
     SourceItem() {
 

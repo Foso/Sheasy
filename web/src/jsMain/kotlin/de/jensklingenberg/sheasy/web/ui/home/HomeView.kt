@@ -3,6 +3,7 @@ package de.jensklingenberg.sheasy.web.ui.home
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.render
 import react.*
+import react.dom.button
 
 
 interface HomeViewState : RState {
@@ -10,7 +11,7 @@ interface HomeViewState : RState {
 
 }
 
-class HomeView :  RComponent<RProps, HomeViewState>(), HomeContract.View {
+class HomeView : RComponent<RProps, HomeViewState>(), HomeContract.View {
     var presenter: HomeContract.Presenter = HomePresenter(this)
 
     /****************************************** React Lifecycle methods  */
@@ -26,6 +27,7 @@ class HomeView :  RComponent<RProps, HomeViewState>(), HomeContract.View {
 
 
     override fun RBuilder.render() {
+
         state.item.render(this)
 
     }

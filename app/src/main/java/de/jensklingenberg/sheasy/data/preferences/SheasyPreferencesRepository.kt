@@ -6,20 +6,25 @@ import android.preference.PreferenceManager
 import androidx.core.content.edit
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.data.event.EventDataSource
 import de.jensklingenberg.sheasy.data.usecase.GetIpUseCase
 import de.jensklingenberg.sheasy.model.FileResponse
+import de.jensklingenberg.sheasy.model.RefreshClientEvent
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import io.reactivex.subjects.BehaviorSubject
 import network.SharedNetworkSettings
 import javax.inject.Inject
 
-class SheasyPreferencesRepository() : SheasyPrefDataSource {
+class SheasyPreferencesRepository : SheasyPrefDataSource {
 
     @Inject
     lateinit var getIpUseCase: GetIpUseCase
 
     @Inject
     lateinit var application: Application
+
+    @Inject
+    lateinit var eventDataSource: EventDataSource
 
     init {
         initializeDagger()
@@ -37,11 +42,14 @@ class SheasyPreferencesRepository() : SheasyPrefDataSource {
     override val defaultPath = Environment.getExternalStorageDirectory().toString()
 
     override fun addShareFolder(folder: FileResponse) {
+        eventDataSource.addClientEvent(RefreshClientEvent())
         sharedFolders.add(folder)
         sharedFoldersSubject.onNext(sharedFolders)
     }
 
     override fun removeShareFolder(folder: FileResponse) {
+        eventDataSource.addClientEvent(RefreshClientEvent())
+
         sharedFolders.remove(folder)
         sharedFoldersSubject.onNext(sharedFolders)
     }
