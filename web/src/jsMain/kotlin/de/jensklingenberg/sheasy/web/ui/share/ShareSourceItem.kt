@@ -15,13 +15,16 @@ class ShareSourceItem(val shareItem: ShareItem, val type: ShareType) : SourceIte
 
     override fun render(rBuilder: RBuilder) {
 
+        val date = Date()
+        val timeString = date.getHours().toString() + ":" + date.getMinutes() + ":" + date.getSeconds()
+
         with(rBuilder) {
             List {
                 attrs {
                     component = "nav"
                 }
                 p {
-                    +Date.now().toString()
+                    +timeString
 
                 }
 

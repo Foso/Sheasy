@@ -33,7 +33,7 @@ class SheasyPreferencesRepository : SheasyPrefDataSource {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-    val sharedFoldersSubject: BehaviorSubject<List<FileResponse>> = BehaviorSubject.create<List<FileResponse>>()
+    val sharedFoldersSubject: BehaviorSubject<List<FileResponse>> = BehaviorSubject.create()
     override val sharedFolders = arrayListOf<FileResponse>()
     override val nonInterceptedFolders: List<String> = listOf("/web/connection/")
     override var appFolder = Environment.getExternalStorageDirectory().toString() + "/Sheasy/"
@@ -42,9 +42,12 @@ class SheasyPreferencesRepository : SheasyPrefDataSource {
     override val defaultPath = Environment.getExternalStorageDirectory().toString()
 
     override fun addShareFolder(folder: FileResponse) {
-        eventDataSource.addClientEvent(RefreshClientEvent())
-        sharedFolders.add(folder)
-        sharedFoldersSubject.onNext(sharedFolders)
+        if (!sharedFolders.contains(folder)) {
+            eventDataSource.addClientEvent(RefreshClientEvent())
+            sharedFolders.add(folder)
+            sharedFoldersSubject.onNext(sharedFolders)
+        }
+
     }
 
     override fun removeShareFolder(folder: FileResponse) {

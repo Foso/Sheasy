@@ -1,3 +1,5 @@
+import de.jensklingenberg.sheasy.web.data.EventDataSource
+import de.jensklingenberg.sheasy.web.data.repository.EventRepository
 import de.jensklingenberg.sheasy.web.model.Route
 import de.jensklingenberg.sheasy.web.ui.about.AboutView
 import de.jensklingenberg.sheasy.web.ui.apps.AppsView
@@ -45,6 +47,11 @@ class Application {
                 }
             }
         }
+
+    }
+
+    companion object{
+        val eventDataSource: EventDataSource = EventRepository()
 
     }
 }

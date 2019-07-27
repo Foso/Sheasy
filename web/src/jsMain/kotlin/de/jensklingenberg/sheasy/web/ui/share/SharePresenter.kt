@@ -1,13 +1,12 @@
 package de.jensklingenberg.sheasy.web.ui.share
 
+import Application
 import de.jensklingenberg.sheasy.web.data.EventDataSource
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
-import de.jensklingenberg.sheasy.web.data.repository.EventRepository
 import kodando.rxjs.subscribeBy
 
 class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
-
-    val eventDataSource: EventDataSource = EventRepository()
+    private val eventDataSource: EventDataSource = Application.eventDataSource
 
     /****************************************** React Lifecycle methods  */
 
@@ -17,7 +16,6 @@ class SharePresenter(val view: ShareContract.View) : ShareContract.Presenter {
     override fun componentDidMount() {
         view.setConnectedMessage("Connected to Server: " + NetworkPreferences().hostname)
 
-        //  myWebSocket = MyWebSocket(shareWebSocketURL, this)
         eventDataSource
             .observeEvents()
             .subscribeBy(next = { shareItem ->
