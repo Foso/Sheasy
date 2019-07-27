@@ -12,7 +12,7 @@ plugins {
 
 kotlin {
     targets {
-        fromPreset(presets.jvm, 'jvm'){
+        fromPreset(presets.jvm, 'jvm') {
             configure([compilations.main]) {
                 tasks.getByName(compileKotlinTaskName).kotlinOptions {
                     jvmTarget = "1.8"
@@ -45,17 +45,17 @@ kotlin {
 
                 api "io.ktor:ktor-server-netty:$libs.ktor_version"
 
-               // implementation "io.ktor:ktor-locations:$libs.ktor_version"
-            //    api "io.ktor:ktor-websockets:$libs.ktor_version"
+
+                // implementation "io.ktor:ktor-locations:$libs.ktor_version"
+                //    api "io.ktor:ktor-websockets:$libs.ktor_version"
                 api "io.ktor:ktor:$libs.ktor_version"
                 // api "io.ktor:ktor-network-tls:$libs.ktor_version"
 
-              //  api("io.ktor:ktor-server-test-host:$libs.ktor_version")
+                //  api("io.ktor:ktor-server-test-host:$libs.ktor_version")
                 api "io.mockk:mockk:${libs.mockkVersion}"
 
             }
         }
-
 
 
     }

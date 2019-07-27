@@ -87,7 +87,7 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
     }
 
     override fun stopService(intent: Intent) {
-        application.stopService(intent)
+        application.startService(intent)
     }
 
     override fun onDestroy() {

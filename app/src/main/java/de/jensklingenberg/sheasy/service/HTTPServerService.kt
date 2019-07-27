@@ -104,11 +104,7 @@ class HTTPServerService : Service() {
 
         intent?.let {
             if (it.action?.equals(ACTION_STOP) == true) {
-                stopService(intent)
-
-                return START_STICKY
-            } else if (it.action?.equals(ACTION_STOP_SERVER) == true) {
-                stopService(intent)
+                stopService()
 
                 return START_STICKY
             } else if (it.action?.equals(ACTION_START_SERVER) == true) {
@@ -136,21 +132,19 @@ class HTTPServerService : Service() {
     private fun startServ() {
         server
             .start()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onComplete = {
-                    Log.d("Server", "Server running")
-                    Server.serverRunning.onNext(true)
-
-
-                },
-
                 onError = {
                     Log.d("Server", it.message)
-                    Server.serverRunning.onNext(false)
 
-                }).addTo(compositeDisposable)
+                }, onComplete = {
+                    Log.d("Server", "complete")
+
+                }
+            ).addTo(compositeDisposable)
+
+
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -167,22 +161,27 @@ class HTTPServerService : Service() {
     }
 
 
-    override fun onCreate() {
 
-    }
+    fun stopService() {
 
-    override fun stopService(name: Intent?): Boolean {
-        compositeDisposable.dispose()
-        server.stop()
+        server
+            .stop()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(onComplete = {
 
-        stopForeground(true)
-         super.stopService(name)
-        return true
+            }, onError = {
+
+            }).addTo(compositeDisposable)
 
     }
 
     override fun onDestroy() {
-        server.stop()
+
+        compositeDisposable.dispose()
+
+
+        stopForeground(true)
         super.onDestroy()
     }
 

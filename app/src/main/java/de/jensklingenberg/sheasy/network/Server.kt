@@ -5,8 +5,15 @@ import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.usecase.NotificationUseCase
 import de.jensklingenberg.sheasy.data.usecase.VibrationUseCase
 import de.jensklingenberg.sheasy.model.ShareItem
+import de.jensklingenberg.sheasy.network.ktor.ktorApplicationModule
 import de.jensklingenberg.sheasy.network.ktor.routehandler.WebSocketRouteHandler
+import de.jensklingenberg.sheasy.network.routehandler.FileRouteHandler
+import de.jensklingenberg.sheasy.network.routehandler.GeneralRouteHandler
+import io.ktor.application.ApplicationStarted
+import io.ktor.application.ApplicationStopPreparing
 import io.ktor.server.engine.ApplicationEngine
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
@@ -34,8 +41,8 @@ class Server {
     @Inject
     lateinit var vibrationUseCase: VibrationUseCase
 
-    @Inject
-    lateinit var applicationEngine: ApplicationEngine
+    var applicationEngine: ApplicationEngine? = null
+
 
     @Inject
     lateinit var notificationUseCase: NotificationUseCase
@@ -43,8 +50,19 @@ class Server {
     @Inject
     lateinit var webSocketRouteHandler: WebSocketRouteHandler
 
+    @Inject
+    lateinit var generalRouteHandler: GeneralRouteHandler
+
+    @Inject
+    lateinit var fileRouteHandler: FileRouteHandler
+
+
     init {
         initializeDagger()
+        applicationEngine?.environment?.monitor?.subscribe(ApplicationStarted) {
+            serverRunning.onNext(true)
+
+        }
     }
 
 
@@ -54,17 +72,34 @@ class Server {
     private fun initializeDagger() = App.appComponent.inject(this)
 
     fun start(): Completable = Completable.create { emitter ->
+
         try {
-            applicationEngine.start(wait = true)
-            emitter.onComplete()
+            applicationEngine = embeddedServer(
+                Netty,
+                port = sheasyPrefDataSource.httpPort.toInt(),
+                module = {
+                    ktorApplicationModule(
+                        generalRouteHandler,
+                        fileRouteHandler,
+                        webSocketRouteHandler
+                    )
+                })
+
+            serverRunning.onNext(true)
+
+            applicationEngine?.start(true)
+
 
         } catch (exception: Exception) {
             Log.d("Server", exception.message)
-            applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+            //  applicationEngine.stop(3L, 0L, TimeUnit.SECONDS)
 
             emitter.onError(exception)
 
+        } finally {
+
         }
+        emitter.onComplete()
 
     }
 
@@ -73,16 +108,21 @@ class Server {
 
     // vibrationUseCase.vibrate()
 
-    fun stop() {
-        applicationEngine.stop(0L, 0L, TimeUnit.SECONDS)
+    fun stop(): Completable = Completable.create { emitter ->
 
-        serverRunning.onNext(false)
+        applicationEngine?.environment?.monitor?.subscribe(ApplicationStopPreparing) {
+            Server.serverRunning.onNext(false)
+
+            emitter.onComplete()
+        }
+        applicationEngine?.stop(3, 3, TimeUnit.SECONDS)
 
         notificationUseCase.cancelAll()
         Log.d("Server", "Server stopped")
         compositeDisposable.clear()
 
         vibrationUseCase.vibrate()
+
 
     }
 
