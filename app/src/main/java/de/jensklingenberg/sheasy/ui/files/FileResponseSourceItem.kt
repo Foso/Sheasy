@@ -7,7 +7,6 @@ import java.io.File
 
 class FileSourceItem(
     File: File,
-    var onEntryClickListener: FileViewHolder.OnEntryClickListener? = null,
     var onItemClickFunction: (fileResponse: FileResponse) -> Unit = {},
     var onContextMenuButtonClickedFunction: (view: View, fileResponse: FileResponse) -> Unit = { _, _ -> }
 ) :
