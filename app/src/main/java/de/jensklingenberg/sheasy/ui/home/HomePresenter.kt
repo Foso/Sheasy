@@ -55,7 +55,7 @@ class HomePresenter(val view: HomeContract.View) : HomeContract.Presenter {
             .subscribeBy(onNext = { running ->
                 view.setServerState(running)
 
-            },onError = {
+            }, onError = {
 
             }).addTo(compositeDisposable)
 

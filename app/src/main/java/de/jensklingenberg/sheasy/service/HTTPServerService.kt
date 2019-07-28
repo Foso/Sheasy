@@ -68,7 +68,6 @@ class HTTPServerService : Service() {
     @Inject
     lateinit var server: Server
 
-
     @Inject
     lateinit var sheasyPref: SheasyPrefDataSource
 
@@ -161,7 +160,6 @@ class HTTPServerService : Service() {
     }
 
 
-
     fun stopService() {
 
         server
@@ -169,7 +167,8 @@ class HTTPServerService : Service() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(onComplete = {
-
+                compositeDisposable.dispose()
+                stopSelf()
             }, onError = {
 
             }).addTo(compositeDisposable)
@@ -177,8 +176,6 @@ class HTTPServerService : Service() {
     }
 
     override fun onDestroy() {
-
-        compositeDisposable.dispose()
 
 
         stopForeground(true)

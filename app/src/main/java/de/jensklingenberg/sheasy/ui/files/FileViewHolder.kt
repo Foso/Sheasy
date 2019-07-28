@@ -12,10 +12,6 @@ class FileViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<FileSourceItem>(viewParent, R.layout.list_item_shared) {
 
 
-    interface OnEntryClickListener {
-        fun onPopupMenuClicked(fileResponse: FileResponse, id: Int)
-    }
-
     override fun onBindViewHolder(item2: Any, diff: Bundle) {
 
         val fileResponse = (item2 as FileSourceItem).getPayload()
