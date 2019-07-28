@@ -18,6 +18,7 @@ import javax.inject.Inject
 
 class ShareUseCaseProvider : ShareUseCase {
 
+
     @Inject
     lateinit var application: Application
 
@@ -83,6 +84,11 @@ class ShareUseCaseProvider : ShareUseCase {
         sheasyPrefDataSource.removeShareFolder(fileResponse)
     }
 
+    override fun removeAllHostedFolders() {
+        sheasyPrefDataSource.removeAllSharedFolder()
+
+    }
+
     override fun shareApp(appInfo: AppInfo) {
         share(fileDataSource.createTempFile(appInfo))
     }
@@ -93,6 +99,10 @@ class ShareUseCaseProvider : ShareUseCase {
 
     override fun shareDownloadLink(link: FileResponse) {
         shareDownloadLink(SharedNetworkSettings(sheasyPrefDataSource.getBaseUrl()).fileDownloadUrl(link.path))
+    }
+
+    override fun shareFolderLink(link: FileResponse) {
+        shareDownloadLink(SharedNetworkSettings(sheasyPrefDataSource.getBaseUrl()).getFilesUrl(link.path))
     }
 
     override fun shareDownloadLink(message: String) {

@@ -210,6 +210,7 @@ class AndroidFileRouteHandler : FileRouteHandler {
 
             get("/file/{path?}") {
                 val filepath = call.parameters["path"] ?: ""
+
                 getFile(filepath)
                     .doOnError { error ->
                         if (error is SheasyError) {

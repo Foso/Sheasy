@@ -6,7 +6,7 @@ import react.dom.a
 import react.dom.div
 
 
-class LinkSourceItem(val linkItem: LinkItem) : SourceItem() {
+class LinkSourceItem(private val linkItem: LinkItem) : SourceItem() {
 
     override fun render(rBuilder: RBuilder) {
         with(rBuilder) {

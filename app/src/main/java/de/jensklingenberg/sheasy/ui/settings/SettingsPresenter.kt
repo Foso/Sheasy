@@ -54,7 +54,7 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
 
             GenericListItem(
                 context.getString(R.string.http_port),
-                sheasyPrefDataSource.httpPort.toString(),
+                sheasyPrefDataSource.httpPort,
                 R.drawable.ic_info_outline_grey_700_24dp
             ).toSourceItem()
 

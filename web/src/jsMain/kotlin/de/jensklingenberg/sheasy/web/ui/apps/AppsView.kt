@@ -45,7 +45,7 @@ class AppsView : RComponent<RProps, AppsViewState>(), AppsContract.View {
         openMenu = false
         anchor = null
         item = emptyList()
-
+        errorMessage = "Loading..."
 
     }
 
@@ -185,7 +185,7 @@ class AppsView : RComponent<RProps, AppsViewState>(), AppsContract.View {
     private fun progressVisibility(): String {
         return when (state.status) {
             Status.LOADING -> {
-                ""
+                "Loading..."
             }
             Status.SUCCESS, Status.ERROR -> {
                 "none"

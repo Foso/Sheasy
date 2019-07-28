@@ -9,9 +9,12 @@ interface ShareUseCase {
     fun share(file: File)
     fun hostFolder(fileResponse: FileResponse)
     fun removeHostFolder(fileResponse: FileResponse)
+    fun removeAllHostedFolders()
     fun shareApp(appInfo: AppInfo)
     fun shareDownloadLink(appInfo: AppInfo)
     fun shareDownloadLink(link: FileResponse)
+    fun shareFolderLink(link: FileResponse)
+
     fun shareDownloadLink(message: String)
     fun feedbackMailIntent(): Intent
 }

@@ -8,7 +8,6 @@ import de.jensklingenberg.sheasy.web.components.materialui.Input
 import de.jensklingenberg.sheasy.web.model.SourceItem
 import de.jensklingenberg.sheasy.web.model.StringRes
 import de.jensklingenberg.sheasy.web.model.render
-import de.jensklingenberg.sheasy.web.ui.common.StringSourceItem
 import kotlinx.html.InputType
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.EventTarget
@@ -21,7 +20,7 @@ interface FileViewState : RState {
     var openMenu: Boolean
     var anchor: EventTarget?
     var item: ArrayList<SourceItem>
-    var inpu: String
+    var messageFieldInput: String
     var activeConnection: String
 
 }
@@ -39,7 +38,7 @@ class ShareView : RComponent<RProps, FileViewState>(), ShareContract.View {
         openMenu = false
         anchor = null
         item = arrayListOf()
-        inpu = ""
+        messageFieldInput = ""
         activeConnection = StringRes.NOT_CONNECTED
 
     }
@@ -77,12 +76,7 @@ class ShareView : RComponent<RProps, FileViewState>(), ShareContract.View {
 
                 onClick = {
                     // presenter.navigateUp()
-                    presenter?.send(state.inpu)
-                    setState {
-                        item.add(StringSourceItem(state.inpu))
-
-
-                    }
+                    presenter?.send(state.messageFieldInput)
                 }
 
             }
@@ -122,7 +116,7 @@ class ShareView : RComponent<RProps, FileViewState>(), ShareContract.View {
 
 
     private fun onSearchInputChanged(value: String) {
-        state.inpu = value
+        state.messageFieldInput = value
     }
 
 }

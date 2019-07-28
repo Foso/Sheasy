@@ -9,7 +9,7 @@ class FolderSourceItem(
     fileResponse: File,
     val isFolder: Boolean,
     val imageId: Int,
-    var onEntryClickListener: FolderViewHolder.OnEntryClickListener? = null,
+    var onEntryClickListener: (view: View, fileResponse: FileResponse) -> Unit = { _, _ -> },
     var onContextMenuButtonClickedFunction: (view: View, fileResponse: FileResponse) -> Unit = { _, _ -> }
 
 ) :

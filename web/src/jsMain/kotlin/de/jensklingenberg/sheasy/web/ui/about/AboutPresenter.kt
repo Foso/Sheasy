@@ -1,6 +1,5 @@
 package de.jensklingenberg.sheasy.web.ui.about
 
-import components.materialui.icons.HistoryIcon
 import de.jensklingenberg.sheasy.web.components.materialui.icons.CodeIcon
 import de.jensklingenberg.sheasy.web.components.materialui.icons.InfoOutlinedIcon
 import de.jensklingenberg.sheasy.web.data.NetworkPreferences
@@ -21,7 +20,6 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
             listOf(
                 GenericListHeaderSourceItem(StringSourceItem("Info")),
                 AboutSourceItem(AboutItem("Sheasy", "v1.0", InfoOutlinedIcon)),
-                AboutSourceItem(AboutItem("Changelog", "v0.1", HistoryIcon)),
                 GenericListHeaderSourceItem(StringSourceItem("License")),
                 AboutSourceItem(AboutItem("License", "Sheasy is licensed under Apache License 2.0", CodeIcon), {}),
                 LinkSourceItem(

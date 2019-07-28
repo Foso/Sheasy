@@ -128,6 +128,9 @@ class FilesFragment : BaseFragment(), FilesContract.View {
             R.id.menu_share_to_server -> {
                 presenter.hostActiveFolder()
             }
+            R.id.menu_remove_all_hosted -> {
+                presenter.removeAllHostedFolders()
+            }
         }
 
         return true

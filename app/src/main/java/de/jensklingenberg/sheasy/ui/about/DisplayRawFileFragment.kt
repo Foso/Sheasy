@@ -52,7 +52,7 @@ class DisplayRawFileFragment : DialogFragment() {
 
         private fun readRawTextFile(ctx: Context, resId: Int): String? {
 
-            var text = "";
+            var text = ""
             ctx.resources.openRawResource(resId).bufferedReader().use {
                 text = it.readText()
             }

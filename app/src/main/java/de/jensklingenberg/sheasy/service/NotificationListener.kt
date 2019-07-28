@@ -27,11 +27,6 @@ class NotificationListener : NotificationListenerService() {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-    override fun onNotificationRemoved(sbn: StatusBarNotification?) {
-        super.onNotificationRemoved(sbn)
-    }
-
-
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         super.onNotificationPosted(sbn)
         sbn?.notification?.extras?.let {

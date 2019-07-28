@@ -24,7 +24,7 @@ import javax.inject.Inject
 class Server {
 
     companion object {
-        val serverRunning: BehaviorSubject<Boolean> = BehaviorSubject.create<Boolean>()
+        val serverRunning: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     }
 
@@ -111,7 +111,7 @@ class Server {
     fun stop(): Completable = Completable.create { emitter ->
 
         applicationEngine?.environment?.monitor?.subscribe(ApplicationStopPreparing) {
-            Server.serverRunning.onNext(false)
+            serverRunning.onNext(false)
 
             emitter.onComplete()
         }

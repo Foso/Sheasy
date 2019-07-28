@@ -17,6 +17,7 @@ import javax.inject.Inject
 
 class SheasyPreferencesRepository : SheasyPrefDataSource {
 
+
     @Inject
     lateinit var getIpUseCase: GetIpUseCase
 
@@ -33,7 +34,7 @@ class SheasyPreferencesRepository : SheasyPrefDataSource {
     private fun initializeDagger() = App.appComponent.inject(this)
 
 
-    val sharedFoldersSubject: BehaviorSubject<List<FileResponse>> = BehaviorSubject.create()
+    private val sharedFoldersSubject: BehaviorSubject<List<FileResponse>> = BehaviorSubject.create()
     override val sharedFolders = arrayListOf<FileResponse>()
     override val nonInterceptedFolders: List<String> = listOf("/web/connection/")
     override var appFolder = Environment.getExternalStorageDirectory().toString() + "/Sheasy/"
@@ -57,6 +58,14 @@ class SheasyPreferencesRepository : SheasyPrefDataSource {
         sharedFoldersSubject.onNext(sharedFolders)
     }
 
+    override fun removeAllSharedFolder() {
+        eventDataSource.addClientEvent(RefreshClientEvent())
+
+        sharedFolders.clear()
+        sharedFoldersSubject.onNext(sharedFolders)
+
+    }
+
     override var acceptAllConnections: Boolean
         get() = PreferenceManager.getDefaultSharedPreferences(application).getBoolean(
             application.getString(R.string.key_accept_all_connections),
@@ -67,15 +76,9 @@ class SheasyPreferencesRepository : SheasyPrefDataSource {
             apply()
         }
 
-    override fun observeSharedFolders(): BehaviorSubject<List<FileResponse>> {
-        return sharedFoldersSubject
+    override fun observeSharedFolders(): BehaviorSubject<List<FileResponse>> = sharedFoldersSubject
 
-    }
-
-    override fun getBaseUrl(): String {
-
-        return "http://" + getIpUseCase.getIP() + ":" + httpPort + "/api/v1/"
-    }
+    override fun getBaseUrl(): String = "http://" + getIpUseCase.getIP() + ":" + httpPort + "/api/v1/"
 
 
 }

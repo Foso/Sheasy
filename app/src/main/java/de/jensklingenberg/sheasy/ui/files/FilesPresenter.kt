@@ -11,6 +11,8 @@ import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.ui.common.BaseDataSourceItem
 import de.jensklingenberg.sheasy.ui.common.GenericListHeaderSourceItem
+import de.jensklingenberg.sheasy.ui.common.NoOrEmptyContentItem
+import de.jensklingenberg.sheasy.ui.common.NoOrEmptyContentSourceItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -70,7 +72,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                     if (fileList.isNotEmpty()) {
                         add(
                             GenericListHeaderSourceItem(
-                                "Shared Folders"
+                                "Shared Folders/Files"
                             )
                         )
                         addAll(fileList.map { fileResponse ->
@@ -106,7 +108,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                                         file,
                                         !file.isFile,
                                         R.drawable.ic_insert_drive_file_grey_700_24dp,
-                                        this@FilesPresenter
+                                        { _, _ -> }
                                     ) { view, fileResponse ->
                                         setupContextMenu(
                                             view,
@@ -119,7 +121,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                                         file,
                                         !file.isFile,
                                         R.drawable.ic_folder_grey_700_24dp,
-                                        this@FilesPresenter
+                                        { view, file -> onEntryClicked(view, file) }
                                     ) { view, fileResponse ->
                                         setupContextMenu(
                                             view,
@@ -134,6 +136,26 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
                 }
 
+                if (files.isEmpty()) {
+
+                    (files as MutableList<BaseDataSourceItem<*>>).add(
+                        GenericListHeaderSourceItem(
+                            "Folders"
+                        )
+                    )
+
+
+                    (files as MutableList<BaseDataSourceItem<*>>).add(
+                        NoOrEmptyContentSourceItem(
+                            NoOrEmptyContentItem(
+                                "No Files",
+                                R.drawable.ic_insert_drive_file_grey_700_24dp
+                            )
+                        )
+                    )
+
+                }
+
                 view.setData(shared + files)
 
             }, onError = { view.showError(it) })
@@ -145,7 +167,7 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
     override fun folderUp() {
 
         var oldFolderPath = fileResponse1.path
-        var newPath = oldFolderPath.replaceAfterLast("/", "")
+        var newPath = oldFolderPath.substringBeforeLast("/")
         fileResponse1 = FileResponse(File(newPath).name, newPath)
         loadFiles()
         view.updateFolderPathInfo(fileResponse1)
@@ -161,8 +183,12 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
         view.updateFolderPathInfo(item)
     }
 
+    fun onEntryClicked(view: View, fileResponse: FileResponse) {
+        onItemClicked(fileResponse)
 
-    override fun onPopupMenuClicked(fileResponse: FileResponse, id: Int) {
+    }
+
+    fun onPopupMenuClicked(fileResponse: FileResponse, id: Int) {
         when (id) {
             R.id.menu_share -> {
                 shareUseCaseProvider.share(File(fileResponse.path))
@@ -171,11 +197,12 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
                 shareUseCaseProvider.hostFolder(fileResponse)
             }
             R.id.menu_share_link -> {
-                shareUseCaseProvider.shareDownloadLink(fileResponse)
+                shareUseCaseProvider.shareFolderLink(fileResponse)
             }
             R.id.menu_unhost_folder -> {
                 shareUseCaseProvider.removeHostFolder(fileResponse)
             }
+
         }
 
     }
@@ -236,12 +263,17 @@ class FilesPresenter(val view: FilesContract.View) : FilesContract.Presenter {
 
     }
 
+
     override fun hostActiveFolder() {
         shareUseCaseProvider.hostFolder(fileResponse1)
     }
 
     override fun onDestroy() {
         compositeDisposable.dispose()
+    }
+
+    override fun removeAllHostedFolders() {
+        shareUseCaseProvider.removeAllHostedFolders()
     }
 
 }

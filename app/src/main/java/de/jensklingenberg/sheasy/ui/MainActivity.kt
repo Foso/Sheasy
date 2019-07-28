@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
             val type = it.type
 
 
-            val clipData = it.clipData;
+            val clipData = it.clipData
             if (clipData != null) {
 
 

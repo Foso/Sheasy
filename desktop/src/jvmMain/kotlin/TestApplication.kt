@@ -66,29 +66,9 @@ fun main() {
         }
 
 
-        install(WebSockets) {
-            pingPeriod = Duration.ofSeconds(60) // Disabled (null) by default
-            timeout = Duration.ofSeconds(15)
-            maxFrameSize =
-                    Long.MAX_VALUE // Disabled (max value). The connection will be closed if surpassed this length.
-            masking = false
-        }
 
 
         routing {
-            //http://192.168.178.20:8766/api/v1/file?shared=/storage/emulated/0/Music
-            webSocket("/echo") {
-                val frame = incoming.receive()
-                when (frame) {
-                    is Frame.Text -> {
-                        val text = frame.readText()
-                        outgoing.send(Frame.Text(text))
-                        if (text.equals("bye", ignoreCase = true)) {
-                            close(CloseReason(CloseReason.Codes.NORMAL, "Client said BYE"))
-                        }
-                    }
-                }
-            }
 
              get("/") {
 

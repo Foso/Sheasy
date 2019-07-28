@@ -23,7 +23,7 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
 
     private val snackbar: PublishSubject<String> = PublishSubject.create()
 
-    private val appsSubject: PublishSubject<List<AppInfo>> = PublishSubject.create<List<AppInfo>>()
+    private val appsSubject: PublishSubject<List<AppInfo>> = PublishSubject.create()
 
     override val compositeDisposable = CompositeDisposable()
 

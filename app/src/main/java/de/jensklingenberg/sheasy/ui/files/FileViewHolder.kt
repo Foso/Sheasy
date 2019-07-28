@@ -30,6 +30,10 @@ class FileViewHolder(viewParent: ViewGroup) :
                 moreBtn.setOnClickListener {
                     item2.onContextMenuButtonClickedFunction(it, FileResponse(fileResponse.name, fileResponse.path))
                 }
+
+                setOnClickListener {
+
+                }
             }
         }
 

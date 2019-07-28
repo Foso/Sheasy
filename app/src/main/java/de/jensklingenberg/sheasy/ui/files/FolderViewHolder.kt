@@ -1,7 +1,6 @@
 package de.jensklingenberg.sheasy.ui.files
 
 import android.os.Bundle
-import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
@@ -12,13 +11,6 @@ import kotlinx.android.synthetic.main.list_item_generic.view.*
 class FolderViewHolder(viewParent: ViewGroup) :
     BaseViewHolder<FileSourceItem>(viewParent, R.layout.list_item_generic) {
 
-
-    interface OnEntryClickListener {
-        fun onItemClicked(fileResponse: FileResponse)
-        fun onPopupMenuClicked(fileResponse: FileResponse, id: Int)
-        fun onPopupMenuClicked(view: View, fileResponse: FileResponse)
-
-    }
 
     override fun onBindViewHolder(sourceItem: Any, diff: Bundle) {
 
@@ -39,6 +31,8 @@ class FolderViewHolder(viewParent: ViewGroup) :
 
 
                 item.setOnClickListener {
+                    sourceItem.onEntryClickListener(it, FileResponse(file.name, file.path))
+
                 }
 
 
