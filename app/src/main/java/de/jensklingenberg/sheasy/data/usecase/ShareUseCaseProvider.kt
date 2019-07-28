@@ -3,13 +3,15 @@ package de.jensklingenberg.sheasy.data.usecase
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.data.FileDataSource
 import de.jensklingenberg.sheasy.model.AppInfo
 import de.jensklingenberg.sheasy.model.FileResponse
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import network.SharedNetworkSettings
 import java.io.File
 import java.net.URLConnection
@@ -61,7 +63,7 @@ class ShareUseCaseProvider : ShareUseCase {
         intentShareFile.type = URLConnection.guessContentTypeFromName(file.name)
         intentShareFile.putExtra(
             Intent.EXTRA_STREAM,
-            Uri.parse("content://" + file.absolutePath)
+            FileProvider.getUriForFile(application, App.FILE_AUTHORITY, file)
         )
 
         //if you need
@@ -91,6 +93,17 @@ class ShareUseCaseProvider : ShareUseCase {
 
     override fun shareApp(appInfo: AppInfo) {
         share(fileDataSource.createTempFile(appInfo))
+    }
+
+    override fun shareSheasyApk() {
+        fileDataSource.getApps("de.jensklingenberg.sheasy").subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(
+                AndroidSchedulers.mainThread()
+            ).subscribeBy(
+                onSuccess = {
+                    shareApp(it.first())
+                }
+            )
     }
 
     override fun shareDownloadLink(appInfo: AppInfo) {

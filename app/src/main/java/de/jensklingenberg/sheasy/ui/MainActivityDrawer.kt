@@ -20,7 +20,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
 
-class MainActivityDrawer(val activity: MainActivity) : OnCheckedChangeListener {
+class MainActivityDrawer(private val activity: MainActivity) : OnCheckedChangeListener {
 
 
     lateinit var result: Drawer

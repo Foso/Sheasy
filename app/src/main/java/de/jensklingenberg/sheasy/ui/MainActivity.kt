@@ -12,6 +12,7 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
+import de.jensklingenberg.sheasy.data.usecase.ShareUseCase
 import de.jensklingenberg.sheasy.model.SideMenuEntry
 import de.jensklingenberg.sheasy.ui.files.FilesFragmentDirections
 import de.jensklingenberg.sheasy.utils.PermissionUtils
@@ -25,13 +26,15 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
     val compositeDisposable = CompositeDisposable()
 
     lateinit var mainActivityDrawer: MainActivityDrawer
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     @Inject
     lateinit var permissionUtils: PermissionUtils
 
     private val REQUEST_FILE_PERMISSION = 1
 
+    @Inject
+    lateinit var shareUseCaseProvider: ShareUseCase
 
     init {
         initializeDagger()
@@ -67,8 +70,8 @@ class MainActivity : AppCompatActivity(), Drawer.OnDrawerItemClickListener {
 
                 if (item.navId == -1) {
                     when (item.title) {
-                        R.string.side_menu_share_app -> {
-
+                        R.string.share_this_app -> {
+                            shareUseCaseProvider.shareSheasyApk()
                             return true
                         }
                         R.string.menu_help -> {

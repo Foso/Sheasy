@@ -10,6 +10,7 @@ open class App : Application() {
 
     companion object {
         lateinit var appComponent: AppComponent
+        const val FILE_AUTHORITY = "de.jensklingenberg.sheasy.fileprovider"
     }
 
     override fun onCreate() {

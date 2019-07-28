@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="de.jensklingenberg.sheasy">
+          package="de.jensklingenberg.sheasy">
 
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -52,6 +51,17 @@
             </intent-filter>
             <nav-graph android:value="@navigation/navigation_graph" />
         </activity>
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="de.jensklingenberg.sheasy.fileprovider"
+                android:grantUriPermissions="true"
+                android:exported="false">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/filepaths"/>
+        </provider>
+
         <service
                 android:name="de.jensklingenberg.sheasy.service.NotificationListener"
                 android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
