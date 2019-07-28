@@ -7,7 +7,6 @@ import de.jensklingenberg.sheasy.ui.common.MvpPresenter
 interface SettingsContract {
     interface View {
         fun setData(items: List<BaseDataSourceItem<*>>)
-        fun setServerState(isRunning: Boolean)
 
     }
 

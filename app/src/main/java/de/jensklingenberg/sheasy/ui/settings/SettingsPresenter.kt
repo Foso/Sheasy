@@ -6,13 +6,10 @@ import android.content.Intent
 import de.jensklingenberg.sheasy.App
 import de.jensklingenberg.sheasy.R
 import de.jensklingenberg.sheasy.data.usecase.CheckPermissionUseCase
-import de.jensklingenberg.sheasy.network.Server
 import de.jensklingenberg.sheasy.network.SheasyPrefDataSource
 import de.jensklingenberg.sheasy.ui.common.*
 import de.jensklingenberg.sheasy.utils.NetworkUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Presenter {
@@ -96,14 +93,6 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
 
         view.setData(list)
 
-        Server.serverRunning.subscribeOn(AndroidSchedulers.mainThread())
-            .observeOn(
-                AndroidSchedulers.mainThread()
-            )
-            .subscribeBy(onNext = { running ->
-                view.setServerState(running)
-
-            }).addTo(compositeDisposable)
     }
 
     override fun startService(intent: Intent) {

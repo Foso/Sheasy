@@ -155,7 +155,7 @@ open class AndroidFileRepository : FileDataSource {
         val file2 = File(sheasyPrefDataSource.appFolder + "/temp/" + appInfo.packageName + ".apk")
 
         file.copyTo(file2, true)
-        return file
+        return file2
     }
 
     override fun saveUploadedFile(destinationFilePath: String, inputStream: InputStream): Completable =

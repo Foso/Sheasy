@@ -28,9 +28,9 @@ class AppsFragment : BaseFragment(), AppsContract.View {
 
     private val baseAdapter = BaseAdapter()
 
-    lateinit var presenter: AppsContract.Presenter
+    private lateinit var presenter: AppsContract.Presenter
 
-    val compositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     @Inject
     lateinit var messageUseCase: MessageUseCase

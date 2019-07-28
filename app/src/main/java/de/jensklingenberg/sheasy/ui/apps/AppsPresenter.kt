@@ -21,7 +21,7 @@ import javax.inject.Inject
 class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
 
 
-    private val snackbar: PublishSubject<String> = PublishSubject.create()
+    private val snackbarMessage: PublishSubject<String> = PublishSubject.create()
 
     private val appsSubject: PublishSubject<List<AppInfo>> = PublishSubject.create()
 
@@ -65,7 +65,7 @@ class AppsPresenter(val view: AppsContract.View) : AppsContract.Presenter {
                     }
                 )
             }, onError = {
-                snackbar.onError(it)
+                snackbarMessage.onError(it)
             }).addTo(compositeDisposable)
     }
 

@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class PairedPresenter(val view: PairedContract.View) : PairedContract.Presenter {
+class PairedPresenter(private val view: PairedContract.View) : PairedContract.Presenter {
 
     @Inject
     lateinit var context: Context

@@ -8,9 +8,13 @@ class AppInfoSourceItem(appInfo: AndroidAppInfo, var onEntryClickListener: AppIn
     BaseDataSourceItem<AndroidAppInfo>(AppInfoViewHolder::class.java) {
 
 
-    override fun areItemsTheSameInner(other: BaseDataSourceItem<AndroidAppInfo>): Boolean = false
+    override fun areItemsTheSameInner(other: BaseDataSourceItem<AndroidAppInfo>): Boolean {
+        return getPayload() == other.getPayload()
+    }
 
-    override fun areContentsTheSameInner(other: BaseDataSourceItem<AndroidAppInfo>): Boolean = false
+    override fun areContentsTheSameInner(other: BaseDataSourceItem<AndroidAppInfo>): Boolean {
+        return getPayload()?.packageName == other.getPayload()?.packageName
+    }
 
 
     init {

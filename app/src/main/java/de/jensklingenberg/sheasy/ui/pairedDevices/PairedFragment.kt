@@ -17,7 +17,7 @@ class PairedFragment : BaseFragment(), PairedContract.View {
 
 
     private val aboutAdapter = BaseAdapter()
-    lateinit var pairedPresenter: PairedContract.Presenter
+    private lateinit var pairedPresenter: PairedContract.Presenter
 
 
     /****************************************** Fragment Lifecycle methods  */
