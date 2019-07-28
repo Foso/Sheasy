@@ -29,6 +29,8 @@ class SettingsFragment : BaseFragment(), SettingsContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
         recyclerView?.apply {
             adapter = settingsAdapter
             recyclerView.layoutManager = LinearLayoutManager(context)

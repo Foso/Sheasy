@@ -22,8 +22,8 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     private val baseAdapter = BaseAdapter()
     lateinit var presenter: HomeContract.Presenter
-    var toolbarMenu: Menu? = null
-    var serverIcon: MenuItem? = null
+    private var toolbarMenu: Menu? = null
+    private var serverIcon: MenuItem? = null
 
     init {
         initializeDagger()

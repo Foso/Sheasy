@@ -45,14 +45,14 @@
     <string name="About_Changelog">Changelog</string>
     <string name="about_changelog_link">https://github.com/Foso/Sheasy/commits/develop</string>
     <string name="about_feature_request_title">Feature Request</string>
-    <string name="about_feature_request_message">Send Feature Request on Github</string>
+    <string name="about_feature_request_message">Send Feedback/Feature Request on Github</string>
 
     <string name="about_feature_request_link">https://github.com/Foso/Sheasy/issues</string>
 
     <string name="about_License">License</string>
     <string name="about_license_link">https://github.com/Foso/Sheasy/blob/develop/LICENSE</string>
     <string name="about_license_caption">Sheasy is licensed under Apache License 2.0</string>
-    <string name="about_send_feedback">Send Feedback per Mail</string>
+    <string name="about_send_feedback">Send Feedback/Feature Request per Mail</string>
 
 
     <string name="key_accept_all_connections">PORT</string>

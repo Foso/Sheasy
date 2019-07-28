@@ -57,10 +57,16 @@ class NotificationProvider : NotificationUseCase {
     override fun showConnectionRequest(ipaddress: String) {
 
 
-        val intent = HTTPServerService.authorizeDeviceIntent(context, ipaddress)
+        val authIntent = HTTPServerService.authorizeDeviceIntent(context, ipaddress)
+        val notAuthIntent = HTTPServerService.notAuthorizeDeviceIntent(context, ipaddress)
 
-        val replyPendingIntent = PendingIntent.getService(
-            context, 0 /* Request code */, intent,
+        val authPendingIntent = PendingIntent.getService(
+            context, 0 /* Request code */, authIntent,
+            PendingIntent.FLAG_CANCEL_CURRENT
+        )
+
+        val notAuthPendingIntent = PendingIntent.getService(
+            context, 1 /* Request code */, notAuthIntent,
             PendingIntent.FLAG_CANCEL_CURRENT
         )
 
@@ -76,9 +82,9 @@ class NotificationProvider : NotificationUseCase {
             .setAutoCancel(true)
             //.setSound(defaultSoundUri)
             // .setContentIntent(pendingIntent)
-            .addAction(R.mipmap.ic_launcher, "Accept", replyPendingIntent)
+            .addAction(R.mipmap.ic_launcher, "Accept", authPendingIntent)
 
-            .addAction(R.mipmap.ic_launcher, "No Accept", replyPendingIntent)
+            .addAction(R.mipmap.ic_launcher, "No Accept", notAuthPendingIntent)
 
         notificationManager.notify(NOTIFICATION_CHANNEL_ID_CONNECTION_REQUEST_ID, notificationBuilder.build())
 

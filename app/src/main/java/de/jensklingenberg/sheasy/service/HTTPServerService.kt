@@ -39,6 +39,7 @@ class HTTPServerService : Service() {
         val ACTION_START_SERVER = "ACTION_START_SERVER"
 
         val AUTHORIZE_DEVICE = "AUTHORIZE_DEVICE"
+        val NOT_AUTHORIZE_DEVICE = "NOT_AUTHORIZE_DEVICE"
 
 
         const val NOTIFICAITON_ID = 0
@@ -60,6 +61,12 @@ class HTTPServerService : Service() {
         fun authorizeDeviceIntent(context: Context, ipaddress: String): Intent {
             return Intent(context, HTTPServerService::class.java).apply {
                 putExtra(AUTHORIZE_DEVICE, ipaddress)
+            }
+        }
+
+        fun notAuthorizeDeviceIntent(context: Context, ipaddress: String): Intent {
+            return Intent(context, HTTPServerService::class.java).apply {
+                putExtra(NOT_AUTHORIZE_DEVICE, ipaddress)
             }
         }
     }
@@ -120,6 +127,9 @@ class HTTPServerService : Service() {
                         )
                     )
                     notificationManager.cancel(NotificationProvider.NOTIFICATION_CHANNEL_ID_CONNECTION_REQUEST_ID)
+                } else if (intent.hasExtra(NOT_AUTHORIZE_DEVICE)) {
+                    notificationManager.cancel(NotificationProvider.NOTIFICATION_CHANNEL_ID_CONNECTION_REQUEST_ID)
+
                 }
 
 

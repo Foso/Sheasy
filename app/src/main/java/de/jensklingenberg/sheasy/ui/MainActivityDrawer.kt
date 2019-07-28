@@ -23,10 +23,10 @@ import io.reactivex.rxkotlin.subscribeBy
 class MainActivityDrawer(private val activity: MainActivity) : OnCheckedChangeListener {
 
 
-    lateinit var result: Drawer
-    lateinit var headerResult: AccountHeader
-    val compositeDisposable = CompositeDisposable()
-    lateinit var serverSwitch: SwitchDrawerItem
+    private lateinit var result: Drawer
+    private lateinit var headerResult: AccountHeader
+    private val compositeDisposable = CompositeDisposable()
+    private lateinit var serverSwitch: SwitchDrawerItem
 
     init {
         initializeDagger()
@@ -70,7 +70,7 @@ class MainActivityDrawer(private val activity: MainActivity) : OnCheckedChangeLi
                     }
                     false -> {
 
-                        activity.stopService(HTTPServerService.stopIntent(activity))
+                        activity.startService(HTTPServerService.stopIntent(activity))
 
                     }
                 }

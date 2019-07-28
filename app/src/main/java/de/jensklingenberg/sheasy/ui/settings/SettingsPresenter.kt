@@ -59,13 +59,13 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
 
             GenericListHeaderSourceItem(
                 "Connections"
-            ),
-            GenericToggleItem(
-                context.getString(R.string.acceptAllConnections),
-                sheasyPrefDataSource.webSocketPort.toString(),
-                R.drawable.ic_info_outline_grey_700_24dp,
-                sheasyPrefDataSource.acceptAllConnections
-            ) { value -> sheasyPrefDataSource.acceptAllConnections = value }.toSourceItem(),
+            ), GenericToggleItemSourceItem(
+                GenericToggleItem(
+                    context.getString(R.string.acceptAllConnections),
+                    "If active, all incoming requests are accepted automatic",
+                    R.drawable.ic_info_outline_grey_700_24dp,
+                    sheasyPrefDataSource.acceptAllConnections
+                ) { value -> sheasyPrefDataSource.acceptAllConnections = value }),
 
             GenericListHeaderSourceItem(
                 "Folders"
@@ -80,7 +80,7 @@ class SettingsPresenter(val view: SettingsContract.View) : SettingsContract.Pres
             ),
             GenericToggleItem(
                 context.getString(R.string.readNotifications),
-                sheasyPrefDataSource.webSocketPort.toString(),
+                "If active, you can receive device notifications in the browser interface",
                 R.drawable.ic_info_outline_grey_700_24dp,
                 checkPermissionUseCase.checkNotificationPermission()
             ) { value ->

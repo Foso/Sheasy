@@ -27,7 +27,9 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
 
         val list = listOf<BaseDataSourceItem<*>>(
 
-
+            GenericListHeaderSourceItem(
+                "App"
+            ),
             GenericListItem(
                 context.getString(R.string.app_name),
                 "v" + BuildConfig.VERSION_NAME,
@@ -63,6 +65,15 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
                 context.getString(R.string.about_license_caption),
                 R.drawable.ic_code_grey_700_24dp
             ).toSourceItem(this),
+
+            GenericListItem(
+                "Commit",
+                BuildConfig.GIT_SHA,
+                NO_IMAGE
+            ).toSourceItem(this),
+            GenericListHeaderSourceItem(
+                "Contact"
+            ),
             GenericListItem(
                 "Feedback",
                 context.getString(R.string.about_send_feedback),
@@ -72,13 +83,7 @@ class AboutPresenter(val view: AboutContract.View) : AboutContract.Presenter {
                 "Feature Request",
                 context.getString(R.string.about_feature_request_message),
                 R.drawable.ic_send_grey_700_24dp
-            ).toSourceItem(this),
-            GenericListItem(
-                "Commit",
-                BuildConfig.GIT_SHA,
-                NO_IMAGE
             ).toSourceItem(this)
-
 
         )
 

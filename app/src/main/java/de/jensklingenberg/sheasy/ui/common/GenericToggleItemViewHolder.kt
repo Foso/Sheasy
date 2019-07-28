@@ -1,6 +1,7 @@
 package de.jensklingenberg.sheasy.ui.common
 
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import de.jensklingenberg.sheasy.R
 import kotlinx.android.synthetic.main.settings_toggle_entry.view.*
@@ -20,6 +21,12 @@ class GenericToggleItemViewHolder(viewParent: ViewGroup) :
                 toggleBtn.setOnCheckedChangeListener { buttonView, isChecked ->
                     listItem.onToggle(isChecked)
 
+                }
+                if (listItem.caption.isNotEmpty()) {
+                    subtitleTv.visibility = View.VISIBLE
+                    subtitleTv.text = listItem.caption
+                } else {
+                    subtitleTv.visibility = View.GONE
                 }
             }
         }
