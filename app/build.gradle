@@ -73,7 +73,7 @@ android {
         }
         release {
             Properties properties = new Properties()
-            properties.load(project.rootProject.file('signing.properties').newDataInputStream())
+            properties.load(project.rootProject.file('key.properties').newDataInputStream())
             storeFile file(properties.getProperty('storeFile'))
             keyAlias properties.getProperty('keyAlias')
             storePassword properties.getProperty('storePassword')

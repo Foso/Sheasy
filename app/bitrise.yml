@@ -10,7 +10,7 @@ app:
 workflows:
   dev:
     steps:
-    - gradle-runner:
+    - gradle-runner@1.9.0:
         inputs:
         - gradlew_path: ./gradlew
         - gradle_task: clean web:deployToAppAssets app:assembleDebug
