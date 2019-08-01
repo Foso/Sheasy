@@ -21,7 +21,7 @@
 > This an Android App that helps you share/manage your files on your Android Device through a WebInterface in the Browser
 
 <hr>
-<p align="center"><a href="#introduction">Introduction</a> &bull; <a href="#-features">Features</a> &bull; <a href="##-roadmap">Roadmap</a> &bull; <a href="#-architecture">Architecture</a> &bull; <a href="#-docs">Docs</a> &bull; <a href="#-feedback">Feedback</a>&bull; <a href="#-docs">Docs</a> &bull; <a href="##-contributors">Contributors</a></p>
+<p align="center"><a href="#introduction">Introduction</a> &bull; <a href="#-features">Features</a> &bull; <a href="##-roadmap">Roadmap</a> &bull; <a href="#-architecture">Architecture</a> &bull; <a href="#-feedback">Feedback</a>&bull; <a href="#-docs">Docs</a> &bull; <a href="##-contributors">Contributors</a></p>
 <hr>
 
 ## Introduction
