@@ -10,13 +10,7 @@
   <a href="https://twitter.com/intent/tweet?text=Hey, check out Sheasy - Share Easy Android App https://github.com/Foso/Sheasy via @jklingenberg_ #Android 
 "><img src="https://img.shields.io/twitter/url/https/github.com/angular-medellin/meetup.svg?style=social" alt="Tweet"></a>
 
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-      alt="Get it on Google Play"
-      height="90">](https://play.google.com/store/apps/details?id=de.jensklingenberg.sheasy)
 
-<h1 align=center>
-<img src="logo/horizontal.png" width=40%>
-</h1>
 
 > This an Android App that helps you share/manage your files on your Android Device through a WebInterface in the Browser
 
